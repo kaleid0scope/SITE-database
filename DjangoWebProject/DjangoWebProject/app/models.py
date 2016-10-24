@@ -7,11 +7,11 @@ from django.db import models
 # Create your models here.
 
 class Inspectors(models.Model):
-    inspectorID = models.PositiveIntegerField()
+    inspectorNum = models.PositiveIntegerField()
     name = models.CharField(max_length = 20)
 
 class Students(models.Model):
-    StudentID =models.PositiveIntegerField()
+    StudentNum =models.PositiveIntegerField()
     name = models.CharField(max_length = 20)
     sex =models.BooleanField()
     year = models.PositiveSmallIntegerField()
@@ -29,3 +29,17 @@ class Students(models.Model):
     source = models.CharField(max_length = 50)
     collegeEntranceExaminationScore = models.PositiveSmallIntegerField()
     inspector = models.ForeignKey(Inspectors)
+
+class Teachers(models.Model):
+    teacherNum = models.IntegerField()
+    name = models.CharField(max_length = 20)
+    sex =models.BooleanField()
+
+class Projects(models.Model):
+    name = models.CharField(max_length = 20)
+    number = models.SmallIntegerField()
+    teacher = models.ForeignKey(Teachers)
+
+class Relation(models.Model):
+    project = models.ForeignKey(Projects)
+    student = models.ForeignKey(Students)
