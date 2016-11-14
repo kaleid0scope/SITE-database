@@ -39,7 +39,13 @@ class Projects(models.Model):
     name = models.CharField(max_length = 20)
     number = models.SmallIntegerField()
     teacher = models.ForeignKey(Teachers)
+    Location = models.CharField(max_length = 50)
 
 class Relation(models.Model):
     project = models.ForeignKey(Projects)
     student = models.ForeignKey(Students)
+
+class Pig(models.Model):
+    pigid = models.IntegerField(primary_key = True,db_column = "ID")
+    pigname = models.CharField(max_length = 20)
+    
