@@ -110,7 +110,7 @@ class InClass(models.Model):
 
 class ClassScore(models.Model):
     classNum = models.PositiveIntegerField()
-    StudentNum =models.PositiveIntegerField()
+    StudentNum =models.ForeignKey(Students)
     Score = models.SmallIntegerField()
     totalScore = models.SmallIntegerField()
     inspectorNum = models.ForeignKey(Inspectors)
@@ -120,15 +120,196 @@ class ResearchProjectRank(models.Model):
     rank = models.CharField(max_length = 20)
     role = models.CharField(max_length = 20)
     score = models.SmallIntegerField()
-    startingTime = models.PositiveIntegerField()
+    startingTime = models.DateField()
     CompleteNum = models.PositiveIntegerField()
     inspectorNum = models.ForeignKey(Inspectors)
 
 class ResearchProject(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
-    StudentNum =models.PositiveIntegerField()
+    StudentNum =models.ForeignKey(Students)
     rankNum = models.PositiveIntegerField()
     ProjectName = models.CharField(max_length = 20)
-    ProjectTime = models.PositiveIntegerField()  #支撑文档
+    ProjectTime = models.DateField()
+    SupportText = models.TextField()#支撑文档
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class PaperRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    JournalName = models.CharField(max_length = 50)
+    Level = models.CharField(max_length = 20)
+    AuthorRanking = models.SmallIntegerField()
+    score = models.SmallIntegerField()
+    startingTime = models.DateField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class Paper(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    ProjectName = models.CharField(max_length = 20)
+    ProjectTime = models.DateField()
+    SupportText = models.TextField()#支撑文档 
     inspectorNum = models.ForeignKey(Inspectors)
     
+class CompetitionRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    name = models.CharField(max_length = 50)
+    Level = models.CharField(max_length = 20)
+    rank = models.SmallIntegerField()
+    score = models.SmallIntegerField()
+    startingTime = models.DateField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class Competition(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    ProjectTime = models.DateField()
+    SupportText = models.TextField()#支撑文档 
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class ExchangeRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    type = models.CharField(max_length = 50)
+    nature = models.CharField(max_length = 20)
+    score = models.SmallIntegerField()
+    startingTime = models.DateField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class Exchange(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    ProjectName = models.CharField(max_length = 20)
+    targetName = models.CharField(max_length = 20)
+    startTime = models.DateField()
+    endTime = models.DateField()
+    ProjectContent = models.TextField()
+    SupportText = models.TextField()#支撑文档 
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class IdeologyConstructionRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    type = models.CharField(max_length = 50)
+    name = models.CharField(max_length = 20)
+    organizer = models.CharField(max_length = 50)
+    startingTime = models.DateField()
+    Location = models.CharField(max_length = 50)
+    Content = models.TextField()
+    score = models.SmallIntegerField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class IdeologyConstruction(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    SupportText = models.TextField()#支撑文档 
+    inspectorNum = models.ForeignKey(Inspectors)
+
+#Lecture
+class LectureRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    type = models.CharField(max_length = 50)
+    name = models.CharField(max_length = 20)
+    organizer = models.CharField(max_length = 50)
+    speaker = models.CharField(max_length = 50)
+    startingTime = models.DateField()
+    Location = models.CharField(max_length = 50)
+    Content = models.TextField()
+    score = models.SmallIntegerField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class Lecture(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    SupportText = models.TextField()#支撑文档
+    inspectorNum = models.ForeignKey(Inspectors)
+
+#Volunteering
+class VolunteeringRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    name = models.CharField(max_length = 20)
+    organizer = models.CharField(max_length = 50)
+    startingTime = models.DateField()
+    Location = models.CharField(max_length = 50)
+    volunteerTime = models.PositiveIntegerField()
+    Content = models.TextField()
+    score = models.SmallIntegerField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class Volunteering(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    SupportText = models.TextField()#支撑文档
+    inspectorNum = models.ForeignKey(Inspectors)
+
+#SchoolActivity
+class SchoolActivityRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    type = models.CharField(max_length = 50)
+    name = models.CharField(max_length = 20)
+    sponsor = models.CharField(max_length = 50)
+    organizer = models.CharField(max_length = 50)
+    startingTime = models.DateField()
+    awardLevel = models.CharField(max_length = 50)
+    score = models.SmallIntegerField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class SchoolActivity(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    SupportText = models.TextField()#支撑文档
+    inspectorNum = models.ForeignKey(Inspectors)
+
+#Internship
+class InternshipRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    type = models.CharField(max_length = 50)
+    startingTime = models.DateField()
+    score = models.SmallIntegerField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class Internship(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    name = models.CharField(max_length = 20)
+    startingTime = models.DateField()
+    location = models.CharField(max_length = 50)
+    job = models.CharField(max_length = 50)
+    contribution = models.TextField()
+    report = models.TextField()
+    appraisal = models.TextField()
+    SupportText = models.TextField()#支撑文档
+    score = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class StudentCadreRank(models.Model):
+    rankNum = models.PositiveIntegerField(primary_key = True)
+    organizitionType = models.CharField(max_length = 50)
+    organizitionName = models.CharField(max_length = 20)
+    name = models.CharField(max_length = 20)
+    score = models.SmallIntegerField()
+    CompleteNum = models.PositiveIntegerField()
+    inspectorNum = models.ForeignKey(Inspectors)
+
+class StudentCadre(models.Model):
+    ProjectNum = models.PositiveIntegerField(primary_key = True)
+    StudentNum =models.ForeignKey(Students)
+    rankNum = models.PositiveIntegerField()
+    startTime = models.DateField()
+    endTime = models.DateField()
+    opinions = models.TextField()
+    SupportText = models.TextField()#支撑文档
+    inspectorNum = models.ForeignKey(Inspectors)
