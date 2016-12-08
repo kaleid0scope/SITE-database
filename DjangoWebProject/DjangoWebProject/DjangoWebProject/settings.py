@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'DjangoWebProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'test2',
+        'NAME': 'djangodb',
         'USER': 'root',
-        'PASSWORD': 'lhrdlwyysf',
-        'HOST':'localhost',
+        'PASSWORD': 'supersea',
+        'HOST':'10.1.1.68',
         'PORT':'3306',
     }
 }
