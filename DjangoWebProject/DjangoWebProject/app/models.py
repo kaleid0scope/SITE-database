@@ -129,7 +129,7 @@ class ResearchProject(models.Model):
     rankNum = models.PositiveIntegerField()
     ProjectName = models.CharField(max_length = 20)
     ProjectTime = models.DateField()
-    SupportText = models.TextField(defaut = '')#支撑文档
+    SupportText = models.TextField()#支撑文档
     inspectorNum = models.ForeignKey(Inspectors)
 
 class PaperRank(models.Model):
