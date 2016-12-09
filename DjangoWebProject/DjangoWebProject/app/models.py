@@ -4,14 +4,16 @@ Definition of models.
 """
 
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Inspectors(models.Model):
+    user = models.OneToOneField(User,unique=True,verbose_name=('审查者'))
     inspectorNum = models.PositiveIntegerField()
     name = models.CharField(max_length = 20)
 
 class Students(models.Model):
+    user = models.OneToOneField(User,unique=True,verbose_name=('学生'))
     StudentNum =models.PositiveIntegerField('学号',primary_key = True)
     name = models.CharField(max_length = 20)
     sex =models.BooleanField()                         #初始值
@@ -31,6 +33,7 @@ class Students(models.Model):
     inspector = models.ForeignKey(Inspectors)
 
 class Teachers(models.Model):
+    user = models.OneToOneField(User,unique=True,verbose_name=('教师'))
     TeacherNum = models.PositiveIntegerField(default = 10000 , primary_key = True)
     name = models.CharField(max_length = 20)
     sex =models.BooleanField()
