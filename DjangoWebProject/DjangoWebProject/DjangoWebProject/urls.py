@@ -9,6 +9,7 @@ import django.contrib.auth.views
 import app.forms
 import app.views
 import app.testdb
+from app.views import search_form, search
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -39,7 +40,9 @@ urlpatterns = [
         },
         name='logout'),
     url(r'^testdb$', app.testdb.testdb),
-    url(r'^register$',app.views.register,),
+    #url(r'^register$',app.views.register,),
+    url(r'^search_form/$',search_form,),
+    url(r'^search/$',search,),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

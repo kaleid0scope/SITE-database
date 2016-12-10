@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <p>Your searched for '{{ query }}'
+{% if users %}
+    {% for user in users %}
+        <li>{{ user.username }},{{ user.email }}</li>
+    {% endfor %}
+{% else %}
+    <p>No users found.
+{% endif %}
+</body>
+</html>

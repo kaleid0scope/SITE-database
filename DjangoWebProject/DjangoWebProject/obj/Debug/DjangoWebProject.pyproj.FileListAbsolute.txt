@@ -9,8 +9,6 @@ C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProj
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.AzureSetup.exe
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.AzureSetup.exe.config
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\bin\wfastcgi.py
-C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\deployment-updated-orig-prefix.txt
-C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\ptvs_virtualenv_proxy.py
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.config
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.debug.config
 F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.WebRole.dll
