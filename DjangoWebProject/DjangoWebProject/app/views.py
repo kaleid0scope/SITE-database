@@ -54,3 +54,7 @@ def about(request):
           'year':datetime.now().year,
           }
          )"""
+         
+def selecttype(request):
+    usertypes = ['学生','老师','管理员']
+    return render(request,'home.html',{'usertypes':usertypes})
