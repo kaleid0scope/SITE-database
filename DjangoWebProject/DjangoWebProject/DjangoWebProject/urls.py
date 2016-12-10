@@ -39,6 +39,7 @@ urlpatterns = [
         },
         name='logout'),
     url(r'^testdb$', app.testdb.testdb),
+    url(r'^register$',app.views.register,),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

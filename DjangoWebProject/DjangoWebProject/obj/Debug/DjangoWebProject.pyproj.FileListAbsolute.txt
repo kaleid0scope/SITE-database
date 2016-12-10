@@ -13,3 +13,16 @@ C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProj
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\ptvs_virtualenv_proxy.py
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.config
 C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.debug.config
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.WebRole.dll
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\attach_server.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\visualstudio_py_debugger.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\visualstudio_py_repl.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\visualstudio_py_util.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\__init__.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\__main__.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\bin\AzureSetup.cfg
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.AzureSetup.exe
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.AzureSetup.exe.config
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\bin\wfastcgi.py
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.config
+F:\python27\Lib\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.debug.config

@@ -44,3 +44,13 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+"""def register(request):
+     assert isinstance(request, HttpRequest)
+     return render(
+         request,
+         'app/register.html',
+         {'title':'register',
+          'message':'add your message',
+          'year':datetime.now().year,
+          }
+         )"""
