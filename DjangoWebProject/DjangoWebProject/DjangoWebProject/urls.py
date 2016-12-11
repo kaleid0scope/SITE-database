@@ -39,10 +39,11 @@ urlpatterns = [
             'next_page': '/',
         },
         name='logout'),
-    url(r'^testdb$', app.testdb.testdb),
+    url(r'^testdb', app.testdb.testdb),
     #url(r'^register$',app.views.register,),
-    url(r'^search_form/$',search_form,),
-    url(r'^search/$',search,),
+    url(r'^search_form/$',search_form),
+    url(r'^search/$',search),
+    url(r'^reset',app.views.reset),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

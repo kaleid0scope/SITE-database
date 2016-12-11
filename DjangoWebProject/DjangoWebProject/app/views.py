@@ -6,6 +6,10 @@ from django.template import RequestContext
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
+from app.forms import ResetPasswordForm
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect  
+from django.contrib.auth.hashers import make_password
 
 def home(request):
     """Renders the home page."""
@@ -73,3 +77,27 @@ def search(request):
         message = 'You submitted an empty form.'
         #只是简单的返回一个response对象，因为没有使用模块，所以也不用渲染数据Context
         return HttpResponse(message)
+
+def reset(request):
+    #可以不写，因为python中if中定义的变量，也可以在整个函数中可见    
+    form = None 
+    if request.method == 'POST':
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = User.objects.filter(username=cd['username'],email=cd['email'])
+            if user is not None:
+                user.update(password=make_password(cd['password']))
+                return HttpResponseRedirect('/login')
+    else:
+        form = ResetPasswordForm()
+    return render_to_response('reset_form.html', {'form': form})
+
+
+"""cd = form.cleaned_data
+            send_mail(
+                cd['subject'],
+                cd['message'],
+                cd.get('email', 'noreply@example.com'),
+                ['siteowner@example.com'],
+            )"""

@@ -1,0 +1,24 @@
+﻿<html>
+<head>
+    <title>Reset Password</title>
+</head>
+<body>
+    <h1>Reset Password</h1>
+
+    {% if form.errors %}
+        <p style="color: red;">
+            {# pulralize 是filter，用来判断是否为添加's'来表示单词的复数形式#}
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {# 可以使用as_ul, as_p来改变格式 #}
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
