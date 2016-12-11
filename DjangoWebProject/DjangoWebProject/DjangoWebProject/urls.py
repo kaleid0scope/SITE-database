@@ -40,7 +40,7 @@ urlpatterns = [
         },
         name='logout'),
     url(r'^testdb$', app.testdb.testdb),
-    #url(r'^register$',app.views.register,),
+    url(r'^register/$',app.views.register),
     url(r'^search_form/$',search_form,),
     url(r'^search/$',search,),
 
