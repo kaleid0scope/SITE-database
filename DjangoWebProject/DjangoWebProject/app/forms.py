@@ -32,7 +32,7 @@ class RegisterForm(forms.Form):
     email = forms.EmailField(widget=forms.TextInput({
                                    'class': 'form-control',
                                    'placeholder': 'email'}))
-    #type = forms.ChoiceField(label='type', choices=(('teacher','laoshi'),('student','xuesheng')))
+    type = forms.ChoiceField(label='type', choices=(('teacher','teacher'),('student','student')))
  
     def clean(self):
         if not self.is_valid():
@@ -43,13 +43,3 @@ class RegisterForm(forms.Form):
             cleaned_data = super(RegisterForm, self).clean()
         return cleaned_data
  
-#登陆表单
-class LoginForm(forms.Form):
-    username = forms.CharField(label='用户名',widget=forms.TextInput(attrs={"placeholder": "用户名", "required": "required",}),
-                               max_length=50, error_messages={"required": "username不能为空",})
-    password = forms.CharField(label='密码',widget=forms.PasswordInput(attrs={"placeholder": "密码", "required": "required",}),
-                               max_length=20, error_messages={"required": "password不能为空",})
-
-class UserForm(forms.Form): 
-    username = forms.CharField(label='用户名',max_length=100)
-    password = forms.CharField(label='密码',widget=forms.PasswordInput())

@@ -60,6 +60,7 @@
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\fail.html" />
     <Content Include="app\templates\success.html" />
     <Content Include="app\templates\register.html" />
     <Content Include="app\templates\search_form.html" />
