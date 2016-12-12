@@ -1,12 +1,31 @@
 {% if user.is_authenticated %}
+
+{% if user.is_superuser %}
+
+<form id="logoutForm" action="/logout" method="post" class="navbar-right">
+    {% csrf_token %}
+    <ul class="nav navbar-nav navbar-right">
+        <li><span class="navbar-brand">Hello Admin {{ user.username }}!</span></li>
+        <li><a href="/admin">admin</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    
+</form>
+
+{% else %}}
+
 <form id="logoutForm" action="/logout" method="post" class="navbar-right">
     {% csrf_token %}
     <ul class="nav navbar-nav navbar-right">
         <li><span class="navbar-brand">Hello {{ user.username }}!</span></li>
+        <li><a href="/reset">reset</a></li>
+        <li><a href="/changepassword/{{user}}">changepassword</a></li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
 
 </form>
+
+{% endif %}
 
 {% else %}
 

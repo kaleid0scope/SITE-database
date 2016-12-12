@@ -1,6 +1,4 @@
-#coding:utf-8
-"""Definition of forms.
-"""
+# -*- coding: utf-8 -*-
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,31 +13,48 @@ class BootstrapAuthenticationForm(AuthenticationForm):
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput({
                                    'class': 'form-control',
-                                   'placeholder':'password'}))
+                                   'placeholder':'Password'}))
 
-#注册表单
-class RegisterForm(forms.Form):
-    username = forms.CharField(label=_("username"),max_length=100,
-                               widget=forms.TextInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'User name'}))
-    password = forms.CharField(label=_("Password"),widget=forms.PasswordInput({
+class ResetPasswordForm(forms.Form):
+    username = forms.CharField()
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput({
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
-    password2 = forms.CharField(label=_("Password"),widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'ConfirmPassword'}))
-    email = forms.EmailField(widget=forms.TextInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'email'}))
-    type = forms.ChoiceField(label='type', choices=(('teacher','teacher'),('student','student')))
- 
+
+class RegisterForm(forms.Form):  
+    username = forms.CharField()  
+    email = forms.EmailField()  
+    password = forms.CharField(widget=forms.PasswordInput)  
+    password2= forms.CharField(label='Confirm',widget=forms.PasswordInput)  
+    def pwd_validate(self,p1,p2):  
+        return p1==p2  
+
+class ChangepwdForm(forms.Form):
+    old_pwd = forms.CharField(required=True,
+        label=u"原密码",
+        error_messages={'required': u'请输入原密码'},
+        widget=forms.PasswordInput(attrs={
+                'placeholder':u"原密码",
+            }),) 
+    new_pwd = forms.CharField(required=True,
+        label=u"新密码",
+        error_messages={'required': u'请输入新密码'},
+        widget=forms.PasswordInput(attrs={
+                'placeholder':u"新密码",
+            }),)
+    new_pwd2 = forms.CharField(required=True,
+        label=u"确认密码",
+        error_messages={'required': u'请再次输入新密码'},
+        widget=forms.PasswordInput(attrs={
+                'placeholder':u"确认密码",
+            }),)
+
     def clean(self):
         if not self.is_valid():
-            raise forms.ValidationError('所有项都为必填项')
-        elif self.cleaned_data['password2'] != self.cleaned_data['password']:
-            raise forms.ValidationError('两次输入密码不一致')
+            raise forms.ValidationError(u"所有项都为必填项")
+        elif self.cleaned_data['new_pwd'] <> self.cleaned_data['new_pwd2']:
+            raise forms.ValidationError(u"两次输入的新密码不一样")
         else:
-            cleaned_data = super(RegisterForm, self).clean()
+            cleaned_data = super(ChangepwdForm, self).clean()
         return cleaned_data
- 
