@@ -7,9 +7,11 @@ from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
+from app.forms import RegisterForm,ChangepwdForm 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
 
 def home(request):
     """Renders the home page."""
@@ -93,6 +95,28 @@ def reset(request):
         form = ResetPasswordForm()
     return render_to_response('reset_form.html', {'form': form})
 
+def changepassword(request,username):
+	error = []
+	if request.method == 'POST':
+		form = ChangepwdForm(request.POST)
+		if form.is_valid():
+			data = form.cleaned_data
+			user = authenticate(username=username,password=data['old_pwd'])
+			if user is not None:
+				if data['new_pwd']==data['new_pwd2']:
+					newuser = User.objects.get(username__exact=username)
+					newuser.set_password(data['new_pwd'])
+					newuser.save()
+					return HttpResponseRedirect('/login/')
+				else:
+					error.append('Please input the same password')
+			else:
+				error.append('Please correct the old password')
+		else:
+			error.append('Please input the required domain')
+	else:
+		form = ChangepwdForm()
+	return render_to_response('changepassword.html',{'form':form,'error':error})
 
 """cd = form.cleaned_data
             send_mail(
