@@ -118,6 +118,29 @@ def changepassword(request,username):
 		form = ChangepwdForm()
 	return render_to_response('changepassword.html',{'form':form,'error':error})
 
+def changeauth(request,username):
+	error = []
+	if request.method == 'POST':
+		form = ChangeauthForm(request.POST)
+		if form.is_valid():
+			data = form.cleaned_data
+			user = authenticate(username=username,password=data['old_pwd'])
+			if user is not None:
+				if data['new_pwd']==data['new_pwd2']:
+					newuser = User.objects.get(username__exact=username)
+					newuser.set_password(data['new_pwd'])
+					newuser.save()
+					return HttpResponseRedirect('/login/')
+				else:
+					error.append('Please input the same password')
+			else:
+				error.append('Please correct the old password')
+		else:
+			error.append('Please input the required domain')
+	else:
+		form = ChangepwdForm()
+	return render_to_response('changepassword.html',{'form':form,'error':error})
+
 """cd = form.cleaned_data
             send_mail(
                 cd['subject'],

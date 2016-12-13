@@ -58,3 +58,39 @@ class ChangepwdForm(forms.Form):
         else:
             cleaned_data = super(ChangepwdForm, self).clean()
         return cleaned_data
+
+
+class ChangepwdForm(forms.Form):
+    isTeacher = forms.BooleanField(required=True,
+        label=u"是否为教师",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    research = forms.BooleanField(required=True,
+        label=u"科研立项",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    paper = forms.BooleanField(required=True,
+        label=u"论文",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    competition = forms.BooleanField(required=True,
+        label=u"竞赛",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    exchange = forms.BooleanField(required=True,
+        label=u"交流交换",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    ideologyConstruction = forms.BooleanField(required=True,
+        label=u"思想活动",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    lecture = forms.BooleanField(required=True,
+        label=u"讲座活动",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    volunteering = forms.BooleanField(required=True,
+        label=u"志愿活动",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    schoolActivity = forms.BooleanField(required=True,
+        label=u"校园活动",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    internship = forms.BooleanField(required=True,
+        label=u"实践活动",
+        error_messages={'required': u'请确认是否所有值已经输入'})
+    studentCadre = forms.BooleanField(required=True,
+        label=u"学生干部",
+        error_messages={'required': u'请确认是否所有值已经输入'})

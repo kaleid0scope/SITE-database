@@ -131,6 +131,7 @@ class ClassScore(models.Model):
 #ResearchProject
 class ResearchProjectRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     rankName = models.CharField(max_length = 20)
     rank = models.CharField(max_length = 20)
     role = models.CharField(max_length = 20)
@@ -144,8 +145,9 @@ class ResearchProjectRank(models.Model):
 
 class ResearchProject(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(ResearchProjectRank)
     ProjectName = models.CharField(max_length = 20)
     ProjectTime = models.DateField()
     SupportText = models.TextField()#支撑文档
@@ -157,6 +159,7 @@ class ResearchProject(models.Model):
 #Paper
 class PaperRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     JournalName = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
     AuthorRanking = models.SmallIntegerField()
@@ -170,8 +173,9 @@ class PaperRank(models.Model):
 
 class Paper(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(PaperRank)
     ProjectName = models.CharField(max_length = 20)
     ProjectTime = models.DateField()
     SupportText = models.TextField()#支撑文档 
@@ -183,6 +187,7 @@ class Paper(models.Model):
 #Competition
 class CompetitionRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     name = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
     rank = models.SmallIntegerField()
@@ -196,8 +201,9 @@ class CompetitionRank(models.Model):
 
 class Competition(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(CompetitionRank)
     ProjectTime = models.DateField()
     SupportText = models.TextField()#支撑文档 
     inspectorNum = models.ForeignKey(Inspectors)
@@ -208,6 +214,7 @@ class Competition(models.Model):
 #Exchange
 class ExchangeRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     type = models.CharField(max_length = 50)
     nature = models.CharField(max_length = 20)
     score = models.SmallIntegerField()
@@ -220,8 +227,9 @@ class ExchangeRank(models.Model):
 
 class Exchange(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(ExchangeRank)
     ProjectName = models.CharField(max_length = 20)
     targetName = models.CharField(max_length = 20)
     startTime = models.DateField()
@@ -236,6 +244,7 @@ class Exchange(models.Model):
 #IdeologyConstruction
 class IdeologyConstructionRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     type = models.CharField(max_length = 50)
     name = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
@@ -251,8 +260,9 @@ class IdeologyConstructionRank(models.Model):
 
 class IdeologyConstruction(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(IdeologyConstructionRank)
     SupportText = models.TextField()#支撑文档 
     inspectorNum = models.ForeignKey(Inspectors)
 
@@ -262,6 +272,7 @@ class IdeologyConstruction(models.Model):
 #Lecture
 class LectureRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     type = models.CharField(max_length = 50)
     name = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
@@ -279,8 +290,9 @@ class LectureRank(models.Model):
 
 class Lecture(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(LectureRank)
     SupportText = models.TextField()#支撑文档
     inspectorNum = models.ForeignKey(Inspectors)
 
@@ -290,6 +302,7 @@ class Lecture(models.Model):
 #Volunteering
 class VolunteeringRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     name = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
     startingTime = models.DateField()
@@ -305,8 +318,9 @@ class VolunteeringRank(models.Model):
 
 class Volunteering(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(VolunteeringRank)
     SupportText = models.TextField()#支撑文档
     inspectorNum = models.ForeignKey(Inspectors)
 
@@ -316,6 +330,7 @@ class Volunteering(models.Model):
 #SchoolActivity
 class SchoolActivityRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     type = models.CharField(max_length = 50)
     name = models.CharField(max_length = 20)
     sponsor = models.CharField(max_length = 50)
@@ -331,8 +346,9 @@ class SchoolActivityRank(models.Model):
 
 class SchoolActivity(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(SchoolActivityRank)
     SupportText = models.TextField()#支撑文档
     inspectorNum = models.ForeignKey(Inspectors)
 
@@ -342,6 +358,7 @@ class SchoolActivity(models.Model):
 #Internship
 class InternshipRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     type = models.CharField(max_length = 50)
     startingTime = models.DateField()
     score = models.SmallIntegerField()
@@ -353,8 +370,9 @@ class InternshipRank(models.Model):
 
 class Internship(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(InternshipRank)
     name = models.CharField(max_length = 20)
     startingTime = models.DateField()
     location = models.CharField(max_length = 50)
@@ -371,6 +389,7 @@ class Internship(models.Model):
 
 class StudentCadreRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     organizitionType = models.CharField(max_length = 50)
     organizitionName = models.CharField(max_length = 20)
     name = models.CharField(max_length = 20)
@@ -383,8 +402,9 @@ class StudentCadreRank(models.Model):
 
 class StudentCadre(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
+    status = models.PositiveSmallIntegerField()
     StudentNum =models.ForeignKey(Students)
-    rankNum = models.PositiveIntegerField()
+    rankNum = models.ForeignKey(StudentCadreRank)
     startTime = models.DateField()
     endTime = models.DateField()
     opinions = models.TextField()
