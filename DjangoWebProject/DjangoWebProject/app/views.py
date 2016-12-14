@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
 from app.forms import RegisterForm,ChangepwdForm 
-from app.forms import CreateResearchProjectRankForm,CreateResearchProjectForm
+from app.forms import CreateResearchProjectForm,JoinResearchProjectForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
@@ -151,14 +151,24 @@ def changeauth(request,username):
                 ['siteowner@example.com'],
             )"""
 
-"""def createResearchProject(request):
-	error = []
-	if request.method == 'POST':
-		form = CreateResearchProjectForm(request.POST)
-		    if form.is_valid():
-                cd = form.cleaned_data
-                rp = ResearchProject.object.filter(StudentNum = cd['StudentNum'],
-                                                        rankNum = cd['rankNum'],
-                                                        ProjectName = cd['ProjectName'],
-                                                        ProjectTime = cd['ProjectTime'],)"""
-			
+def createResearchProject(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateResearchProjectForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            pn = ResearchProjectRank.objects.get(ProjectName = cd['ProjectName'])
+            tn = ResearchProjectRank.objects.get(teacherNum = cd['teacherNum'])
+            pt = ResearchProjectRank.objects.get(ProjectTime = cd['ProjectTime'])
+            if pn is not None and tn is not None and pt is not None:
+                pn.save()
+                tn.save()
+                pt.save()
+                return HttpResponse('科研立项项目创建成功！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateResearchProjectForm()
+    return render_to_response('createResearchProject.html',{'form':form,'error':error})

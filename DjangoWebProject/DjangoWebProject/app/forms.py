@@ -95,11 +95,17 @@ class ChangepwdForm(forms.Form):
         label=u"学生干部",
         error_messages={'required': u'请确认是否所有值已经输入'})
 
-class CreateResearchProjectRankForm(forms.Form):
-    rankName = forms.CharField(required=True,
+class CreateResearchProjectForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
         label=u"科研立项名称",
         error_messages={'required': u'请输入科研立项名称'})
-    rank = forms.CharField(required=True,
+    teacherNum = forms.IntegerField(required=True,
+        label=u"创建者学号",
+        error_messages={'required': u'请输入创建者学号'})
+    ProjectTime = forms.DateField(required=True,
+        label=u"项目时间",
+        error_messages={'required': u'请输入项目时间'})
+"""    rank = forms.CharField(required=True,
         label=u"科研立项等级",
         error_messages={'required': u'请输入科研立项等级'})
     score = forms.IntegerField(required=True,
@@ -110,9 +116,9 @@ class CreateResearchProjectRankForm(forms.Form):
         error_messages={'required': u'请输入“负责人”或“成员”'})
     startingTime = forms.DateField(required=True,
         label=u"分级评分起始有效时间",
-        error_messages={'required': u'请输入分级评分起始有效时间'})
+        error_messages={'required': u'请输入分级评分起始有效时间'})"""
 
-class CreateResearchProjectForm(forms.Form):
+class JoinResearchProjectForm(forms.Form):
     StudentNum = forms.IntegerField(required=True,
         label=u"学号",
         error_messages={'required': u'请输入学号'})
@@ -125,6 +131,3 @@ class CreateResearchProjectForm(forms.Form):
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'})
-'''    SupportText = forms.TextField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'})'''
