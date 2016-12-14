@@ -151,7 +151,7 @@ def changeauth(request,username):
                 ['siteowner@example.com'],
             )"""
 
-'''def createResearchProject(request):
+"""def createResearchProject(request):
 	error = []
 	if request.method == 'POST':
 		form = CreateResearchProjectForm(request.POST)
@@ -160,5 +160,5 @@ def changeauth(request,username):
                 rp = ResearchProject.object.filter(StudentNum = cd['StudentNum'],
                                                         rankNum = cd['rankNum'],
                                                         ProjectName = cd['ProjectName'],
-                                                        ProjectTime = cd['ProjectTime'],)'''
+                                                        ProjectTime = cd['ProjectTime'],)"""
 			
