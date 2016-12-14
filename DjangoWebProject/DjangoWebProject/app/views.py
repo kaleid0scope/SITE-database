@@ -8,10 +8,12 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
 from app.forms import RegisterForm,ChangepwdForm 
+from app.forms import CreateResearchProjectRankForm,CreateResearchProjectForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
+from app.models import ResearchProject,ResearchProjectRank
 
 def home(request):
     """Renders the home page."""
@@ -148,3 +150,15 @@ def changeauth(request,username):
                 cd.get('email', 'noreply@example.com'),
                 ['siteowner@example.com'],
             )"""
+
+'''def createResearchProject(request):
+	error = []
+	if request.method == 'POST':
+		form = CreateResearchProjectForm(request.POST)
+		    if form.is_valid():
+                cd = form.cleaned_data
+                rp = ResearchProject.object.filter(StudentNum = cd['StudentNum'],
+                                                        rankNum = cd['rankNum'],
+                                                        ProjectName = cd['ProjectName'],
+                                                        ProjectTime = cd['ProjectTime'],)'''
+			
