@@ -7,49 +7,44 @@ from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
-from app.forms import RegisterForm,ChangepwdForm 
+from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
+from app.models import Students,Authorizations
 
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
+    return render(request,
         'app/index.html',
         {
             'title':'SITE',
             'year':datetime.now().year,
-        }
-    )
+        })
 
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
+    return render(request,
         'app/contact.html',
         {
             'title':'Contact',
             'message':'Your contact page.',
             'year':datetime.now().year,
-        }
-    )
+        })
 
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
+    return render(request,
         'app/about.html',
         {
             'title':'About',
             'message':'Your application description page.',
             'year':datetime.now().year,
-        }
-    )
+        })
 """def register(request):
      assert isinstance(request, HttpRequest)
      return render(
@@ -81,7 +76,7 @@ def search(request):
         return HttpResponse(message)
 
 def reset(request):
-    #可以不写，因为python中if中定义的变量，也可以在整个函数中可见    
+    #可以不写，因为python中if中定义的变量，也可以在整个函数中可见
     form = None 
     if request.method == 'POST':
         form = ResetPasswordForm(request.POST)
@@ -103,7 +98,7 @@ def changepassword(request,username):
 			data = form.cleaned_data
 			user = authenticate(username=username,password=data['old_pwd'])
 			if user is not None:
-				if data['new_pwd']==data['new_pwd2']:
+				if data['new_pwd'] == data['new_pwd2']:
 					newuser = User.objects.get(username__exact=username)
 					newuser.set_password(data['new_pwd'])
 					newuser.save()
@@ -124,22 +119,33 @@ def changeauth(request,username):
 		form = ChangeauthForm(request.POST)
 		if form.is_valid():
 			data = form.cleaned_data
-			user = authenticate(username=username,password=data['old_pwd'])
-			if user is not None:
-				if data['new_pwd']==data['new_pwd2']:
-					newuser = User.objects.get(username__exact=username)
-					newuser.set_password(data['new_pwd'])
-					newuser.save()
-					return HttpResponseRedirect('/login/')
+			nowuser = request.user
+			if nowuser is not None:
+				if nowuser.is_superuser:
+				    user = User.objects.get(username__exact=username)
+				    auth = Students.objects.get(user__exact=user.id).auth
+				    auth.isTeacher = data['isTeacher']
+				    auth.research = data['research']
+				    auth.paper = data['paper']
+				    auth.competition = data['competition']
+				    auth.exchange = data['exchange']
+				    auth.ideologyConstruction = data['ideologyConstruction']
+				    auth.lecture = data['lecture']
+				    auth.volunteering = data['volunteering']
+				    auth.schoolActivity= data['schoolActivity']
+				    auth.internship = data['internship']
+				    auth.studentCadre = data['studentCadre']
+				    auth.save()
+				    return HttpResponseRedirect('/admin/app/students')
 				else:
-					error.append('Please input the same password')
+				    error.append('错误的请求：管理员身份验证未通过')
 			else:
-				error.append('Please correct the old password')
+				error.append('错误的请求：请先登录')
 		else:
 			error.append('Please input the required domain')
 	else:
-		form = ChangepwdForm()
-	return render_to_response('changepassword.html',{'form':form,'error':error})
+		form = ChangeauthForm()
+	return render_to_response('changeauth.html',{'form':form,'error':error,'username':username})
 
 """cd = form.cleaned_data
             send_mail(

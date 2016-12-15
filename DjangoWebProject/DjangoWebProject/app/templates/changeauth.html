@@ -1,0 +1,20 @@
+﻿<html>
+<head>
+	<title>Changeauth</title>
+   
+</head>
+<body>
+	<h1>Changeauth</h1>
+	{% for item in error %}
+		<p style="color:red;">{{item}}</p>
+	{% endfor %}
+			username is {{username}}
+	<form action="" method="post">
+		<table>
+			{{ form.as_table }}
+		</table>
+		
+		<input type="submit" value="Enter">
+	</form>
+</body>
+</html>

@@ -30,7 +30,7 @@ class Authorizations(models.Model):
     studentCadre = models.BooleanField()
 
     def __unicode__(self):
-        return self.id
+        return str(self.id)
 
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('用户'))
@@ -54,7 +54,7 @@ class Students(models.Model):
     inspector = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 '''
 class Major(models.Model):
@@ -141,7 +141,7 @@ class ResearchProjectRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class ResearchProject(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -154,7 +154,7 @@ class ResearchProject(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #Paper
 class PaperRank(models.Model):
@@ -169,7 +169,7 @@ class PaperRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class Paper(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -182,7 +182,7 @@ class Paper(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
     
 #Competition
 class CompetitionRank(models.Model):
@@ -197,7 +197,7 @@ class CompetitionRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class Competition(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -209,7 +209,7 @@ class Competition(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #Exchange
 class ExchangeRank(models.Model):
@@ -223,7 +223,7 @@ class ExchangeRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class Exchange(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -239,7 +239,7 @@ class Exchange(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #IdeologyConstruction
 class IdeologyConstructionRank(models.Model):
@@ -256,7 +256,7 @@ class IdeologyConstructionRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class IdeologyConstruction(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -267,7 +267,7 @@ class IdeologyConstruction(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #Lecture
 class LectureRank(models.Model):
@@ -286,7 +286,7 @@ class LectureRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class Lecture(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -297,7 +297,7 @@ class Lecture(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #Volunteering
 class VolunteeringRank(models.Model):
@@ -314,7 +314,7 @@ class VolunteeringRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class Volunteering(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -325,7 +325,7 @@ class Volunteering(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #SchoolActivity
 class SchoolActivityRank(models.Model):
@@ -342,7 +342,7 @@ class SchoolActivityRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum
+        return self.rankName
 
 class SchoolActivity(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -353,7 +353,7 @@ class SchoolActivity(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 #Internship
 class InternshipRank(models.Model):
@@ -366,7 +366,7 @@ class InternshipRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum 
+        return self.rankName 
 
 class Internship(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -385,7 +385,7 @@ class Internship(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
     
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)
 
 class StudentCadreRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
@@ -398,7 +398,7 @@ class StudentCadreRank(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.rankNum #返回分级编号
+        return self.rankName #返回分级编号
 
 class StudentCadre(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
@@ -412,4 +412,4 @@ class StudentCadre(models.Model):
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
-        return self.StudentNum
+        return str(self.StudentNum)

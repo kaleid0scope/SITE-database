@@ -64,6 +64,7 @@
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\search_form.html" />
     <Content Include="app\templates\changepassword.html" />
+    <Content Include="app\templates\changeauth.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

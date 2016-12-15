@@ -9,7 +9,8 @@ import django.contrib.auth.views
 import app.forms
 import app.views
 import app.testdb
-from app.views import search_form, search, changepassword
+from app.views import search_form, search, changepassword,changeauth
+from django.contrib import auth
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -45,6 +46,7 @@ urlpatterns = [
     url(r'^search/$',search),
     url(r'^reset',app.views.reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
+    url(r'^changeauth/(?P<username>\w+)/$',changeauth),  
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
