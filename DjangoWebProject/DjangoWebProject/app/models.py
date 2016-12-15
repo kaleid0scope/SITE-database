@@ -131,14 +131,17 @@ class ClassScore(models.Model):
 #ResearchProject
 class ResearchProjectRank(models.Model):
     rankNum = models.PositiveIntegerField(primary_key = True)
+    ProjectName = models.CharField(max_length = 20)
+    ProjectTime = models.DateField()
     status = models.PositiveSmallIntegerField(default = 1)
-    rankName = models.CharField(max_length = 20)
     rank = models.CharField(max_length = 20)
-    role = models.CharField(max_length = 20)
-    score = models.SmallIntegerField()
+    ManagerScore = models.SmallIntegerField()
+    MemberScore = models.SmallIntegerField()
     startingTime = models.DateField()
+    teacherNum = models.ForeignKey(Students)
     CompleteNum = models.PositiveIntegerField()
     inspectorNum = models.ForeignKey(Inspectors)
+    teacherNum = models.ForeignKey(Students)
 
     def __unicode__(self):
         return self.rankName
@@ -148,7 +151,6 @@ class ResearchProject(models.Model):
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(ResearchProjectRank)
-    ProjectName = models.CharField(max_length = 20)
     ProjectTime = models.DateField()
     SupportText = models.TextField()#支撑文档
     inspectorNum = models.ForeignKey(Inspectors)
