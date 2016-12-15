@@ -60,52 +60,20 @@ class ChangepwdForm(forms.Form):
             cleaned_data = super(ChangepwdForm, self).clean()
         return cleaned_data
 
-
-class ChangepwdForm(forms.Form):
-    isTeacher = forms.BooleanField(required=True,
-        label=u"是否为教师",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    research = forms.BooleanField(required=True,
-        label=u"科研立项",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    paper = forms.BooleanField(required=True,
-        label=u"论文",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    competition = forms.BooleanField(required=True,
-        label=u"竞赛",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    exchange = forms.BooleanField(required=True,
-        label=u"交流交换",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    ideologyConstruction = forms.BooleanField(required=True,
-        label=u"思想活动",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    lecture = forms.BooleanField(required=True,
-        label=u"讲座活动",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    volunteering = forms.BooleanField(required=True,
-        label=u"志愿活动",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    schoolActivity = forms.BooleanField(required=True,
-        label=u"校园活动",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    internship = forms.BooleanField(required=True,
-        label=u"实践活动",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-    studentCadre = forms.BooleanField(required=True,
-        label=u"学生干部",
-        error_messages={'required': u'请确认是否所有值已经输入'})
-
 class CreateResearchProjectForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"科研立项名称",
         error_messages={'required': u'请输入科研立项名称'})
-    teacherNum = forms.IntegerField(required=True,
-        label=u"创建者学号",
-        error_messages={'required': u'请输入创建者学号'})
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'})
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateResearchProjectForm, self).clean()
+        return cleaned_data
 """    rank = forms.CharField(required=True,
         label=u"科研立项等级",
         error_messages={'required': u'请输入科研立项等级'})
@@ -118,6 +86,7 @@ class CreateResearchProjectForm(forms.Form):
     startingTime = forms.DateField(required=True,
         label=u"分级评分起始有效时间",
         error_messages={'required': u'请输入分级评分起始有效时间'})"""
+
 
 class JoinResearchProjectForm(forms.Form):
     StudentNum = forms.IntegerField(required=True,
@@ -132,6 +101,7 @@ class JoinResearchProjectForm(forms.Form):
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'})
+
 class ChangeauthForm(forms.Form):
     isTeacher = forms.BooleanField(required=False,
         label=u"是否为教师")

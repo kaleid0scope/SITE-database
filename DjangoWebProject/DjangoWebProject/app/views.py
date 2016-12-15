@@ -7,15 +7,15 @@ from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
-from app.forms import RegisterForm,ChangepwdForm 
 from app.forms import CreateResearchProjectForm,JoinResearchProjectForm
 from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations
+from app.models import Students,Authorizations,Inspectors
 from app.models import ResearchProject,ResearchProjectRank
+import random,time
 
 def home(request):
     """Renders the home page."""
@@ -164,13 +164,9 @@ def createResearchProject(request):
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            pn = ResearchProjectRank.objects.get(ProjectName = cd['ProjectName'])
-            tn = ResearchProjectRank.objects.get(teacherNum = cd['teacherNum'])
-            pt = ResearchProjectRank.objects.get(ProjectTime = cd['ProjectTime'])
-            if pn is not None and tn is not None and pt is not None:
-                pn.save()
-                tn.save()
-                pt.save()
+            project = ResearchProjectRank(ProjectName = cd['ProjectName'],teacherNum = Students.objects.get(user = request.user),ProjectTime = cd['ProjectTime'],status = 1,rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
                 return HttpResponse('科研立项项目创建成功！')
             else:
                 error.append('Please check your importation')
