@@ -186,7 +186,7 @@ def ExcelToMysql(request):
     sheet = book.sheet_by_name('excel工作簿名')
 
     #建立一个MySQL连接
-    database = MySQLdb.connect (host="localhost", user = "root", passwd = "zxf19960103", db = "test3")
+    database = MySQLdb.connect (host="服务器名", user = "root", passwd = "", db = "数据库名")
 
     # 获得游标对象, 用于逐行遍历数据库数据
     cursor = database.cursor()
