@@ -164,7 +164,7 @@ def createResearchProject(request):
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            project = ResearchProjectRank(ProjectName = cd['ProjectName'],teacherNum = Students.objects.get(user = request.user),ProjectTime = cd['ProjectTime'],status = 1,rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            project = ResearchProjectRank(rankName = cd['ProjectName'],teacherNum = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = 1,rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
             if True:
                 project.save()
                 return HttpResponse('科研立项项目创建成功！')
