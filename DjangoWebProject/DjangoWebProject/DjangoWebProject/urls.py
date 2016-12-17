@@ -11,7 +11,10 @@ import app.views
 import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
-from app.views import search_form, search, changepassword , createResearchProject
+from app.views import search_form, search, changepassword
+from app.views import createResearchProject ,createPaper
+from app.views import createCompetition , createExchange , createIdeologyConstruction ,createLecture
+from app.views import createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -49,6 +52,15 @@ urlpatterns = [
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
     url(r'^changeauth/(?P<username>\w+)/$',changeauth),  
     url(r'^createResearchProject/$',createResearchProject),  
+    url(r'^createPaper/$',createPaper),  
+    url(r'^createCompetition/$',createCompetition),  
+    url(r'^createExchange/$',createExchange),  
+    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),  
+    url(r'^createLecture/$',createLecture),  
+    url(r'^createVolunteering/$',createVolunteering),  
+    url(r'^createSchoolActivity/$',createSchoolActivity),  
+    url(r'^createInternship/$',createInternship),  
+    url(r'^createStudentCadre/$',createStudentCadre),  
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

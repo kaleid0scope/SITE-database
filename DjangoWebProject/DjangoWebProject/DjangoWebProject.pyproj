@@ -66,6 +66,15 @@
     <Content Include="app\templates\changepassword.html" />
     <Content Include="app\templates\changeauth.html" />
     <Content Include="app\templates\createResearchProject.html" />
+    <Content Include="app\templates\createPaper.html" />
+    <Content Include="app\templates\createCompetition.html" />
+    <Content Include="app\templates\createExchange.html" />
+    <Content Include="app\templates\createIdeologyConstruction.html" />
+    <Content Include="app\templates\createLecture.html" />
+    <Content Include="app\templates\createVolunteering.html" />
+    <Content Include="app\templates\createSchoolActivity.html" />
+    <Content Include="app\templates\createInternship.html" />
+    <Content Include="app\templates\createStudentCadre.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

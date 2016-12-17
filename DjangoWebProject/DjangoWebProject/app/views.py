@@ -7,18 +7,18 @@ from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
-from app.forms import CreateResearchProjectForm,JoinResearchProjectForm
+from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm
 from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from app.models import Students,Authorizations,Inspectors
-from app.models import ResearchProject,ResearchProjectRank
+from app.models import ResearchProject,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank
 import random,time
-import xlrd
+'''import xlrd'''
 import MySQLdb
-import win32com.client as win32
+'''import win32com.client as win32'''
 
 def home(request):
     """Renders the home page."""
@@ -179,7 +179,247 @@ def createResearchProject(request):
         form = CreateResearchProjectForm()
     return render_to_response('createResearchProject.html',{'form':form,'error':error})
 
+def createPaper(request):
+    error = []
+    if request.method == 'POST':
+        form = CreatePaperForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = PaperRank(rankName = cd['ProjectName'],
+                                journalName = cd['JournalName'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['ProjectTime'],
+                                status = 1,
+                                Level = '',
+                                AuthorRanking = 0,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('论文申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreatePaperForm()
+    return render_to_response('createPaper.html',{'form':form,'error':error})
 
+def createCompetition(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateCompetitionForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = CompetitionRank(rankName = cd['ProjectName'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['ProjectTime'],
+                                status = 1,
+                                rank = '',
+                                Level = '',
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('竞赛申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateCompetitionForm()
+    return render_to_response('createCompetition.html',{'form':form,'error':error})
+
+def createExchange(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateExchangeForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = ExchangeRank(rankName = cd['ProjectName'],
+                                type = cd['type'],
+                                nature = cd['nature'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startTime = cd['startTime'],
+                                endTime = cd['endTime'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('交流交换申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateExchangeForm()
+    return render_to_response('createExchange.html',{'form':form,'error':error})
+
+def createIdeologyConstruction(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateIdeologyConstructionForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = IdeologyConstructionRank(rankName = cd['ProjectName'],
+                                type = cd['type'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['startingTime'],
+                                organizer = cd['organizer'],
+                                Location = cd['Location'],
+                                Content = cd['Content'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('思建活动申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateIdeologyConstructionForm()
+    return render_to_response('createIdeologyConstruction.html',{'form':form,'error':error})
+
+def createLecture(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateLectureForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = LectureRank(rankName = cd['ProjectName'],
+                                type = cd['type'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['startingTime'],
+                                organizer = cd['organizer'],
+                                speaker = cd['speaker'],
+                                Location = cd['Location'],
+                                Content = cd['Content'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('讲座活动申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateLectureForm()
+    return render_to_response('createLecture.html',{'form':form,'error':error})
+
+def createVolunteering(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateVolunteeringForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = VolunteeringRank(rankName = cd['ProjectName'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['startingTime'],
+                                volunteerTime = cd['volunteerTime'],
+                                organizer = cd['organizer'],
+                                Location = cd['Location'],
+                                Content = cd['Content'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('志愿活动申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateVolunteeringForm()
+    return render_to_response('createVolunteering.html',{'form':form,'error':error})
+
+def createSchoolActivity(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateSchoolActivityForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = SchoolActivityRank(rankName = cd['ProjectName'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['startingTime'],
+                                type = cd['type'],
+                                sponsor = cd['sponsor'],
+                                organizer = cd['organizer'],
+                                awardLevel = cd['awardLevel'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('校园活动申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateSchoolActivityForm()
+    return render_to_response('createSchoolActivity.html',{'form':form,'error':error})
+
+def createInternship(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateInternshipForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = InternshipRank(rankName = cd['ProjectName'],
+                                teacherNum = Students.objects.get(user = request.user),
+                                startingTime = cd['startingTime'],
+                                type = cd['type'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('实践实习信息申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateInternshipForm()
+    return render_to_response('createInternship.html',{'form':form,'error':error})
+
+def createStudentCadre(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateStudentCadreForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = StudentCadreRank(teacherNum = Students.objects.get(user = request.user),
+                                organizitionType = cd['organizitionType'],
+                                organizitionName = cd['organizitionName'],
+                                status = 1,
+                                score = 0,
+                                CompleteNum = 0,
+                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            if True:
+                project.save()
+                return HttpResponse('学生干部信息申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateStudentCadreForm()
+    return render_to_response('createStudentCadre.html',{'form':form,'error':error})
 '''#excel 批量添加数据到数据库
 def ExcelToMysql(request):
     book = xlrd.open_workbook('excel文件路径')
