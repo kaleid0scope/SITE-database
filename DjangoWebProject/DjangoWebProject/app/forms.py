@@ -74,6 +74,68 @@ class CreateResearchProjectForm(forms.Form):
         else:
             cleaned_data = super(CreateResearchProjectForm, self).clean()
         return cleaned_data
+
+class CreatePaperForm(forms.Form):#期刊名称? 支撑文件 是否需要审核 对应两个类?
+    ProjectName = forms.CharField(required=True,
+        label=u"论文题目",
+        error_messages={'required': u'请输入论文题目'})
+    ProjectTime = forms.DateField(required=True,
+        label=u"发表时间",
+        error_messages={'required': u'请输入论文发表时间'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreatePaperForm, self).clean()
+        return cleaned_data
+    '''   SupportText = forms.FileField(upload_to = './upload/')'''
+
+class CreateCompetitionForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
+        label=u"竞赛名称",
+        error_messages={'required': u'请输入竞赛名称'})
+    ProjectTime = forms.DateField(required=True,
+        label=u"竞赛时间",
+        error_messages={'required': u'请输入竞赛时间'})
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateCompetitionForm, self).clean()
+        return cleaned_data
+
+class CreateExchangeForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
+        label=u"交流交换项目名称",
+        error_messages={'required': u'请输入交流交换项目名称'})
+    startTime = forms.DateField(required=True,
+        label=u"派出时间",
+        error_messages={'required': u'请输入派出时间'})
+    endTime = forms.DateField(required=True,
+        label=u"返校时间",
+        error_messages={'required': u'请输入竞赛时间'})
+    ProjectContent = forms.Textarea(required=True,
+        label=u"交流内容",
+        error_messages={'required': u'请输入交流内容'})
+    SupportText = forms.Textarea(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'})
+    type = forms.CharField(required=True,
+        label=u"交流类型",
+        error_messages={'required': u'请输入交流交换项目名称'})
+    nature = forms.CharField(required=True,
+        label=u"交流性质",
+        error_messages={'required': u'请输入交流性质'})
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateExchangeForm, self).clean()
+        return cleaned_data
+
 """    rank = forms.CharField(required=True,
         label=u"科研立项等级",
         error_messages={'required': u'请输入科研立项等级'})
