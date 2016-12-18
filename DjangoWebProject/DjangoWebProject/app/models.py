@@ -406,7 +406,7 @@ class StudentCadreRank(models.Model):
     teacherNum = models.ForeignKey(Students)
 
     def __unicode__(self):
-        return self.rankName #返回分级编号
+        return self.rankName 
 
 class StudentCadre(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)

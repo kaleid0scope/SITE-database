@@ -13,8 +13,7 @@ from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import search_form, search, changepassword
 from app.views import createResearchProject ,createPaper
-from app.views import createCompetition , createExchange , createIdeologyConstruction ,createLecture
-from app.views import createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre
+from app.views import createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre,ResearchProject
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -50,8 +49,9 @@ urlpatterns = [
     url(r'^search/$',search),
     url(r'^reset',app.views.reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
-    url(r'^changeauth/(?P<username>\w+)/$',changeauth),  
+    url(r'^changeauth/(?P<username>\w+)/$',changeauth),    
     url(r'^createResearchProject/$',createResearchProject),  
+    url(r'^ResearchProject/(?P<id>\w+)/$',ResearchProject),
     url(r'^createPaper/$',createPaper),  
     url(r'^createCompetition/$',createCompetition),  
     url(r'^createExchange/$',createExchange),  

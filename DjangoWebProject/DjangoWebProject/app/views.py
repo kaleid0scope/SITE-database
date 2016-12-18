@@ -7,14 +7,13 @@ from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import ResetPasswordForm
-from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm
+from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm,ResearchProjectForm
 from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors
-from app.models import ResearchProject,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank
 import random,time
 '''import xlrd'''
 import MySQLdb
@@ -178,6 +177,33 @@ def createResearchProject(request):
     else:
         form = CreateResearchProjectForm()
     return render_to_response('createResearchProject.html',{'form':form,'error':error})
+
+def ResearchProject(request,id):
+    error = []
+    try:  
+        project = ResearchProjectRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+    except Exception,e:  
+        error.append(e)
+    if request.method == 'POST':
+        form = ResearchProjectForm(request.POST)
+        if form.is_valid() and auth.isTeacher:
+            cd = form.cleaned_data
+            try:
+                project.rank = cd['rank']
+                project.MemberScore = cd['MemberScore']
+                project.ManagerScore = cd['ManagerScore']
+                project.status = cd['status']
+                project.inspectorNum = Inspectors.objects.get(user = request.user)
+                project.save()
+                return HttpResponse('科研立项项目审核成功！')
+            except Exception,e:  
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = ResearchProjectForm()
+    return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
 def createPaper(request):
     error = []

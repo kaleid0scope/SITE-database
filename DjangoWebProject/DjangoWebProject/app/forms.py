@@ -60,6 +60,7 @@ class ChangepwdForm(forms.Form):
             cleaned_data = super(ChangepwdForm, self).clean()
         return cleaned_data
 
+
 class CreateResearchProjectForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"科研立项名称",
@@ -74,6 +75,28 @@ class CreateResearchProjectForm(forms.Form):
         else:
             cleaned_data = super(CreateResearchProjectForm, self).clean()
         return cleaned_data
+
+class ResearchProjectForm(forms.Form):
+    rank = forms.CharField(required=True,
+        label=u"科研立项等级",
+        error_messages={'required': u'请输入论文题目'})
+    ManagerScore = forms.IntegerField(required=True,
+        label=u"组长分数",
+        error_messages={'required': u'请输入组长分数'})
+    MemberScore = forms.IntegerField(required=True,
+        label=u"成员分数",
+        error_messages={'required': u'请输入成员分数'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(ResearchProjectForm, self).clean()
+        return cleaned_data
+
 
 class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -90,7 +113,6 @@ class CreatePaperForm(forms.Form):
         error_messages={'required': u'请输入支撑文档'},
         widget=forms.Textarea)
 
-    
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
