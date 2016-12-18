@@ -16,12 +16,14 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
 
+
 class ResetPasswordForm(forms.Form):
     username = forms.CharField()
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput({
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
+
 
 class RegisterForm(forms.Form):  
     username = forms.CharField()  
@@ -30,6 +32,7 @@ class RegisterForm(forms.Form):
     password2= forms.CharField(label='Confirm',widget=forms.PasswordInput)  
     def pwd_validate(self,p1,p2):  
         return p1==p2  
+
 
 class ChangepwdForm(forms.Form):
     old_pwd = forms.CharField(required=True,
@@ -76,6 +79,7 @@ class CreateResearchProjectForm(forms.Form):
             cleaned_data = super(CreateResearchProjectForm, self).clean()
         return cleaned_data
 
+
 class ResearchProjectForm(forms.Form):
     rank = forms.CharField(required=True,
         label=u"科研立项等级",
@@ -120,6 +124,7 @@ class CreatePaperForm(forms.Form):
             cleaned_data = super(CreatePaperForm, self).clean()
         return cleaned_data
 
+
 class CreateCompetitionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"竞赛名称",
@@ -134,6 +139,7 @@ class CreateCompetitionForm(forms.Form):
         else:
             cleaned_data = super(CreateCompetitionForm, self).clean()
         return cleaned_data
+
 
 class CreateExchangeForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -172,6 +178,7 @@ class CreateExchangeForm(forms.Form):
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'})'''
 
+
 class CreateIdeologyConstructionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"活动名称",
@@ -192,12 +199,14 @@ class CreateIdeologyConstructionForm(forms.Form):
         label=u"活动内容",
         error_messages={'required': u'请输入活动内容'},
         widget=forms.Textarea)
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(CreateIdeologyConstructionForm, self).clean()
         return cleaned_data 
+
 
 class CreateLectureForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -230,6 +239,7 @@ class CreateLectureForm(forms.Form):
             cleaned_data = super(CreateLectureForm, self).clean()
         return cleaned_data 
 
+
 class CreateVolunteeringForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"项目名称",
@@ -258,6 +268,7 @@ class CreateVolunteeringForm(forms.Form):
             cleaned_data = super(CreateVolunteeringForm, self).clean()
         return cleaned_data 
 
+
 class CreateSchoolActivityForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"校园活动名称",
@@ -285,6 +296,7 @@ class CreateSchoolActivityForm(forms.Form):
             cleaned_data = super(CreateSchoolActivityForm, self).clean()
         return cleaned_data 
 
+
 class CreateInternshipForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"实践实习名称",
@@ -295,12 +307,14 @@ class CreateInternshipForm(forms.Form):
     startingTime = forms.IntegerField(required=True,
         label=u"实践实习时间",
         error_messages={'required': u'请输入实践实习时间'})
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(CreateInternshipForm, self).clean()
         return cleaned_data 
+
 
 class CreateStudentCadreForm(forms.Form):
     organizitionType = forms.CharField(required=True,
@@ -346,6 +360,14 @@ class JoinResearchProjectForm(forms.Form):
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'})
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(JoinResearchProjectForm, self).clean()
+        return cleaned_data
+
 
 class ChangeauthForm(forms.Form):
     isTeacher = forms.BooleanField(required=False,
