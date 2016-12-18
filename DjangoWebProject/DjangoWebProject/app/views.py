@@ -18,6 +18,11 @@ import random,time
 '''import xlrd'''
 import MySQLdb
 '''import win32com.client as win32'''
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+import MySQLdb
+import DjangoWebProject.settings
 
 def home(request):
     """Renders the home page."""
@@ -499,3 +504,10 @@ def ExcelToMysql(request):
     print ""
     print u"我刚导入了数据到MySQL!"
     '''
+def index(request):
+    projects=ResearchProjectrank.objects.all()
+    ProjectName=""
+    for project in projects:
+        ProjectName=project.ProjectName
+        break
+    return render_to_response('index.html',{'projects':projects,'ProjectName':ProjectName,'ProjectTime':ProjectTime})
