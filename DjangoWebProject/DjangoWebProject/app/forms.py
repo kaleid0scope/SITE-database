@@ -75,7 +75,7 @@ class CreateResearchProjectForm(forms.Form):
             cleaned_data = super(CreateResearchProjectForm, self).clean()
         return cleaned_data
 
-class CreatePaperForm(forms.Form):#期刊名称? 支撑文件 是否需要审核 对应两个类?
+class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"论文题目",
         error_messages={'required': u'请输入论文题目'})
@@ -85,6 +85,10 @@ class CreatePaperForm(forms.Form):#期刊名称? 支撑文件 是否需要审核
     JournalName = forms.CharField(required=True,
         label=u"期刊名称",
         error_messages={'required': u'请输入期刊名称'})
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     
     def clean(self):
@@ -93,11 +97,6 @@ class CreatePaperForm(forms.Form):#期刊名称? 支撑文件 是否需要审核
         else:
             cleaned_data = super(CreatePaperForm, self).clean()
         return cleaned_data
-
-    SupportText = forms.Textarea(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请添加支撑文档'})
-    '''SupportText = forms.FileField(upload_to = './upload/')'''
 
 class CreateCompetitionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
