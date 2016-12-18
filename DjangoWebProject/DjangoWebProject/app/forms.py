@@ -168,8 +168,8 @@ class CreateIdeologyConstructionForm(forms.Form):
         error_messages={'required': u'请输入活动地点'})
     Content = forms.CharField(required=True,
         label=u"活动内容",
-        error_messages={'required': u'请输入活动内容'})
-
+        error_messages={'required': u'请输入活动内容'},
+        widget=forms.Textarea)
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
@@ -198,7 +198,8 @@ class CreateLectureForm(forms.Form):
         error_messages={'required': u'请输入讲座地点'})
     Content = forms.CharField(required=True,
         label=u"内容简介",
-        error_messages={'required': u'请输入讲座内容简介'})
+        error_messages={'required': u'请输入讲座内容简介'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -225,7 +226,8 @@ class CreateVolunteeringForm(forms.Form):
         error_messages={'required': u'请输入志愿时长'})
     Content = forms.CharField(required=True,
         label=u"活动内容简介",
-        error_messages={'required': u'请输入活动内容简介'})
+        error_messages={'required': u'请输入活动内容简介'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
