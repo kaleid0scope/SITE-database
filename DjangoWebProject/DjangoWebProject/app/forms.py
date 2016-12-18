@@ -94,10 +94,10 @@ class CreatePaperForm(forms.Form):#期刊名称? 支撑文件 是否需要审核
             cleaned_data = super(CreatePaperForm, self).clean()
         return cleaned_data
 
-    '''    SupportText = forms.Textarea(required=True,
+    SupportText = forms.Textarea(required=True,
         label=u"支撑文档",
-        error_messages={'required': u'请添加支撑文档'})'''
-    '''   SupportText = forms.FileField(upload_to = './upload/')'''
+        error_messages={'required': u'请添加支撑文档'})
+    '''SupportText = forms.FileField(upload_to = './upload/')'''
 
 class CreateCompetitionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
