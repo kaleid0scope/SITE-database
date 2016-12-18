@@ -13,7 +13,7 @@ from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import search_form, search, changepassword
 from app.views import createResearchProject ,createPaper
-from app.views import createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre,ResearchProject
+from app.views import createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre,ResearchProject,index
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -60,7 +60,8 @@ urlpatterns = [
     url(r'^createVolunteering/$',createVolunteering),  
     url(r'^createSchoolActivity/$',createSchoolActivity),  
     url(r'^createInternship/$',createInternship),  
-    url(r'^createStudentCadre/$',createStudentCadre),  
+    url(r'^createStudentCadre/$',createStudentCadre), 
+    url(r'^index/$',index), 
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

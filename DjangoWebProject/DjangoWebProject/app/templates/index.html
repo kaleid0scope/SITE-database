@@ -1,0 +1,11 @@
+﻿<body>
+         <p>项目数据如下:</p>
+   <table border="10">
+       {% for project in projects %}
+           <tr >
+               <td>{{ResearchProjectRank.rankName}}</td>
+               <td>{{ResearchProjectRank.startingTime}}</td>
+           </tr>
+       {% endfor %}
+   </table>
+</body>

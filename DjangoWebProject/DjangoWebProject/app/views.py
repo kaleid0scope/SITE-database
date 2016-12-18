@@ -505,9 +505,9 @@ def ExcelToMysql(request):
     print u"我刚导入了数据到MySQL!"
     '''
 def index(request):
-    projects=ResearchProjectrank.objects.all()
-    ProjectName=""
+    projects=ResearchProjectRank.objects.all()
+    rankName=""
     for project in projects:
-        ProjectName=project.ProjectName
+        rankName=project.rankName
         break
-    return render_to_response('index.html',{'projects':projects,'ProjectName':ProjectName,'ProjectTime':ProjectTime})
+    return render_to_response('index.html',{'projects':projects,'rankName':rankName})
