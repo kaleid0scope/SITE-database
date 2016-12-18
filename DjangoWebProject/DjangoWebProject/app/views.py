@@ -446,6 +446,8 @@ def createStudentCadre(request):
     else:
         form = CreateStudentCadreForm()
     return render_to_response('createStudentCadre.html',{'form':form,'error':error})
+
+
 '''#excel 批量添加数据到数据库
 def ExcelToMysql(request):
     book = xlrd.open_workbook('excel文件路径')
