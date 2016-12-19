@@ -15,13 +15,13 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank
 import random,time
+import uuid
 import xlrd
 import MySQLdb
 '''import win32com.client as win32'''
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
-import MySQLdb
 import DjangoWebProject.settings
 
 def home(request):
@@ -454,27 +454,60 @@ def createStudentCadre(request):
 
 
 def Excel(request):
+    Inspector = Inspectors.objects.get(user = request.user)
     book = xlrd.open_workbook('D:\\test.xls')
     sheet = book.sheets()[0]  
     for r in range(1, sheet.nrows):
-          collegeEntranceExaminationScore  = sheet.cell(r,0).value
-          StudentNum     = sheet.cell(r,1).value
-          name           = sheet.cell(r,2).value
-          sex            = sheet.cell(r,3).value
-          year           = sheet.cell(r,4).value
-          phone          = sheet.cell(r,5).value
-          email          = sheet.cell(r,6).value
-          born           = sheet.cell(r,7).value
-          root           = sheet.cell(r,8).value
-          nation         = sheet.cell(r,9).value
-          politicalStatus= sheet.cell(r,10).value
-          location       = sheet.cell(r,11).value
-          identityType   = sheet.cell(r,12).value
-          identityNumber = sheet.cell(r,13).value
-          speciality     = sheet.cell(r,14).value
-          province       = sheet.cell(r,15).value
-          user = User(username = str(int(StudentNum)),password = make_password('uibe'+str(int(identityNumber))[-6:]),email = email)
-          user.save()
+          CollegeEntranceExaminationScore  = str(int(sheet.cell(r,0).value))
+          studentNum     = str(int(sheet.cell(r,1).value))
+          Name           = sheet.cell(r,2).value
+          Sex            = str(int(sheet.cell(r,3).value))
+          Year           = str(int(sheet.cell(r,4).value))
+          Phone          = str(int(sheet.cell(r,5).value))
+          Email          = sheet.cell(r,6).value
+          Born           = sheet.cell(r,7).value
+          Root           = sheet.cell(r,8).value
+          Nation         = sheet.cell(r,9).value
+          PoliticalStatus= sheet.cell(r,10).value
+          Location       = sheet.cell(r,11).value
+          IdentityType   = sheet.cell(r,12).value
+          IdentityNumber = str(int(sheet.cell(r,13).value))
+          Speciality     = sheet.cell(r,14).value
+          Province       = sheet.cell(r,15).value
+          theuser = User(username = studentNum,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
+          theuser.save()
+          theauth = Authorizations(id = uuid.uuid1(),
+                                   isTeacher = False,
+                                   research = False,
+                                   paper = False,
+                                   competition = False,
+                                   exchange = False,
+                                   ideologyConstruction = False,
+                                   lecture = False,
+                                   volunteering = False,
+                                   schoolActivity = False,
+                                   internship = False,
+                                   studentCadre = False)
+          theauth.save()
+          student = Students(user =theuser,
+                             auth =theauth, 
+                             StudentNum =int(studentNum), 
+                             rankName =Name, 
+                             sex =int(Sex), 
+                             year =int(Year), 
+                             phone = int(Phone),
+                             email = Email,
+                             born = datetime.strptime(Born,'%Y-%m-%d'),
+                             root =Root,nation =Nation,
+                             politicalStatus =PoliticalStatus,
+                             location =Location,
+                             identityType =IdentityType,
+                             identityNumber =int(IdentityNumber),
+                             speciality =Speciality,
+                             province =Province,
+                             inspector =Inspector,
+                             collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
+          student.save()
     return HttpResponseRedirect('/')
 
 def index(request):
