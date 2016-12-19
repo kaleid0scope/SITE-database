@@ -512,8 +512,53 @@ def Excel(request):
 
 def index(request):
     projects=ResearchProjectRank.objects.all()
+    papers=PaperRank.objects.all()
+    competitions=CompetitionRank.objects.all()
+    exchanges=ExchangeRank.objects.all()
+    constructions=IdeologyConstructionRank.objects.all()
+    lectures=LectureRank.objects.all()
+    volunteerings=VolunteeringRank.objects.all()
+    activities=SchoolActivityRank.objects.all()
+    internships=InternshipRank.objects.all()
+    cadres=StudentCadreRank.objects.all()   
     rankName=""
     for project in projects:
         rankName=project.rankName
         break
     return render_to_response('index.html',{'projects':projects,'rankName':rankName})
+    for paper in papers:
+        rankName=paper.rankName
+        break
+    return render_to_response('index.html',{'papers':papers,'rankName':rankName})
+    for competition in competitions:
+        rankName=competition.rankName
+        break
+    return render_to_response('index.html',{'competitions':competitions,'rankName':rankName})
+    for exchange in exchanges:
+        rankName=exchange.rankName
+        break
+    return render_to_response('index.html',{'exchanges':exchanges,'rankName':rankName})
+    for construction in constructions:
+        rankName=construction.rankName
+        break
+    return render_to_response('index.html',{'constructions':constructions,'rankName':rankName})
+    for lecture in lectures:
+        rankName=lecture.rankName
+        break
+    return render_to_response('index.html',{'lectures':lectures,'rankName':rankName})
+    for volunteering in volunteerings:
+        rankName=volunteering.rankName
+        break
+    return render_to_response('index.html',{'volunteerings':volunteerings,'rankName':rankName})
+    for activity in activities:
+        rankName=activity.rankName
+        break
+    return render_to_response('index.html',{'activities':activities,'rankName':rankName})
+    for internship in internships:
+        rankName=internship.rankName
+        break
+    return render_to_response('index.html',{'internships':internships,'rankName':rankName})
+    for cadre in cadres:
+        rankName=cadre.rankName
+        break
+    return render_to_response('index.html',{'cadres':cadres,'rankName':rankName})
