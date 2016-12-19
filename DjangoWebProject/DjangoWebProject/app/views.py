@@ -15,7 +15,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank
 import random,time
-'''import xlrd'''
+import xlrd
 import MySQLdb
 '''import win32com.client as win32'''
 import sys
@@ -476,6 +476,7 @@ def Excel(request):
           province       = sheet.cell(r,15).value
           user = User(username = StudentNum,password = make_password('uibe'+identityNumber[-6:]),email = email)
           user.save()
+    return HttpResponseRedirect('/home')
 
 def index(request):
     projects=ResearchProjectRank.objects.all()
