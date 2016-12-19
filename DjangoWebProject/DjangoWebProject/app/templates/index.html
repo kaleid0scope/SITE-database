@@ -3,72 +3,72 @@
    <table border="10">
        {% for project in projects %}
            <tr >
-               <td>{{project.rankName}}</td>
-               <td>{{project.startingTime}}</td>
-               <td>{{project.status}}</td>
+               <td>{{project.rankNum.rankName}}</td>
+               <td>{{project.rankNum.startingTime}}</td>
+               <td>{{project.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for paper in papers %}
            <tr >
-               <td>{{paper.rankName}}</td>
-               <td>{{paper.startingTime}}</td>
-               <td>{{paper.status}}</td>
+               <td>{{paper.rankNum.rankName}}</td>
+               <td>{{paper.rankNum.startingTime}}</td>
+               <td>{{paper.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for competition in competitions %}
            <tr >
-               <td>{{competition.rankName}}</td>
-               <td>{{competition.startingTime}}</td>
-               <td>{{competition.status}}</td>
+               <td>{{competition.rankNum.rankName}}</td>
+               <td>{{competition.rankNum.startingTime}}</td>
+               <td>{{competition.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for exchange in exchanges %}
            <tr >
-               <td>{{exchange.rankName}}</td>
+               <td>{{exchange.rankNum.rankName}}</td>
                <td>{{exchange.startTime}}</td>
-               <td>{{exchange.status}}</td>
+               <td>{{exchange.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for construction in constructions %}
            <tr >
-               <td>{{construction.rankName}}</td>
-               <td>{{construction.startingTime}}</td>
-               <td>{{construction.status}}</td>
+               <td>{{construction.rankNum.rankName}}</td>
+               <td>{{construction.rankNum.startingTime}}</td>
+               <td>{{construction.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for lecture in lectures %}
            <tr >
-               <td>{{lecture.rankName}}</td>
-               <td>{{lecture.startingTime}}</td>
-               <td>{{lecture.status}}</td>
+               <td>{{lecture.rankNum.rankName}}</td>
+               <td>{{lecture.rankNum.startingTime}}</td>
+               <td>{{lecture.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for volunteering in volunteerings %}
            <tr >
-               <td>{{volunteering.rankName}}</td>
-               <td>{{volunteering.startingTime}}</td>
-               <td>{{volunteering.status}}</td>
+               <td>{{volunteering.rankNum.rankName}}</td>
+               <td>{{volunteering.rankNum.startingTime}}</td>
+               <td>{{volunteering.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for activity in activities %}
            <tr >
-               <td>{{activity.rankName}}</td>
-               <td>{{activity.startingTime}}</td>
-               <td>{{activity.status}}</td>
+               <td>{{activity.rankNum.rankName}}</td>
+               <td>{{activity.rankNum.startingTime}}</td>
+               <td>{{activity.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for internship in internships %}
            <tr >
-               <td>{{internship.rankName}}</td>
-               <td>{{internship.startingTime}}</td>
-               <td>{{internship.status}}</td>
+               <td>{{internship.rankNum.rankName}}</td>
+               <td>{{internship.rankNum.startingTime}}</td>
+               <td>{{internship.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}
        {% for cadre in cadres %}
            <tr >
-               <td>{{cadre.rankName}}</td>
-               <td>{{cadre.startingTime}}</td>
-               <td>{{cadre.status}}</td>
+               <td>{{cadre.rankNum.rankName}}</td>
+               <td>{{cadre.rankNum.startingTime}}</td>
+               <td>{{cadre.rankNum.teacherNum}}</td>
            </tr>
        {% endfor %}          
    </table>
