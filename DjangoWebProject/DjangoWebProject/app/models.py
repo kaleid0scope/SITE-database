@@ -156,7 +156,6 @@ class ResearchProject(models.Model):
 
 #Paper
 class PaperRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     rankName = models.CharField(max_length = 50)
     journalName = models.CharField(max_length = 20)
@@ -173,7 +172,6 @@ class PaperRank(models.Model):
         return self.rankName
 
 class Paper(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(PaperRank)
@@ -186,7 +184,6 @@ class Paper(models.Model):
     
 #Competition
 class CompetitionRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     rankName = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
@@ -202,7 +199,6 @@ class CompetitionRank(models.Model):
         return self.rankName
 
 class Competition(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(CompetitionRank)
@@ -214,7 +210,6 @@ class Competition(models.Model):
 
 #Exchange
 class ExchangeRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     rankName = models.CharField(max_length = 50)
     status = models.PositiveSmallIntegerField(default = 1)
     type = models.CharField(max_length = 50)
@@ -231,7 +226,6 @@ class ExchangeRank(models.Model):
         return self.rankName
 
 class Exchange(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(ExchangeRank)
@@ -245,7 +239,6 @@ class Exchange(models.Model):
 
 #IdeologyConstruction
 class IdeologyConstructionRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     type = models.CharField(max_length = 50)
     rankName = models.CharField(max_length = 20)
@@ -263,7 +256,6 @@ class IdeologyConstructionRank(models.Model):
         return self.rankName
 
 class IdeologyConstruction(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(IdeologyConstructionRank)
@@ -274,7 +266,6 @@ class IdeologyConstruction(models.Model):
 
 #Lecture
 class LectureRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     type = models.CharField(max_length = 50)
     rankName = models.CharField(max_length = 20)
@@ -293,7 +284,6 @@ class LectureRank(models.Model):
         return self.rankName
 
 class Lecture(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(LectureRank)
@@ -304,7 +294,6 @@ class Lecture(models.Model):
 
 #Volunteering
 class VolunteeringRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     rankName = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
@@ -322,7 +311,6 @@ class VolunteeringRank(models.Model):
         return self.rankName
 
 class Volunteering(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(VolunteeringRank)
@@ -333,7 +321,6 @@ class Volunteering(models.Model):
 
 #SchoolActivity
 class SchoolActivityRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     type = models.CharField(max_length = 50)
     rankName = models.CharField(max_length = 20)
@@ -351,7 +338,6 @@ class SchoolActivityRank(models.Model):
         return self.rankName
 
 class SchoolActivity(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(SchoolActivityRank)
@@ -362,7 +348,6 @@ class SchoolActivity(models.Model):
 
 #Internship
 class InternshipRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     rankName = models.CharField(max_length = 20)
     status = models.PositiveSmallIntegerField(default = 1)
     type = models.CharField(max_length = 50)
@@ -377,7 +362,6 @@ class InternshipRank(models.Model):
         return self.rankName 
 
 class Internship(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(InternshipRank)
@@ -395,7 +379,6 @@ class Internship(models.Model):
         return str(self.StudentNum)
 
 class StudentCadreRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     organizitionType = models.CharField(max_length = 50)
     organizitionName = models.CharField(max_length = 20)
@@ -410,7 +393,6 @@ class StudentCadreRank(models.Model):
         return self.rankName 
 
 class StudentCadre(models.Model):
-    ProjectNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(StudentCadreRank)
