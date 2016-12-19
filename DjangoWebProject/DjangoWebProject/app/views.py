@@ -532,9 +532,6 @@ def Excel(request):
 def index(request):
     student = Students.objects.get(user = request.user)
     return render_to_response('index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),
-                                            'papers':Paper.objects.filter(StudentNum = student),
-                                            'competitions':Competition.objects.filter(StudentNum = student),
-                                            'exchanges':Exchange.objects.filter(StudentNum = student),
                                             'constructions':IdeologyConstruction.objects.filter(StudentNum = student),
                                             'lectures':Lecture.objects.filter(StudentNum = student),
                                             'volunteerings':Volunteering.objects.filter(StudentNum = student),
