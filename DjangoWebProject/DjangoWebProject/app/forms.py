@@ -125,6 +125,29 @@ class CreatePaperForm(forms.Form):
         return cleaned_data
 
 
+class PaperForm(forms.Form):
+    level = forms.CharField(required=True,
+        label=u"论文等级",
+        error_messages={'required': u'请输入论文等级'})
+    score = forms.IntegerField(required=True,
+        label=u"论文分级评分",
+        error_messages={'required': u'请输入论文分级评分'})
+    AuthorRanking = forms.IntegerField(required=True,
+        label=u"作者顺位为第几作者",
+        error_messages={'required': u'请输入作者顺位为第几作者'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
+
+
+
 class CreateCompetitionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"竞赛名称",
@@ -132,6 +155,10 @@ class CreateCompetitionForm(forms.Form):
     ProjectTime = forms.DateField(required=True,
         label=u"竞赛时间",
         error_messages={'required': u'请输入竞赛时间'})
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -140,6 +167,26 @@ class CreateCompetitionForm(forms.Form):
             cleaned_data = super(CreateCompetitionForm, self).clean()
         return cleaned_data
 
+class CompetitionForm(forms.Form):
+    level = forms.CharField(required=True,
+        label=u"论文等级",
+        error_messages={'required': u'请输入论文等级'})
+    score = forms.IntegerField(required=True,
+        label=u"竞赛分级评分",
+        error_messages={'required': u'请输入竞赛分级评分'})
+    rank = forms.IntegerField(required=True,
+        label=u"学生排名",
+        error_messages={'required': u'请输入学生排名'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 class CreateExchangeForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -157,6 +204,10 @@ class CreateExchangeForm(forms.Form):
     endTime = forms.DateField(required=True,
         label=u"返校时间",
         error_messages={'required': u'请输入返校时间'})
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -164,6 +215,21 @@ class CreateExchangeForm(forms.Form):
         else:
             cleaned_data = super(CreateExchangeForm, self).clean()
         return cleaned_data 
+
+class ExchangeForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"交流分级评分",
+        error_messages={'required': u'请输入交流分级评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 '''    startTime = forms.DateField(required=True,
         label=u"派出时间",
@@ -199,6 +265,10 @@ class CreateIdeologyConstructionForm(forms.Form):
         label=u"活动内容",
         error_messages={'required': u'请输入活动内容'},
         widget=forms.Textarea)
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -207,6 +277,20 @@ class CreateIdeologyConstructionForm(forms.Form):
             cleaned_data = super(CreateIdeologyConstructionForm, self).clean()
         return cleaned_data 
 
+class IdeologyConstructionForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"活动分级评分",
+        error_messages={'required': u'请输入活动分级评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 class CreateLectureForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -231,6 +315,10 @@ class CreateLectureForm(forms.Form):
         label=u"内容简介",
         error_messages={'required': u'请输入讲座内容简介'},
         widget=forms.Textarea)
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -239,6 +327,20 @@ class CreateLectureForm(forms.Form):
             cleaned_data = super(CreateLectureForm, self).clean()
         return cleaned_data 
 
+class LectureForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"讲座评分",
+        error_messages={'required': u'请输入讲座评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 class CreateVolunteeringForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -260,6 +362,10 @@ class CreateVolunteeringForm(forms.Form):
         label=u"活动内容简介",
         error_messages={'required': u'请输入活动内容简介'},
         widget=forms.Textarea)
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -268,6 +374,20 @@ class CreateVolunteeringForm(forms.Form):
             cleaned_data = super(CreateVolunteeringForm, self).clean()
         return cleaned_data 
 
+class VolunteeringForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"志愿活动评分",
+        error_messages={'required': u'请输入志愿活动评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 class CreateSchoolActivityForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -288,6 +408,10 @@ class CreateSchoolActivityForm(forms.Form):
     awardLevel = forms.CharField(required=True,
         label=u"奖项",
         error_messages={'required': u'请输入校园活动奖项'})
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -296,6 +420,20 @@ class CreateSchoolActivityForm(forms.Form):
             cleaned_data = super(CreateSchoolActivityForm, self).clean()
         return cleaned_data 
 
+class SchoolActivityForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"校园活动分级评分",
+        error_messages={'required': u'请输入校园活动分级评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 class CreateInternshipForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -307,6 +445,10 @@ class CreateInternshipForm(forms.Form):
     startingTime = forms.DateField(required=True,
         label=u"实践实习时间",
         error_messages={'required': u'请输入实践实习时间'})
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -315,6 +457,20 @@ class CreateInternshipForm(forms.Form):
             cleaned_data = super(CreateInternshipForm, self).clean()
         return cleaned_data 
 
+class InternshipForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"实践实习评分",
+        error_messages={'required': u'请输入实践实习评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(PaperForm, self).clean()
+        return cleaned_data
 
 class CreateStudentCadreForm(forms.Form):
     organizitionType = forms.CharField(required=True,
@@ -326,6 +482,10 @@ class CreateStudentCadreForm(forms.Form):
     rankName = forms.CharField(required=True,
         label=u"学生干部名称",
         error_messages={'required': u'请输入学生干部名称'})
+    SupportText = forms.CharField(required=True,
+        label=u"支撑文档",
+        error_messages={'required': u'请输入支撑文档'},
+        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
@@ -346,26 +506,19 @@ class CreateStudentCadreForm(forms.Form):
         label=u"分级评分起始有效时间",
         error_messages={'required': u'请输入分级评分起始有效时间'})"""
 
-
-class JoinResearchProjectForm(forms.Form):
-    StudentNum = forms.IntegerField(required=True,
-        label=u"学号",
-        error_messages={'required': u'请输入学号'})
-    rankNum = forms.IntegerField(required=True,
-        label=u"科研立项分级编号",
-        error_messages={'required': u'请输入科研立项分级编号'})
-    ProjectName = forms.CharField(required=True,
-        label=u"项目名称",
-        error_messages={'required': u'请输入项目名称'})
-    ProjectTime = forms.DateField(required=True,
-        label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'})
-
+class StudentCadreForm(forms.Form):
+    score = forms.IntegerField(required=True,
+        label=u"学生干部评分",
+        error_messages={'required': u'请输入学生干部评分'})
+    status = forms.IntegerField(required=True,
+        label=u"审核状态",
+        error_messages={'required': u'请输入审核状态'})
+    
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(JoinResearchProjectForm, self).clean()
+            cleaned_data = super(PaperForm, self).clean()
         return cleaned_data
 
 
