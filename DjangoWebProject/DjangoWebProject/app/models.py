@@ -154,7 +154,7 @@ class ResearchProject(models.Model):
     def __unicode__(self):
         return str(self.StudentNum)
 
-#Paper
+#Paper-s
 class PaperRank(models.Model):
     status = models.PositiveSmallIntegerField(default = 1)
     rankName = models.CharField(max_length = 50)
@@ -175,14 +175,13 @@ class Paper(models.Model):
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(PaperRank)
-    ProjectName = models.CharField(max_length = 20)
     ProjectTime = models.DateField()
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
         return str(self.StudentNum)
     
-#Competition
+#Competition-s
 class CompetitionRank(models.Model):
     status = models.PositiveSmallIntegerField(default = 1)
     rankName = models.CharField(max_length = 50)
@@ -208,7 +207,7 @@ class Competition(models.Model):
     def __unicode__(self):
         return str(self.StudentNum)
 
-#Exchange
+#Exchange-s
 class ExchangeRank(models.Model):
     rankName = models.CharField(max_length = 50)
     status = models.PositiveSmallIntegerField(default = 1)
@@ -229,9 +228,6 @@ class Exchange(models.Model):
     status = models.PositiveSmallIntegerField(default = 1)
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(ExchangeRank)
-    ProjectName = models.CharField(max_length = 20)
-    targetName = models.CharField(max_length = 20)
-    ProjectContent = models.TextField()
     inspectorNum = models.ForeignKey(Inspectors)
 
     def __unicode__(self):

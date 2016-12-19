@@ -6,7 +6,6 @@ from django.template import RequestContext
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
-from app.forms import JoinResearchProjectForm
 from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm,ResearchProjectForm
 from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm,ResetPasswordForm
 from django.http import HttpResponse
@@ -157,13 +156,6 @@ def changeauth(request,username):
 		form = ChangeauthForm()
 	return render_to_response('changeauth.html',{'form':form,'error':error,'username':username})
 
-"""cd = form.cleaned_data
-            send_mail(
-                cd['subject'],
-                cd['message'],
-                cd.get('email', 'noreply@example.com'),
-                ['siteowner@example.com'],
-            )"""
 
 def createResearchProject(request):
     error = []
@@ -210,13 +202,13 @@ def researchProject(request,id):
         form = ResearchProjectForm()
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
+
 def joinResearchProject(request):
     error = []
     if request.method == 'POST':
-        form = JoinResearchProjectForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            project = ResearchProject(rankName = cd['ProjectName'],teacherNum = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = 1,rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            project = ResearchProject()
             if True:
                 project.save()
                 return HttpResponse('科研立项项目创建成功！')
@@ -225,8 +217,7 @@ def joinResearchProject(request):
         else:
             error.append('Please input information of your project')
     else:
-        form = JoinResearchProjectForm()
-    return render_to_response('joinResearchProject.html',{'form':form,'error':error})
+        return HttpResponseRedirect('/')
 
 
 def createPaper(request):
