@@ -48,18 +48,32 @@ urlpatterns = [
     url(r'^search/$',search),
     url(r'^reset',app.views.reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
-    url(r'^changeauth/(?P<username>\w+)/$',changeauth),    
-    url(r'^createResearchProject/$',createResearchProject),  
-    url(r'^researchProject/(?P<id>\w+)/$',researchProject),
-    url(r'^createPaper/$',createPaper),  
-    url(r'^createCompetition/$',createCompetition),  
-    url(r'^createExchange/$',createExchange),  
-    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),  
-    url(r'^createLecture/$',createLecture),  
-    url(r'^createVolunteering/$',createVolunteering),  
-    url(r'^createSchoolActivity/$',createSchoolActivity),  
-    url(r'^createInternship/$',createInternship),  
+    url(r'^changeauth/(?P<username>\w+)/$',changeauth),
+
+    url(r'^createResearchProject/$',createResearchProject),
+    url(r'^researchProjectDetail/(?P<id>\w+)/$',researchProject),
+    url(r'^ResearchProjectDetail/$',ResearchProjectDetail), 
+    url(r'^ResearchProjectIndex/$',ResearchProjectIndex), 
+
+    url(r'^createPaper/$',createPaper),
+    url(r'^createCompetition/$',createCompetition),
+    url(r'^createExchange/$',createExchange), 
     url(r'^createStudentCadre/$',createStudentCadre), 
+
+    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),
+    url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
+
+    url(r'^createLecture/$',createLecture),
+    url(r'^IdeologyConstructionIndex/$',LectureIndex), 
+
+    url(r'^createVolunteering/$',createVolunteering),
+    url(r'^IdeologyConstructionIndex/$',VolunteeringIndex), 
+
+    url(r'^createSchoolActivity/$',createSchoolActivity),
+    url(r'^IdeologyConstructionIndex/$',SchoolActivityIndex), 
+
+    url(r'^createInternship/$',createInternship), 
+    url(r'^IdeologyConstructionIndex/$',InternshipIndex), 
     url(r'^index/$',index), 
     url(r'^excel/$',Excel),
 

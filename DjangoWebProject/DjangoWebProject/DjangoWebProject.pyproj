@@ -77,6 +77,8 @@
     <Content Include="app\templates\createSchoolActivity.html" />
     <Content Include="app\templates\createInternship.html" />
     <Content Include="app\templates\createStudentCadre.html" />
+    <Content Include="app\templates\WebPage1.html" />
+    <Content Include="app\templates\ResearchProjectDetail.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

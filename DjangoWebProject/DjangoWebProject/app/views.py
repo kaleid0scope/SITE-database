@@ -536,8 +536,32 @@ def index(request):
 def ResearchProjectIndex(request):
     return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过')})
 
+#single model do not need index
+'''
 def PaperIndex(request):
     return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '通过')})
 
-def PaperIndex(request):
-    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '通过')})
+def CompetitionIndex(request):
+    return render_to_response('CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '通过')})
+
+def ExchangeIndex(request):
+    return render_to_response('ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '通过')})
+
+def StudentCadreIndex(request):
+    return render_to_response('StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '通过')})
+'''
+
+def IdeologyConstructionIndex(request):
+    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过')})
+
+def LectureIndex(request):
+    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过')})
+
+def VolunteeringIndex(request):
+    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过')})
+
+def SchoolActivityIndex(request):
+    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过')})
+
+def InternshipIndex(request):
+    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过')})
