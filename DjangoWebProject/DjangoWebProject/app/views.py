@@ -521,14 +521,13 @@ def Excel(request):
     return HttpResponseRedirect('/')
 
 def index(request):
-    projects=ResearchProjectRank.objects.all()
-    papers=PaperRank.objects.all()
-    competitions=CompetitionRank.objects.all()
-    exchanges=ExchangeRank.objects.all()
-    constructions=IdeologyConstructionRank.objects.all()
-    lectures=LectureRank.objects.all()
-    volunteerings=VolunteeringRank.objects.all()
-    activities=SchoolActivityRank.objects.all()
-    internships=InternshipRank.objects.all()
-    cadres=StudentCadreRank.objects.all()
-    return render_to_response('index.html',{'projects':projects,'papers':papers,'competitions':competitions,'exchanges':exchanges,'constructions':constructions,'lectures':lectures,'volunteerings':volunteerings,'activities':activities,'internships':internships,'cadres':cadres})
+    return render_to_response('index.html',{'projects':ResearchProjectRank.objects.all(),
+                                            'papers':PaperRank.objects.all(),
+                                            'competitions':CompetitionRank.objects.all(),
+                                            'exchanges':ExchangeRank.objects.all(),
+                                            'constructions':IdeologyConstructionRank.objects.all(),
+                                            'lectures':LectureRank.objects.all(),
+                                            'volunteerings':VolunteeringRank.objects.all(),
+                                            'activities':SchoolActivityRank.objects.all(),
+                                            'internships':InternshipRank.objects.all(),
+                                            'cadres':StudentCadreRank.objects.all()})
