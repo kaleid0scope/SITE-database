@@ -156,7 +156,6 @@ class ResearchProject(models.Model):
 
 #Paper
 class PaperRank(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
     status = models.PositiveSmallIntegerField(default = 1)
     rankName = models.CharField(max_length = 50)
     journalName = models.CharField(max_length = 20)
