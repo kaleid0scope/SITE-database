@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre,statusChoice
 import random,time
 import uuid
 import xlrd
@@ -199,7 +199,7 @@ def researchProject(request,id):
         else:
             error.append('Please input information of your project')
     else:
-        form = ResearchProjectForm(data={"status": ["未通过", "通过", "待审核"]})
+        form = ResearchProjectForm()
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
 def ResearchProjectDetail(request):

@@ -4,8 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from cProfile import label
-
-ACTIVITY_STYLE = (("未通过", "1"), ("通过", "2"), ("待审核", "3"))  
+from app.models import statusChoice
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -92,9 +91,7 @@ class ResearchProjectForm(forms.Form):
     MemberScore = forms.IntegerField(required=True,
         label=u"成员分数",
         error_messages={'required': u'请输入成员分数'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -137,9 +134,7 @@ class PaperForm(forms.Form):
     AuthorRanking = forms.IntegerField(required=True,
         label=u"作者顺位为第几作者",
         error_messages={'required': u'请输入作者顺位为第几作者'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -179,9 +174,7 @@ class CompetitionForm(forms.Form):
     rank = forms.IntegerField(required=True,
         label=u"学生排名",
         error_messages={'required': u'请输入学生排名'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -222,9 +215,7 @@ class ExchangeForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"交流分级评分",
         error_messages={'required': u'请输入交流分级评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -283,9 +274,7 @@ class IdeologyConstructionForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"活动分级评分",
         error_messages={'required': u'请输入活动分级评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -333,9 +322,7 @@ class LectureForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"讲座评分",
         error_messages={'required': u'请输入讲座评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -380,9 +367,7 @@ class VolunteeringForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"志愿活动评分",
         error_messages={'required': u'请输入志愿活动评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -426,9 +411,7 @@ class SchoolActivityForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"校园活动分级评分",
         error_messages={'required': u'请输入校园活动分级评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -463,9 +446,7 @@ class InternshipForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"实践实习评分",
         error_messages={'required': u'请输入实践实习评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
         if not self.is_valid():
@@ -512,10 +493,8 @@ class StudentCadreForm(forms.Form):
     score = forms.IntegerField(required=True,
         label=u"学生干部评分",
         error_messages={'required': u'请输入学生干部评分'})
-    status = forms.MultipleChoiceField(required=True,
-        label=u'审核状态', 
-        choices=ACTIVITY_STYLE, widget=forms.CheckboxSelectMultiple())
-    
+    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")

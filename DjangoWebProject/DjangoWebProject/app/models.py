@@ -7,6 +7,11 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+statusChoice = (
+        ('未通过', '未通过'),
+        ('通过', '通过'),
+        ('待审核', '待审核'),)
+
 class Inspectors(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('审查者'))
     number = models.PositiveIntegerField()
