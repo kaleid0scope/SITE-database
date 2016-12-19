@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,Paper,Competition,Exchange,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre
 import random,time
 import uuid
 import xlrd
@@ -532,3 +532,12 @@ def index(request):
                                             'activities':SchoolActivity.objects.filter(StudentNum = student),
                                             'internships':Internship.objects.filter(StudentNum = student),
                                             'cadres':StudentCadre.objects.filter(StudentNum = student)})
+
+def ResearchProjectIndex(request):
+    return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = 2)})
+
+def PaperIndex(request):
+    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = 2)})
+
+def PaperIndex(request):
+    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = 2)})

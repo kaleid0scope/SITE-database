@@ -12,7 +12,7 @@ import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import createResearchProject ,createPaper,createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre
-from app.views import researchProject,index,Excel
+from app.views import researchProject,index,Excel,ResearchProjectIndex,PaperIndex,CompetitionIndex,ExchangeIndex,IdeologyConstructionIndex,LectureIndex,VolunteeringIndex,SchoolActivityIndex,InternshipIndex,StudentCadreIndex
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
