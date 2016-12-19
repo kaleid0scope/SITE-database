@@ -1,18 +1,34 @@
-﻿<body>
-         <p>项目信息如下:</p>
-   <table border="10">
+﻿<body style="background-color:burlywood">
+         <p style="text-align:center;font-size:xx-large;font-family:sans-serif"><b>项目信息</b></p>
+   <style>
+       table.one
+       {
+	        border-style:solid;
+            border-width:2px;
+            border-spacing:15px;
+            text-align:center;
+            width:300px;
+       }
+   </style>
+    <center>
+    <table class="one" >
+        <tr>
+            <td>姓名</td>
+            <td>日期</td>
+            <td>老师</td>
+        </tr>
        {% for project in projects %}
            <tr >
-               <td>{{project.rankNum.rankName}}</td>
-               <td>{{project.rankNum.startingTime}}</td>
-               <td>{{project.rankNum.teacherNum}}</td>
+               <td>{{project.rankNum.rankName}} </td>
+               <td>{{project.rankNum.startingTime}} </td>
+               <td>{{project.rankNum.teacherNum}} </td>
            </tr>
        {% endfor %}
        {% for paper in papers %}
            <tr >
                <td>{{paper.rankNum.rankName}}</td>
                <td>{{paper.rankNum.startingTime}}</td>
-               <td>{{paper.rankNum.teacherNum}}</td>
+               <td>{{paper.rankNum.teacherNum}} </td>
            </tr>
        {% endfor %}
        {% for competition in competitions %}
@@ -24,52 +40,53 @@
        {% endfor %}
        {% for exchange in exchanges %}
            <tr >
-               <td>{{exchange.rankNum.rankName}}</td>
-               <td>{{exchange.startTime}}</td>
-               <td>{{exchange.rankNum.teacherNum}}</td>
+               <td>{{exchange.rankNum.rankName}}  </td>
+               <td>{{exchange.startTime}}  </td>
+               <td>{{exchange.rankNum.teacherNum}}  </td>
            </tr>
        {% endfor %}
        {% for construction in constructions %}
            <tr >
-               <td>{{construction.rankNum.rankName}}</td>
-               <td>{{construction.rankNum.startingTime}}</td>
-               <td>{{construction.rankNum.teacherNum}}</td>
+               <td>{{construction.rankNum.rankName}}  </td>
+               <td>{{construction.rankNum.startingTime}} </td>
+               <td>{{construction.rankNum.teacherNum}} </td>
            </tr>
        {% endfor %}
        {% for lecture in lectures %}
            <tr >
-               <td>{{lecture.rankNum.rankName}}</td>
-               <td>{{lecture.rankNum.startingTime}}</td>
-               <td>{{lecture.rankNum.teacherNum}}</td>
+               <td>{{lecture.rankNum.rankName}}  </td>
+               <td>{{lecture.rankNum.startingTime}}  </td>
+               <td>{{lecture.rankNum.teacherNum}}  </td>
            </tr>
        {% endfor %}
        {% for volunteering in volunteerings %}
            <tr >
-               <td>{{volunteering.rankNum.rankName}}</td>
-               <td>{{volunteering.rankNum.startingTime}}</td>
-               <td>{{volunteering.rankNum.teacherNum}}</td>
+               <td>{{volunteering.rankNum.rankName}}  </td>
+               <td>{{volunteering.rankNum.startingTime}}  </td>
+               <td>{{volunteering.rankNum.teacherNum}}  </td>
            </tr>
        {% endfor %}
        {% for activity in activities %}
            <tr >
-               <td>{{activity.rankNum.rankName}}</td>
-               <td>{{activity.rankNum.startingTime}}</td>
-               <td>{{activity.rankNum.teacherNum}}</td>
+               <td>{{activity.rankNum.rankName}}  </td>
+               <td>{{activity.rankNum.startingTime}}  </td>
+               <td>{{activity.rankNum.teacherNum}}  </td>
            </tr>
        {% endfor %}
        {% for internship in internships %}
            <tr >
-               <td>{{internship.rankNum.rankName}}</td>
-               <td>{{internship.rankNum.startingTime}}</td>
-               <td>{{internship.rankNum.teacherNum}}</td>
+               <td>{{internship.rankNum.rankName}}  </td>
+               <td>{{internship.rankNum.startingTime}}  </td>
+               <td>{{internship.rankNum.teacherNum}}  </td>
            </tr>
        {% endfor %}
        {% for cadre in cadres %}
            <tr >
-               <td>{{cadre.rankNum.rankName}}</td>
-               <td>{{cadre.rankNum.startingTime}}</td>
-               <td>{{cadre.rankNum.teacherNum}}</td>
+               <td>{{cadre.rankNum.rankName}}  </td>
+               <td>{{cadre.rankNum.startingTime}}  </td>
+               <td>{{cadre.rankNum.teacherNum}}  </td>
            </tr>
        {% endfor %}          
    </table>
+   </center>
 </body>
