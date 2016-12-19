@@ -454,9 +454,8 @@ def createStudentCadre(request):
 
 
 def Excel(request):
-    book = xlrd.open_workbook('D:\\')
-    sheet = book.sheet_by_name('test')
-
+    book = xlrd.open_workbook('D:\\test.xls')
+    sheet = book.sheets()[0]  
     for r in range(1, sheet.nrows):
           collegeEntranceExaminationScore  = sheet.cell(r,0).value
           StudentNum     = sheet.cell(r,1).value
@@ -474,9 +473,9 @@ def Excel(request):
           identityNumber = sheet.cell(r,13).value
           speciality     = sheet.cell(r,14).value
           province       = sheet.cell(r,15).value
-          user = User(username = StudentNum,password = make_password('uibe'+identityNumber[-6:]),email = email)
+          user = User(username = str(int(StudentNum)),password = make_password('uibe'+str(int(identityNumber))[-6:]),email = email)
           user.save()
-    return HttpResponseRedirect('/home')
+    return HttpResponseRedirect('/')
 
 def index(request):
     projects=ResearchProjectRank.objects.all()
