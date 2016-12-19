@@ -6,14 +6,13 @@ from django.template import RequestContext
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
-from app.forms import ResetPasswordForm
 from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm,ResearchProjectForm
-from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm
+from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm,ResetPasswordForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,Paper,Competition,Exchange,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre
 import random,time
 import uuid
 import xlrd
@@ -157,13 +156,6 @@ def changeauth(request,username):
 		form = ChangeauthForm()
 	return render_to_response('changeauth.html',{'form':form,'error':error,'username':username})
 
-"""cd = form.cleaned_data
-            send_mail(
-                cd['subject'],
-                cd['message'],
-                cd.get('email', 'noreply@example.com'),
-                ['siteowner@example.com'],
-            )"""
 
 def createResearchProject(request):
     error = []
@@ -183,7 +175,7 @@ def createResearchProject(request):
         form = CreateResearchProjectForm()
     return render_to_response('createResearchProject.html',{'form':form,'error':error})
 
-def ResearchProject(request,id):
+def researchProject(request,id):
     error = []
     try:  
         project = ResearchProjectRank.objects.get(id = int(id))
@@ -209,6 +201,24 @@ def ResearchProject(request,id):
     else:
         form = ResearchProjectForm()
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
+
+
+def joinResearchProject(request):
+    error = []
+    if request.method == 'POST':
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = ResearchProject()
+            if True:
+                project.save()
+                return HttpResponse('科研立项项目创建成功！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        return HttpResponseRedirect('/')
+
 
 def createPaper(request):
     error = []
@@ -247,7 +257,7 @@ def createCompetition(request):
                                 teacherNum = Students.objects.get(user = request.user),
                                 startingTime = cd['ProjectTime'],
                                 status = 1,
-                                rank = '',
+                                rank = '0',
                                 Level = '',
                                 score = 0,
                                 CompleteNum = 0,
@@ -411,7 +421,7 @@ def createInternship(request):
             cd = form.cleaned_data
             project = InternshipRank(rankName = cd['ProjectName'],
                                 teacherNum = Students.objects.get(user = request.user),
-                                startingTime = cd['startingTime'],
+                                InternshipTime = cd['startingTime'],
                                 type = cd['type'],
                                 status = 1,
                                 score = 0,
@@ -520,45 +530,5 @@ def index(request):
     volunteerings=VolunteeringRank.objects.all()
     activities=SchoolActivityRank.objects.all()
     internships=InternshipRank.objects.all()
-    cadres=StudentCadreRank.objects.all()   
-    rankName=""
-    for project in projects:
-        rankName=project.rankName
-        break
-    return render_to_response('index.html',{'projects':projects,'rankName':rankName})
-    for paper in papers:
-        rankName=paper.rankName
-        break
-    return render_to_response('index.html',{'papers':papers,'rankName':rankName})
-    for competition in competitions:
-        rankName=competition.rankName
-        break
-    return render_to_response('index.html',{'competitions':competitions,'rankName':rankName})
-    for exchange in exchanges:
-        rankName=exchange.rankName
-        break
-    return render_to_response('index.html',{'exchanges':exchanges,'rankName':rankName})
-    for construction in constructions:
-        rankName=construction.rankName
-        break
-    return render_to_response('index.html',{'constructions':constructions,'rankName':rankName})
-    for lecture in lectures:
-        rankName=lecture.rankName
-        break
-    return render_to_response('index.html',{'lectures':lectures,'rankName':rankName})
-    for volunteering in volunteerings:
-        rankName=volunteering.rankName
-        break
-    return render_to_response('index.html',{'volunteerings':volunteerings,'rankName':rankName})
-    for activity in activities:
-        rankName=activity.rankName
-        break
-    return render_to_response('index.html',{'activities':activities,'rankName':rankName})
-    for internship in internships:
-        rankName=internship.rankName
-        break
-    return render_to_response('index.html',{'internships':internships,'rankName':rankName})
-    for cadre in cadres:
-        rankName=cadre.rankName
-        break
-    return render_to_response('index.html',{'cadres':cadres,'rankName':rankName})
+    cadres=StudentCadreRank.objects.all()
+    return render_to_response('index.html',{'projects':projects,'papers':papers,'competitions':competitions,'exchanges':exchanges,'constructions':constructions,'lectures':lectures,'volunteerings':volunteerings,'activities':activities,'internships':internships,'cadres':cadres})
