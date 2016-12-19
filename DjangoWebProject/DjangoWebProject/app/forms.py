@@ -5,6 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from cProfile import label
 
+ACTIVITY_STYLE = (("未通过", "1"), ("通过", "2"), ("待审核", "3"))  
+
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,

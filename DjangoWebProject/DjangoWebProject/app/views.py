@@ -202,6 +202,15 @@ def researchProject(request,id):
         form = ResearchProjectForm(data={"status": ["未通过", "通过", "待审核"]})
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
+def ResearchProjectDetail(request):
+    """detail"""
+    assert isinstance(request, HttpRequest)
+    return render(request,
+        'app/index.html',
+        {
+            'title':'SITE',
+            'year':datetime.now().year,
+        })
 
 def joinResearchProject(request):
     error = []
