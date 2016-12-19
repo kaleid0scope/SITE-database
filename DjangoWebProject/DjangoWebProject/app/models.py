@@ -131,7 +131,7 @@ class ClassScore(models.Model):
 #ResearchProject
 class ResearchProjectRank(models.Model):
     rankName = models.CharField(max_length = 20)
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     rank = models.CharField(max_length = 20)
     ManagerScore = models.SmallIntegerField()
     MemberScore = models.SmallIntegerField(null = True)
@@ -145,7 +145,7 @@ class ResearchProjectRank(models.Model):
         return self.rankName
 
 class ResearchProject(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(ResearchProjectRank)
     ProjectTime = models.DateField()
@@ -156,7 +156,7 @@ class ResearchProject(models.Model):
 
 #Paper-s
 class PaperRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     rankName = models.CharField(max_length = 50)
     journalName = models.CharField(max_length = 20)
     Level = models.CharField(max_length = 20)
@@ -173,7 +173,7 @@ class PaperRank(models.Model):
 
 #Competition-s
 class CompetitionRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     rankName = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
     rank = models.SmallIntegerField()
@@ -190,7 +190,7 @@ class CompetitionRank(models.Model):
 #Exchange-s
 class ExchangeRank(models.Model):
     rankName = models.CharField(max_length = 50)
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     nature = models.CharField(max_length = 20)
     score = models.SmallIntegerField()
@@ -206,7 +206,7 @@ class ExchangeRank(models.Model):
 
 #IdeologyConstruction
 class IdeologyConstructionRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     rankName = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
@@ -223,7 +223,7 @@ class IdeologyConstructionRank(models.Model):
         return self.rankName
 
 class IdeologyConstruction(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(IdeologyConstructionRank)
     inspector = models.ForeignKey(Inspectors)
@@ -233,7 +233,7 @@ class IdeologyConstruction(models.Model):
 
 #Lecture
 class LectureRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     rankName = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
@@ -251,7 +251,7 @@ class LectureRank(models.Model):
         return self.rankName
 
 class Lecture(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(LectureRank)
     inspector = models.ForeignKey(Inspectors)
@@ -261,7 +261,7 @@ class Lecture(models.Model):
 
 #Volunteering
 class VolunteeringRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     rankName = models.CharField(max_length = 20)
     organizer = models.CharField(max_length = 50)
     startingTime = models.DateField()
@@ -278,7 +278,7 @@ class VolunteeringRank(models.Model):
         return self.rankName
 
 class Volunteering(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(VolunteeringRank)
     inspector = models.ForeignKey(Inspectors)
@@ -288,7 +288,7 @@ class Volunteering(models.Model):
 
 #SchoolActivity
 class SchoolActivityRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     rankName = models.CharField(max_length = 20)
     sponsor = models.CharField(max_length = 50)
@@ -305,7 +305,7 @@ class SchoolActivityRank(models.Model):
         return self.rankName
 
 class SchoolActivity(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(SchoolActivityRank)
     inspector = models.ForeignKey(Inspectors)
@@ -316,7 +316,7 @@ class SchoolActivity(models.Model):
 #Internship
 class InternshipRank(models.Model):
     rankName = models.CharField(max_length = 20)
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     InternshipTime = models.DateField()
     score = models.SmallIntegerField()
@@ -329,7 +329,7 @@ class InternshipRank(models.Model):
         return self.rankName 
 
 class Internship(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(InternshipRank)
     rankName = models.CharField(max_length = 20)
@@ -346,7 +346,7 @@ class Internship(models.Model):
         return str(self.StudentNum)
 
 class StudentCadreRank(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     organizitionType = models.CharField(max_length = 50)
     organizitionName = models.CharField(max_length = 20)
     rankName = models.CharField(max_length = 20)
@@ -360,7 +360,7 @@ class StudentCadreRank(models.Model):
         return self.rankName 
 
 class StudentCadre(models.Model):
-    status = models.PositiveSmallIntegerField(default = 1)
+    status = models.CharField(max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(StudentCadreRank)
     startTime = models.DateField()

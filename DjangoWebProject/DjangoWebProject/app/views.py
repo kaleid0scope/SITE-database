@@ -199,7 +199,7 @@ def researchProject(request,id):
         else:
             error.append('Please input information of your project')
     else:
-        form = ResearchProjectForm()
+        form = ResearchProjectForm(data={"status": ["未通过", "已通过", "待审核"]})
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
 
