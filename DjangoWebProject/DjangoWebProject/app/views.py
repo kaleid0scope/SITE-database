@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,Paper,Competition,Exchange,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre,statusChoice
 import random,time
 import uuid
 import xlrd
@@ -163,7 +163,7 @@ def createResearchProject(request):
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            project = ResearchProjectRank(rankName = cd['ProjectName'],teacherNum = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = 1,rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+            project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('科研立项项目创建成功！')
@@ -191,7 +191,7 @@ def researchProject(request,id):
                 project.MemberScore = cd['MemberScore']
                 project.ManagerScore = cd['ManagerScore']
                 project.status = cd['status']
-                project.inspectorNum = Inspectors.objects.get(user = request.user)
+                project.inspector = Inspectors.objects.get(user = request.user)
                 project.save()
                 return HttpResponse('科研立项项目审核成功！')
             except Exception,e:  
@@ -202,6 +202,15 @@ def researchProject(request,id):
         form = ResearchProjectForm()
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
+def ResearchProjectDetail(request):
+    """detail"""
+    assert isinstance(request, HttpRequest)
+    return render(request,
+        'app/index.html',
+        {
+            'title':'SITE',
+            'year':datetime.now().year,
+        })
 
 def joinResearchProject(request):
     error = []
@@ -228,14 +237,14 @@ def createPaper(request):
             cd = form.cleaned_data
             project = PaperRank(rankName = cd['ProjectName'],
                                 journalName = cd['JournalName'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                student = Students.objects.get(user = request.user),
                                 startingTime = cd['ProjectTime'],
-                                status = 1,
+                                status = '待审核',
                                 Level = '',
                                 AuthorRanking = 0,
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(inspector = 10002))
             if True:
                 project.save()
                 return HttpResponse('论文申请已提交！')
@@ -254,14 +263,14 @@ def createCompetition(request):
         if form.is_valid():
             cd = form.cleaned_data
             project = CompetitionRank(rankName = cd['ProjectName'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                student = Students.objects.get(user = request.user),
                                 startingTime = cd['ProjectTime'],
-                                status = 1,
+                                status = '待审核',
                                 rank = '0',
                                 Level = '',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10001))
             if True:
                 project.save()
                 return HttpResponse('竞赛申请已提交！')
@@ -282,13 +291,13 @@ def createExchange(request):
             project = ExchangeRank(rankName = cd['ProjectName'],
                                 type = cd['type'],
                                 nature = cd['nature'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                student = Students.objects.get(user = request.user),
                                 startTime = cd['startTime'],
                                 endTime = cd['endTime'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10001))
             if True:
                 project.save()
                 return HttpResponse('交流交换申请已提交！')
@@ -308,15 +317,15 @@ def createIdeologyConstruction(request):
             cd = form.cleaned_data
             project = IdeologyConstructionRank(rankName = cd['ProjectName'],
                                 type = cd['type'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                teacher = Students.objects.get(user = request.user),
                                 startingTime = cd['startingTime'],
                                 organizer = cd['organizer'],
                                 Location = cd['Location'],
                                 Content = cd['Content'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('思建活动申请已提交！')
@@ -336,16 +345,16 @@ def createLecture(request):
             cd = form.cleaned_data
             project = LectureRank(rankName = cd['ProjectName'],
                                 type = cd['type'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                teacher = Students.objects.get(user = request.user),
                                 startingTime = cd['startingTime'],
                                 organizer = cd['organizer'],
                                 speaker = cd['speaker'],
                                 Location = cd['Location'],
                                 Content = cd['Content'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('讲座活动申请已提交！')
@@ -364,16 +373,16 @@ def createVolunteering(request):
         if form.is_valid():
             cd = form.cleaned_data
             project = VolunteeringRank(rankName = cd['ProjectName'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                teacher = Students.objects.get(user = request.user),
                                 startingTime = cd['startingTime'],
                                 volunteerTime = cd['volunteerTime'],
                                 organizer = cd['organizer'],
                                 Location = cd['Location'],
                                 Content = cd['Content'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('志愿活动申请已提交！')
@@ -392,16 +401,16 @@ def createSchoolActivity(request):
         if form.is_valid():
             cd = form.cleaned_data
             project = SchoolActivityRank(rankName = cd['ProjectName'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                teacher = Students.objects.get(user = request.user),
                                 startingTime = cd['startingTime'],
                                 type = cd['type'],
                                 sponsor = cd['sponsor'],
                                 organizer = cd['organizer'],
                                 awardLevel = cd['awardLevel'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('校园活动申请已提交！')
@@ -420,13 +429,13 @@ def createInternship(request):
         if form.is_valid():
             cd = form.cleaned_data
             project = InternshipRank(rankName = cd['ProjectName'],
-                                teacherNum = Students.objects.get(user = request.user),
+                                teacher = Students.objects.get(user = request.user),
                                 InternshipTime = cd['startingTime'],
                                 type = cd['type'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('实践实习信息申请已提交！')
@@ -444,13 +453,13 @@ def createStudentCadre(request):
         form = CreateStudentCadreForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            project = StudentCadreRank(teacherNum = Students.objects.get(user = request.user),
+            project = StudentCadreRank(teacher = Students.objects.get(user = request.user),
                                 organizitionType = cd['organizitionType'],
                                 organizitionName = cd['organizitionName'],
-                                status = 1,
+                                status = '待审核',
                                 score = 0,
                                 CompleteNum = 0,
-                                inspectorNum = Inspectors.objects.get(inspectorNum = 10002))
+                                inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
                 return HttpResponse('学生干部信息申请已提交！')
@@ -523,12 +532,42 @@ def Excel(request):
 def index(request):
     student = Students.objects.get(user = request.user)
     return render_to_response('index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),
-                                            'papers':Paper.objects.filter(StudentNum = student),
-                                            'competitions':Competition.objects.filter(StudentNum = student),
-                                            'exchanges':Exchange.objects.filter(StudentNum = student),
                                             'constructions':IdeologyConstruction.objects.filter(StudentNum = student),
                                             'lectures':Lecture.objects.filter(StudentNum = student),
                                             'volunteerings':Volunteering.objects.filter(StudentNum = student),
                                             'activities':SchoolActivity.objects.filter(StudentNum = student),
                                             'internships':Internship.objects.filter(StudentNum = student),
                                             'cadres':StudentCadre.objects.filter(StudentNum = student)})
+
+def ResearchProjectIndex(request):
+    return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过')})
+
+#single model do not need index
+'''
+def PaperIndex(request):
+    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '通过')})
+
+def CompetitionIndex(request):
+    return render_to_response('CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '通过')})
+
+def ExchangeIndex(request):
+    return render_to_response('ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '通过')})
+
+def StudentCadreIndex(request):
+    return render_to_response('StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '通过')})
+'''
+
+def IdeologyConstructionIndex(request):
+    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过')})
+
+def LectureIndex(request):
+    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过')})
+
+def VolunteeringIndex(request):
+    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过')})
+
+def SchoolActivityIndex(request):
+    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过')})
+
+def InternshipIndex(request):
+    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过')})

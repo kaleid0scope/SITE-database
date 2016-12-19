@@ -1,0 +1,16 @@
+﻿{{from django.shortcuts import render}}
+{{from django.http import HttpResponse}}
+{{from django.http import HttpResponseRedirect }}
+{{from django.shortcuts import render_to_response}}
+<body>
+         <p>如下:</p>
+   <table>
+           <tr >
+               <td>{{project.rankName}}</td>
+               <td>{{project.startingTime}}</td>
+               <td>{{project.teacher}}</td>
+               <td>{{project.SupportText}}</td>
+               <td>{{HttpResponseRedirect('/researchProjectDetail/'+str(project.id)}}</td>
+           </tr>
+   </table>
+</body>

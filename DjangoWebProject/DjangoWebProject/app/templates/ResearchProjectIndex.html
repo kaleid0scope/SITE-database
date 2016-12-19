@@ -1,0 +1,13 @@
+﻿<body>
+         <p>如下:</p>
+   <table>
+       {% for project in projects %}
+           <tr >
+               <td>{{project.rankNum.rankName}}</td>
+               <td>{{project.rankNum.startingTime}}</td>
+               <td>{{project.rankNum.teacher}}</td>
+               <td>{{django.shortcuts.render_to_response('ResearchProjectDetail.html',{'project':project.rankNum})}}</td>
+           </tr>
+       {% endfor %}
+   </table>
+</body>

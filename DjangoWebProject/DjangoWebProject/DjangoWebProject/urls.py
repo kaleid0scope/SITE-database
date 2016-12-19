@@ -12,7 +12,7 @@ import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import createResearchProject ,createPaper,createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre
-from app.views import researchProject,index,Excel
+from app.views import researchProject,index,Excel,ResearchProjectIndex,IdeologyConstructionIndex,LectureIndex,VolunteeringIndex,SchoolActivityIndex,InternshipIndex,ResearchProjectDetail
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -48,18 +48,32 @@ urlpatterns = [
     url(r'^search/$',search),
     url(r'^reset',app.views.reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
-    url(r'^changeauth/(?P<username>\w+)/$',changeauth),    
-    url(r'^createResearchProject/$',createResearchProject),  
+    url(r'^changeauth/(?P<username>\w+)/$',changeauth),
+
+    url(r'^createResearchProject/$',createResearchProject),
     url(r'^researchProject/(?P<id>\w+)/$',researchProject),
-    url(r'^createPaper/$',createPaper),  
-    url(r'^createCompetition/$',createCompetition),  
-    url(r'^createExchange/$',createExchange),  
-    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),  
-    url(r'^createLecture/$',createLecture),  
-    url(r'^createVolunteering/$',createVolunteering),  
-    url(r'^createSchoolActivity/$',createSchoolActivity),  
-    url(r'^createInternship/$',createInternship),  
+    url(r'^ResearchProjectDetail/$',ResearchProjectDetail), 
+    url(r'^ResearchProjectIndex/$',ResearchProjectIndex), 
+
+    url(r'^createPaper/$',createPaper),
+    url(r'^createCompetition/$',createCompetition),
+    url(r'^createExchange/$',createExchange), 
     url(r'^createStudentCadre/$',createStudentCadre), 
+
+    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),
+    url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
+
+    url(r'^createLecture/$',createLecture),
+    url(r'^IdeologyConstructionIndex/$',LectureIndex), 
+
+    url(r'^createVolunteering/$',createVolunteering),
+    url(r'^IdeologyConstructionIndex/$',VolunteeringIndex), 
+
+    url(r'^createSchoolActivity/$',createSchoolActivity),
+    url(r'^IdeologyConstructionIndex/$',SchoolActivityIndex), 
+
+    url(r'^createInternship/$',createInternship), 
+    url(r'^IdeologyConstructionIndex/$',InternshipIndex), 
     url(r'^index/$',index), 
     url(r'^excel/$',Excel),
 
