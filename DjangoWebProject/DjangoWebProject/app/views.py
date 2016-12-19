@@ -247,7 +247,7 @@ def createCompetition(request):
                                 teacherNum = Students.objects.get(user = request.user),
                                 startingTime = cd['ProjectTime'],
                                 status = 1,
-                                rank = '',
+                                rank = '0',
                                 Level = '',
                                 score = 0,
                                 CompleteNum = 0,
@@ -411,7 +411,7 @@ def createInternship(request):
             cd = form.cleaned_data
             project = InternshipRank(rankName = cd['ProjectName'],
                                 teacherNum = Students.objects.get(user = request.user),
-                                startingTime = cd['startingTime'],
+                                InternshipTime = cd['startingTime'],
                                 type = cd['type'],
                                 status = 1,
                                 score = 0,

@@ -304,7 +304,7 @@ class CreateInternshipForm(forms.Form):
     type = forms.CharField(required=True,
         label=u"实践实习类别",
         error_messages={'required': u'请输入实践实习类别'})
-    startingTime = forms.IntegerField(required=True,
+    startingTime = forms.DateField(required=True,
         label=u"实践实习时间",
         error_messages={'required': u'请输入实践实习时间'})
 
