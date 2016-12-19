@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 
 
 def testdb (request):
-	insp1 = Inspectors(inspectorNum=10002,name='chen')
+	insp1 = Inspectors(number=10002,name='chen')
 	insp1.save()
 	return HttpResponse("<p>ok</p>")
 
