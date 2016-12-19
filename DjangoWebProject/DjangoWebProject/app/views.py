@@ -453,59 +453,30 @@ def createStudentCadre(request):
     return render_to_response('createStudentCadre.html',{'form':form,'error':error})
 
 
-'''#excel 批量添加数据到数据库
-def ExcelToMysql(request):
-    book = xlrd.open_workbook('excel文件路径')
-    sheet = book.sheet_by_name('excel工作簿名')
+def Excel(request):
+    book = xlrd.open_workbook('D:\\')
+    sheet = book.sheet_by_name('test')
 
-    #建立一个MySQL连接
-    database = MySQLdb.connect (host="服务器名", user = "root", passwd = "", db = "数据库名")
-
-    # 获得游标对象, 用于逐行遍历数据库数据
-    cursor = database.cursor()
-
-    # 创建插入SQL语句
-    query = "INSERT INTO 目标数据库表 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'')"
-    # 创建一个for循环迭代读取xls文件每行数据的, 从第二行开始是要跳过标题
     for r in range(1, sheet.nrows):
-          user      = sheet.cell(r,0).value
-          StudentNum = sheet.cell(r,1).value
-          name          = sheet.cell(r,2).value
-          sex     = sheet.cell(r,3).value
-          year       = sheet.cell(r,4).value
-          phone = sheet.cell(r,5).value
-          email        = sheet.cell(r,6).value
-          born       = sheet.cell(r,7).value
-          root     = sheet.cell(r,8).value
-          nation        = sheet.cell(r,9).value
-          politicalStatus      = sheet.cell(r,10).value
-          location          = sheet.cell(r,11).value
+          collegeEntranceExaminationScore  = sheet.cell(r,0).value
+          StudentNum     = sheet.cell(r,1).value
+          name           = sheet.cell(r,2).value
+          sex            = sheet.cell(r,3).value
+          year           = sheet.cell(r,4).value
+          phone          = sheet.cell(r,5).value
+          email          = sheet.cell(r,6).value
+          born           = sheet.cell(r,7).value
+          root           = sheet.cell(r,8).value
+          nation         = sheet.cell(r,9).value
+          politicalStatus= sheet.cell(r,10).value
+          location       = sheet.cell(r,11).value
           identityType   = sheet.cell(r,12).value
           identityNumber = sheet.cell(r,13).value
-          speciality         = sheet.cell(r,14).value
+          speciality     = sheet.cell(r,14).value
           province       = sheet.cell(r,15).value
-          collegeEntranceExaminationScore   = sheet.cell(r,16).value
+          user = User(username = StudentNum,password = make_password('uibe'+identityNumber[-6:]),email = email)
+          user.save()
 
-          values = (user,StudentNum,name,sex,year,phone,email,born,root,nation,politicalStatus,location,identityType,identityNumber,speciality,province,collegeEntranceExaminationScore)
-
-          # 执行sql语句
-          cursor.execute(query, values)
-
-    # 关闭游标
-    cursor.close()
-
-    # 提交
-    database.commit()
-
-    # 关闭数据库连接
-    database.close()
-
-    # 打印结果
-    print ""
-    print "Done! "
-    print ""
-    print u"我刚导入了数据到MySQL!"
-    '''
 def index(request):
     projects=ResearchProjectRank.objects.all()
     rankName=""
