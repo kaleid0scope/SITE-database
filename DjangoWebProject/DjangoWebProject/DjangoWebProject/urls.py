@@ -11,9 +11,8 @@ import app.views
 import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
-from app.views import search_form, search, changepassword
-from app.views import createResearchProject ,createPaper
-from app.views import createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre,ResearchProject,index
+from app.views import createResearchProject ,createPaper,createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre
+from app.views import ResearchProject,index,Excel
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -51,7 +50,7 @@ urlpatterns = [
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
     url(r'^changeauth/(?P<username>\w+)/$',changeauth),    
     url(r'^createResearchProject/$',createResearchProject),  
-    url(r'^ResearchProject/(?P<id>\w+)/$',ResearchProject),
+    url(r'^researchProject/(?P<id>\w+)/$',ResearchProject),
     url(r'^createPaper/$',createPaper),  
     url(r'^createCompetition/$',createCompetition),  
     url(r'^createExchange/$',createExchange),  
@@ -62,6 +61,7 @@ urlpatterns = [
     url(r'^createInternship/$',createInternship),  
     url(r'^createStudentCadre/$',createStudentCadre), 
     url(r'^index/$',index), 
+    url(r'^excel/$',Excel),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -16,7 +16,7 @@ class Inspectors(models.Model):
         return self.name
 
 class Authorizations(models.Model):
-    id = models.PositiveIntegerField(primary_key = True)
+    id = models.CharField(max_length = 50,primary_key = True)
     isTeacher = models.BooleanField()
     research = models.BooleanField()
     paper = models.BooleanField()    
@@ -35,9 +35,9 @@ class Authorizations(models.Model):
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('用户'))
     auth = models.OneToOneField(Authorizations)
-    StudentNum =models.PositiveIntegerField(primary_key = True)
+    StudentNum = models.PositiveIntegerField(primary_key = True)
     rankName = models.CharField(max_length = 20)
-    sex =models.BooleanField()#初始值
+    sex = models.BooleanField()#初始值
     year = models.PositiveSmallIntegerField()
     phone = models.BigIntegerField()
     email = models.EmailField()    #特殊符号
@@ -47,7 +47,7 @@ class Students(models.Model):
     politicalStatus = models.CharField(max_length = 50)
     location = models.CharField(max_length = 50)
     identityType = models.CharField(max_length = 20)
-    identityNumber = models.PositiveIntegerField()
+    identityNumber = models.BigIntegerField()
     speciality = models.CharField(max_length = 50)
     province = models.CharField(max_length = 50)
     collegeEntranceExaminationScore = models.PositiveSmallIntegerField()
