@@ -1,11 +1,75 @@
 ﻿<body>
-         <p>项目数据如下:</p>
+         <p>项目信息如下:</p>
    <table border="10">
        {% for project in projects %}
            <tr >
                <td>{{project.rankName}}</td>
                <td>{{project.startingTime}}</td>
+               <td>{{project.status}}</td>
            </tr>
        {% endfor %}
+       {% for paper in papers %}
+           <tr >
+               <td>{{paper.rankName}}</td>
+               <td>{{paper.startingTime}}</td>
+               <td>{{paper.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for competition in competitions %}
+           <tr >
+               <td>{{competition.rankName}}</td>
+               <td>{{competition.startingTime}}</td>
+               <td>{{competition.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for exchange in exchanges %}
+           <tr >
+               <td>{{exchange.rankName}}</td>
+               <td>{{exchange.startTime}}</td>
+               <td>{{exchange.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for construction in constructions %}
+           <tr >
+               <td>{{construction.rankName}}</td>
+               <td>{{construction.startingTime}}</td>
+               <td>{{construction.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for lecture in lectures %}
+           <tr >
+               <td>{{lecture.rankName}}</td>
+               <td>{{lecture.startingTime}}</td>
+               <td>{{lecture.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for volunteering in volunteerings %}
+           <tr >
+               <td>{{volunteering.rankName}}</td>
+               <td>{{volunteering.startingTime}}</td>
+               <td>{{volunteering.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for activity in activities %}
+           <tr >
+               <td>{{activity.rankName}}</td>
+               <td>{{activity.startingTime}}</td>
+               <td>{{activity.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for internship in internships %}
+           <tr >
+               <td>{{internship.rankName}}</td>
+               <td>{{internship.startingTime}}</td>
+               <td>{{internship.status}}</td>
+           </tr>
+       {% endfor %}
+       {% for cadre in cadres %}
+           <tr >
+               <td>{{cadre.rankName}}</td>
+               <td>{{cadre.startingTime}}</td>
+               <td>{{cadre.status}}</td>
+           </tr>
+       {% endfor %}          
    </table>
 </body>
