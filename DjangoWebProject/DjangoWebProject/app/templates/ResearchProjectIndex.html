@@ -1,20 +1,38 @@
 ﻿{% extends "app/layout.html" %}
 
+
 {% block content %}
 
+<!DOCTYPE html>
+<html>
+
 <body>
-         <p>如下:</p>
-   <table>
-       {% for project in projects %}
-           <tr >
-               <td>{{project.rankName}}</td>
-               <td>{{project.startingTime}}</td>
-               <td>{{project.teacher}}</td>
-               {% if can == False %}<td><a class="btn btn-info" href= "/ResearchProjectDetail/{{project.id}}" >查看</a></td>{% endif %}
-               {% if can == True %}<td><a class="btn btn-info" href= "/researchProject/{{project.id}}" >审核</a></td>{% endif %}
-           </tr>
-       {% endfor %}
-   </table>
+
+<div class="container">
+	<h2>项目列表</h2>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>项目名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>其他信息</th>
+                <th>加入</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in projects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher}}</td>
+                <td>Anna</td>
+                <td><a class="btn btn-info" href= "/ResearchProjectDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+</div>
     {% if alert != '' %}
     <script>
         alert("{{alert}}");
