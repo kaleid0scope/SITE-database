@@ -6,8 +6,9 @@ from django.template import RequestContext
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
-from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm,ResearchProjectForm
+from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm
 from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm,ResetPasswordForm
+from app.forms import ResearchProjectForm,IdeologyConstructionForm,LectureForm,VolunteeringForm,SchoolActivityForm,InternshipForm,StudentCadreForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
@@ -195,7 +196,7 @@ def researchProject(request,id):
                 project.status = cd['status']
                 project.inspector = Inspectors.objects.get(user = request.user)
                 project.save()
-                return HttpResponse('科研立项项目审核成功！')
+                return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
             except Exception,e:  
                 error.append('Please check your importation')
         else:
@@ -206,12 +207,10 @@ def researchProject(request,id):
 
 
 def ResearchProjectDetail(request,id):
-    error = []
     try:  
         project = ResearchProjectRank.objects.get(id = int(id))
-    except Exception,e:  
-        error.append(e)
-        return render_to_response('ResearchProjectDetail.html',{'error':error})
+    except Exception,e: 
+        return render_to_response('ResearchProjectDetail.html',{'error':e})
     return render_to_response('ResearchProjectDetail.html',{'project':project})
 
 
@@ -256,7 +255,6 @@ def createPaper(request):
     else:
         form = CreatePaperForm()
     return render_to_response('createPaper.html',{'form':form,'error':error})
-
 def createCompetition(request):
     error = []
     if request.method == 'POST':
@@ -282,7 +280,29 @@ def createCompetition(request):
     else:
         form = CreateCompetitionForm()
     return render_to_response('createCompetition.html',{'form':form,'error':error})
-
+def createStudentCadre(request):
+    error = []
+    if request.method == 'POST':
+        form = CreateStudentCadreForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = StudentCadreRank(teacher = Students.objects.get(user = request.user),
+                                organizitionType = cd['organizitionType'],
+                                organizitionName = cd['organizitionName'],
+                                status = '待审核',
+                                score = 0,
+                                CompleteNum = 0,
+                                inspector = Inspectors.objects.get(number = 10002))
+            if True:
+                project.save()
+                return HttpResponse('学生干部信息申请已提交！')
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateStudentCadreForm()
+    return render_to_response('createStudentCadre.html',{'form':form,'error':error})
 def createExchange(request):
     error = []
     if request.method == 'POST':
@@ -309,6 +329,7 @@ def createExchange(request):
     else:
         form = CreateExchangeForm()
     return render_to_response('createExchange.html',{'form':form,'error':error})
+
 
 def createIdeologyConstruction(request):
     error = []
@@ -337,6 +358,46 @@ def createIdeologyConstruction(request):
     else:
         form = CreateIdeologyConstructionForm()
     return render_to_response('createIdeologyConstruction.html',{'form':form,'error':error})
+
+
+def ideologyConstruction(request,id):
+    error = []
+    try:  
+        project = IdeologyConstructionRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('IdeologyConstruction.html',{'error':error})
+    if project.status == '未通过':
+        if request.method == 'POST':
+            form = IdeologyConstructionForm(request.POST)
+            if form.is_valid() and auth.isTeacher and auth.ideologyConstruction:
+                cd = form.cleaned_data
+                try:
+                    project.score = cd['score']
+                    project.status = cd['status']
+                    project.inspector = inspector
+                    project.save()
+                    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = IdeologyConstructionForm()
+            return render_to_response('IdeologyConstruction.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.ideologyConstruction:
+       return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核失败！该活动已审核','can':True})
+    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'alert':'','can':False})
+
+def IdeologyConstructionDetail(request,id):
+    try:  
+        project = IdeologyConstructionRank.objects.get(id = int(id))
+    except Exception,e: 
+        return render_to_response('IdeologyConstructionDetail.html',{'error':e})
+    return render_to_response('IdeologyConstructionDetail.html',{'project':project})
+
 
 def createLecture(request):
     error = []
@@ -367,6 +428,15 @@ def createLecture(request):
         form = CreateLectureForm()
     return render_to_response('createLecture.html',{'form':form,'error':error})
 
+
+def LectureDetail(request,id):
+    try:  
+        project = LectureRank.objects.get(id = int(id))
+    except Exception,e: 
+        return render_to_response('LectureDetail.html',{'error':e})
+    return render_to_response('LectureDetail.html',{'project':project})
+
+
 def createVolunteering(request):
     error = []
     if request.method == 'POST':
@@ -394,6 +464,15 @@ def createVolunteering(request):
     else:
         form = CreateVolunteeringForm()
     return render_to_response('createVolunteering.html',{'form':form,'error':error})
+
+
+def VolunteeringDetail(request,id):
+    try:  
+        project = VolunteeringRank.objects.get(id = int(id))
+    except Exception,e: 
+        return render_to_response('VolunteeringDetail.html',{'error':e})
+    return render_to_response('VolunteeringDetail.html',{'project':project})
+
 
 def createSchoolActivity(request):
     error = []
@@ -423,6 +502,15 @@ def createSchoolActivity(request):
         form = CreateSchoolActivityForm()
     return render_to_response('createSchoolActivity.html',{'form':form,'error':error})
 
+
+def SchoolActivityDetail(request,id):
+    try:  
+        project = SchoolActivityRank.objects.get(id = int(id))
+    except Exception,e: 
+        return render_to_response('SchoolActivityDetail.html',{'error':e})
+    return render_to_response('SchoolActivityDetail.html',{'project':project})
+
+
 def createInternship(request):
     error = []
     if request.method == 'POST':
@@ -448,29 +536,13 @@ def createInternship(request):
         form = CreateInternshipForm()
     return render_to_response('createInternship.html',{'form':form,'error':error})
 
-def createStudentCadre(request):
-    error = []
-    if request.method == 'POST':
-        form = CreateStudentCadreForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            project = StudentCadreRank(teacher = Students.objects.get(user = request.user),
-                                organizitionType = cd['organizitionType'],
-                                organizitionName = cd['organizitionName'],
-                                status = '待审核',
-                                score = 0,
-                                CompleteNum = 0,
-                                inspector = Inspectors.objects.get(number = 10002))
-            if True:
-                project.save()
-                return HttpResponse('学生干部信息申请已提交！')
-            else:
-                error.append('Please check your importation')
-        else:
-            error.append('Please input information of your project')
-    else:
-        form = CreateStudentCadreForm()
-    return render_to_response('createStudentCadre.html',{'form':form,'error':error})
+
+def InternshipDetail(request,id):
+    try:  
+        project = InternshipRank.objects.get(id = int(id))
+    except Exception,e: 
+        return render_to_response('InternshipDetail.html',{'error':e})
+    return render_to_response('InternshipDetail.html',{'project':project})
 
 
 def Excel(request):
