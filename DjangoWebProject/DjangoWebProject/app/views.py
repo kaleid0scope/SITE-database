@@ -159,6 +159,7 @@ def changeauth(request,username):
 
 def createResearchProject(request):
     error = []
+    alert = ''
     if request.method == 'POST':
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
@@ -166,14 +167,14 @@ def createResearchProject(request):
             project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
-                return HttpResponse('科研立项项目创建成功！')
+                alert = '成功创建！'
             else:
                 error.append('Please check your importation')
         else:
             error.append('Please input information of your project')
     else:
         form = CreateResearchProjectForm()
-    return render_to_response('createResearchProject.html',{'form':form,'error':error})
+    return render_to_response('createResearchProject.html',{'form':form,'error':error,'alert':alert})
 
 def researchProject(request,id):
     error = []
@@ -182,6 +183,7 @@ def researchProject(request,id):
         auth = Students.objects.get(user = request.user).auth
     except Exception,e:  
         error.append(e)
+        return render_to_response('ResearchProject.html',{'error':error})
     if request.method == 'POST':
         form = ResearchProjectForm(request.POST)
         if form.is_valid() and auth.isTeacher:
@@ -202,31 +204,30 @@ def researchProject(request,id):
         form = ResearchProjectForm()
     return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
 
-def ResearchProjectDetail(request):
-    """detail"""
-    assert isinstance(request, HttpRequest)
-    return render(request,
-        'app/index.html',
-        {
-            'title':'SITE',
-            'year':datetime.now().year,
-        })
 
-def joinResearchProject(request):
+def ResearchProjectDetail(request,id):
     error = []
-    if request.method == 'POST':
-        if form.is_valid():
-            cd = form.cleaned_data
-            project = ResearchProject()
-            if True:
-                project.save()
-                return HttpResponse('科研立项项目创建成功！')
-            else:
-                error.append('Please check your importation')
-        else:
-            error.append('Please input information of your project')
-    else:
-        return HttpResponseRedirect('/')
+    try:  
+        project = ResearchProjectRank.objects.get(id = int(id))
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('ResearchProjectDetail.html',{'error':error})
+    return render_to_response('ResearchProjectDetail.html',{'project':project})
+
+
+def JoinResearchProject(request,id):
+    error = []
+    alert = ''
+    try:  
+        project = ResearchProjectRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('ResearchProjectDetail.html',{'error':error})
+    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project ,projectTime = datetime.today , inspector = 10002)
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('ResearchProjectIndex.html',{'alert':alert})
 
 
 def createPaper(request):

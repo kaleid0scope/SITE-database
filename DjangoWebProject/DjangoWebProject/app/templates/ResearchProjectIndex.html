@@ -6,8 +6,13 @@
                <td>{{project.rankNum.rankName}}</td>
                <td>{{project.rankNum.startingTime}}</td>
                <td>{{project.rankNum.teacher}}</td>
-               <td>{{django.shortcuts.render_to_response('ResearchProjectDetail.html',{'project':project.rankNum})}}</td>
+               <td><a class="btn btn-info" href= "{% url 'ResearchProjectDetail' project.id %}" >查看</a></td>
            </tr>
        {% endfor %}
    </table>
+    {% if alert != '' %}
+    <script>
+        alert("{{alert}}");
+    </script>
+    {% endif %}
 </body>
