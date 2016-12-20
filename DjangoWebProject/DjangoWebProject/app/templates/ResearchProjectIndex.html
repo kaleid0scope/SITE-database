@@ -2,15 +2,33 @@
 
 {% block content %}
 
-<body>
-         <p>如下:</p>
-   <table>
+<body style="font-family:'Microsoft JhengHei'">
+         <p style="font-size:xx-large">项目列表:</p>
+   <table style="width:auto;border-top:solid;border-bottom:solid;border-width:thin">
+               <td style="font-size:x-large">项目名称</td>
+               <td width="50px"></td>
+               <td style="font-size:x-large">开始时间</td>
+               <td width="50px"></td>
+               <td style="font-size:x-large">指导老师</td>
+               <td width="50px"></td>
+               <td style="font-size:x-large">信息一</td>
+               <td width="50px"></td>
+               <td style="font-size:x-large">信息二</td>
+               <td width="50px"></td>
+               <td style="font-size:x-large">加入</td>
        {% for project in projects %}
            <tr >
                <td>{{project.rankName}}</td>
+               <td width="50px"></td>
                <td>{{project.startingTime}}</td>
+               <td width="50px"></td>
                <td>{{project.teacher}}</td>
-               <td><a class="btn btn-info" href= "/ResearchProjectDetail/{{project.id}}" >查看</a></td>
+               <td width="50px"></td>
+               <td></td>
+               <td width="50px"></td>
+               <td></td>
+               <td width="50px"></td>
+               <td ><a class="btn btn-info" href= "/ResearchProjectDetail/{{project.id}}" >查看</a></td>
            </tr>
        {% endfor %}
    </table>
