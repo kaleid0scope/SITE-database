@@ -15,6 +15,7 @@ from app.views import createResearchProject ,createPaper,createCompetition,creat
 from app.views import researchProject,index,Excel,ResearchProjectIndex,IdeologyConstructionIndex,LectureIndex,VolunteeringIndex,SchoolActivityIndex,InternshipIndex
 from app.views import ResearchProjectDetail,IdeologyConstructionDetail,LectureDetail,VolunteeringDetail,SchoolActivityDetail,InternshipDetail
 from app.views import JoinResearchProject,JoinIdeologyConstruction,JoinLecture,JoinVolunteering,JoinSchoolActivity,JoinInternship
+from app.views import researchProject,ideologyConstruction,lecture,volunteering,schoolActivity,internship
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
