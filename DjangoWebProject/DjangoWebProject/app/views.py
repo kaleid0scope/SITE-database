@@ -158,77 +158,6 @@ def changeauth(request,username):
 	return render_to_response('changeauth.html',{'form':form,'error':error,'username':username})
 
 
-def createResearchProject(request):
-    error = []
-    alert = ''
-    if request.method == 'POST':
-        form = CreateResearchProjectForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspector = Inspectors.objects.get(number = 10002))
-            if True:
-                project.save()
-                alert = '成功创建！'
-            else:
-                error.append('Please check your importation')
-        else:
-            error.append('Please input information of your project')
-    else:
-        form = CreateResearchProjectForm()
-    return render_to_response('createResearchProject.html',{'form':form,'error':error,'alert':alert})
-
-def researchProject(request,id):
-    error = []
-    try:  
-        project = ResearchProjectRank.objects.get(id = int(id))
-        auth = Students.objects.get(user = request.user).auth
-    except Exception,e:  
-        error.append(e)
-        return render_to_response('ResearchProject.html',{'error':error})
-    if request.method == 'POST':
-        form = ResearchProjectForm(request.POST)
-        if form.is_valid() and auth.isTeacher and project.status == '未通过':
-            cd = form.cleaned_data
-            try:
-                project.rank = cd['rank']
-                project.MemberScore = cd['MemberScore']
-                project.ManagerScore = cd['ManagerScore']
-                project.status = cd['status']
-                project.inspector = Inspectors.objects.get(user = request.user)
-                project.save()
-                return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
-            except Exception,e:  
-                error.append('Please check your importation')
-        else:
-            error.append('Please input information of your project')
-    else:
-        form = ResearchProjectForm()
-    return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
-
-
-def ResearchProjectDetail(request,id):
-    try:  
-        project = ResearchProjectRank.objects.get(id = int(id))
-    except Exception,e: 
-        return render_to_response('ResearchProjectDetail.html',{'error':e})
-    return render_to_response('ResearchProjectDetail.html',{'project':project})
-
-
-def JoinResearchProject(request,id):
-    error = []
-    alert = ''
-    try:  
-        project = ResearchProjectRank.objects.get(id = int(id))
-        student = Students.objects.get(user = request.user)
-    except Exception,e:  
-        error.append(e)
-        return render_to_response('ResearchProjectDetail.html',{'error':error})
-    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
-    join.save()
-    alert = '成功加入！'
-    return render_to_response('ResearchProjectIndex.html',{'alert':alert})
-
-
 def createPaper(request):
     error = []
     if request.method == 'POST':
@@ -331,6 +260,83 @@ def createExchange(request):
     return render_to_response('createExchange.html',{'form':form,'error':error})
 
 
+def createResearchProject(request):
+    error = []
+    alert = ''
+    if request.method == 'POST':
+        form = CreateResearchProjectForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0,CompleteNum = 0,inspector = Inspectors.objects.get(number = 10002))
+            if True:
+                project.save()
+                alert = '成功创建！'
+            else:
+                error.append('Please check your importation')
+        else:
+            error.append('Please input information of your project')
+    else:
+        form = CreateResearchProjectForm()
+    return render_to_response('createResearchProject.html',{'form':form,'error':error,'alert':alert})
+
+
+def researchProject(request,id):
+    error = []
+    try:  
+        project = ResearchProjectRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('ResearchProject.html',{'error':error})
+    if project.status == '未通过':
+        if request.method == 'POST':
+            form = ResearchProjectForm(request.POST)
+            if form.is_valid() and auth.isTeacher and auth.research:
+                cd = form.cleaned_data
+                try:
+                    project.rank = cd['rank']
+                    project.MemberScore = cd['MemberScore']
+                    project.ManagerScore = cd['ManagerScore']
+                    project.status = cd['status']
+                    project.inspector = inspector 
+                    project.save()
+                    return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = ResearchProjectForm()
+        return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.ideologyConstruction:
+       return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核失败！该活动已审核','can':True})
+    return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':'','can':False})
+
+
+def ResearchProjectDetail(request,id):
+    try:  
+        project = ResearchProjectRank.objects.get(id = int(id))
+    except Exception,e: 
+        return render_to_response('ResearchProjectDetail.html',{'error':e})
+    return render_to_response('ResearchProjectDetail.html',{'project':project})
+
+
+def JoinResearchProject(request,id):
+    error = []
+    alert = ''
+    try:  
+        project = ResearchProjectRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('ResearchProjectDetail.html',{'error':error})
+    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('ResearchProjectIndex.html',{'alert':alert})
+
+
 def createIdeologyConstruction(request):
     error = []
     if request.method == 'POST':
@@ -429,6 +435,38 @@ def createLecture(request):
     return render_to_response('createLecture.html',{'form':form,'error':error})
 
 
+def lecture(request,id):
+    error = []
+    try:  
+        project = LectureRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('IdeologyConstruction.html',{'error':error})
+    if project.status == '未通过':
+        if request.method == 'POST':
+            form = LectureForm(request.POST)
+            if form.is_valid() and auth.isTeacher and auth.lecture:
+                cd = form.cleaned_data
+                try:
+                    project.score = cd['score']
+                    project.status = cd['status']
+                    project.inspector = inspector
+                    project.save()
+                    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'讲座活动审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = LectureForm()
+            return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.lecture:
+       return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'讲座活动审核失败！该活动已审核','can':True})
+    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过'),'alert':'','can':False})
+
+
 def LectureDetail(request,id):
     try:  
         project = LectureRank.objects.get(id = int(id))
@@ -464,6 +502,38 @@ def createVolunteering(request):
     else:
         form = CreateVolunteeringForm()
     return render_to_response('createVolunteering.html',{'form':form,'error':error})
+
+
+def volunteering(request,id):
+    error = []
+    try:  
+        project = VolunteeringRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('Volunteering.html',{'error':error})
+    if project.status == '未通过':
+        if request.method == 'POST':
+            form = VolunteeringForm(request.POST)
+            if form.is_valid() and auth.isTeacher and auth.volunteering:
+                cd = form.cleaned_data
+                try:
+                    project.score = cd['score']
+                    project.status = cd['status']
+                    project.inspector = inspector
+                    project.save()
+                    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'志愿活动审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = VolunteeringForm()
+            return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.volunteering:
+       return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'志愿活动审核失败！该活动已审核','can':True})
+    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过'),'alert':'','can':False})
 
 
 def VolunteeringDetail(request,id):
@@ -503,6 +573,38 @@ def createSchoolActivity(request):
     return render_to_response('createSchoolActivity.html',{'form':form,'error':error})
 
 
+def schoolActivity(request,id):
+    error = []
+    try:  
+        project = SchoolActivityRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('SchoolActivity.html',{'error':error})
+    if project.status == '未通过':
+        if request.method == 'POST':
+            form = SchoolActivityForm(request.POST)
+            if form.is_valid() and auth.isTeacher and auth.schoolActivity:
+                cd = form.cleaned_data
+                try:
+                    project.score = cd['score']
+                    project.status = cd['status']
+                    project.inspector = inspector
+                    project.save()
+                    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'校园活动审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = SchoolActivityForm()
+            return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.schoolActivity:
+       return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'校园活动审核失败！该活动已审核','can':True})
+    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过'),'alert':'','can':False})
+
+
 def SchoolActivityDetail(request,id):
     try:  
         project = SchoolActivityRank.objects.get(id = int(id))
@@ -535,6 +637,38 @@ def createInternship(request):
     else:
         form = CreateInternshipForm()
     return render_to_response('createInternship.html',{'form':form,'error':error})
+
+
+def internship(request,id):
+    error = []
+    try:  
+        project = InternshipRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('Internship.html',{'error':error})
+    if project.status == '未通过':
+        if request.method == 'POST':
+            form = InternshipForm(request.POST)
+            if form.is_valid() and auth.isTeacher and auth.internship:
+                cd = form.cleaned_data
+                try:
+                    project.score = cd['score']
+                    project.status = cd['status']
+                    project.inspector = inspector
+                    project.save()
+                    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = InternshipForm()
+            return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.internship:
+       return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核失败！该活动已审核','can':True})
+    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'alert':'','can':False})
 
 
 def InternshipDetail(request,id):
