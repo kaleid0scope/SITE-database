@@ -1,14 +1,39 @@
-﻿
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
 <body>
-    {% for item in error %}
+	
+<div class="container">
+	<h2>项目详情如下：</h2>             
+	<table class="table table-striped">
+		    {% for item in error %}
 		<p style="color:red;">{{item}}</p>
 	{% endfor %}
-         <p>ResearchProjectDetail如下:</p>
-    <ul class="nav navbar-nav">
-               <li>{{project.rankName}}</li>
-               <li>{{project.startingTime}}</li>
-               <li>{{project.teacher}}</li>
-               <li>{{project.SupportText}}</li>
-               <li><a class="btn btn-info" href= "/JoinResearchProject/{{project.id}}" >加入</a></li>
-    </ul>
-</body>
+		<tbody>
+			<tr>
+				<td width="100px">项目名称：</td>
+				<td>{{project.rankName}}</td>
+			</tr>
+			<tr>
+				<td>开始时间：</td>
+				<td>{{project.startingTime}}</td>
+			</tr>
+			<tr>
+				<td>指导老师：</td>
+				<td>{{project.teacher}}</td>
+			</tr>
+            <tr>
+				<td>详细介绍：</td>
+				<td>{{project.SupportText}}</td>
+			</tr>
+            <tr>
+				<td>报名：</td>
+				<td><a class="btn btn-info" href= "/JoinResearchProject/{{project.id}}" >加入</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+{% endblock %}
