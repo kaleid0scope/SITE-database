@@ -1,9 +1,13 @@
-﻿
-<body>
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<body style="font-family:'Microsoft YaHei'">
+    <center>
     {% for item in error %}
 		<p style="color:red;">{{item}}</p>
 	{% endfor %}
-         <p>ResearchProjectDetail如下:</p>
+         <p style="font-size:xx-large">科研立项详情:</p>
    <table>
            <tr >
                <td>{{project.rankName}}</td>
@@ -13,4 +17,6 @@
                <td><a class="btn btn-info" href= "{% url 'JoinResearchProject' project.id %}" >加入</a></td>
            </tr>
    </table>
+    </center>
 </body>
+{% endblock %}
