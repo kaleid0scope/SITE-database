@@ -186,7 +186,7 @@ def researchProject(request,id):
         return render_to_response('ResearchProject.html',{'error':error})
     if request.method == 'POST':
         form = ResearchProjectForm(request.POST)
-        if form.is_valid() and auth.isTeacher:
+        if form.is_valid() and auth.isTeacher and project.status == '未通过':
             cd = form.cleaned_data
             try:
                 project.rank = cd['rank']
@@ -547,8 +547,10 @@ def ResearchProjectIndex(request):
     except Exception,e:  
         error.append(e)
         return render_to_response('Index.html',{'alert':error})
-    if (project.count() == 0):
-        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':''})
+    if student.auth.isTeacher and student.auth.research:
+        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'','can':True})
+    if project.count() == 0:
+        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':'','can':False})
     return render_to_response('Index.html',{'alert':'您已加入科研立项!'})
 
 #single model do not need index
