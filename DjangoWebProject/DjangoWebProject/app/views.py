@@ -323,14 +323,12 @@ def ResearchProjectDetail(request,id):
 
 
 def JoinResearchProject(request,id):
-    error = []
     alert = ''
     try:  
         project = ResearchProjectRank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
-        return render_to_response('ResearchProjectDetail.html',{'error':error})
+        return render_to_response('ResearchProjectDetail.html',{'error':e})
     join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
     join.save()
     alert = '成功加入！'
@@ -397,12 +395,26 @@ def ideologyConstruction(request,id):
        return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核失败！该活动已审核','can':True})
     return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'alert':'','can':False})
 
+
 def IdeologyConstructionDetail(request,id):
     try:  
         project = IdeologyConstructionRank.objects.get(id = int(id))
     except Exception,e: 
         return render_to_response('IdeologyConstructionDetail.html',{'error':e})
     return render_to_response('IdeologyConstructionDetail.html',{'project':project})
+
+
+def JoinIdeologyConstruction(request,id):
+    alert = ''
+    try:  
+        project = IdeologyConstructionRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        return render_to_response('IdeologyConstructionDetail.html',{'error':e})
+    join = IdeologyConstruction(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('IdeologyConstructionIndex.html',{'alert':alert})
 
 
 def createLecture(request):
@@ -475,6 +487,19 @@ def LectureDetail(request,id):
     return render_to_response('LectureDetail.html',{'project':project})
 
 
+def JoinLecture(request,id):
+    alert = ''
+    try:  
+        project = LectureRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        return render_to_response('LectureDetail.html',{'error':e})
+    join = Lecture(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('LectureIndex.html',{'alert':alert})
+
+
 def createVolunteering(request):
     error = []
     if request.method == 'POST':
@@ -542,6 +567,19 @@ def VolunteeringDetail(request,id):
     except Exception,e: 
         return render_to_response('VolunteeringDetail.html',{'error':e})
     return render_to_response('VolunteeringDetail.html',{'project':project})
+
+
+def JoinVolunteering(request,id):
+    alert = ''
+    try:  
+        project = VolunteeringRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        return render_to_response('VolunteeringDetail.html',{'error':e})
+    join = Volunteering(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('VolunteeringIndex.html',{'alert':alert})
 
 
 def createSchoolActivity(request):
@@ -613,6 +651,19 @@ def SchoolActivityDetail(request,id):
     return render_to_response('SchoolActivityDetail.html',{'project':project})
 
 
+def JoinSchoolActivity(request,id):
+    alert = ''
+    try:  
+        project = SchoolActivityRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        return render_to_response('SchoolActivityDetail.html',{'error':e})
+    join = SchoolActivity(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('SchoolActivityIndex.html',{'alert':alert})
+
+
 def createInternship(request):
     error = []
     if request.method == 'POST':
@@ -677,6 +728,19 @@ def InternshipDetail(request,id):
     except Exception,e: 
         return render_to_response('InternshipDetail.html',{'error':e})
     return render_to_response('InternshipDetail.html',{'project':project})
+
+
+def JoinInternship(request,id):
+    alert = ''
+    try:  
+        project = InternshipRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
+    except Exception,e:  
+        return render_to_response('InternshipDetail.html',{'error':e})
+    join = Internship(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功加入！'
+    return render_to_response('InternshipIndex.html',{'alert':alert})
 
 
 def Excel(request):
