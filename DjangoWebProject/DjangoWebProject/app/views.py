@@ -541,7 +541,15 @@ def index(request):
                                             'cadres':StudentCadre.objects.filter(StudentNum = student)})
 
 def ResearchProjectIndex(request):
-    return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':''})
+    try:  
+        student = Students.objects.get(user = request.user)
+        project = ResearchProject.objects.filter(StudentNum= student)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('Index.html',{'alert':error})
+    if (project.count() == 0):
+        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':''})
+    return render_to_response('Index.html',{'alert':'您已加入科研立项!'})
 
 #single model do not need index
 '''
