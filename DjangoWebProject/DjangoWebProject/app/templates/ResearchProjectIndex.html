@@ -1,37 +1,38 @@
 ﻿{% extends "app/layout.html" %}
 
+
 {% block content %}
 
-<body style="font-family:'Microsoft JhengHei'">
-         <p style="font-size:xx-large">项目列表:</p>
-   <table style="width:auto;border-top:solid;border-bottom:solid;border-width:thin">
-               <td style="font-size:x-large">项目名称</td>
-               <td width="50px"></td>
-               <td style="font-size:x-large">开始时间</td>
-               <td width="50px"></td>
-               <td style="font-size:x-large">指导老师</td>
-               <td width="50px"></td>
-               <td style="font-size:x-large">信息一</td>
-               <td width="50px"></td>
-               <td style="font-size:x-large">信息二</td>
-               <td width="50px"></td>
-               <td style="font-size:x-large">加入</td>
-       {% for project in projects %}
-           <tr >
-               <td>{{project.rankName}}</td>
-               <td width="50px"></td>
-               <td>{{project.startingTime}}</td>
-               <td width="50px"></td>
-               <td>{{project.teacher}}</td>
-               <td width="50px"></td>
-               <td></td>
-               <td width="50px"></td>
-               <td></td>
-               <td width="50px"></td>
-               <td ><a class="btn btn-info" href= "/ResearchProjectDetail/{{project.id}}" >查看</a></td>
-           </tr>
-       {% endfor %}
-   </table>
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<div class="container">
+	<h2>项目列表</h2>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>项目名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>其他信息</th>
+                <th>加入</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in projects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher}}</td>
+                <td>Anna</td>
+                <td><a class="btn btn-info" href= "/ResearchProjectDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+</div>
     {% if alert != '' %}
     <script>
         alert("{{alert}}");
