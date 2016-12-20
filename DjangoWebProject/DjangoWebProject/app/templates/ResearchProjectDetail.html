@@ -1,22 +1,14 @@
-﻿{% extends "app/layout.html" %}
-
-{% block content %}
-
-<body style="font-family:'Microsoft YaHei'">
-    <center>
+﻿
+<body>
     {% for item in error %}
 		<p style="color:red;">{{item}}</p>
 	{% endfor %}
-         <p style="font-size:xx-large">科研立项详情:</p>
-   <table>
-           <tr >
-               <td>{{project.rankName}}</td>
-               <td>{{project.startingTime}}</td>
-               <td>{{project.teacher}}</td>
-               <td>{{project.SupportText}}</td>
-               <td><a class="btn btn-info" href= "{% url 'JoinResearchProject' project.id %}" >加入</a></td>
-           </tr>
-   </table>
-    </center>
+         <p>ResearchProjectDetail如下:</p>
+    <ul class="nav navbar-nav">
+               <li>{{project.rankName}}</li>
+               <li>{{project.startingTime}}</li>
+               <li>{{project.teacher}}</li>
+               <li>{{project.SupportText}}</li>
+               <li><a class="btn btn-info" href= "/JoinResearchProject/{{project.id}}" >加入</a></li>
+        </ul>
 </body>
-{% endblock %}

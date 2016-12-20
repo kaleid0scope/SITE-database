@@ -56,7 +56,7 @@ urlpatterns = [
     url(r'^researchProject/(?P<id>\w+)/$',researchProject),
     url(r'^ResearchProjectDetail/(?P<id>\w+)/$',ResearchProjectDetail), 
     url(r'^ResearchProjectIndex/$',ResearchProjectIndex), 
-    url(r'^JoinProjectIndex/(?P<id>\w+)/$',JoinResearchProject), 
+    url(r'^JoinResearchProject/(?P<id>\w+)/$',JoinResearchProject), 
 
     url(r'^createPaper/$',createPaper),
     url(r'^createCompetition/$',createCompetition),

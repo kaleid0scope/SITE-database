@@ -153,7 +153,6 @@ class ResearchProject(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(ResearchProjectRank)
-    ProjectTime = models.DateField()
     inspector = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
