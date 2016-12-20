@@ -29,7 +29,7 @@ def home(request):
     return render(request,
         'app/index.html',
         {
-            'title':'SITE',
+            'title':'学生综合测评系统',
             'year':datetime.now().year,
         })
 
