@@ -1,4 +1,8 @@
-﻿<body>
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<body>
          <p>如下:</p>
    <table>
        {% for project in projects %}
@@ -17,3 +21,4 @@
     </script>
     {% endif %}
 </body>
+{% endblock %}
