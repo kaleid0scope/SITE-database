@@ -4,13 +4,11 @@
 		<p style="color:red;">{{item}}</p>
 	{% endfor %}
          <p>ResearchProjectDetail如下:</p>
-   <table>
-           <tr >
-               <td>{{project.rankName}}</td>
-               <td>{{project.startingTime}}</td>
-               <td>{{project.teacher}}</td>
-               <td>{{project.SupportText}}</td>
-               <td><a class="btn btn-info" href= "{% url 'JoinResearchProject' project.id %}" >加入</a></td>
-           </tr>
-   </table>
+    <ul class="nav navbar-nav">
+               <li>{{project.rankName}}</li>
+               <li>{{project.startingTime}}</li>
+               <li>{{project.teacher}}</li>
+               <li>{{project.SupportText}}</li>
+               <li><a class="btn btn-info" href= "/JoinResearchProject/{{project.id}}" >加入</a></li>
+        </ul>
 </body>

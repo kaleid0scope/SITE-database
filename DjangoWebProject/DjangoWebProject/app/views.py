@@ -224,7 +224,7 @@ def JoinResearchProject(request,id):
     except Exception,e:  
         error.append(e)
         return render_to_response('ResearchProjectDetail.html',{'error':error})
-    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project ,projectTime = datetime.today , inspector = 10002)
+    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
     join.save()
     alert = '成功加入！'
     return render_to_response('ResearchProjectIndex.html',{'alert':alert})
@@ -541,7 +541,7 @@ def index(request):
                                             'cadres':StudentCadre.objects.filter(StudentNum = student)})
 
 def ResearchProjectIndex(request):
-    return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过')})
+    return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':''})
 
 #single model do not need index
 '''
