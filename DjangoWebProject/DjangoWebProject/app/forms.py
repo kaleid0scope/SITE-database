@@ -19,11 +19,15 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 
 
 class ResetPasswordForm(forms.Form):
-    username = forms.CharField()
-    email = forms.EmailField()
+    username = forms.CharField(widget=forms.TextInput({
+                                   'class': 'form-control'}),        label=u"用户名",
+)
+    email = forms.EmailField(widget=forms.TextInput({
+                                   'class': 'form-control'}),        label=u"邮箱",
+)
     password = forms.CharField(widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'}))
+                                   'class': 'form-control'}),        label=u"新密码",
+)
 
 
 class RegisterForm(forms.Form):  
@@ -40,19 +44,19 @@ class ChangepwdForm(forms.Form):
         label=u"原密码",
         error_messages={'required': u'请输入原密码'},
         widget=forms.PasswordInput(attrs={
-                'placeholder':u"原密码",
+                'placeholder':u"原密码", 'class': 'form-control',
             }),) 
     new_pwd = forms.CharField(required=True,
         label=u"新密码",
         error_messages={'required': u'请输入新密码'},
         widget=forms.PasswordInput(attrs={
-                'placeholder':u"新密码",
+                'placeholder':u"新密码", 'class': 'form-control',
             }),)
     new_pwd2 = forms.CharField(required=True,
         label=u"确认密码",
         error_messages={'required': u'请再次输入新密码'},
         widget=forms.PasswordInput(attrs={
-                'placeholder':u"确认密码",
+                'placeholder':u"确认密码", 'class': 'form-control',
             }),)
 
     def clean(self):
@@ -68,10 +72,12 @@ class ChangepwdForm(forms.Form):
 class CreateResearchProjectForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"科研立项名称",
-        error_messages={'required': u'请输入科研立项名称'})
+        error_messages={'required': u'请输入科研立项名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'})
+        error_messages={'required': u'请输入项目时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -104,17 +110,21 @@ class ResearchProjectForm(forms.Form):
 class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"论文题目",
-        error_messages={'required': u'请输入论文题目'})
+        error_messages={'required': u'请输入论文题目'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"发表时间",
-        error_messages={'required': u'请输入论文发表时间'})
+        error_messages={'required': u'请输入论文发表时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     JournalName = forms.CharField(required=True,
         label=u"期刊名称",
-        error_messages={'required': u'请输入期刊名称'})
+        error_messages={'required': u'请输入期刊名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -148,14 +158,17 @@ class PaperForm(forms.Form):
 class CreateCompetitionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"竞赛名称",
-        error_messages={'required': u'请输入竞赛名称'})
+        error_messages={'required': u'请输入竞赛名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"竞赛时间",
-        error_messages={'required': u'请输入竞赛时间'})
+        error_messages={'required': u'请输入竞赛时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():

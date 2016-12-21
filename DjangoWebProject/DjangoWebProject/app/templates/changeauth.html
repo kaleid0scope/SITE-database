@@ -1,20 +1,28 @@
-﻿<html>
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<html>
 <head>
-	<title>Changeauth</title>
+	<title>更改权限</title>
    
 </head>
-<body>
-	<h1>Changeauth</h1>
+<body style="font-family:'Microsoft YaHei'">
+	<h1 style="text-align:center">更改权限</h1>
 	{% for item in error %}
-		<p style="color:red;">{{item}}</p>
+		<p style="color:red;"><b>{{item}}</b></p>
 	{% endfor %}
-			username is {{username}}
+		 <p style="text-align:center;font-size:x-large"><b>用户名为{{username}}</b></p>
 	<form action="" method="post">
-		<table>
+		<center>
+        <table>
 			{{ form.as_table }}
 		</table>
 		
-		<input type="submit" value="Enter">
+		<input type="submit" value="确定" class="btn btn-default">
+        </center>
 	</form>
 </body>
 </html>
+
+{% endblock %}

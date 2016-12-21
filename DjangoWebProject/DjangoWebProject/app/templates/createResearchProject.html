@@ -1,15 +1,21 @@
-﻿<html>
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<html>
 <head>
-	<title>createResearchProject</title>
+	<title>创建科研立项</title>
    
 </head>
 <body>
+    <h1 style="text-align:center">创建科研立项</h1>
 	<form action="" method="post">
-		<table>
+		<center>
+        <table>
 			{{ form.as_table }}
 		</table>
 		
-		<input type="submit" value="Enter">
+		<input type="submit" value="提交  " class="btn btn-default">
+        </center>
 	</form>
     {% if alert != '' %}
     <script>
@@ -18,3 +24,4 @@
     {% endif %}
 </body>
 </html>
+{% endblock %}

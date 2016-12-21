@@ -37,3 +37,16 @@ C:\Users\Cindy\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\bin\
 C:\Users\Cindy\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\bin\wfastcgi.py
 C:\Users\Cindy\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.config
 C:\Users\Cindy\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.debug.config
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.WebRole.dll
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\attach_server.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\visualstudio_py_debugger.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\visualstudio_py_repl.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\visualstudio_py_util.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\__init__.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\__main__.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\bin\AzureSetup.cfg
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.AzureSetup.exe
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.AzureSetup.exe.config
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\bin\wfastcgi.py
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.config
+D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.debug.config
