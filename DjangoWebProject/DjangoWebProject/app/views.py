@@ -289,7 +289,7 @@ def researchProject(request,id):
     except Exception,e:  
         error.append(e)
         return render_to_response('ResearchProject.html',{'error':error})
-    if project.status == '未通过':
+    if project.status == '待审核':
         if request.method == 'POST':
             form = ResearchProjectForm(request.POST)
             if form.is_valid() and auth.isTeacher and auth.research:
@@ -456,7 +456,7 @@ def lecture(request,id):
     except Exception,e:  
         error.append(e)
         return render_to_response('IdeologyConstruction.html',{'error':error})
-    if project.status == '未通过':
+    if project.status == '待审核':
         if request.method == 'POST':
             form = LectureForm(request.POST)
             if form.is_valid() and auth.isTeacher and auth.lecture:
@@ -538,7 +538,7 @@ def volunteering(request,id):
     except Exception,e:  
         error.append(e)
         return render_to_response('Volunteering.html',{'error':error})
-    if project.status == '未通过':
+    if project.status == '待审核':
         if request.method == 'POST':
             form = VolunteeringForm(request.POST)
             if form.is_valid() and auth.isTeacher and auth.volunteering:
@@ -620,7 +620,7 @@ def schoolActivity(request,id):
     except Exception,e:  
         error.append(e)
         return render_to_response('SchoolActivity.html',{'error':error})
-    if project.status == '未通过':
+    if project.status == '待审核':
         if request.method == 'POST':
             form = SchoolActivityForm(request.POST)
             if form.is_valid() and auth.isTeacher and auth.schoolActivity:
@@ -699,7 +699,7 @@ def internship(request,id):
     except Exception,e:  
         error.append(e)
         return render_to_response('Internship.html',{'error':error})
-    if project.status == '未通过':
+    if project.status == '待审核':
         if request.method == 'POST':
             form = InternshipForm(request.POST)
             if form.is_valid() and auth.isTeacher and auth.internship:
