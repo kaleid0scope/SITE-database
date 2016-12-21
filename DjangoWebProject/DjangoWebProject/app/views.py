@@ -336,7 +336,7 @@ def JoinResearchProject(request,id):
 
 
 def ResearchProjectList(request):
-    try: 
+    try:  
         student = Students.objects.get(user = request.user)
         project = ResearchProjectRank.objects.get(teacher = student)
         joins = ResearchProject.objects.filter(rankNum = project)
