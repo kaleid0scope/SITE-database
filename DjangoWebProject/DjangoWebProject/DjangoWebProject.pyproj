@@ -62,6 +62,8 @@
   <ItemGroup>
     <Content Include="app\templates\index.html" />
     <Content Include="app\templates\ResearchProject.html" />
+    <Content Include="app\templates\ResearchProjectSDetail.html" />
+    <Content Include="app\templates\ResearchProjectList.html" />
     <Content Include="app\templates\reset_form.html" />
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\search_form.html" />

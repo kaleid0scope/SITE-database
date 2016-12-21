@@ -335,6 +335,43 @@ def JoinResearchProject(request,id):
     return render_to_response('ResearchProjectIndex.html',{'alert':alert})
 
 
+def ResearchProjectList(request):
+    try:  
+        student = Students.objects.get(user = request.user)
+        project = ResearchProjectRank.objects.get(teacher = student)
+        joins = ResearchProject.objects.filter(rankNum = project)
+    except Exception,e:  
+        return render_to_response('ResearchProjectList.html',{'error':e,'alert':''})
+    return render_to_response('ResearchProjectList.html',{'projects':joins,'alert':''})
+    
+
+def ResearchProjectSDetail(request,id):
+    try:  
+        join = ResearchProject.objects.get(id = int(id))
+        student = join.StudentNum
+    except Exception,e: 
+        return render_to_response('ResearchProjectSDetail.html',{'error':e})
+    if join.StudentNum.user == request.user:
+        return render_to_response('ResearchProjectSDetail.html',{'project':join,'student':student})
+    return render_to_response('ResearchProjectSDetail.html',{'error':'您无权查看此报名信息！'})
+
+
+def CheckResearchProject(request,id,isok):
+    try:  
+        join = ResearchProject.objects.get(id = int(id))
+        student = join.StudentNum
+    except Exception,e: 
+        return render_to_response('ResearchProjectSDetail.html',{'error':e})
+    if join.StudentNum.user == request.user:
+        if isok:
+            join.status = '通过'
+        else:
+            join.status = '未通过'
+        join.save()
+    return render_to_response('ResearchProjectSDetail.html',{'error':'您无权审核此报名信息！'})
+
+
+
 def createIdeologyConstruction(request):
     error = []
     if request.method == 'POST':
