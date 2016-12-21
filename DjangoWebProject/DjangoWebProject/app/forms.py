@@ -457,18 +457,21 @@ class InternshipForm(forms.Form):
 
 class CreateStudentCadreForm(forms.Form):
     organizitionType = forms.CharField(required=True,
-        label=u"组织类型",
+        label=u"组织类型",widget=forms.TextInput({
+                                   'class': 'form-control',}),
         error_messages={'required': u'请输入组织类型'})
     organizitionName = forms.CharField(required=True,
-        label=u"组织名称",
+        label=u"组织名称",widget=forms.TextInput({
+                                   'class': 'form-control',}),
         error_messages={'required': u'请输入组织名称'})
     rankName = forms.CharField(required=True,
-        label=u"学生干部名称",
+        label=u"学生干部名称",widget=forms.TextInput({
+                                   'class': 'form-control',}),
         error_messages={'required': u'请输入学生干部名称'})
     SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        label=u"支撑文档",widget=forms.Textarea({
+                                   'class': 'form-control',}),
+        error_messages={'required': u'请输入支撑文档'})
 
     def clean(self):
         if not self.is_valid():
