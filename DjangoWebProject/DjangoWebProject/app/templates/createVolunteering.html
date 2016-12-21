@@ -1,15 +1,23 @@
-﻿<html>
+﻿
+{% extends "app/layout.html" %}
+
+{% block content %}
+<html>
 <head>
-	<title>createVolunteering</title>
+	<title>参加志愿</title>
    
 </head>
 <body>
+	<h1 style="text-align:center">参加志愿</h1>
 	<form action="" method="post">
-		<table>
+		<center>
+        <table>
 			{{ form.as_table }}
 		</table>
 		
-		<input type="submit" value="Enter">
+		<input type="submit" value="提交" class="btn btn-default">
+            </center>
 	</form>
 </body>
 </html>
+{% endblock %}

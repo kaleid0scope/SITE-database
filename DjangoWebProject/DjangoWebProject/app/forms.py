@@ -90,13 +90,16 @@ class CreateResearchProjectForm(forms.Form):
 class ResearchProjectForm(forms.Form):
     rank = forms.CharField(required=True,
         label=u"科研立项等级",
-        error_messages={'required': u'请输入论文题目'})
+        error_messages={'required': u'请输入科研立项等级'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     ManagerScore = forms.IntegerField(required=True,
         label=u"组长分数",
-        error_messages={'required': u'请输入组长分数'})
+        error_messages={'required': u'请输入组长分数'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     MemberScore = forms.IntegerField(required=True,
         label=u"成员分数",
-        error_messages={'required': u'请输入成员分数'})
+        error_messages={'required': u'请输入成员分数'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     
     def clean(self):
@@ -199,23 +202,29 @@ class CompetitionForm(forms.Form):
 class CreateExchangeForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"交流交换项目名称",
-        error_messages={'required': u'请输入交流交换项目名称'})
+        error_messages={'required': u'请输入交流交换项目名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"交流类型",
-        error_messages={'required': u'请输入交流交换项目名称'})
+        error_messages={'required': u'请输入交流交换项目名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     nature = forms.CharField(required=True,
         label=u"交流性质",
-        error_messages={'required': u'请输入交流性质'})
+        error_messages={'required': u'请输入交流性质'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     startTime = forms.DateField(required=True,
         label=u"派出时间",
-        error_messages={'required': u'请输入派出时间'})
+        error_messages={'required': u'请输入派出时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     endTime = forms.DateField(required=True,
         label=u"返校时间",
-        error_messages={'required': u'请输入返校时间'})
+        error_messages={'required': u'请输入返校时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -299,30 +308,38 @@ class IdeologyConstructionForm(forms.Form):
 class CreateLectureForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"讲座题目",
-        error_messages={'required': u'请输入讲座名称'})
+        error_messages={'required': u'请输入讲座名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"讲座类型",
-        error_messages={'required': u'请输入讲座类型'})
+        error_messages={'required': u'请输入讲座类型'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     organizer = forms.CharField(required=True,
         label=u"主办方",
-        error_messages={'required': u'请输入讲座主办方'})
+        error_messages={'required': u'请输入讲座主办方'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     speaker =forms.CharField(required=True,
         label=u"讲座人",
-        error_messages={'required': u'请输入讲座人'})
+        error_messages={'required': u'请输入讲座人'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"讲座时间",
-        error_messages={'required': u'请输入讲座时间'})
+        error_messages={'required': u'请输入讲座时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     Location = forms.CharField(required=True,
         label=u"讲座地点",
-        error_messages={'required': u'请输入讲座地点'})
+        error_messages={'required': u'请输入讲座地点'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     Content = forms.CharField(required=True,
         label=u"内容简介",
         error_messages={'required': u'请输入讲座内容简介'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -347,27 +364,34 @@ class LectureForm(forms.Form):
 class CreateVolunteeringForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"项目名称",
-        error_messages={'required': u'请输入项目名称'})
+        error_messages={'required': u'请输入项目名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     organizer = forms.CharField(required=True,
         label=u"主办方",
-        error_messages={'required': u'请输入项目主办方'})
+        error_messages={'required': u'请输入项目主办方'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'})
+        error_messages={'required': u'请输入项目时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     Location = forms.CharField(required=True,
         label=u"志愿活动地点",
-        error_messages={'required': u'请输入志愿活动地点'})
+        error_messages={'required': u'请输入志愿活动地点'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     volunteerTime = forms.IntegerField(required=True,
         label=u"志愿时长",
-        error_messages={'required': u'请输入志愿时长'})
+        error_messages={'required': u'请输入志愿时长'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     Content = forms.CharField(required=True,
         label=u"活动内容简介",
         error_messages={'required': u'请输入活动内容简介'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -392,26 +416,33 @@ class VolunteeringForm(forms.Form):
 class CreateSchoolActivityForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"校园活动名称",
-        error_messages={'required': u'请输入校园活动名称'})
+        error_messages={'required': u'请输入校园活动名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"校园活动类型",
-        error_messages={'required': u'请输入校园活动类型'})
+        error_messages={'required': u'请输入校园活动类型'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     sponsor = forms.CharField(required=True,
         label=u"主办方",
-        error_messages={'required': u'请输入校园活动主办方'})
+        error_messages={'required': u'请输入校园活动主办方'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     organizer = forms.CharField(required=True,
         label=u"承办方",
-        error_messages={'required': u'请输入校园活动承办方'})
+        error_messages={'required': u'请输入校园活动承办方'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"校园活动时间",
-        error_messages={'required': u'请输入校园活动时间'})
+        error_messages={'required': u'请输入校园活动时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     awardLevel = forms.CharField(required=True,
         label=u"奖项",
-        error_messages={'required': u'请输入校园活动奖项'})
+        error_messages={'required': u'请输入校园活动奖项'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -436,17 +467,21 @@ class SchoolActivityForm(forms.Form):
 class CreateInternshipForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"实践实习名称",
-        error_messages={'required': u'请输入实践实习名称'})
+        error_messages={'required': u'请输入实践实习名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"实践实习类别",
-        error_messages={'required': u'请输入实践实习类别'})
+        error_messages={'required': u'请输入实践实习类别'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"实践实习时间",
-        error_messages={'required': u'请输入实践实习时间'})
+        error_messages={'required': u'请输入实践实习时间'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
+        widget=forms.Textarea({
+                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
