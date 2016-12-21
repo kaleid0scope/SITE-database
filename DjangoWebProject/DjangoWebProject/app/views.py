@@ -340,7 +340,7 @@ def ResearchProjectList(request):
         student = Students.objects.get(user = request.user)
         project = ResearchProjectRank.objects.get(teacher = student)
         joins = ResearchProject.objects.filter(rankNum = project)
-    except Exception,e:  
+    except Exception,e: 
         return render_to_response('ResearchProjectList.html',{'error':e,'alert':''})
     return render_to_response('ResearchProjectList.html',{'projects':joins,'alert':''})
     
