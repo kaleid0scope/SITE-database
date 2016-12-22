@@ -1,9 +1,10 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
+<body>
 <h2><center>登录界面</center></h2>
         <section id="loginForm"> 
-            <form action="." method="post" class="form-horizontal">
+            <form action="." method="post">
                 {% csrf_token %}
                 <hr />
                 <center>
@@ -28,6 +29,6 @@
     <div class="col-md-4">
         <section id="socialLoginForm"></section>
     </div>
-
+</body>
 {% endblock %}
 

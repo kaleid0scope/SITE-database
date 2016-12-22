@@ -60,6 +60,11 @@
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\guide.html" />
+    <Content Include="app\templates\LectureDetail.html" />
+    <Content Include="app\templates\LectureIndex.html" />
+    <Content Include="app\templates\LectureList.html" />
+    <Content Include="app\templates\LectureSDetail.html" />
     <Content Include="app\templates\index.html" />
     <Content Include="app\templates\ResearchProject.html" />
     <Content Include="app\templates\ResearchProjectSDetail.html" />
