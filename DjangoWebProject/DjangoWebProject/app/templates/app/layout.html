@@ -23,7 +23,21 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}">管理功能</a></li>
+                    <li class="dropdown">
+				        <a href="{% url 'home' %}" class="dropdown-toggle" data-toggle="dropdown">
+					            管理功能 
+					        <b class="caret"></b>
+				        </a>
+				        <ul class="dropdown-menu">
+					        <li><a href="{% url 'contact' %}">链接</a></li>
+					        <li><a href="#">链接</a></li>
+					        <li><a href="#">链接</a></li>
+					        <li class="divider"></li>
+					        <li><a href="#">链接</a></li>
+					        <li class="divider"></li>
+					        <li><a href="#">链接</a></li>
+				        </ul>
+			        </li>
                     <li><a href="{% url 'about' %}">相关信息</a></li>
                     <li><a href="{% url 'contact' %}">联系我们</a></li>
                 </ul>

@@ -34,6 +34,13 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\static\img\admin.py" />
+    <Compile Include="app\static\img\apps.py" />
+    <Compile Include="app\static\img\migrations\__init__.py" />
+    <Compile Include="app\static\img\models.py" />
+    <Compile Include="app\static\img\tests.py" />
+    <Compile Include="app\static\img\views.py" />
+    <Compile Include="app\static\img\__init__.py" />
     <Compile Include="app\testdb.py">
       <SubType>Code</SubType>
     </Compile>
@@ -55,12 +62,15 @@
     <Folder Include="app\static\app\content\" />
     <Folder Include="app\static\app\fonts\" />
     <Folder Include="app\static\app\scripts\" />
+    <Folder Include="app\static\img\" />
+    <Folder Include="app\static\img\migrations\" />
+    <Folder Include="app\static\img\templates\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\templates\app\guide.html" />
+    <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\LectureDetail.html" />
     <Content Include="app\templates\LectureIndex.html" />
     <Content Include="app\templates\LectureList.html" />
