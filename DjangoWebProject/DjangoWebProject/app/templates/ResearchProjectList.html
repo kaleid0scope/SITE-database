@@ -22,8 +22,8 @@
             {% for project in projects %}
 			<tr>
 				<td>{{project.StudentNum.StudentNum}}</td>
-                {% if project == '待审核' %}<td><a class="btn btn-info" href= "/ResearchProjectSDetail/{{project.id}}" >审核</a></td>{% endif %}
-                {% if project == '通过' %}<td><a class="btn btn-info" href= "/ResearchProjectSDetail/{{project.id}}" >查看</a></td>{% endif %}
+                {% if project == '待审核' %}<td><a class="btn btn-info" href= "/ResearchSDetail/{{project.id}}" >审核</a></td>{% endif %}
+                {% if project == '通过' %}<td><a class="btn btn-info" href= "/ResearchSDetail/{{project.id}}" >查看</a></td>{% endif %}
 			</tr>
             {% endfor %}
 		</tbody>
