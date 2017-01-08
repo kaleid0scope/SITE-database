@@ -3,7 +3,6 @@
 
 {% block content %}
 
-<!DOCTYPE html>
 
 <body>
 
@@ -12,10 +11,12 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>项目名称</th>
-				<th>开始时间</th>
-                <th>指导老师</th>
-                <th>其他信息</th>
+				<th>讲座题目</th>
+                <th>讲座类型</th>
+				<th>讲座时间</th>
+                <th>讲座地点</th>
+                <th>讲座人</th>
+                <th>主办方</th>
                 {% if can == False %}<th>查看详细信息</th>{% endif %}
                 {% if can == True %}<th>审核</th>{% endif %}
 			</tr>
@@ -23,10 +24,12 @@
 		<tbody>
             {% for project in projects %}
 			<tr>
-				<td>{{project.rankName}}</td>
-				<td>{{project.startingTime}}</td>
-                <td>{{project.teacher}}</td>
-                <td></td>
+				<td>{{project.ProjectName}}</td>
+				<td>{{project.type}}</td>
+                <td>{{project.startingTime}}</td>
+                <td>{{project.Location}}</td>
+                <td>{{project.speaker}}</td>
+                <td>{{project.organizer}}</td>
                 {% if can == True %}<td><a class="btn btn-info" href= "/research/{{project.id}}" >审核</a></td>{% endif %}
                 {% if can == False %}<td><a class="btn btn-info" href= "/ResearchDetail/{{project.id}}" >查看</a></td>{% endif %}
 			</tr>
