@@ -352,6 +352,7 @@ def researchProject(request,id):
                 error.append('Please input information of your project')
         else:
             form = ResearchProjectForm()
+            form.set_choices
         return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核失败！该活动已审核','can':True})

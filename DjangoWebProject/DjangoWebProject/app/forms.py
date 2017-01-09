@@ -101,7 +101,14 @@ class ResearchProjectForm(forms.Form):
         error_messages={'required': u'请输入成员分数'},widget=forms.TextInput({
                                    'class': 'form-control',}))
     status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
-    
+    level = forms.ChoiceField(required=True,label=u"活动分级等级", widget=forms.Select, choices=(),error_messages={'required': u'请选择活动分级评分'},)
+
+    def set_choices(self):
+        opts = ChoicesTeam.objects.all()
+        self.fields['level'].choices = ()
+        for opt in opts:
+            self.fields['level'].choices += [opt.name]
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
@@ -304,7 +311,7 @@ class IdeologyConstructionForm(forms.Form):
 
         return cleaned_data
     def set_choices(self):
-        opts = Choice.objects.all()
+        opts = Choices.objects.all()
         self.fields['level'].choices = ()
         for opt in opts:
             self.fields['level'].choices += [opt.name]
