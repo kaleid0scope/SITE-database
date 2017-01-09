@@ -92,22 +92,12 @@ class ResearchProjectForm(forms.Form):
         label=u"科研立项等级",
         error_messages={'required': u'请输入科研立项等级'},widget=forms.TextInput({
                                    'class': 'form-control',}))
-    ManagerScore = forms.IntegerField(required=True,
-        label=u"组长分数",
-        error_messages={'required': u'请输入组长分数'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    MemberScore = forms.IntegerField(required=True,
-        label=u"成员分数",
-        error_messages={'required': u'请输入成员分数'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
     status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
-    level = forms.ChoiceField(required=True,label=u"活动分级等级", widget=forms.Select, choices=(),error_messages={'required': u'请选择活动分级评分'},)
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
 
-    def set_choices(self):
-        opts = ChoicesTeam.objects.all()
-        self.fields['level'].choices = ()
-        for opt in opts:
-            self.fields['level'].choices += [opt.name]
+    def __init__(self,*args,**kwargs): 
+        super(ResearchProjectForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in ChoicesTeam.objects.all())
 
     def clean(self):
         if not self.is_valid():

@@ -14,7 +14,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre,Choices,ChoicesTeam
 import random,time
 import uuid
 import xlrd
@@ -337,23 +337,23 @@ def researchProject(request,id):
         if request.method == 'POST':
             form = ResearchProjectForm(request.POST)
             if form.is_valid():
-                cd = form.cleaned_data
-                try:
+                    cd = form.cleaned_data
+                #try:
+                    choice = ChoicesTeam.objects.get(id = cd['level'])
                     project.rank = cd['rank']
-                    project.MemberScore = cd['MemberScore']
-                    project.ManagerScore = cd['ManagerScore']
+                    project.MemberScore = choice.memberScore
+                    project.ManagerScore = choice.managerScore
                     project.status = cd['status']
-                    project.inspector = inspector 
+                    project.inspector = inspector
                     project.save()
                     return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
-                except Exception,e:  
-                    error.append('Please check your importation')
+                #except Exception,e:  
+                #    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
             form = ResearchProjectForm()
-            form.set_choices
-        return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
+        return render_to_response('ResearchProject.html',{'form':form,'project':project,'alert':error})
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核失败！该活动已审核','can':True})
     return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'can':False})
