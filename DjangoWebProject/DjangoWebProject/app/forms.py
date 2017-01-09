@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from cProfile import label
-from app.models import statusChoice
+from app.models import statusChoice,Choices,ChoicesTeam
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -293,17 +293,21 @@ class CreateIdeologyConstructionForm(forms.Form):
         return cleaned_data 
 
 class IdeologyConstructionForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"活动分级评分",
-        error_messages={'required': u'请输入活动分级评分'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级", widget=forms.Select, choices=(),error_messages={'required': u'请选择活动分级评分'},)
     status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
-    
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(PaperForm, self).clean()
+
         return cleaned_data
+    def set_choices(self):
+        opts = Choice.objects.all()
+        self.fields['level'].choices = ()
+        for opt in opts:
+            self.fields['level'].choices += [opt.name]
 
 class CreateLectureForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -527,6 +531,8 @@ class CreateStudentCadreForm(forms.Form):
         else:
             cleaned_data = super(CreateStudentCadreForm, self).clean()
         return cleaned_data 
+
+
 """    rank = forms.CharField(required=True,
         label=u"科研立项等级",
         error_messages={'required': u'请输入科研立项等级'})

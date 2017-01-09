@@ -12,6 +12,18 @@ statusChoice = (
         ('通过', '通过'),
         ('待审核', '待审核'),)
 
+class ChoicesTeam(models.Model):
+    name = models.CharField(max_length = 50)
+    managerScore = models.SmallIntegerField()
+    memberScore = models.SmallIntegerField()
+    managerComplete = models.SmallIntegerField()
+    memberComplete = models.SmallIntegerField()
+
+class Choices(models.Model):
+    name = models.CharField(max_length = 50)
+    score = models.SmallIntegerField()
+    complete = models.SmallIntegerField()
+
 class Inspectors(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('审查者'))
     number = models.PositiveIntegerField()
@@ -36,6 +48,21 @@ class Authorizations(models.Model):
 
     def __unicode__(self):
         return str(self.id)
+'''
+class Complete(models.Model):
+    complete1 = models.SmallIntegerField()
+    complete2 = models.SmallIntegerField()
+    complete3 = models.SmallIntegerField()
+    complete4 = models.SmallIntegerField()
+    complete5 = models.SmallIntegerField()
+
+class CompleteInformation(models.Model):
+    CompleteNum = models.PositiveIntegerField(primary_key = True)
+    CompleteExplain = models.TextField()
+    majorName = models.CharField(max_length = 20)
+    data = models.PositiveIntegerField()
+
+'''
 
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('用户'))
@@ -86,13 +113,6 @@ class TrainingProject(models.Model):
 class Completeness(models.Model):
     number = models.PositiveIntegerField(primary_key = True)
     explain = models.CharField(max_length = 200)
-
-class CompleteInformation(models.Model):
-    CompleteNum = models.PositiveIntegerField(primary_key = True)
-    CompleteExplain = models.TextField()
-    majorName = models.CharField(max_length = 20)
-    data = models.PositiveIntegerField()
-    inspector = models.ForeignKey(Inspectors)
 
 class TeacherBasis(models.Model):
     TeacherNum = models.PositiveIntegerField(primary_key = True)

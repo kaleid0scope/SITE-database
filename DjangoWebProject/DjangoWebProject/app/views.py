@@ -8,7 +8,8 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm
 from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm,ResetPasswordForm
-from app.forms import ResearchProjectForm,IdeologyConstructionForm,LectureForm,VolunteeringForm,SchoolActivityForm,InternshipForm,StudentCadreForm
+from app.forms import ResearchProjectForm,IdeologyConstructionForm,LectureForm,VolunteeringForm,SchoolActivityForm,InternshipForm,StudentCadreForm,PaperForm,CompetitionForm,ExchangeForm,StudentCadreForm
+
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
@@ -184,6 +185,47 @@ def createPaper(request):
     else:
         form = CreatePaperForm()
     return render_to_response('createPaper.html',{'form':form,'error':error})
+def paper(request,id):
+    error = []
+    try:  
+        project = PaperRank.objects.get(id = int(id))
+        auth = Students.objects.get(user = request.user).auth
+        inspector = Inspectors.objects.get(user = request.user)
+    except Exception,e:  
+        error.append(e)
+        return render_to_response('Paper.html',{'error':error})
+    if project.status == '待审核' and auth.isTeacher and auth.paper:
+        if request.method == 'POST':
+            form = PaperForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                try:
+                    project.rank = cd['rank']
+                    project.MemberScore = cd['MemberScore']
+                    project.ManagerScore = cd['ManagerScore']
+                    project.status = cd['status']
+                    project.inspector = inspector 
+                    project.save()
+                    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
+                except Exception,e:  
+                    error.append('Please check your importation')
+            else:
+                error.append('Please input information of your project')
+        else:
+            form = PaperForm()
+        return render_to_response('Paper.html',{'form':form,'project':project,'error':error})
+    elif auth.isTeacher and auth.ideologyConstruction:
+       return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'alert':'科研立项审核失败！该活动已审核','can':True})
+    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '通过'),'can':False})
+def PaperIndex(request):
+    try:  
+        student = Students.objects.get(user = request.user)
+        project = Paper.objects.filter(StudentNum= student)
+    except Exception,e: 
+        return render_to_response('index.html',{'alert':e})
+    if student.auth.isTeacher and student.auth.lecture:
+        return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'can':True})
+    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(StudentNum= student),'can':False})
 def createCompetition(request):
     error = []
     if request.method == 'POST':
@@ -313,7 +355,7 @@ def researchProject(request,id):
         return render_to_response('ResearchProject.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核失败！该活动已审核','can':True})
-    return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':'','can':False})
+    return render_to_response('ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'can':False})
 #项目详情
 def ResearchProjectDetail(request,id):
     try:  
@@ -339,11 +381,11 @@ def ResearchProjectIndex(request):
         student = Students.objects.get(user = request.user)
         project = ResearchProject.objects.filter(StudentNum= student)
     except Exception,e: 
-        return render_to_response('index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),'alert':e})
+        return render_to_response('index.html',{'alert':e})
     if student.auth.isTeacher and student.auth.research:
-        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'','can':True})
+        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'can':True})
     if project.count() == 0:
-        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'alert':'','can':False})
+        return render_to_response('researchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '通过'),'can':False})
     return render_to_response('index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),'alert':'您已加入科研立项!'})
 #管理申请的列表
 def ResearchProjectList(request):
@@ -440,7 +482,7 @@ def ideologyConstruction(request,id):
             return render_to_response('IdeologyConstruction.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核失败！该活动已审核','can':True})
-    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'alert':'','can':False})
+    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'can':False})
 #项目详情
 def IdeologyConstructionDetail(request,id):
     try:  
@@ -468,8 +510,8 @@ def IdeologyConstructionIndex(request):
     except Exception,e: 
         return render_to_response('index.html',{'constructions':IdeologyConstruction.objects.filter(StudentNum = student),'alert':e})
     if student.auth.isTeacher and student.auth.ideologyConstruction:
-        return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'','can':True})
-    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'alert':'','can':False})
+        return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'can':True})
+    return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'can':False})
 #管理申请的列表
 def IdeologyConstructionList(request):
     try:  
@@ -567,7 +609,7 @@ def lecture(request,id):
             return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.lecture:
        return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'讲座活动审核失败！该活动已审核','can':True})
-    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过'),'alert':'','can':False})
+    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过'),'can':False})
 #项目详情
 def LectureDetail(request,id):
     try:  
@@ -595,8 +637,8 @@ def LectureIndex(request):
     except Exception,e: 
         return render_to_response('index.html',{'lectures':Lecture.objects.filter(StudentNum = student),'alert':e})
     if student.auth.isTeacher and student.auth.lecture:
-        return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'','can':True})
-    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过'),'alert':'','can':False})
+        return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'can':True})
+    return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '通过'),'can':False})
 #管理申请的列表
 def LectureList(request):
     try:  
@@ -692,7 +734,7 @@ def volunteering(request,id):
             return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.volunteering:
        return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'志愿活动审核失败！该活动已审核','can':True})
-    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过'),'alert':'','can':False})
+    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过'),'can':False})
 #项目详情
 def VolunteeringDetail(request,id):
     try:  
@@ -720,8 +762,8 @@ def VolunteeringIndex(request):
     except Exception,e: 
         return render_to_response('index.html',{'volunteerings':Volunteering.objects.filter(StudentNum = student),'alert':e})
     if student.auth.isTeacher and student.auth.ideologyConstruction:
-        return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'','can':True})
-    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过'),'alert':'','can':False})
+        return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'can':True})
+    return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '通过'),'can':False})
 #管理申请的列表
 def VolunteeringList(request):
     try:  
@@ -817,7 +859,7 @@ def schoolActivity(request,id):
             return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.schoolActivity:
        return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'校园活动审核失败！该活动已审核','can':True})
-    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过'),'alert':'','can':False})
+    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过'),'can':False})
 #项目详情
 def SchoolActivityDetail(request,id):
     try:  
@@ -845,8 +887,8 @@ def SchoolActivityIndex(request):
     except Exception,e: 
         return render_to_response('index.html',{'activities':SchoolActivity.objects.filter(StudentNum = student),'alert':e})
     if student.auth.isTeacher and student.auth.ideologyConstruction:
-        return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'','can':True})
-    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过'),'alert':'','can':False})
+        return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'can':True})
+    return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '通过'),'can':False})
 #管理申请的列表
 def SchoolActivityList(request):
     try:  
@@ -939,7 +981,7 @@ def internship(request,id):
             return render_to_response('Lecture.html',{'form':form,'project':project,'error':error})
     elif auth.isTeacher and auth.internship:
        return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核失败！该活动已审核','can':True})
-    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'alert':'','can':False})
+    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'can':False})
 #项目详情
 def InternshipDetail(request,id):
     try:  
@@ -967,8 +1009,8 @@ def InternshipIndex(request):
     except Exception,e: 
         return render_to_response('index.html',{'internships':Internship.objects.filter(StudentNum = student),'alert':e})
     if student.auth.isTeacher and student.auth.ideologyConstruction:
-        return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'','can':True})
-    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'alert':'','can':False})
+        return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'can':True})
+    return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'can':False})
 #管理申请的列表
 def InternshipList(request):
     try:  
