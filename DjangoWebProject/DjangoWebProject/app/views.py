@@ -173,7 +173,7 @@ def createPaper(request):
                                 Level = '',
                                 AuthorRanking = 0,
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(inspector = 10002))
             if True:
                 project.save()
@@ -245,7 +245,7 @@ def createCompetition(request):
                                 rank = '0',
                                 Level = '',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10001))
             if True:
                 project.save()
@@ -268,7 +268,7 @@ def createStudentCadre(request):
                                 organizitionName = cd['organizitionName'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
@@ -294,7 +294,7 @@ def createExchange(request):
                                 endTime = cd['endTime'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10001))
             if True:
                 project.save()
@@ -453,7 +453,7 @@ def createIdeologyConstruction(request):
                                 Content = cd['Content'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
@@ -585,7 +585,7 @@ def createLecture(request):
                                 Content = cd['Content'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
@@ -715,7 +715,7 @@ def createVolunteering(request):
                                 Content = cd['Content'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
@@ -845,7 +845,7 @@ def createSchoolActivity(request):
                                 awardLevel = cd['awardLevel'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
@@ -972,7 +972,7 @@ def createInternship(request):
                                 type = cd['type'],
                                 status = '待审核',
                                 score = 0,
-                                 complete = 0,
+                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
             if True:
                 project.save()
