@@ -88,11 +88,6 @@ class CreateResearchProjectForm(forms.Form):
 
 
 class ResearchProjectForm(forms.Form):
-    rank = forms.CharField(required=True,
-        label=u"科研立项等级",
-        error_messages={'required': u'请输入科研立项等级'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
     level = forms.ChoiceField(required=True,label=u"活动分级等级")
 
     def __init__(self,*args,**kwargs): 
@@ -135,24 +130,18 @@ class CreatePaperForm(forms.Form):
 
 
 class PaperForm(forms.Form):
-    level = forms.CharField(required=True,
-        label=u"论文等级",
-        error_messages={'required': u'请输入论文等级'})
-    score = forms.IntegerField(required=True,
-        label=u"论文分级评分",
-        error_messages={'required': u'请输入论文分级评分'})
-    AuthorRanking = forms.IntegerField(required=True,
-        label=u"作者顺位为第几作者",
-        error_messages={'required': u'请输入作者顺位为第几作者'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
-    
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(PaperForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(PaperForm, self).clean()
         return cleaned_data
-
 
 
 class CreateCompetitionForm(forms.Form):
@@ -178,22 +167,17 @@ class CreateCompetitionForm(forms.Form):
         return cleaned_data
 
 class CompetitionForm(forms.Form):
-    level = forms.CharField(required=True,
-        label=u"论文等级",
-        error_messages={'required': u'请输入论文等级'})
-    score = forms.IntegerField(required=True,
-        label=u"竞赛分级评分",
-        error_messages={'required': u'请输入竞赛分级评分'})
-    rank = forms.IntegerField(required=True,
-        label=u"学生排名",
-        error_messages={'required': u'请输入学生排名'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(CompetitionForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
     
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(CompetitionForm, self).clean()
         return cleaned_data
 
 class CreateExchangeForm(forms.Form):
@@ -231,16 +215,17 @@ class CreateExchangeForm(forms.Form):
         return cleaned_data 
 
 class ExchangeForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"交流分级评分",
-        error_messages={'required': u'请输入交流分级评分'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(ExchangeForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
     
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(ExchangeForm, self).clean()
         return cleaned_data
 
 '''    startTime = forms.DateField(required=True,
@@ -290,21 +275,19 @@ class CreateIdeologyConstructionForm(forms.Form):
         return cleaned_data 
 
 class IdeologyConstructionForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级", widget=forms.Select, choices=(),error_messages={'required': u'请选择活动分级评分'},)
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(IdeologyConstructionForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
 
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(IdeologyConstructionForm, self).clean()
 
         return cleaned_data
-    def set_choices(self):
-        opts = Choices.objects.all()
-        self.fields['level'].choices = ()
-        for opt in opts:
-            self.fields['level'].choices += [opt.name]
 
 class CreateLectureForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -350,16 +333,17 @@ class CreateLectureForm(forms.Form):
         return cleaned_data 
 
 class LectureForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"讲座评分",
-        error_messages={'required': u'请输入讲座评分'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(LectureForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
     
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(LectureForm, self).clean()
         return cleaned_data
 
 class CreateVolunteeringForm(forms.Form):
@@ -402,16 +386,17 @@ class CreateVolunteeringForm(forms.Form):
         return cleaned_data 
 
 class VolunteeringForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"志愿活动评分",
-        error_messages={'required': u'请输入志愿活动评分'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(VolunteeringForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
     
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(VolunteeringForm, self).clean()
         return cleaned_data
 
 class CreateSchoolActivityForm(forms.Form):
@@ -453,16 +438,17 @@ class CreateSchoolActivityForm(forms.Form):
         return cleaned_data 
 
 class SchoolActivityForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"校园活动分级评分",
-        error_messages={'required': u'请输入校园活动分级评分'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(SchoolActivityForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
     
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(SchoolActivityForm, self).clean()
         return cleaned_data
 
 class CreateInternshipForm(forms.Form):
@@ -492,16 +478,17 @@ class CreateInternshipForm(forms.Form):
         return cleaned_data 
 
 class InternshipForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"实践实习评分",
-        error_messages={'required': u'请输入实践实习评分'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
-    
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(InternshipForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
+
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(InternshipForm, self).clean()
         return cleaned_data
 
 class CreateStudentCadreForm(forms.Form):
@@ -544,16 +531,17 @@ class CreateStudentCadreForm(forms.Form):
         error_messages={'required': u'请输入分级评分起始有效时间'})"""
 
 class StudentCadreForm(forms.Form):
-    score = forms.IntegerField(required=True,
-        label=u"学生干部评分",
-        error_messages={'required': u'请输入学生干部评分'})
-    status = forms.ChoiceField(required=True,choices=statusChoice,label='审核状态',error_messages={'required': u'请输入审核状态'})
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(StudentCadreForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
 
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
-            cleaned_data = super(PaperForm, self).clean()
+            cleaned_data = super(StudentCadreForm, self).clean()
         return cleaned_data
 
 
