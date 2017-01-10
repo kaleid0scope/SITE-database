@@ -162,7 +162,8 @@ class ResearchProjectRank(models.Model):
     MemberScore = models.SmallIntegerField(null = True)
     startingTime = models.DateField()
     teacher = models.ForeignKey(Students)
-    CompleteNum = models.PositiveIntegerField()
+    ManagerComplete = models.PositiveSmallIntegerField()
+    MemberComplete = models.PositiveSmallIntegerField()
     inspector = models.ForeignKey(Inspectors)
     SupportText = models.TextField(null = True)#支撑文档
 

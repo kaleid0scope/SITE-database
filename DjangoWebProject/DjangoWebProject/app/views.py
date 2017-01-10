@@ -343,6 +343,8 @@ def researchProject(request,id):
                     project.rank = cd['rank']
                     project.MemberScore = choice.memberScore
                     project.ManagerScore = choice.managerScore
+                    project.memberComplete = choice.memberComplete
+                    project.managerComplete = choice.managerComplete
                     project.status = cd['status']
                     project.inspector = inspector
                     project.save()
