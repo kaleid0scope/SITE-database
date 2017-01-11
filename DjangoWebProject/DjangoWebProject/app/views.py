@@ -328,6 +328,7 @@ def createResearchProject(request):
             error.append('Please input information of your project')
     else:
         form = CreateResearchProjectForm()
+        error = None
     return render_to_response('createResearchProject.html',{'form':form,'error':error,'alert':alert})
 #评价审核（审核结果输入）
 def researchProject(request,id):
@@ -464,6 +465,7 @@ def createIdeologyConstruction(request):
             error.append('Please input information of your project')
     else:
         form = CreateIdeologyConstructionForm()
+        error = None
     return render_to_response('createIdeologyConstruction.html',{'form':form,'error':error})
 #评价审核（审核结果输入）
 def ideologyConstruction(request,id):
@@ -596,6 +598,7 @@ def createLecture(request):
             error.append('Please input information of your project')
     else:
         form = CreateLectureForm()
+        error = None
     return render_to_response('createLecture.html',{'form':form,'error':error})
 #评价审核（审核结果输入）
 def lecture(request,id):
@@ -726,6 +729,7 @@ def createVolunteering(request):
             error.append('Please input information of your project')
     else:
         form = CreateVolunteeringForm()
+        error = None
     return render_to_response('createVolunteering.html',{'form':form,'error':error})
 #评价审核（审核结果输入）
 def volunteering(request,id):
@@ -856,6 +860,7 @@ def createSchoolActivity(request):
             error.append('Please input information of your project')
     else:
         form = CreateSchoolActivityForm()
+        error = None
     return render_to_response('createSchoolActivity.html',{'form':form,'error':error})
 #评价审核（审核结果输入）
 def schoolActivity(request,id):
@@ -983,6 +988,7 @@ def createInternship(request):
             error.append('Please input information of your project')
     else:
         form = CreateInternshipForm()
+        error = None
     return render_to_response('createInternship.html',{'form':form,'error':error})
 #评价审核（审核结果输入）
 def internship(request,id):
