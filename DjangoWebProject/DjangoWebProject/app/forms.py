@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from cProfile import label
 from app.models import statusChoice,Choices,ChoicesTeam
+from django.forms.extras.widgets import SelectDateWidget
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -76,8 +77,8 @@ class CreateResearchProjectForm(forms.Form):
                                    'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入项目时间'},
+        widget = SelectDateWidget())
 
     def clean(self):
         if not self.is_valid():

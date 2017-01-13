@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\img\templates\index.html" />
+    <Content Include="app\templates\first.html" />
     <Content Include="app\templates\LectureDetail.html" />
     <Content Include="app\templates\LectureIndex.html" />
     <Content Include="app\templates\LectureList.html" />

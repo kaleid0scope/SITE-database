@@ -56,6 +56,8 @@ urlpatterns = [
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),   
     url(r'^changeauth/(?P<username>\w+)/$',changeauth),
 
+    url(r'^first/$',app.views.first),
+
     url(r'^createResearch/$',createResearchProject),
     url(r'^research/(?P<id>\w+)/$',researchProject),
     url(r'^ResearchDetail/(?P<id>\w+)/$',ResearchProjectDetail), 

@@ -35,6 +35,9 @@ def home(request):
             'year':datetime.now().year,
         })
 
+def first(request):
+    return render(request,'first.html',{ 'title':'学生主页',})
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
@@ -169,8 +172,9 @@ def createPaper(request):
             error.append(e)
         form = CreatePaperForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = PaperRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = PaperRank(rankName = cd['ProjectName'],
                                 journalName = cd['JournalName'],
                                 student = student,
                                 startingTime = cd['ProjectTime'],
@@ -180,15 +184,8 @@ def createPaper(request):
                                 score = 0,
                                 complete = 0,
                                 inspector = inspector,)
-            try:
                 project.save()
-                return render_to_response('index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),
-                                            'constructions':IdeologyConstruction.objects.filter(StudentNum = student),
-                                            'lectures':Lecture.objects.filter(StudentNum = student),
-                                            'volunteerings':Volunteering.objects.filter(StudentNum = student),
-                                            'activities':SchoolActivity.objects.filter(StudentNum = student),
-                                            'internships':Internship.objects.filter(StudentNum = student),
-                                            'cadres':StudentCadre.objects.filter(StudentNum = student)})
+                return render_to_response('first.html',{'alert':'创建成功！'})
             except Exception,e:
                 error.append(e)
         else:
@@ -226,7 +223,7 @@ def paper(request,id):
                     project.save()
                     return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
                 except Exception,e:  
-                    error.append('Please check your importation')
+                    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
@@ -254,8 +251,9 @@ def createCompetition(request):
             error.append(e)
         form = CreateCompetitionForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = CompetitionRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = CompetitionRank(rankName = cd['ProjectName'],
                                 student = student,
                                 startingTime = cd['ProjectTime'],
                                 status = '待审核',
@@ -264,11 +262,10 @@ def createCompetition(request):
                                 score = 0,
                                 complete = 0,
                                 inspector = inspector,)
-            if True:
                 project.save()
-                return HttpResponse('竞赛申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -285,19 +282,19 @@ def createStudentCadre(request):
             error.append(e)
         form = CreateStudentCadreForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = StudentCadreRank(teacher = student,
+            try:
+                cd = form.cleaned_data
+                project = StudentCadreRank(teacher = student,
                                 organizitionType = cd['organizitionType'],
                                 organizitionName = cd['organizitionName'],
                                 status = '待审核',
                                 score = 0,
                                 complete = 0,
                                 inspector = inspector,)
-            if True:
                 project.save()
-                return HttpResponse('学生干部信息申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -314,8 +311,9 @@ def createExchange(request):
             error.append(e)
         form = CreateExchangeForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = ExchangeRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = ExchangeRank(rankName = cd['ProjectName'],
                                 type = cd['type'],
                                 nature = cd['nature'],
                                 student = student,
@@ -325,11 +323,10 @@ def createExchange(request):
                                 score = 0,
                                 complete = 0,
                                 inspector = inspector,)
-            if True:
                 project.save()
-                return HttpResponse('交流交换申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -351,11 +348,11 @@ def createResearchProject(request):
             error.append(e)
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = Students.objects.get(user = request.user),startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0, complete = 0,inspector = Inspectors.objects.get(number = 10002))
             try:
+                cd = form.cleaned_data
+                project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = student,startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0, complete = 0,inspector =inspector,)
                 project.save()
-                alert = '成功创建！'
+                return render_to_response('first.html',{'alert':'创建成功！'})
             except Exception,e:
                 error.append(e)
         else:
@@ -474,14 +471,20 @@ def CheckResearchProject(request,id,isok):
 '''
 #创建
 def createIdeologyConstruction(request):
-    error = []
     if request.method == 'POST':
+        error = []
+        try:
+            student = Students.objects.get(user = request.user)
+            inspector = Inspectors.objects.get(inspector = 10002)
+        except Exception,e:
+            error.append(e)
         form = CreateIdeologyConstructionForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = IdeologyConstructionRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = IdeologyConstructionRank(rankName = cd['ProjectName'],
                                 type = cd['type'],
-                                teacher = Students.objects.get(user = request.user),
+                                teacher = student,
                                 startingTime = cd['startingTime'],
                                 organizer = cd['organizer'],
                                 Location = cd['Location'],
@@ -489,12 +492,11 @@ def createIdeologyConstruction(request):
                                 status = '待审核',
                                 score = 0,
                                 complete = 0,
-                                inspector = Inspectors.objects.get(number = 10002))
-            if True:
+                                inspector = inspector,)
                 project.save()
-                return HttpResponse('思建活动申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -528,7 +530,7 @@ def ideologyConstruction(request,id):
                     project.save()
                     return render_to_response('IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append('Please check your importation')
+                    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
@@ -606,14 +608,20 @@ def CheckIdeologyConstructionx(request,id,isok):
 '''
 #创建
 def createLecture(request):
-    error = []
     if request.method == 'POST':
+        error = []
+        try:
+            student = Students.objects.get(user = request.user)
+            inspector = Inspectors.objects.get(inspector = 10002)
+        except Exception,e:
+            error.append(e)
         form = CreateLectureForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = LectureRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = LectureRank(rankName = cd['ProjectName'],
                                 type = cd['type'],
-                                teacher = Students.objects.get(user = request.user),
+                                teacher = student,
                                 startingTime = cd['startingTime'],
                                 organizer = cd['organizer'],
                                 speaker = cd['speaker'],
@@ -622,12 +630,11 @@ def createLecture(request):
                                 status = '待审核',
                                 score = 0,
                                 complete = 0,
-                                inspector = Inspectors.objects.get(number = 10002))
-            if True:
+                                inspector = inspector)
                 project.save()
-                return HttpResponse('讲座活动申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -661,7 +668,7 @@ def lecture(request,id):
                     project.save()
                     return render_to_response('LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'讲座活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append('Please check your importation')
+                    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
@@ -738,12 +745,18 @@ def CheckLecturex(request,id,isok):
 '''
 #创建
 def createVolunteering(request):
-    error = []
     if request.method == 'POST':
+        error = []
+        try:
+            student = Students.objects.get(user = request.user)
+            inspector = Inspectors.objects.get(inspector = 10002)
+        except Exception,e:
+            error.append(e)
         form = CreateVolunteeringForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = VolunteeringRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = VolunteeringRank(rankName = cd['ProjectName'],
                                 teacher = Students.objects.get(user = request.user),
                                 startingTime = cd['startingTime'],
                                 volunteerTime = cd['volunteerTime'],
@@ -754,11 +767,10 @@ def createVolunteering(request):
                                 score = 0,
                                 complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
-            if True:
                 project.save()
-                return HttpResponse('志愿活动申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -792,7 +804,7 @@ def volunteering(request,id):
                     project.save()
                     return render_to_response('VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'志愿活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append('Please check your importation')
+                    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
@@ -869,13 +881,19 @@ def CheckVolunteeringx(request,id,isok):
 '''
 #创建
 def createSchoolActivity(request):
-    error = []
     if request.method == 'POST':
+        error = []
+        try:
+            student = Students.objects.get(user = request.user)
+            inspector = Inspectors.objects.get(inspector = 10002)
+        except Exception,e:
+            error.append(e)
         form = CreateSchoolActivityForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = SchoolActivityRank(rankName = cd['ProjectName'],
-                                teacher = Students.objects.get(user = request.user),
+            try:
+                cd = form.cleaned_data
+                project = SchoolActivityRank(rankName = cd['ProjectName'],
+                                teacher = student,
                                 startingTime = cd['startingTime'],
                                 type = cd['type'],
                                 sponsor = cd['sponsor'],
@@ -884,12 +902,11 @@ def createSchoolActivity(request):
                                 status = '待审核',
                                 score = 0,
                                 complete = 0,
-                                inspector = Inspectors.objects.get(number = 10002))
-            if True:
+                                inspector = inspector)
                 project.save()
-                return HttpResponse('校园活动申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -923,7 +940,7 @@ def schoolActivity(request,id):
                     project.save()
                     return render_to_response('SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'校园活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append('Please check your importation')
+                    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
@@ -1000,12 +1017,18 @@ def CheckSchoolActivityx(request,id,isok):
 '''
 #创建
 def createInternship(request):
-    error = []
     if request.method == 'POST':
+        error = []
+        try:
+            student = Students.objects.get(user = request.user)
+            inspector = Inspectors.objects.get(inspector = 10002)
+        except Exception,e:
+            error.append(e)
         form = CreateInternshipForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            project = InternshipRank(rankName = cd['ProjectName'],
+            try:
+                cd = form.cleaned_data
+                project = InternshipRank(rankName = cd['ProjectName'],
                                 teacher = Students.objects.get(user = request.user),
                                 InternshipTime = cd['startingTime'],
                                 type = cd['type'],
@@ -1013,11 +1036,10 @@ def createInternship(request):
                                 score = 0,
                                 complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
-            if True:
                 project.save()
-                return HttpResponse('实践实习信息申请已提交！')
-            else:
-                error.append('Please check your importation')
+                return render_to_response('first.html',{'alert':'创建成功！'})
+            except Exception,e:
+                error.append(e)
         else:
             error.append('Please input information of your project')
     else:
@@ -1051,7 +1073,7 @@ def internship(request,id):
                     project.save()
                     return render_to_response('InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核成功！','can':True})
                 except Exception,e:  
-                    error.append('Please check your importation')
+                    error.append(e)
             else:
                 error.append('Please input information of your project')
         else:
