@@ -21,7 +21,7 @@ class ChoicesTeam(models.Model):
 
 class Choices(models.Model):
     name = models.CharField(max_length = 50)
-    score = models.SmallIntegerField()
+    score = models.SmallIntegerField(null = True)
     complete = models.SmallIntegerField()
 
 class Inspectors(models.Model):
@@ -133,7 +133,7 @@ class ClassBasis(models.Model):
     classIntroduction = models.CharField(max_length = 200)
     classTarget = models.CharField(max_length = 200)    
     classSort = models.CharField(max_length = 50)     #课程类别
-    complete = models.PositiveIntegerField()   #外键
+    complete = models.PositiveIntegerField(null = True)   #外键
     inspector = models.ForeignKey(Inspectors)
 
 class InClass(models.Model):
@@ -158,12 +158,12 @@ class ResearchProjectRank(models.Model):
     rankName = models.CharField(max_length = 20)
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     rank = models.CharField(max_length = 20)
-    ManagerScore = models.SmallIntegerField()
+    ManagerScore = models.SmallIntegerField(null = True)
     MemberScore = models.SmallIntegerField(null = True)
     startingTime = models.DateField()
     teacher = models.ForeignKey(Students)
-    ManagerComplete = models.PositiveSmallIntegerField()
-    MemberComplete = models.PositiveSmallIntegerField()
+    ManagerComplete = models.PositiveSmallIntegerField(null = True)
+    MemberComplete = models.PositiveSmallIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     SupportText = models.TextField(null = True)#支撑文档
 
@@ -186,9 +186,9 @@ class PaperRank(models.Model):
     journalName = models.CharField(max_length = 20)
     rank = models.CharField(max_length = 20)
     AuthorRanking = models.SmallIntegerField()
-    score = models.SmallIntegerField()
+    score = models.SmallIntegerField(null = True)
     startingTime = models.DateField()
-    complete = models.PositiveIntegerField()
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -202,9 +202,9 @@ class CompetitionRank(models.Model):
     rankName = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
     rank = models.SmallIntegerField()
-    score = models.SmallIntegerField()
+    score = models.SmallIntegerField(null = True)
     startingTime = models.DateField()
-    complete = models.PositiveIntegerField()
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -218,10 +218,10 @@ class ExchangeRank(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     nature = models.CharField(max_length = 20)
-    score = models.SmallIntegerField()
+    score = models.SmallIntegerField(null = True)
     startTime = models.DateField()
     endTime = models.DateField()
-    complete = models.PositiveIntegerField()
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -238,8 +238,8 @@ class IdeologyConstructionRank(models.Model):
     startingTime = models.DateField()
     Location = models.CharField(max_length = 50)
     Content = models.TextField()
-    score = models.SmallIntegerField()
-    complete = models.PositiveIntegerField()
+    score = models.SmallIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -266,8 +266,8 @@ class LectureRank(models.Model):
     startingTime = models.DateField()
     Location = models.CharField(max_length = 50)
     Content = models.TextField()
-    score = models.SmallIntegerField()
-    complete = models.PositiveIntegerField()
+    score = models.SmallIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True)
     teacher = models.ForeignKey(Students)
     inspector = models.ForeignKey(Inspectors)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -293,8 +293,8 @@ class VolunteeringRank(models.Model):
     Location = models.CharField(max_length = 50)
     volunteerTime = models.PositiveIntegerField()
     Content = models.TextField()
-    score = models.SmallIntegerField()
-    complete = models.PositiveIntegerField()
+    score = models.SmallIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -320,8 +320,8 @@ class SchoolActivityRank(models.Model):
     organizer = models.CharField(max_length = 50)
     startingTime = models.DateField()
     awardLevel = models.CharField(max_length = 50)
-    score = models.SmallIntegerField()
-    complete = models.PositiveIntegerField()
+    score = models.SmallIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -344,8 +344,8 @@ class InternshipRank(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     InternshipTime = models.DateField()
-    score = models.SmallIntegerField()
-    complete = models.PositiveIntegerField()
+    score = models.SmallIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 
@@ -375,8 +375,8 @@ class StudentCadreRank(models.Model):
     organizitionType = models.CharField(max_length = 50)
     organizitionName = models.CharField(max_length = 20)
     rankName = models.CharField(max_length = 20)
-    score = models.SmallIntegerField()
-    complete = models.PositiveIntegerField()
+    score = models.SmallIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True)#支撑文档 

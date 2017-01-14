@@ -167,7 +167,7 @@ def createPaper(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreatePaperForm(request.POST)
@@ -181,11 +181,9 @@ def createPaper(request):
                                 status = '待审核',
                                 Level = '',
                                 AuthorRanking = 0,
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector,)
+                               inspector = insp,)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -246,7 +244,7 @@ def createCompetition(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateCompetitionForm(request.POST)
@@ -259,11 +257,9 @@ def createCompetition(request):
                                 status = '待审核',
                                 rank = '0',
                                 Level = '',
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector,)
+                               inspector = insp,)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -277,7 +273,7 @@ def createStudentCadre(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateStudentCadreForm(request.POST)
@@ -288,11 +284,9 @@ def createStudentCadre(request):
                                 organizitionType = cd['organizitionType'],
                                 organizitionName = cd['organizitionName'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector,)
+                               inspector = insp,)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -304,11 +298,10 @@ def createStudentCadre(request):
 def createExchange(request):
     if request.method == 'POST':
         error = []
-        try:
-            student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
-        except Exception,e:
-            error.append(e)
+        #try:
+        student = Students.objects.get(user = request.user)
+        insp = Inspectors.objects.get(number = 10002)
+        #except Exception,e:#error.append(e)
         form = CreateExchangeForm(request.POST)
         if form.is_valid():
             try:
@@ -320,11 +313,11 @@ def createExchange(request):
                                 startTime = cd['startTime'],
                                 endTime = cd['endTime'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector,)
+                                
+                                
+                               inspector = insp,)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -343,17 +336,17 @@ def createResearchProject(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
-            try:
+            #try:
                 cd = form.cleaned_data
-                project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = student,startingTime = cd['ProjectTime'],status = '待审核',rank = '',ManagerScore = 0,MemberScore = 0, complete = 0,inspector =inspector,)
+                project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = student,startingTime = cd['ProjectTime'],status = '待审核',rank = '',inspector = insp,)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
-            except Exception,e:
+                return render_to_response('first.html',{'alert':'okkkk!'})
+            #except Exception,e:
                 error.append(e)
         else:
             error.append('Please input information of your project')
@@ -475,7 +468,7 @@ def createIdeologyConstruction(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateIdeologyConstructionForm(request.POST)
@@ -490,11 +483,9 @@ def createIdeologyConstruction(request):
                                 Location = cd['Location'],
                                 Content = cd['Content'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector,)
+                               inspector = insp,)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -612,7 +603,7 @@ def createLecture(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateLectureForm(request.POST)
@@ -628,11 +619,9 @@ def createLecture(request):
                                 Location = cd['Location'],
                                 Content = cd['Content'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector)
+                               inspector = insp)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -749,7 +738,7 @@ def createVolunteering(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateVolunteeringForm(request.POST)
@@ -764,11 +753,9 @@ def createVolunteering(request):
                                 Location = cd['Location'],
                                 Content = cd['Content'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -885,7 +872,7 @@ def createSchoolActivity(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateSchoolActivityForm(request.POST)
@@ -900,11 +887,9 @@ def createSchoolActivity(request):
                                 organizer = cd['organizer'],
                                 awardLevel = cd['awardLevel'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
-                                inspector = inspector)
+                               inspector = insp)
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
@@ -1021,7 +1006,7 @@ def createInternship(request):
         error = []
         try:
             student = Students.objects.get(user = request.user)
-            inspector = Inspectors.objects.get(inspector = 10002)
+            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error.append(e)
         form = CreateInternshipForm(request.POST)
@@ -1033,11 +1018,9 @@ def createInternship(request):
                                 InternshipTime = cd['startingTime'],
                                 type = cd['type'],
                                 status = '待审核',
-                                score = 0,
-                                complete = 0,
                                 inspector = Inspectors.objects.get(number = 10002))
                 project.save()
-                return render_to_response('first.html',{'alert':'创建成功！'})
+                return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error.append(e)
         else:
