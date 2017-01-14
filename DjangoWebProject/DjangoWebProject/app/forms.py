@@ -109,9 +109,9 @@ class CreatePaperForm(forms.Form):
         error_messages={'required': u'请输入论文题目'},widget=forms.TextInput({
                                    'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
-        label=u"发表时间",
-        error_messages={'required': u'请输入论文发表时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        label=u"项目时间",
+        error_messages={'required': u'请输入项目时间'},
+        widget = SelectDateWidget())
     JournalName = forms.CharField(required=True,
         label=u"期刊名称",
         error_messages={'required': u'请输入期刊名称'},widget=forms.TextInput({
@@ -151,9 +151,9 @@ class CreateCompetitionForm(forms.Form):
         error_messages={'required': u'请输入竞赛名称'},widget=forms.TextInput({
                                    'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
-        label=u"竞赛时间",
-        error_messages={'required': u'请输入竞赛时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        label=u"项目时间",
+        error_messages={'required': u'请输入项目时间'},
+        widget = SelectDateWidget())
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
@@ -196,12 +196,12 @@ class CreateExchangeForm(forms.Form):
                                    'class': 'form-control',}))
     startTime = forms.DateField(required=True,
         label=u"派出时间",
-        error_messages={'required': u'请输入派出时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入派出时间'},
+        widget = SelectDateWidget())
     endTime = forms.DateField(required=True,
         label=u"返校时间",
-        error_messages={'required': u'请输入返校时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入返校时间'},
+        widget = SelectDateWidget(),)
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
@@ -255,7 +255,8 @@ class CreateIdeologyConstructionForm(forms.Form):
         error_messages={'required': u'请输入活动主办方'})
     startingTime = forms.DateField(required=True,
         label=u"活动时间",
-        error_messages={'required': u'请输入活动时间'})
+        error_messages={'required': u'请输入活动时间'},
+        widget = SelectDateWidget())
     Location = forms.CharField(required=True,
         label=u"活动地点",
         error_messages={'required': u'请输入活动地点'})
@@ -309,8 +310,8 @@ class CreateLectureForm(forms.Form):
                                    'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"讲座时间",
-        error_messages={'required': u'请输入讲座时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入讲座时间'},
+        widget = SelectDateWidget())
     Location = forms.CharField(required=True,
         label=u"讲座地点",
         error_messages={'required': u'请输入讲座地点'},widget=forms.TextInput({
@@ -358,8 +359,8 @@ class CreateVolunteeringForm(forms.Form):
                                    'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入项目时间'},
+        widget = SelectDateWidget())
     Location = forms.CharField(required=True,
         label=u"志愿活动地点",
         error_messages={'required': u'请输入志愿活动地点'},widget=forms.TextInput({
@@ -419,8 +420,8 @@ class CreateSchoolActivityForm(forms.Form):
                                    'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"校园活动时间",
-        error_messages={'required': u'请输入校园活动时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入校园活动时间'},
+        widget = SelectDateWidget())
     awardLevel = forms.CharField(required=True,
         label=u"奖项",
         error_messages={'required': u'请输入校园活动奖项'},widget=forms.TextInput({
@@ -463,8 +464,8 @@ class CreateInternshipForm(forms.Form):
                                    'class': 'form-control',}))
     startingTime = forms.DateField(required=True,
         label=u"实践实习时间",
-        error_messages={'required': u'请输入实践实习时间'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入实践实习时间'},
+        widget = SelectDateWidget())
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
