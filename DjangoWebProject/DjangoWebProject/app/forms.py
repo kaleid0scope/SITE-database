@@ -106,21 +106,24 @@ class ResearchProjectForm(forms.Form):
 class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"论文题目",
-        error_messages={'required': u'请输入论文题目'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入论文题目'},
+                        widget=forms.TextInput({'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'},
         widget = SelectDateWidget())
+    AuthorRanking = forms.IntegerField(required=True,
+        label=u"第几作者",
+        error_messages={'required': u'请输入第几作者'},
+        widget = forms.TextInput({'class': 'form-control',}))
     JournalName = forms.CharField(required=True,
         label=u"期刊名称",
-        error_messages={'required': u'请输入期刊名称'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入期刊名称'},
+        widget=forms.TextInput({'class': 'form-control',}))
     SupportText = forms.CharField(required=True,
         label=u"支撑文档",
         error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
+        widget=forms.Textarea({'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():

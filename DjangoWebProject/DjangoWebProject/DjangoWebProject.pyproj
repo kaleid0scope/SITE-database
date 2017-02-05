@@ -77,7 +77,9 @@
     <Content Include="app\templates\LectureList.html" />
     <Content Include="app\templates\LectureSDetail.html" />
     <Content Include="app\templates\index.html" />
+    <Content Include="app\templates\Paper.html" />
     <Content Include="app\templates\ResearchProject.html" />
+    <Content Include="app\templates\PaperIndex.html" />
     <Content Include="app\templates\ResearchProjectSDetail.html" />
     <Content Include="app\templates\ResearchProjectList.html" />
     <Content Include="app\templates\reset_form.html" />

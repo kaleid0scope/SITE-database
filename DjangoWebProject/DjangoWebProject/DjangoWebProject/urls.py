@@ -68,6 +68,8 @@ urlpatterns = [
     url(r'^CheckResearch/(?P<id>\w+)/(?P<isok>\w+)/$',CheckResearchProject), 
 
     url(r'^createPaper/$',createPaper),
+    url(r'^paper/(?P<id>\w+)/$',app.views.paper),
+    url(r'^PaperIndex/$',app.views.paperIndex),
     url(r'^createCompetition/$',createCompetition),
     url(r'^createExchange/$',createExchange), 
     url(r'^createStudentCadre/$',createStudentCadre), 

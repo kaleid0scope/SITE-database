@@ -14,7 +14,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,StudentCadre,Choices,ChoicesTeam
+from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,Choices,ChoicesTeam,PaperRank,CompetitionRank,StudentCadreRank,ExchangeRank
 import random,time
 import uuid
 import xlrd
@@ -172,19 +172,19 @@ def createPaper(request):
             error.append(e)
         form = CreatePaperForm(request.POST)
         if form.is_valid():
-            try:
+            #try:
                 cd = form.cleaned_data
                 project = PaperRank(rankName = cd['ProjectName'],
                                 journalName = cd['JournalName'],
                                 student = student,
                                 startingTime = cd['ProjectTime'],
+                                AuthorRanking = cd['AuthorRanking'],
                                 status = '待审核',
-                                Level = '',
-                                AuthorRanking = 0,
-                               inspector = insp,)
+                                rank = '',
+                                inspector = insp,)
                 project.save()
                 return render_to_response('first.html',{'alert':'okkkk!'})
-            except Exception,e:
+            #except Exception,e:
                 error.append(e)
         else:
             error.append('Please input information of your project')
@@ -230,15 +230,15 @@ def paper(request,id):
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'alert':'科研立项审核失败！该活动已审核','can':True})
     return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '通过'),'can':False})
-def PaperIndex(request):
+def paperIndex(request):
     try:  
         student = Students.objects.get(user = request.user)
-        project = Paper.objects.filter(StudentNum= student)
+        project = PaperRank.objects.filter(student = student.StudentNum)
     except Exception,e: 
         return render_to_response('index.html',{'alert':e})
     if student.auth.isTeacher and student.auth.lecture:
-        return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'can':True})
-    return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(StudentNum= student),'can':False})
+        return render_to_response('PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核')})#teacher
+    return render_to_response('index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
 def createCompetition(request):
     if request.method == 'POST':
         error = []
@@ -257,7 +257,7 @@ def createCompetition(request):
                                 status = '待审核',
                                 rank = '0',
                                 Level = '',
-                               inspector = insp,)
+                                inspector = insp,)
                 project.save()
                 return render_to_response('first.html',{'alert':'okkkk!'})
             except Exception,e:
