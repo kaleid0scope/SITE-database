@@ -153,6 +153,14 @@ class CreateCompetitionForm(forms.Form):
         label=u"竞赛名称",
         error_messages={'required': u'请输入竞赛名称'},widget=forms.TextInput({
                                    'class': 'form-control',}))
+    level = forms.CharField(required=True,
+        label=u"竞赛等级",
+        error_messages={'required': u'请输入竞赛等级'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    rank = forms.CharField(required=True,
+        label=u"学生角色（队长/队员）",
+        error_messages={'required': u'请输入学生角色（队长/队员）'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'},
@@ -186,8 +194,8 @@ class CompetitionForm(forms.Form):
 
 class CreateExchangeForm(forms.Form):
     ProjectName = forms.CharField(required=True,
-        label=u"交流交换项目名称",
-        error_messages={'required': u'请输入交流交换项目名称'},widget=forms.TextInput({
+        label=u"对方院校/公司名称名称",
+        error_messages={'required': u'请输入对方院校/公司名称名称'},widget=forms.TextInput({
                                    'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"交流类型",

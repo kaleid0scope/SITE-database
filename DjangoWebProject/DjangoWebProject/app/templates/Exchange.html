@@ -1,0 +1,59 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+<html>
+<head>
+	<title>审核交流交换</title>
+   
+</head>
+<body>
+<div style="margin:30px">
+    	<h1 style="text-align:center">审核交流交换</h1>
+    <center>
+ <div class="container" >            
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td><b>对方院校/公司名称：</b></td>
+				<td>{{project.rankName}}</td>
+			</tr>
+            <tr>
+				<td><b>交流类别：</b></td>
+				<td>{{project.type}}</td>
+			</tr>
+            <tr>
+				<td><b>交流性质：</b></td>
+				<td>{{project.nature}}</td>
+			</tr>
+			<tr>
+				<td><b>学生学号：</b></td>
+				<td>{{project.student}}</td>
+			</tr>
+            <tr>
+				<td><b>派出时间：</b></td>
+				<td>{{project.startTime}}</td>
+			</tr>
+            <tr>
+				<td><b>返校时间：</b></td>
+				<td>{{project.endTime}}</td>
+			</tr>
+            <tr>
+				<td><b>支撑文档：</b></td>
+				<td>{{project.SupportText}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+	<form action="" method="post">
+		<table>
+			{{ form.as_table }}
+		</table>
+		
+		<input type="submit" name="passyes" value="通过" class="btn btn-default">
+        <input type="submit" name="passno" value="拒绝" class="btn btn-default">
+	</form>
+    </center>
+</div>
+</body>
+</html>
+{% endblock %}

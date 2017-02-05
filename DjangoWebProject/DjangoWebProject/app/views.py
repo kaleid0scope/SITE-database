@@ -252,8 +252,8 @@ def createCompetition(request):
                                 student = student,
                                 startingTime = cd['ProjectTime'],
                                 status = '待审核',
-                                rank = '0',
-                                Level = '',
+                                level = cd['level'],
+                                rank = cd['rank'],
                                 inspector = insp,)
                 project.save()
                 return render_to_response('first.html',{'alert':'okkkk!'})
@@ -300,6 +300,15 @@ def competition(request,id):
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '待审核'),'alert':'审核失败！该活动已审核','can':True})
     return render_to_response('CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '通过'),'can':False})
+def competitionIndex(request):
+    try:  
+        student = Students.objects.get(user = request.user)
+        project = CompetitionRank.objects.filter(student = student.StudentNum)
+    except Exception,e: 
+        return render_to_response('index.html',{'alert':e})
+    if student.auth.isTeacher and student.auth.lecture:
+        return render_to_response('CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '待审核')})#teacher
+    return render_to_response('index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
 def createStudentCadre(request):
     if request.method == 'POST':
         error = []
@@ -362,6 +371,15 @@ def studentCadre(request,id):
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '待审核'),'alert':'审核失败！该活动已审核','can':True})
     return render_to_response('StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '通过'),'can':False})
+def studentCadreIndex(request):
+    try:  
+        student = Students.objects.get(user = request.user)
+        project = StudentCadreRank.objects.filter(student = student.StudentNum)
+    except Exception,e: 
+        return render_to_response('index.html',{'alert':e})
+    if student.auth.isTeacher and student.auth.lecture:
+        return render_to_response('StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '待审核')})#teacher
+    return render_to_response('index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
 def createExchange(request):
     if request.method == 'POST':
         error = []
@@ -428,6 +446,15 @@ def exchange(request,id):
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_to_response('ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '待审核'),'alert':'审核失败！该活动已审核','can':True})
     return render_to_response('ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '通过'),'can':False})
+def exchangeIndex(request):
+    try:  
+        student = Students.objects.get(user = request.user)
+        project = ExchangeRank.objects.filter(student = student.StudentNum)
+    except Exception,e: 
+        return render_to_response('index.html',{'alert':e})
+    if student.auth.isTeacher and student.auth.lecture:
+        return render_to_response('ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '待审核')})#teacher
+    return render_to_response('index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
 
 
 '''科研立项

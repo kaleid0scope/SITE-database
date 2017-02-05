@@ -11,7 +11,7 @@ import app.views
 import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
-from app.views import createResearchProject ,createPaper,createCompetition,createExchange,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship ,createStudentCadre
+from app.views import createResearchProject,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship, createPaper,createCompetition,createExchange,createStudentCadre
 from app.views import researchProject,index,Excel,ResearchProjectIndex,IdeologyConstructionIndex,LectureIndex,VolunteeringIndex,SchoolActivityIndex,InternshipIndex
 from app.views import ResearchProjectDetail,IdeologyConstructionDetail,LectureDetail,VolunteeringDetail,SchoolActivityDetail,InternshipDetail
 from app.views import JoinResearchProject,JoinIdeologyConstruction,JoinLecture,JoinVolunteering,JoinSchoolActivity,JoinInternship
@@ -71,8 +71,14 @@ urlpatterns = [
     url(r'^paper/(?P<id>\w+)/$',app.views.paper),
     url(r'^PaperIndex/$',app.views.paperIndex),
     url(r'^createCompetition/$',createCompetition),
+    url(r'^competition/(?P<id>\w+)/$',app.views.competition),
+    url(r'^CompetitionIndex/$',app.views.competitionIndex),
     url(r'^createExchange/$',createExchange), 
+    url(r'^exchange/(?P<id>\w+)/$',app.views.exchange),
+    url(r'^ExchangeIndex/$',app.views.exchangeIndex),
     url(r'^createStudentCadre/$',createStudentCadre), 
+    url(r'^studentCadre/(?P<id>\w+)/$',app.views.studentCadre),
+    url(r'^StudentCadreIndex/$',app.views.studentCadreIndex),
 
     url(r'^createIdeologyConstruction/$',createIdeologyConstruction),
     url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),

@@ -213,7 +213,7 @@ class CompetitionRank(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     rankName = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
-    rank = models.SmallIntegerField()
+    rank = models.CharField(max_length = 20)
     score = models.SmallIntegerField(null = True)
     startingTime = models.DateField()
     complete = models.PositiveIntegerField(null = True)
