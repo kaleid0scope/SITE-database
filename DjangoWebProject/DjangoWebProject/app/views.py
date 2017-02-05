@@ -211,7 +211,7 @@ def paper(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector 
@@ -284,7 +284,7 @@ def competition(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector 
@@ -346,7 +346,7 @@ def studentCadre(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector 
@@ -412,7 +412,7 @@ def exchange(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector 
@@ -477,7 +477,7 @@ def researchProject(request,id):
                     project.memberComplete = choice.memberComplete
                     project.managerComplete = choice.managerComplete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     else :
@@ -616,7 +616,7 @@ def ideologyConstruction(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector
@@ -752,7 +752,7 @@ def lecture(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector
@@ -886,7 +886,7 @@ def volunteering(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector
@@ -1020,7 +1020,7 @@ def schoolActivity(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector
@@ -1151,7 +1151,7 @@ def internship(request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '已通过'
+                        project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
                     project.inspector = inspector
