@@ -4,13 +4,18 @@ Definition of models.
 """
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 # Create your models here.
 
 statusChoice = (
         ('未通过', '未通过'),
         ('通过', '通过'),
         ('待审核', '待审核'),)
+
+
+class CompleteInformation(models.Model):
+    Complete = models.PositiveIntegerField(primary_key = True)
+    CompleteExplain = models.TextField()
 
 class Complete(models.Model):
     complete1 = models.SmallIntegerField()
@@ -60,21 +65,6 @@ class Authorizations(models.Model):
 
     def __unicode__(self):
         return str(self.id)
-'''
-class Complete(models.Model):
-    complete1 = models.SmallIntegerField()
-    complete2 = models.SmallIntegerField()
-    complete3 = models.SmallIntegerField()
-    complete4 = models.SmallIntegerField()
-    complete5 = models.SmallIntegerField()
-
-class CompleteInformation(models.Model):
-    Complete = models.PositiveIntegerField(primary_key = True)
-    CompleteExplain = models.TextField()
-    majorName = models.CharField(max_length = 20)
-    data = models.PositiveIntegerField()
-
-'''
 
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('用户'))
@@ -84,7 +74,7 @@ class Students(models.Model):
     sex = models.BooleanField()#初始值
     year = models.PositiveSmallIntegerField()
     phone = models.BigIntegerField()
-    email = models.EmailField()    #特殊符号
+    email = models.EmailField()#待修改
     born = models.DateField()
     root = models.CharField(max_length = 50)
     nation = models.CharField(max_length = 50)
@@ -95,7 +85,6 @@ class Students(models.Model):
     speciality = models.CharField(max_length = 50)
     province = models.CharField(max_length = 50)
     collegeEntranceExaminationScore = models.PositiveSmallIntegerField()
-    inspector = models.ForeignKey(Inspectors)
 
     def __unicode__(self):
         return str(self.StudentNum)

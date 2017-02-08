@@ -34,6 +34,9 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\type.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\static\img\admin.py" />
     <Compile Include="app\static\img\apps.py" />
     <Compile Include="app\static\img\migrations\__init__.py" />
@@ -79,6 +82,9 @@
     <Content Include="app\templates\LectureList.html" />
     <Content Include="app\templates\LectureSDetail.html" />
     <Content Include="app\templates\index.html" />
+    <Content Include="app\templates\StudentCadreIndex.html" />
+    <Content Include="app\templates\ExchangeIndex.html" />
+    <Content Include="app\templates\CompetitionIndex.html" />
     <Content Include="app\templates\StudentCadre.html" />
     <Content Include="app\templates\Exchange.html" />
     <Content Include="app\templates\Competition.html" />

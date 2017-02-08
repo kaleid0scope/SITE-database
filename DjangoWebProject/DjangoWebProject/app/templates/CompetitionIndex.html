@@ -14,6 +14,7 @@
 				<th>项目名称</th>
 				<th>开始时间</th>
                 <th>指导老师</th>
+                {% if can == False %}<th>查看详细信息</th>{% endif %}
                 {% if can == True %}<th>审核</th>{% endif %}
 			</tr>
 		</thead>
@@ -23,7 +24,6 @@
 				<td>{{project.rankName}}</td>
 				<td>{{project.startingTime}}</td>
                 <td>{{project.teacher}}</td>
-                <td></td>
                 <td><a class="btn btn-info" href= "/paper/{{project.id}}" >审核</a></td>
 			</tr>
             {% endfor %}

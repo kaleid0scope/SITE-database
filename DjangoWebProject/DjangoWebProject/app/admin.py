@@ -1,10 +1,9 @@
 from django.contrib import admin
 import app.models
-from app.models import Inspectors,Students,Authorizations,ResearchProjectRank,ResearchProject,LectureRank,Lecture,ChoicesTeam,Choices
+from app.models import Inspectors,Authorizations,ResearchProjectRank,ResearchProject,LectureRank,Lecture,ChoicesTeam,Choices
  
  
 admin.site.register(Inspectors)
-admin.site.register(Students)
 admin.site.register(Authorizations)
 admin.site.register(ResearchProjectRank)
 admin.site.register(ResearchProject)
