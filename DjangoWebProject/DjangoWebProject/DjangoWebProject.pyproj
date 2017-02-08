@@ -65,12 +65,14 @@
     <Folder Include="app\static\img\" />
     <Folder Include="app\static\img\migrations\" />
     <Folder Include="app\static\img\templates\" />
+    <Folder Include="app\static\images\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\img\templates\index.html" />
+    <Content Include="app\templates\app\construction.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\LectureDetail.html" />
     <Content Include="app\templates\LectureIndex.html" />

@@ -5,7 +5,7 @@ Definition of urls for DjangoWebProject.
 from datetime import datetime
 from django.conf.urls import url
 import django.contrib.auth.views
-
+import DjangoWebProject.settings
 import app.forms
 import app.views
 import app.testdb
@@ -23,9 +23,11 @@ from app.views import CheckResearchProject
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
 from django.contrib import admin
+from DjangoWebProject import settings
 admin.autodiscover()
 
 urlpatterns = [
+    #url(r'/(?P<path>.*)','django.views.static.serve',{'document_root':settings.STATIC_ROOT+'/images'}), 
     # Examples:
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
@@ -110,8 +112,12 @@ urlpatterns = [
     url(r'^InternshipIndex/$',VolunteeringIndex), 
     url(r'^JoinInternship/(?P<id>\w+)/$',JoinInternship),  
 
-    url(r'^index/$',index), 
+    url(r'^index/$',index,name='index'), 
+    url(r'^construction/$',app.views.construction,name='construction'), 
     url(r'^excel/$',Excel),
+    
+    #C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\app\static\images
+    
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
+from DjangoWebProject import settings
 from django.http import HttpRequest
 from django.template import RequestContext
+from django.template.loader import get_template
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
@@ -19,11 +21,15 @@ import random,time
 import uuid
 import xlrd
 import MySQLdb
+from django.template.context import Context
 '''import win32com.client as win32'''
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 import DjangoWebProject.settings
+
+def construction(request):
+    return render_to_response('app/construction.html')
 
 def home(request):
     """Renders the home page."""
@@ -39,15 +45,7 @@ def first(request):
     return render(request,'first.html',{ 'title':'学生主页',})
 
 def contact(request):
-    """Renders the contact page."""
-    assert isinstance(request, HttpRequest)
-    return render(request,
-        'app/contact.html',
-        {
-            'title':'Contact',
-            'message':'Your contact page.',
-            'year':datetime.now().year,
-        })
+    return render_to_response('app/contact.html', {'t': settings.STATIC_ROOT})
 
 def about(request):
     """Renders the about page."""
