@@ -8,15 +8,13 @@ from django.template.loader import get_template
 from datetime import datetime
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
-from app.forms import CreateResearchProjectForm,CreatePaperForm,CreateCompetitionForm,CreateExchangeForm,CreateIdeologyConstructionForm,CreateLectureForm,CreateVolunteeringForm, CreateSchoolActivityForm,CreateInternshipForm,CreateStudentCadreForm
-from app.forms import RegisterForm,ChangepwdForm,ChangeauthForm,ResetPasswordForm
-from app.forms import ResearchProjectForm,IdeologyConstructionForm,LectureForm,VolunteeringForm,SchoolActivityForm,InternshipForm,StudentCadreForm,PaperForm,CompetitionForm,ExchangeForm,StudentCadreForm
+from app.forms import *
+from app.models import *
 
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
-from app.models import Students,Authorizations,Inspectors,ResearchProjectRank,PaperRank,CompetitionRank,ExchangeRank,IdeologyConstructionRank,LectureRank,VolunteeringRank,SchoolActivityRank,InternshipRank,StudentCadreRank,ResearchProject,IdeologyConstruction,Lecture,Volunteering,SchoolActivity,Internship,Choices,ChoicesTeam,PaperRank,CompetitionRank,StudentCadreRank,ExchangeRank
 import random,time
 import uuid
 import xlrd
