@@ -38,7 +38,7 @@ class ChoicesTeam(models.Model):
 
 class Choices(models.Model):
     name = models.CharField(max_length = 50)
-    score = models.SmallIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
     complete = models.SmallIntegerField()
 
 class Inspectors(models.Model):
@@ -134,7 +134,7 @@ class ClassBasis(models.Model):
     classIntroduction = models.CharField(max_length = 200)
     classTarget = models.CharField(max_length = 200)    
     classSort = models.CharField(max_length = 50)     #课程类别
-    complete = models.PositiveIntegerField(null = True)   #外键
+    complete = models.PositiveIntegerField(null = True,blank = True)   #外键
     inspector = models.ForeignKey(Inspectors)
 
 class InClass(models.Model):
@@ -159,14 +159,14 @@ class ResearchProjectRank(models.Model):
     rankName = models.CharField(max_length = 20)
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     rank = models.CharField(max_length = 20)
-    ManagerScore = models.SmallIntegerField(null = True)
-    MemberScore = models.SmallIntegerField(null = True)
+    ManagerScore = models.SmallIntegerField(null = True,blank = True)
+    MemberScore = models.SmallIntegerField(null = True,blank = True)
     startingTime = models.DateField()
     teacher = models.ForeignKey(Students)
-    ManagerComplete = models.PositiveSmallIntegerField(null = True)
-    MemberComplete = models.PositiveSmallIntegerField(null = True)
+    ManagerComplete = models.PositiveSmallIntegerField(null = True,blank = True)
+    MemberComplete = models.PositiveSmallIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
-    SupportText = models.TextField(null = True)#支撑文档
+    SupportText = models.TextField(null = True,blank = True)#支撑文档
 
     def __unicode__(self):
         return self.rankName
@@ -187,12 +187,12 @@ class PaperRank(models.Model):
     journalName = models.CharField(max_length = 20)
     rank = models.CharField(max_length = 20)
     AuthorRanking = models.SmallIntegerField()
-    score = models.SmallIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
     startingTime = models.DateField()
-    complete = models.PositiveIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -203,12 +203,12 @@ class CompetitionRank(models.Model):
     rankName = models.CharField(max_length = 50)
     Level = models.CharField(max_length = 20)
     rank = models.CharField(max_length = 20)
-    score = models.SmallIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
     startingTime = models.DateField()
-    complete = models.PositiveIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -219,13 +219,13 @@ class ExchangeRank(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     nature = models.CharField(max_length = 20)
-    score = models.SmallIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
     startTime = models.DateField()
     endTime = models.DateField()
-    complete = models.PositiveIntegerField(null = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -236,11 +236,11 @@ class StudentCadreRank(models.Model):
     organizitionType = models.CharField(max_length = 50)
     organizitionName = models.CharField(max_length = 20)
     rankName = models.CharField(max_length = 20)
-    score = models.SmallIntegerField(null = True)
-    complete = models.PositiveIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName 
@@ -254,11 +254,11 @@ class IdeologyConstructionRank(models.Model):
     startingTime = models.DateField()
     Location = models.CharField(max_length = 50)
     Content = models.TextField()
-    score = models.SmallIntegerField(null = True)
-    complete = models.PositiveIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -282,11 +282,11 @@ class LectureRank(models.Model):
     startingTime = models.DateField()
     Location = models.CharField(max_length = 50)
     Content = models.TextField()
-    score = models.SmallIntegerField(null = True)
-    complete = models.PositiveIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     teacher = models.ForeignKey(Students)
     inspector = models.ForeignKey(Inspectors)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -309,11 +309,11 @@ class VolunteeringRank(models.Model):
     Location = models.CharField(max_length = 50)
     volunteerTime = models.PositiveIntegerField()
     Content = models.TextField()
-    score = models.SmallIntegerField(null = True)
-    complete = models.PositiveIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -336,11 +336,11 @@ class SchoolActivityRank(models.Model):
     organizer = models.CharField(max_length = 50)
     startingTime = models.DateField()
     awardLevel = models.CharField(max_length = 50)
-    score = models.SmallIntegerField(null = True)
-    complete = models.PositiveIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName
@@ -360,11 +360,11 @@ class InternshipRank(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核')
     type = models.CharField(max_length = 50)
     InternshipTime = models.DateField()
-    score = models.SmallIntegerField(null = True)
-    complete = models.PositiveIntegerField(null = True)
+    score = models.SmallIntegerField(null = True,blank = True)
+    complete = models.PositiveIntegerField(null = True,blank = True)
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
-    SupportText = models.TextField(null = True)#支撑文档 
+    SupportText = models.TextField(null = True,blank = True)#支撑文档 
 
     def __unicode__(self):
         return self.rankName 
