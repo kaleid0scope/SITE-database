@@ -16,5 +16,5 @@ def GetType(request):
     return 1     #student
 
 def render_with_type(request,url,list):
-    list['teacher'] = GetType(request)
+    list['type'] = GetType(request)
     return render_to_response(url,list)
