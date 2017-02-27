@@ -1,0 +1,39 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+<body>
+	
+<div class="container">
+	<h2>活动详情如下：</h2>             
+	<table class="table table-striped">
+		    {% for item in error %}
+		<p style="color:red;">{{item}}</p>
+	{% endfor %}
+		<tbody>
+			<tr>
+				<td width="100px">活动名称：</td>
+				<td>{{project.rankName}}</td>
+			</tr>
+			<tr>
+				<td>开始时间：</td>
+				<td>{{project.startingTime}}</td>
+			</tr>
+			<tr>
+				<td>指导老师：</td>
+				<td>{{project.teacher}}</td>
+			</tr>
+            <tr>
+				<td>详细介绍：</td>
+				<td>{{project.SupportText}}</td>
+			</tr>
+            <tr>
+				<td>报名：</td>
+				<td><a class="btn btn-info" href= "/JoinResearch/{{project.id}}" >加入</a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+{% endblock %}

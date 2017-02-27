@@ -1,0 +1,39 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+<body>
+	
+<div class="container">
+	<h2>x学生详情如下：</h2>  
+    {{error}}           
+	<table class="table table-striped">
+		<tbody>
+			<tr>
+				<td width="100px">学生姓名：</td>
+				<td>{{student.rankName}}</td>
+			</tr>
+			<tr>
+				<td>学生学号：</td>
+				<td>{{student.StudentNum}}</td>
+			</tr>
+			<tr>
+				<td>学生邮箱：</td>
+				<td>{{student.email}}</td>
+			</tr>
+            <tr>
+				<td>学生电话：</td>
+				<td>{{student.phone}}</td>
+			</tr>
+            <tr>
+				{% if project == '待审核' %}
+                    <td><a class="btn btn-info" href= "/CheckResearch/{{project.id}}/1" >同意加入</a></td></tr>
+                    <tr><td><a class="btn btn-info" href= "/CheckResearch/{{project.id}}/0" >拒绝加入</a></td></tr>
+                {% endif %}
+                 <tr><td><a class="btn btn-info" href= "/ResearchList}" >返回</a></td></tr>
+		</tbody>
+	</table>
+</div>
+
+
+{% endblock %}
