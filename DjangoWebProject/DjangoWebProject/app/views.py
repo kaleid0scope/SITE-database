@@ -55,16 +55,6 @@ def about(request):
             'message':'Your application description page.',
             'year':datetime.now().year,
         })
-"""def register(request):
-     assert isinstance(request, HttpRequest)
-     return render(
-         request,
-         'app/register.html',
-         {'title':'register',
-          'message':'add your message',
-          'year':datetime.now().year,
-          }
-         )"""
 
 def search_form(request):
     return render_with_type(request,'search_form.html')
@@ -88,9 +78,12 @@ def reset(request):
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = User.objects.filter(username=cd['username'],email=cd['email'])
-            if user is not None:
-                user.update(password=make_password(cd['password']))
+            try:
+                student = Students.objects.get(user = User.objects.get(username=cd['username'],email=cd['email']))
+            except Exception,e:
+                return render_with_type(request,'reset_form.html', {'form': form,'alert':e})
+            if student.StudentNum == cd['StudentNum'] and str(student.identityNumber)[-6:] == cd['IdentityNumberSix']:
+                user.password = make_password(cd['password'])
                 return HttpResponseRedirect('/login')
     else:
         form = ResetPasswordForm()
@@ -1309,14 +1302,17 @@ def Excel(request):
 
 #我的项目
 def index(request):
-    student = Students.objects.get(user = request.user)
-    return render_with_type(request,'index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),
+    try:
+        student = Students.objects.get(user = request.user)
+        return render_with_type(request,'index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),
                                             'constructions':IdeologyConstruction.objects.filter(StudentNum = student),
                                             'lectures':Lecture.objects.filter(StudentNum = student),
                                             'volunteerings':Volunteering.objects.filter(StudentNum = student),
                                             'activities':SchoolActivity.objects.filter(StudentNum = student),
                                             'internships':Internship.objects.filter(StudentNum = student),
                                             'cadres':StudentCadre.objects.filter(StudentNum = student)})
+    except Exception,e:
+        return render_with_type('/home',{'alert':'unlogin!'})
 
 
 #single model do not need index
