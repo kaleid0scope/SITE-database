@@ -1,0 +1,39 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+
+<body>
+<div class="container">
+	<h2>活动列表</h2>   
+    <p>{% if can == False %}<a class="btn btn-primary" href= "/createIdeologyConstruction" >创建活动</a>{% endif %}</p>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>支撑文档</th>
+                {% if can == False %}<th>查看详细信息</th>{% endif %}
+                {% if can == True %}<th>审核</th>{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in projects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher}}</td>
+                <td></td>
+                {% if can == True %}<td><a class="btn btn-info" href= "/ideologyConstruction/{{project.id}}" >审核</a></td>{% endif %}
+                {% if can == False %}<td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>{% endif %}
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+</div>
+    <a class="btn btn-info" href= "/first" >返回个人主页</a>
+</body>
+{% endblock %}

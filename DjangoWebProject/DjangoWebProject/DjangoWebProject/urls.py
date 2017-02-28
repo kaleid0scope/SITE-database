@@ -11,14 +11,7 @@ import app.views
 import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
-from app.views import createResearchProject,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship, createPaper,createCompetition,createExchange,createStudentCadre
-from app.views import researchProject,index,Excel,ResearchProjectIndex,IdeologyConstructionIndex,LectureIndex,VolunteeringIndex,SchoolActivityIndex,InternshipIndex
-from app.views import ResearchProjectDetail,IdeologyConstructionDetail,LectureDetail,VolunteeringDetail,SchoolActivityDetail,InternshipDetail
-from app.views import JoinResearchProject,JoinIdeologyConstruction,JoinLecture,JoinVolunteering,JoinSchoolActivity,JoinInternship
-from app.views import researchProject,ideologyConstruction,lecture,volunteering,schoolActivity,internship
-from app.views import ResearchProjectList
-from app.views import ResearchProjectSDetail
-from app.views import CheckResearchProject
+from app.views import *
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -86,8 +79,11 @@ urlpatterns = [
     url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
-    url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction), 
 
+    url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
+    url(r'^IdeologyConstructionSDetail/(?P<id>\w+)/$',app.views.IdeologyConstructionSDetail), 
+    url(r'^CheckIdeologyConstruction/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckIdeologyConstructionx),  
+    url(r'^IdeologyConstructionList/$',app.views.ResearchProjectList), 
     url(r'^createLecture/$',createLecture),
     url(r'^lecture/(?P<id>\w+)/$',lecture),
     url(r'^LectureDetail/(?P<id>\w+)/$',LectureDetail), 
@@ -97,19 +93,28 @@ urlpatterns = [
     url(r'^createVolunteering/$',createVolunteering),
     url(r'^volunteering/(?P<id>\w+)/$',volunteering),
     url(r'^VolunteeringDetail/(?P<id>\w+)/$',VolunteeringDetail), 
-    url(r'^VolunteeringIndex/$',VolunteeringIndex), 
+    url(r'^VolunteeringIndex/$',VolunteeringIndex),
+    url(r'^VolunteeringList/$',app.views.VolunteeringList), 
+    url(r'^VolunteeringSDetail/(?P<id>\w+)/$',app.views.VolunteeringSDetail), 
+    url(r'^CheckVolunteering/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckVolunteeringx),  
     url(r'^JoinVolunteering/(?P<id>\w+)/$',JoinVolunteering), 
 
     url(r'^createSchoolActivity/$',createSchoolActivity),
     url(r'^schoolActivity/(?P<id>\w+)/$',schoolActivity),
     url(r'^SchoolActivityDetail/(?P<id>\w+)/$',SchoolActivityDetail), 
-    url(r'^SchoolActivityIndex/$',VolunteeringIndex), 
+    url(r'^SchoolActivityIndex/$',SchoolActivityIndex),
+    url(r'^CheckSchoolActivity/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckSchoolActivityx),  
+    url(r'^SchoolActivityList/$',app.views.SchoolActivityList),  
+    url(r'^SchoolActivitySDetail/(?P<id>\w+)/$',app.views.SchoolActivitySDetail), 
     url(r'^JoinSchoolActivity/(?P<id>\w+)/$',JoinSchoolActivity),  
 
     url(r'^createInternship/$',createInternship), 
     url(r'^internship/(?P<id>\w+)/$',internship),
     url(r'^InternshipDetail/(?P<id>\w+)/$',InternshipDetail), 
-    url(r'^InternshipIndex/$',VolunteeringIndex), 
+    url(r'^InternshipIndex/$',app.views.InternshipIndex), 
+    url(r'^InternshipList/$',app.views.InternshipList),  
+    url(r'^CheckInternship/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckInternship),  
+    url(r'^InternshipSDetail/(?P<id>\w+)/$',app.views.InternshipSDetail), 
     url(r'^JoinInternship/(?P<id>\w+)/$',JoinInternship),  
 
     url(r'^index/$',index,name='index'), 

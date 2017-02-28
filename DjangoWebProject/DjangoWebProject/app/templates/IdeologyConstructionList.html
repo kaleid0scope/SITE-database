@@ -1,0 +1,33 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<div class="container">
+	<h2>管理思建活动：以下学生申请加入思建活动或已加入你的思建活动（这个文字看情况改）</h2>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>学生学号</th>
+                <th>学生详情</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in projects %}
+			<tr>
+				<td>{{project.StudentNum.StudentNum}}</td>
+                {% if project == '待审核' %}<td><a class="btn btn-info" href= "/IdeologyConstructionSDetail/{{project.id}}" >审核</a></td>{% endif %}
+                {% if project == '通过' %}<td><a class="btn btn-info" href= "/IdeologyConstructionSDetail/{{project.id}}" >查看</a></td>{% endif %}
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+</div>
+</body>
+</html>
+{% endblock %}
