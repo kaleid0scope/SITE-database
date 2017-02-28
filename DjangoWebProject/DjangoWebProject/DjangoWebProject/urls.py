@@ -11,14 +11,7 @@ import app.views
 import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
-from app.views import createResearchProject,createIdeologyConstruction ,createLecture,createVolunteering ,createSchoolActivity,createInternship, createPaper,createCompetition,createExchange,createStudentCadre
-from app.views import researchProject,index,Excel,ResearchProjectIndex,IdeologyConstructionIndex,LectureIndex,VolunteeringIndex,SchoolActivityIndex,InternshipIndex
-from app.views import ResearchProjectDetail,IdeologyConstructionDetail,LectureDetail,VolunteeringDetail,SchoolActivityDetail,InternshipDetail
-from app.views import JoinResearchProject,JoinIdeologyConstruction,JoinLecture,JoinVolunteering,JoinSchoolActivity,JoinInternship
-from app.views import researchProject,ideologyConstruction,lecture,volunteering,schoolActivity,internship
-from app.views import ResearchProjectList
-from app.views import ResearchProjectSDetail
-from app.views import CheckResearchProject
+from app.views import *
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -86,8 +79,11 @@ urlpatterns = [
     url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
-    url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction), 
 
+    url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
+    url(r'^IdeologyConstructionSDetail/(?P<id>\w+)/$',app.views.IdeologyConstructionSDetail), 
+    url(r'^CheckIdeologyConstruction/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckIdeologyConstruction),  
+    url(r'^IdeologyConstructionList/$',app.views.ResearchProjectList), 
     url(r'^createLecture/$',createLecture),
     url(r'^lecture/(?P<id>\w+)/$',lecture),
     url(r'^LectureDetail/(?P<id>\w+)/$',LectureDetail), 
