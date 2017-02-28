@@ -1152,7 +1152,7 @@ def internship(request,id):
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
         error.append(e)
-        return render_with_type(request,'Internship.html',{'alert':error})
+        return render_with_type(request,'Verify/Internship.html',{'alert':error})
     if project.status == '待审核':
         if request.method == 'POST':
             form = InternshipForm(request.POST)
@@ -1175,7 +1175,7 @@ def internship(request,id):
                 error.append('Please input information of your project')
         else:
             form = InternshipForm()
-            return render_with_type(request,'Lecture.html',{'form':form,'project':project})
+            return render_with_type(request,'Verify/Internship.html',{'form':form,'project':project})
     elif auth.isTeacher and auth.internship:
        return render_with_type(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核失败！该活动已审核','can':True})
     return render_with_type(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'can':False})

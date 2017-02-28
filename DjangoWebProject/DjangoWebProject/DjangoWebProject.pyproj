@@ -60,6 +60,7 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
+    <Folder Include="app\Defs\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
@@ -73,6 +74,7 @@
     <Folder Include="app\templates\app\" />
     <Folder Include="app\templates\Create\" />
     <Folder Include="app\templates\Index\" />
+    <Folder Include="app\templates\Verify\" />
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +87,7 @@
     <Content Include="app\templates\Index\IdeologyConstructionIndex.html" />
     <Content Include="app\templates\IdeologyConstructionList.html" />
     <Content Include="app\templates\IdeologyConstructionSDetail.html" />
-    <Content Include="app\templates\internship.html" />
+    <Content Include="app\templates\Verify\Internship.html" />
     <Content Include="app\templates\InternshipDetail.html" />
     <Content Include="app\templates\Index\InternshipIndex.html" />
     <Content Include="app\templates\InternshipList.html" />
