@@ -27,13 +27,13 @@
 			</tr>
             <tr>
 				{% if project == '待审核' %}
-                    <td><a class="btn btn-info" href= "/CheckIdeologyConstruction/{{project.id}}/1" >同意加入</a></td></tr>
-                    <tr><td><a class="btn btn-info" href= "/CheckIdeologyConstruction/{{project.id}}/0" >拒绝加入</a></td></tr>
+                    <td><a class="btn btn-info" href= "/CheckInternship/{{project.id}}/1" >同意加入</a></td></tr>
+                    <tr><td><a class="btn btn-info" href= "/CheckInternship/{{project.id}}/0" >拒绝加入</a></td></tr>
                 {% endif %}
-                 <tr><td><a class="btn btn-info" href= "/IdeologyConstructionList}" >返回</a></td></tr>
+                 <tr><td><a class="btn btn-info" href= "/InternshipList}" >返回</a></td></tr>
 		</tbody>
 	</table>
 </div>
-</body>
+
 
 {% endblock %}

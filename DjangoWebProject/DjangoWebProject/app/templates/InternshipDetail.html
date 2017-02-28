@@ -5,14 +5,14 @@
 <body>
 	
 <div class="container">
-	<h2>活动详情如下：</h2>             
+	<h2>实习详情如下：</h2>             
 	<table class="table table-striped">
 		    {% for item in error %}
 		<p style="color:red;">{{item}}</p>
 	{% endfor %}
 		<tbody>
 			<tr>
-				<td width="100px">活动名称：</td>
+				<td width="100px">实习单位：</td>
 				<td>{{project.rankName}}</td>
 			</tr>
 			<tr>
@@ -20,7 +20,7 @@
 				<td>{{project.startingTime}}</td>
 			</tr>
 			<tr>
-				<td>指导老师：</td>
+				<td>实习导师：</td>
 				<td>{{project.teacher}}</td>
 			</tr>
             <tr>
@@ -29,12 +29,11 @@
 			</tr>
             <tr>
 				<td>报名：</td>
-				<td><a class="btn btn-info" href= "/JoinIdeologyConstruction/{{project.id}}" >加入</a></td>
+				<td><a class="btn btn-info" href= "/JoinInternship/{{project.id}}" >加入</a></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-</body>
 
 
 {% endblock %}
