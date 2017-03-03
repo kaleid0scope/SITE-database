@@ -1303,7 +1303,7 @@ def Excel(request):
 #我的项目
 def index(request):
     alert = 'unlogin!'
-    if request.user.is__authenticated:
+    if request.user.is__authenticated():
         try:
             student = Students.objects.get(user = request.user)
             return render_with_type(request,'index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),

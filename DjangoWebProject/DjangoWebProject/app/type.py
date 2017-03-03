@@ -11,6 +11,8 @@ def GetType(request):
     except Exception,e:  
         error.append(e)
         return 0 #unlogin
+    if request.user.is_superuser():
+        return 3 #admin
     if auth.isTeacher:
         return 2 #teacher
     return 1     #student
