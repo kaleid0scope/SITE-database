@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from app.models import PaperRank, Students, Inspectors
 
@@ -10,13 +10,13 @@ def GetType(request):
         auth = Students.objects.get(user = request.user).auth
     except Exception,e:  
         error.append(e)
-        return 0 #unlogin
-    if request.user.is_superuser():
-        return 3 #admin
+        return '未登录'
     if auth.isTeacher:
-        return 2 #teacher
-    return 1     #student
+        return '教师端'
+    return '学生端'
 
 def render_with_type(request,url,list):
+    if 'title' not in list.keys():
+        list['title'] = '学生综合测评系统'
     list['type'] = GetType(request)
     return render_to_response(url,list)
