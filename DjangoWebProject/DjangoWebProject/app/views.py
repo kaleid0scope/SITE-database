@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from app.forms import *
 from app.models import *
 from app.type import *
+from app.Info import *
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password

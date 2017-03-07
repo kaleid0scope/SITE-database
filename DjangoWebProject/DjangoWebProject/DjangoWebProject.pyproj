@@ -34,6 +34,9 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\Info.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\type.py">
       <SubType>Code</SubType>
     </Compile>
