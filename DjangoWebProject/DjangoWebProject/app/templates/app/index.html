@@ -2,30 +2,176 @@
 
 {% block content %}
 
-<div class="jumbotron" style="background-image:url()">
-    <h1>项目详情</h1>
-    <p class="lead">此处有背景图片</p>
-    <p><a href="../index" class="btn btn-primary btn-large">查看详情</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>创建活动</h2>
-        <p>
-            此处有背景图片
-        </p>
-        <p><a class="btn btn-default" href="http://www.djangobook.com/en/2.0/index.html">查看详情&raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>未审核活动</h2>
-        <p>此处有背景图片</p>
-        <p><a class="btn btn-default" href="https://pypi.python.org/pypi">查看详情&raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>已审核活动</h2>
-        <p>此处有背景图片</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">查看详情&raquo;</a></p>
-    </div>
-</div>
+    <section id="main-slider" class="no-margin">
+        <div class="carousel slide">
+            <ol class="carousel-indicators">
+                <li data-target="#main-slider" data-slide-to="0" class="active"></li>
+                <li data-target="#main-slider" data-slide-to="1"></li>
+                <li data-target="#main-slider" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+
+                <div class="item active" style="background-image: url(/static/images/bg1.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">公告1</h1>
+                                    <h2 class="animation animated-item-2">网站即将上线...</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+
+                <div class="item" style="background-image: url(/static/images/bg2.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">公告2</h1>
+                                    <h2 class="animation animated-item-2">网站即将上线...</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+
+                <div class="item" style="background-image: url(/static/images/bg3.jpg)">
+                    <div class="container">
+                        <div class="row slide-margin">
+                            <div class="col-sm-6">
+                                <div class="carousel-content">
+                                    <h1 class="animation animated-item-1">公告3</h1>
+                                    <h2 class="animation animated-item-2">网站即将上线...</h2>
+                                    <a class="btn-slide animation animated-item-3" href="#">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.item-->
+            </div><!--/.carousel-inner-->
+        </div><!--/.carousel-->
+        <a class="prev hidden-xs" href="#main-slider" data-slide="prev">
+            <i class="fa fa-chevron-left"></i>
+        </a>
+        <a class="next hidden-xs" href="#main-slider" data-slide="next">
+            <i class="fa fa-chevron-right"></i>
+        </a>
+    </section><!--/#main-slider-->
+
+<section id="recent-works">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item1.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../ResearchIndex">科研立项</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../ResearchIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>   
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item2.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../IdeologyConstructionIndex">思建活动</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../IdeologyConstructionIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item3.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../LectureIndex">讲座</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../LectureIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>   
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item4.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../VolunteeringIndex">志愿活动></a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../VolunteeringIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>   
+                
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item5.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../SchoolActivityIndex">校园活动</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../SchoolActivityIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>   
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item6.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../InternshipIndex">实践实习</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../InternshipIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item7.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../PaperIndex">科研论文</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../PaperIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>   
+
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="recent-work-wrap">
+                        <img class="img-responsive" src="/static/images/item8.png" alt="Cinque Terre">
+                        <div class="overlay">
+                            <div class="recent-work-inner">
+                                <h3><a href="../CompetitionIndex">学术竞赛</a></h3>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
+                                <a class="preview" href="../CompetitionIndex" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
+                            </div> 
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </section>
+
 
 {% endblock %}

@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}-{{type}}端</title>
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
-    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <link href="{% static 'app/content/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'app/content/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'app/content/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'app/content/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'app/content/main.css' %}" rel="stylesheet">
+    <link href="{% static 'app/content/responsive.css' %}" rel="stylesheet">
+
+    <script src="{% static 'app/scripts/html5shiv.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.min.js' %}"></script>
 </head>
 
 <body>
@@ -19,7 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand" style="font-size:x-large">学生综合测评系统</a>
+                <a href="#" class="navbar-brand" style="font-size:x-large">学生综合测评系统</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -69,17 +75,31 @@
         </div>
     </div>
 
-    <div class="container body-content">
 {% block content %}{% endblock %}
-    <hr/>
-        <footer>
-            <p style="text-align:right">———贸大SEA项目小分队</p>
-        </footer>
-    </div>
+  
+    <footer id="footer" class="midnight-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                        ©对外经济贸易大学SEA
+                </div> 
+                <div class="col-sm-6">
+                    <ul class="pull-right">
+                        <li><a href="index.html">主页</a></li>
+                        <li><a href="#">关于我们</a></li>
+                        <li><a href="#">联系我们@123456789</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!--/#footer-->
 
-    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
-    <script src="{% static 'app/scripts/respond.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap.min.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery.isotope.min.js' %}"></script>
+    <script src="{% static 'app/scripts/main.js' %}"></script>
+    <script src="{% static 'app/scripts/wow.min.js' %}"></script>
 
 
 </body>

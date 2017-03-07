@@ -78,22 +78,8 @@
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\static\app\content\animate.css" />
-    <Content Include="app\static\app\content\font-awesome.css" />
-    <Content Include="app\static\app\content\style.css" />
-    <Content Include="app\static\app\fonts\fontawesome-webfont.eot" />
-    <Content Include="app\static\app\fonts\fontawesome-webfont.svg" />
-    <Content Include="app\static\app\fonts\fontawesome-webfont.ttf" />
-    <Content Include="app\static\app\fonts\fontawesome-webfont.woff" />
-    <Content Include="app\static\app\fonts\FontAwesome.otf" />
-    <Content Include="app\static\app\scripts\custom.js" />
-    <Content Include="app\static\app\scripts\jquery-1.11.1.js" />
-    <Content Include="app\static\app\scripts\jquery.smooth-scroll.min.js" />
-    <Content Include="app\static\app\scripts\scrollReveal.js" />
-    <Content Include="app\static\app\scripts\wow.js" />
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\construction.html" />
-    <Content Include="app\templates\app\shit.html" />
     <Content Include="app\templates\fail.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\ideologyConstruction.html" />
