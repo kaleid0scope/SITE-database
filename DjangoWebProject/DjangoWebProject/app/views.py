@@ -93,7 +93,7 @@ def reset(request):
     return render_with_type(request,'reset_form.html', {'form': form})
 
 def changepassword(request,username):
-	error = []
+	error = None
 	if request.method == 'POST':
 		form = ChangepwdForm(request.POST)
 		if form.is_valid():
@@ -116,7 +116,7 @@ def changepassword(request,username):
 	return render_with_type(request,'changepassword.html',{'form':form,'alert':error})
 
 def changeauth(request,username):
-	error = []
+	error = None
 	if request.method == 'POST':
 		form = ChangeauthForm(request.POST)
 		if form.is_valid():
@@ -152,12 +152,12 @@ def changeauth(request,username):
 
 def createPaper(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreatePaperForm(request.POST)
         if form.is_valid():
             #try:
@@ -173,7 +173,7 @@ def createPaper(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             #except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -181,13 +181,13 @@ def createPaper(request):
         error = None
     return render_with_type(request,'Create/createPaper.html',{'form':form,'alert':error})
 def paper(request,id):
-    error = []
+    error = None
     try:  
         project = PaperRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'Paper.html',{'alert':error})
     if project.status == '待审核' and auth.isTeacher and auth.paper:
         if request.method == 'POST':
@@ -206,7 +206,7 @@ def paper(request,id):
                     project.save()
                     return render_with_type(request,'Index/PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -223,15 +223,15 @@ def paperIndex(request):
         return render_with_type(request,'index.html',{'alert':e})
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type(request,'Index/PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核')})#teacher
-    return render_with_type(request,'index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
+    return render_with_type(request,'index.html',{'alert':'你没有权限审核！请与管理员联系'})
 def createCompetition(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateCompetitionForm(request.POST)
         if form.is_valid():
             try:
@@ -246,7 +246,7 @@ def createCompetition(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -254,13 +254,13 @@ def createCompetition(request):
         error = None
     return render_with_type(request,'Create/createCompetition.html',{'form':form,'alert':error})
 def competition(request,id):
-    error = []
+    error = None
     try:  
         project = CompetitionRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'Competition.html',{'alert':error})
     if project.status == '待审核' and auth.isTeacher and auth.competition:
         if request.method == 'POST':
@@ -279,7 +279,7 @@ def competition(request,id):
                     project.save()
                     return render_with_type(request,'Index/CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -296,15 +296,15 @@ def competitionIndex(request):
         return render_with_type(request,'index.html',{'alert':e})
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type(request,'Index/CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '待审核')})#teacher
-    return render_with_type(request,'index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
+    return render_with_type(request,'index.html',{'alert':'你没有权限审核！请与管理员联系'})
 def createStudentCadre(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateStudentCadreForm(request.POST)
         if form.is_valid():
             try:
@@ -317,7 +317,7 @@ def createStudentCadre(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -325,13 +325,13 @@ def createStudentCadre(request):
         error = None
     return render_with_type(request,'Create/createStudentCadre.html',{'form':form,'alert':error})
 def studentCadre(request,id):
-    error = []
+    error = None
     try:  
         project = StudentCadreRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'StudentCadre.html',{'alert':error})
     if project.status == '待审核' and auth.isTeacher and auth.studentCadre:
         if request.method == 'POST':
@@ -350,7 +350,7 @@ def studentCadre(request,id):
                     project.save()
                     return render_with_type(request,'Index/StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -367,14 +367,14 @@ def studentCadreIndex(request):
         return render_with_type(request,'index.html',{'alert':e})
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type(request,'Index/StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '待审核')})#teacher
-    return render_with_type(request,'index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
+    return render_with_type(request,'index.html',{'alert':'你没有权限审核！请与管理员联系'})
 def createExchange(request):
     if request.method == 'POST':
-        error = []
+        error = None
         #try:
         student = Students.objects.get(user = request.user)
         insp = Inspectors.objects.get(number = 10002)
-        #except Exception,e:#error.append(e)
+        #except Exception,e:#error = e
         form = CreateExchangeForm(request.POST)
         if form.is_valid():
             try:
@@ -392,7 +392,7 @@ def createExchange(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -400,13 +400,13 @@ def createExchange(request):
         error = None
     return render_with_type(request,'Create/createExchange.html',{'form':form,'alert':error})
 def exchange(request,id):
-    error = []
+    error = None
     try:  
         project = ExchangeRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'Exchange.html',{'alert':error})
     if project.status == '待审核' and auth.isTeacher and auth.exchange:
         if request.method == 'POST':
@@ -425,7 +425,7 @@ def exchange(request,id):
                     project.save()
                     return render_with_type(request,'Index/ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -442,7 +442,7 @@ def exchangeIndex(request):
         return render_with_type(request,'index.html',{'alert':e})
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type(request,'Index/ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '待审核')})#teacher
-    return render_with_type(request,'index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
+    return render_with_type(request,'index.html',{'alert':'你没有权限审核！请与管理员联系'})
 
 
 '''科研立项
@@ -450,12 +450,12 @@ def exchangeIndex(request):
 #创建
 def createResearchProject(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
             #try:
@@ -464,9 +464,9 @@ def createResearchProject(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             #except Exception,e:
-                error.append(e)
+                error = e
         else:
-            error.append('Please input information of your project')
+            error = 'Please input information of your project'
     else:
         form = CreateResearchProjectForm()
         error = None
@@ -581,13 +581,15 @@ def CheckResearchProject(request,id,isok):
 '''
 #创建
 def createIdeologyConstruction(request):
-    if request.method == 'POST':
-        error = []
-        try:
+    try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
-        except Exception,e:
-            error.append(e)
+            project = IdeologyConstructionRank.objects.filter(teacher = student)
+    except Exception,e:
+            error = e
+    if project != []:
+        return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':project,'alert':'您已经创建了项目！','can':False})
+    if request.method == 'POST':
         form = CreateIdeologyConstructionForm(request.POST)
         if form.is_valid():
             try:
@@ -604,7 +606,7 @@ def createIdeologyConstruction(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -613,13 +615,13 @@ def createIdeologyConstruction(request):
     return render_with_type(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
 #评价审核（审核结果输入）
 def ideologyConstruction(request,id):
-    error = []
+    error = None
     try:  
         project = IdeologyConstructionRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'IdeologyConstruction.html',{'alert':error})
     if project.status == '未通过':
         if request.method == 'POST':
@@ -638,7 +640,7 @@ def ideologyConstruction(request,id):
                     project.save()
                     return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -651,8 +653,11 @@ def ideologyConstruction(request,id):
 def IdeologyConstructionDetail(request,id):
     try:  
         project = IdeologyConstructionRank.objects.get(id = int(id))
+        student = Students.objects.get(user = request.user)
     except Exception,e: 
         return render_with_type(request,'IdeologyConstructionDetail.html',{'alert':e})
+    if project.teacher == student:
+        return render_with_type(request,'IdeologyConstructionDetail.html',{'project':project,'self':True})
     return render_with_type(request,'IdeologyConstructionDetail.html',{'project':project})
 #申请加入
 def JoinIdeologyConstruction(request,id):
@@ -717,12 +722,12 @@ def CheckIdeologyConstructionx(request,id,isok):
 #创建
 def createLecture(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateLectureForm(request.POST)
         if form.is_valid():
             try:
@@ -740,7 +745,7 @@ def createLecture(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -749,13 +754,13 @@ def createLecture(request):
     return render_with_type(request,'Create/createLecture.html',{'form':form,'alert':error})
 #评价审核（审核结果输入）
 def lecture(request,id):
-    error = []
+    error = None
     try:  
         project = LectureRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'IdeologyConstruction.html',{'alert':error})
     if project.status == '待审核':
         if request.method == 'POST':
@@ -774,7 +779,7 @@ def lecture(request,id):
                     project.save()
                     return render_with_type(request,'Index/LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'讲座活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -852,12 +857,12 @@ def CheckLecturex(request,id,isok):
 #创建
 def createVolunteering(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateVolunteeringForm(request.POST)
         if form.is_valid():
             try:
@@ -874,7 +879,7 @@ def createVolunteering(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -883,13 +888,13 @@ def createVolunteering(request):
     return render_with_type(request,'Create/createVolunteering.html',{'form':form,'alert':error})
 #评价审核（审核结果输入）
 def volunteering(request,id):
-    error = []
+    error = None
     try:  
         project = VolunteeringRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'Volunteering.html',{'alert':error})
     if project.status == '待审核':
         if request.method == 'POST':
@@ -908,7 +913,7 @@ def volunteering(request,id):
                     project.save()
                     return render_with_type(request,'Index/VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'志愿活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -986,12 +991,12 @@ def CheckVolunteeringx(request,id,isok):
 #创建
 def createSchoolActivity(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateSchoolActivityForm(request.POST)
         if form.is_valid():
             try:
@@ -1008,7 +1013,7 @@ def createSchoolActivity(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -1017,13 +1022,13 @@ def createSchoolActivity(request):
     return render_with_type(request,'Create/createSchoolActivity.html',{'form':form,'alert':error})
 #评价审核（审核结果输入）
 def schoolActivity(request,id):
-    error = []
+    error = None
     try:  
         project = SchoolActivityRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'SchoolActivity.html',{'alert':error})
     if project.status == '待审核':
         if request.method == 'POST':
@@ -1042,7 +1047,7 @@ def schoolActivity(request,id):
                     project.save()
                     return render_with_type(request,'Index/SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'校园活动审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:
@@ -1120,12 +1125,12 @@ def CheckSchoolActivityx(request,id,isok):
 #创建
 def createInternship(request):
     if request.method == 'POST':
-        error = []
+        error = None
         try:
             student = Students.objects.get(user = request.user)
             insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
-            error.append(e)
+            error = e
         form = CreateInternshipForm(request.POST)
         if form.is_valid():
             try:
@@ -1139,7 +1144,7 @@ def createInternship(request):
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
-                error.append(e)
+                error = e
         else:
             error.append('Please input information of your project')
     else:
@@ -1148,13 +1153,13 @@ def createInternship(request):
     return render_with_type(request,'Create/createInternship.html',{'form':form,'alert':error})
 #评价审核（审核结果输入）
 def internship(request,id):
-    error = []
+    error = None
     try:  
         project = InternshipRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
-        error.append(e)
+        error = e
         return render_with_type(request,'Verify/Internship.html',{'alert':error})
     if project.status == '待审核':
         if request.method == 'POST':
@@ -1173,7 +1178,7 @@ def internship(request,id):
                     project.save()
                     return render_with_type(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核成功！','can':True})
                 except Exception,e:  
-                    error.append(e)
+                    error = e
             else:
                 error.append('Please input information of your project')
         else:

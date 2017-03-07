@@ -27,10 +27,12 @@
 				<td>详细介绍：</td>
 				<td>{{project.SupportText}}</td>
 			</tr>
+            {% if self != True %}
             <tr>
 				<td>报名：</td>
 				<td><a class="btn btn-info" href= "/JoinIdeologyConstruction/{{project.id}}" >加入</a></td>
 			</tr>
+            {% endif %}
 		</tbody>
 	</table>
 </div>
