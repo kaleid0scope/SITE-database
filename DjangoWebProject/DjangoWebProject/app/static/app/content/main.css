@@ -440,7 +440,7 @@ input.search-form:hover {
 #main-slider .next {
   position: absolute;
   top: 50%;
-  background-color: #c52d2f;
+  /* background-color: #c52d2f; */
   color: #fff;
   display: inline-block;
   margin-top: -25px;
@@ -455,7 +455,7 @@ input.search-form:hover {
 
 #main-slider .prev:hover,
 #main-slider .next:hover {
-  background-color: #000;
+   /* background-color: #c52d2f; */
 }
 
 #main-slider .prev {
