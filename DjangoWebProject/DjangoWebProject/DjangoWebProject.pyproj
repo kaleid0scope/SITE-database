@@ -29,9 +29,25 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app\exchange.py" />
     <Compile Include="app\forms.py" />
+    <Compile Include="app\ideology.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\internship.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\lecture.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\models.py" />
     <Compile Include="app\admin.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\research.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\schoolact.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\type.py">
@@ -49,6 +65,9 @@
     </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
+    <Compile Include="app\volunteer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="manage.py" />

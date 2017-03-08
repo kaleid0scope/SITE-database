@@ -365,6 +365,9 @@ def studentCadreIndex(request):
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type(request,'Index/StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '待审核')})#teacher
     return render_with_type(request,'index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
+
+'''交换项目
+
 def createExchange(request):
     if request.method == 'POST':
         error = []
@@ -440,10 +443,10 @@ def exchangeIndex(request):
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type(request,'Index/ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '待审核')})#teacher
     return render_with_type(request,'index.html',{'alert':'你没有权限审核论文！请与管理员联系'})
-
+'''
 
 '''科研立项
-'''
+
 #创建
 def createResearchProject(request):
     if request.method == 'POST':
@@ -571,11 +574,11 @@ def CheckResearchProject(request,id,isok):
         else:
             join.status = '未通过'
         join.save()
-    return render_with_type(request,'ResearchProjectSDetail.html',{'alert':'您无权审核此报名信息！'})
+    return render_with_type(request,'ResearchProjectSDetail.html',{'alert':'您无权审核此报名信息！'})'''
 
 
 '''思建活动
-'''
+
 #创建
 def createIdeologyConstruction(request):
     if request.method == 'POST':
@@ -706,11 +709,10 @@ def CheckIdeologyConstructionx(request,id,isok):
             join.status = '未通过'
         join.save()
     return render_with_type(request,'IdeologyConstructionSDetail.html',{'alert':'您无权审核此报名信息！'})
-
+'''
 
 
 '''讲座
-'''
 #创建
 def createLecture(request):
     if request.method == 'POST':
@@ -842,10 +844,11 @@ def CheckLecturex(request,id,isok):
             join.status = '未通过'
         join.save()
     return render_with_type(request,'LectureSDetail.html',{'alert':'您无权审核此报名信息！'})
+'''
 
 
 '''志愿活动
-'''
+
 #创建
 def createVolunteering(request):
     if request.method == 'POST':
@@ -975,11 +978,11 @@ def CheckVolunteeringx(request,id,isok):
         else:
             join.status = '未通过'
         join.save()
-    return render_with_type(request,'VolunteeringSDetail.html',{'alert':'您无权审核此报名信息！'})
+    return render_with_type(request,'VolunteeringSDetail.html',{'alert':'您无权审核此报名信息！'})'''
 
 
 '''校园活动
-'''
+
 #创建
 def createSchoolActivity(request):
     if request.method == 'POST':
@@ -1110,10 +1113,10 @@ def CheckSchoolActivityx(request,id,isok):
             join.status = '未通过'
         join.save()
     return render_with_type(request,'SchoolActivitySDetail.html',{'alert':'您无权审核此报名信息！'})
-
+'''
 
 '''实践实习
-'''
+
 #创建
 def createInternship(request):
     if request.method == 'POST':
@@ -1241,7 +1244,7 @@ def CheckInternship(request,id,isok):
             join.status = '未通过'
         join.save()
     return render_with_type(request,'InternshipSDetail.html',{'alert':'您无权审核此报名信息！'})
-
+'''
 
 def Excel(request):
     Inspector = Inspectors.objects.get(user = request.user)

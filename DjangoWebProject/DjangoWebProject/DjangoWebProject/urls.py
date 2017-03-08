@@ -8,10 +8,19 @@ import django.contrib.auth.views
 import DjangoWebProject.settings
 import app.forms
 import app.views
+import app.exchange
 import app.testdb
 from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import *
+from app.ideology import *
+from app.internship import *
+from app.exchange import *
+from app.lecture import *
+from app.research import *
+from app.schoolact import *
+from app.volunteer import *
+ 
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -53,14 +62,14 @@ urlpatterns = [
 
     url(r'^first/$',app.views.first),
 
-    url(r'^createResearch/$',createResearchProject),
-    url(r'^research/(?P<id>\w+)/$',researchProject),
-    url(r'^ResearchDetail/(?P<id>\w+)/$',ResearchProjectDetail), 
-    url(r'^ResearchIndex/$',ResearchProjectIndex), 
-    url(r'^JoinResearch/(?P<id>\w+)/$',JoinResearchProject), 
-    url(r'^ResearchList/$',ResearchProjectList), 
-    url(r'^ResearchSDetail/(?P<id>\w+)/$',ResearchProjectSDetail), 
-    url(r'^CheckResearch/(?P<id>\w+)/(?P<isok>\w+)/$',CheckResearchProject), 
+    url(r'^createResearch/$',app.research.createResearchProject),
+    url(r'^research/(?P<id>\w+)/$',app.research.ResearchProject),
+    url(r'^ResearchDetail/(?P<id>\w+)/$',app.research.ResearchProjectDetail), 
+    url(r'^ResearchIndex/$',app.research.ResearchProjectIndex), 
+    url(r'^JoinResearch/(?P<id>\w+)/$',app.research.JoinResearchProject), 
+    url(r'^ResearchList/$',app.research.ResearchProjectList), 
+    url(r'^ResearchSDetail/(?P<id>\w+)/$',app.research.ResearchProjectSDetail), 
+    url(r'^CheckResearch/(?P<id>\w+)/(?P<isok>\w+)/$',app.research.CheckResearchProject), 
 
     url(r'^createPaper/$',createPaper),
     url(r'^paper/(?P<id>\w+)/$',app.views.paper),
@@ -68,54 +77,54 @@ urlpatterns = [
     url(r'^createCompetition/$',createCompetition),
     url(r'^competition/(?P<id>\w+)/$',app.views.competition),
     url(r'^CompetitionIndex/$',app.views.competitionIndex),
-    url(r'^createExchange/$',createExchange), 
-    url(r'^exchange/(?P<id>\w+)/$',app.views.exchange),
-    url(r'^ExchangeIndex/$',app.views.exchangeIndex),
+    url(r'^createExchange/$',app.exchange.createExchange), 
+    url(r'^exchange/(?P<id>\w+)/$',app.exchange.exchange),
+    url(r'^ExchangeIndex/$',app.exchange.exchangeIndex),
     url(r'^createStudentCadre/$',createStudentCadre), 
     url(r'^studentCadre/(?P<id>\w+)/$',app.views.studentCadre),
     url(r'^StudentCadreIndex/$',app.views.studentCadreIndex),
 
-    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),
-    url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),
-    url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
-    url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
+    url(r'^createIdeologyConstruction/$',app.ideology.createIdeologyConstruction),
+    url(r'^ideologyConstruction/(?P<id>\w+)/$',app.ideology.ideologyConstruction),
+    url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',app.ideology.IdeologyConstructionDetail), 
+    url(r'^IdeologyConstructionIndex/$',app.ideology.IdeologyConstructionIndex), 
 
-    url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
-    url(r'^IdeologyConstructionSDetail/(?P<id>\w+)/$',app.views.IdeologyConstructionSDetail), 
-    url(r'^CheckIdeologyConstruction/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckIdeologyConstructionx),  
-    url(r'^IdeologyConstructionList/$',app.views.ResearchProjectList), 
-    url(r'^createLecture/$',createLecture),
-    url(r'^lecture/(?P<id>\w+)/$',lecture),
-    url(r'^LectureDetail/(?P<id>\w+)/$',LectureDetail), 
-    url(r'^LectureIndex/$',LectureIndex), 
-    url(r'^JoinLecture/(?P<id>\w+)/$',JoinLecture), 
+    url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',app.ideology.JoinIdeologyConstruction),
+    url(r'^IdeologyConstructionSDetail/(?P<id>\w+)/$',app.ideology.IdeologyConstructionSDetail), 
+    url(r'^CheckIdeologyConstruction/(?P<id>\w+)/(?P<isok>\w+)/$',app.ideology.CheckIdeologyConstructions),  
+    url(r'^IdeologyConstructionList/$',app.ideology.IdeologyConstructionList), 
+    url(r'^createLecture/$',app.lecture.createLecture),
+    url(r'^lecture/(?P<id>\w+)/$',app.lecture.lecture),
+    url(r'^LectureDetail/(?P<id>\w+)/$',app.lecture.LectureDetail), 
+    url(r'^LectureIndex/$',app.lecture.LectureIndex), 
+    url(r'^JoinLecture/(?P<id>\w+)/$',app.lecture.JoinLecture), 
 
-    url(r'^createVolunteering/$',createVolunteering),
-    url(r'^volunteering/(?P<id>\w+)/$',volunteering),
-    url(r'^VolunteeringDetail/(?P<id>\w+)/$',VolunteeringDetail), 
-    url(r'^VolunteeringIndex/$',VolunteeringIndex),
-    url(r'^VolunteeringList/$',app.views.VolunteeringList), 
-    url(r'^VolunteeringSDetail/(?P<id>\w+)/$',app.views.VolunteeringSDetail), 
-    url(r'^CheckVolunteering/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckVolunteeringx),  
-    url(r'^JoinVolunteering/(?P<id>\w+)/$',JoinVolunteering), 
+    url(r'^createVolunteering/$',app.volunteer.createVolunteering),
+    url(r'^volunteering/(?P<id>\w+)/$',app.volunteer.volunteering),
+    url(r'^VolunteeringDetail/(?P<id>\w+)/$',app.volunteer.VolunteeringDetail), 
+    url(r'^VolunteeringIndex/$',app.volunteer.VolunteeringIndex),
+    url(r'^VolunteeringList/$',app.volunteer.VolunteeringList), 
+    url(r'^VolunteeringSDetail/(?P<id>\w+)/$',app.volunteer.VolunteeringSDetail), 
+    url(r'^CheckVolunteering/(?P<id>\w+)/(?P<isok>\w+)/$',app.volunteer.CheckVolunteeringx),  
+    url(r'^JoinVolunteering/(?P<id>\w+)/$',app.volunteer.JoinVolunteering), 
 
-    url(r'^createSchoolActivity/$',createSchoolActivity),
-    url(r'^schoolActivity/(?P<id>\w+)/$',schoolActivity),
-    url(r'^SchoolActivityDetail/(?P<id>\w+)/$',SchoolActivityDetail), 
-    url(r'^SchoolActivityIndex/$',SchoolActivityIndex),
-    url(r'^CheckSchoolActivity/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckSchoolActivityx),  
-    url(r'^SchoolActivityList/$',app.views.SchoolActivityList),  
-    url(r'^SchoolActivitySDetail/(?P<id>\w+)/$',app.views.SchoolActivitySDetail), 
-    url(r'^JoinSchoolActivity/(?P<id>\w+)/$',JoinSchoolActivity),  
+    url(r'^createSchoolActivity/$',app.schoolact.createSchoolActivity),
+    url(r'^schoolActivity/(?P<id>\w+)/$',app.schoolact.schoolActivity),
+    url(r'^SchoolActivityDetail/(?P<id>\w+)/$',app.schoolact.SchoolActivityDetail), 
+    url(r'^SchoolActivityIndex/$',app.schoolact.SchoolActivityIndex),
+    url(r'^CheckSchoolActivity/(?P<id>\w+)/(?P<isok>\w+)/$',app.schoolact.CheckSchoolActivityx),  
+    url(r'^SchoolActivityList/$',app.schoolact.SchoolActivityList),  
+    url(r'^SchoolActivitySDetail/(?P<id>\w+)/$',app.schoolact.SchoolActivitySDetail), 
+    url(r'^JoinSchoolActivity/(?P<id>\w+)/$',app.schoolact.JoinSchoolActivity),  
 
-    url(r'^createInternship/$',createInternship), 
-    url(r'^internship/(?P<id>\w+)/$',internship),
-    url(r'^InternshipDetail/(?P<id>\w+)/$',InternshipDetail), 
-    url(r'^InternshipIndex/$',app.views.InternshipIndex), 
-    url(r'^InternshipList/$',app.views.InternshipList),  
-    url(r'^CheckInternship/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckInternship),  
-    url(r'^InternshipSDetail/(?P<id>\w+)/$',app.views.InternshipSDetail), 
-    url(r'^JoinInternship/(?P<id>\w+)/$',JoinInternship),  
+    url(r'^createInternship/$',app.internship.createInternship), 
+    url(r'^internship/(?P<id>\w+)/$',app.internship.internship),
+    url(r'^InternshipDetail/(?P<id>\w+)/$',app.internship.InternshipDetail), 
+    url(r'^InternshipIndex/$',app.internship.InternshipIndex), 
+    url(r'^InternshipList/$',app.internship.InternshipList),  
+    url(r'^CheckInternship/(?P<id>\w+)/(?P<isok>\w+)/$',app.internship.CheckInternship),  
+    url(r'^InternshipSDetail/(?P<id>\w+)/$',app.internship.InternshipSDetail), 
+    url(r'^JoinInternship/(?P<id>\w+)/$',app.internship.JoinInternship),  
 
     url(r'^index/$',index,name='index'), 
     url(r'^construction/$',app.views.construction,name='construction'), 
