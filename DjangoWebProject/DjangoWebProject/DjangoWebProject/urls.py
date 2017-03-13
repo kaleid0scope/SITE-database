@@ -9,7 +9,6 @@ import DjangoWebProject.settings
 import app.forms
 import app.views
 import app.testdb
-from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import *
 
@@ -48,8 +47,7 @@ urlpatterns = [
     url(r'^search_form/$',search_form),
     url(r'^search/$',search),
     url(r'^reset',app.views.reset),
-    url(r'^changepassword/(?P<username>\w+)/$',changepassword),   
-    url(r'^changeauth/(?P<username>\w+)/$',changeauth),
+    url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
 
     url(r'^first/$',app.views.first),
     url(r'^copy/$',app.views.shit),
