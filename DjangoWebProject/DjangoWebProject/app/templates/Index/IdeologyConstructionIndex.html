@@ -9,6 +9,53 @@
 <div class="container">
 	<h2>活动列表</h2>   
     <p>{% if can == False %}<a class="btn btn-primary" href= "/createIdeologyConstruction" >创建活动</a>{% endif %}</p>
+    <h3>我创建的活动</h3> 
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>审核状态</th>
+                <th>支撑文档</th>
+                <th>查看详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in Cprojects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.status}}</td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+    <h3>我加入的活动</h3> 
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>支撑文档</th>
+                <th>查看详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in Jprojects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher}}</td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+    <h3>可加入列表</h3> 
 	<table class="table table-hover">
 		<thead>
 			<tr>

@@ -12,6 +12,7 @@ from app.forms import *
 from app.models import *
 from app.type import *
 from app.Info import *
+from app.project import *
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
@@ -540,148 +541,15 @@ def CheckResearchProject(request,id,isok):
 '''思建活动
 '''
 #创建
-def createIdeologyConstruction(request):
-    error = None
-    try:
-            student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
-            project = IdeologyConstructionRank.objects.filter(teacher = student)
-    except Exception,e:
-            error = e
-    if not project:
-        return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':project,'alert':'您已经创建了项目！','can':False})
-    if request.method == 'POST':
-        form = CreateIdeologyConstructionForm(request.POST)
-        if form.is_valid():
-            try:
-                cd = form.cleaned_data
-                project = IdeologyConstructionRank(rankName = cd['ProjectName'],
-                                type = cd['type'],
-                                teacher = student,
-                                startingTime = cd['startingTime'],
-                                organizer = cd['organizer'],
-                                Location = cd['Location'],
-                                Content = cd['Content'],
-                                status = '待审核',
-                                inspector = insp,)
-                project.save()
-                return render_with_type(request,'first.html',{'alert':'okkkk!'})
-            except Exception,e:
-                error = e
-        else:
-            error = 'Please input information of your project'
-    else:
-        form = CreateIdeologyConstructionForm()
-    return render_with_type(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
+def createIdeologyConstruction(request): return createProject(IdeologyConstructionRank,IdeologyConstruction,CreateIdeologyConstructionForm,request,id)
 #评价审核（审核结果输入）
-def ideologyConstruction(request,id):
-    error = None
-    try:  
-        project = IdeologyConstructionRank.objects.get(id = int(id))
-        auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
-    except Exception,e:  
-        error = e
-        return render_with_type(request,'IdeologyConstruction.html',{'alert':error})
-    if project.status == '未通过':
-        if request.method == 'POST':
-            form = IdeologyConstructionForm(request.POST)
-            if form.is_valid() and auth.isTeacher and auth.ideologyConstruction:
-                cd = form.cleaned_data
-                try:
-                    choice = Choices.objects.get(id = cd['level'])
-                    project.score = choice.score
-                    project.complete = choice.complete
-                    if request.POST.has_key('passyes'):
-                        project.status = '通过'
-                    elif request.POST.has_key('passno'):
-                        project.status = '未通过'
-                    project.inspector = inspector
-                    project.save()
-                    return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核成功！','can':True})
-                except Exception,e:  
-                    error = e
-            else:
-                error.append('Please input information of your project')
-        else:
-            form = IdeologyConstructionForm()
-            return render_with_type(request,'IdeologyConstruction.html',{'form':form,'project':project})
-    elif auth.isTeacher and auth.ideologyConstruction:
-       return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'alert':'思建活动审核失败！该活动已审核','can':True})
-    return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'can':False})
+def ideologyConstruction(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
 #项目详情
-def IdeologyConstructionDetail(request,id):
-    try:  
-        project = IdeologyConstructionRank.objects.get(id = int(id))
-        student = Students.objects.get(user = request.user)
-        links = IdeologyConstruction.objects.filter(rankNum = project)
-        members = []
-        for link in links:
-            members.append(link.StudentNum)
-    except Exception,e: 
-        return render_with_type(request,'IdeologyConstructionDetail.html',{'alert':e})
-    if project.teacher == student:
-        return render_with_type(request,'IdeologyConstructionDetail.html',{'project':project,'hasJoin':True,'members':members})
-    elif members.count(student) == 1: 
-        return render_with_type(request,'IdeologyConstructionDetail.html',{'project':project,'hasJoin':True})
-    return render_with_type(request,'IdeologyConstructionDetail.html',{'project':project})
+def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id)
 #申请加入
-def JoinIdeologyConstruction(request,id):
-    alert = ''
-    try:  
-        project = IdeologyConstructionRank.objects.get(id = int(id))
-        student = Students.objects.get(user = request.user)
-    except Exception,e:  
-        return render_with_type(request,'IdeologyConstructionDetail.html',{'alert':e})
-    join = IdeologyConstruction(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
-    join.save()
-    alert = '成功加入！'
-    return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'alert':alert})
+def JoinIdeologyConstruction(request,id): return JoinProject(IdeologyConstructionRank,IdeologyConstruction,request,id)
 #申请者的列表
-def IdeologyConstructionIndex(request):
-    try:  
-        student = Students.objects.get(user = request.user)
-        links = IdeologyConstruction.objects.filter(StudentNum = student)
-        project = IdeologyConstructionRank.objects.filter(teacher = student)
-    except Exception,e: 
-        return render_with_type(request,'index.html',{'constructions':IdeologyConstruction.objects.filter(StudentNum = student),'alert':e})
-    if student.auth.isTeacher and student.auth.ideologyConstruction: return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '待审核'),'can':True})
-    if not links : 
-        return render_with_type(request,'Index/IdeologyConstructionIndex.html',{'projects':IdeologyConstructionRank.objects.filter(status = '通过'),'can':False})
-    elif len(links) == 1 and links[0].status == '通过' :
-        return render_with_type(request,'IdeologyConstructionDetail.html',{'project': IdeologyConstructionRank.objects.get(id = links[0].rankNum),'hasJoin':True,'alert':'您已加入项目！'})
-    elif len(links) == 0 and not project: 
-        IdeologyConstructionDetail(request,project[0].id) #$需要修改逻辑
-#管理申请的列表
-def IdeologyConstructionList(request):
-    try:  
-        student = Students.objects.get(user = request.user)
-        project = IdeologyConstructionRank.objects.get(teacher = student)
-        joins = IdeologyConstruction.objects.filter(rankNum = project)
-    except Exception,e: 
-        return render_with_type(request,'IdeologyConstructionList.html',{'alert':e})
-    return render_with_type(request,'IdeologyConstructionList.html',{'projects':joins})
-#申请者的详情
-def IdeologyConstructionSDetail(request,id):
-    try:  
-        join = IdeologyConstruction.objects.get(id = int(id))
-        student = join.StudentNum
-    except Exception,e: 
-        return render_with_type(request,'IdeologyConstructionSDetail.html',{'alert':e})
-    if join.StudentNum.user == request.user:
-        return render_with_type(request,'IdeologyConstructionSDetail.html',{'project':join,'student':student})
-    return render_with_type(request,'IdeologyConstructionSDetail.html',{'alert':'您无权查看此报名信息！'})
-#审核加入
-def CheckIdeologyConstruction(request,id,isok):
-    try:  
-        join = IdeologyConstruction.objects.get(id = int(id))
-        student = join.StudentNum
-    except Exception,e: return render_with_type(request,'IdeologyConstructionSDetail.html',{'alert':e})
-    if join.StudentNum.user == request.user:
-        if isok: join.status = '通过'
-        else:    join.status = '未通过'
-        join.save()
-    return render_with_type(request,'IdeologyConstructionSDetail.html',{'alert':'您无权审核此报名信息！'})
+def IdeologyConstructionIndex(request): return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request)
 #手动加入
 def AddIdeologyConstruction(request,id):
     try:
