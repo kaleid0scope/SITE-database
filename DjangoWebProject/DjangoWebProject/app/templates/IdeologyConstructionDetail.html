@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>指导老师：</td>
-				<td>{{project.teacher}}</td>
+				<td>{{project.teacher.rankName}}</td>
 			</tr>
             <tr>
 				<td>详细介绍：</td>
@@ -46,9 +46,6 @@
             {% endif %}
 
             {% if manage == True %}
-            <tr>
-				<td>管理项目：<a class="btn btn-info" href= "/DeleteIdeologyConstruction/{{project.id}}" >删除</a></td>
-			</tr>
             <tr>
 				<td>加入申请：</td>
 			</tr>

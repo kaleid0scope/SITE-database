@@ -49,11 +49,14 @@ def ProjectDetail(rank,link,request,id):
 def ProjectIndex(rank,link,request):
     try:  
         student = Students.objects.get(user = request.user)
-        links = link.objects.filter(StudentNum = student) #所有加入的项目
+        linksP = link.objects.filter(StudentNum = student).filter(status = '通过') #所有加入的项目
+        links = link.objects.filter(StudentNum = student).filter(status = '待审核') 
+        linksNP = link.objects.filter(StudentNum = student).filter(status = '未通过') 
         created = rank.objects.filter(teacher = student)
-        joined = []
-        for link in links:
-            joined.append(link.rankNum)
+        joined,join,joinNP = [],[],[]
+        for link in linksP: joined.append(link.rankNum)
+        for link in links: join.append(link.rankNum)
+        for link in linksNP: joinNP.append(link.rankNum)
     except Exception,e: 
         return render_with_type(request,'app/login.html',{'alert':e})
     if student.auth.isTeacher and student.auth.ideologyConstruction: #如果是教师，返回待审核的项目
@@ -63,7 +66,9 @@ def ProjectIndex(rank,link,request):
         return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
             {'projects':rank.objects.filter(status = '通过'),
             'Cprojects':created,
-            'Jprojects':joined,
+            'JprojectsP':joined,
+            'Jprojects':join,
+            'JprojectsNP':joinNP,
             'can':False})
 
 def ProjectCheck(rank,link,f,request,id):
@@ -150,3 +155,4 @@ def JoinProject(rank,link,request,id):
     join.save()
     alert = '申请成功！'
     return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),{'alert':alert})
+

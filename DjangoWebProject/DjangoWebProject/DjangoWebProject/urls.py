@@ -78,11 +78,8 @@ urlpatterns = [
     url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
-
     url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
-    url(r'^IdeologyConstructionSDetail/(?P<id>\w+)/$',app.views.IdeologyConstructionSDetail), 
-    url(r'^CheckIdeologyConstruction/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckIdeologyConstruction),  
-    url(r'^IdeologyConstructionList/$',app.views.ResearchProjectList), 
+
     url(r'^createLecture/$',createLecture),
     url(r'^lecture/(?P<id>\w+)/$',lecture),
     url(r'^LectureDetail/(?P<id>\w+)/$',LectureDetail), 
