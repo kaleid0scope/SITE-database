@@ -79,6 +79,8 @@ urlpatterns = [
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
     url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
+    url(r'^AddIdeologyConstruction/(?P<id>\w+)/(?P<sid>\w+)/$',AddIdeologyConstruction),
+    url(r'^DeleteIdeologyConstruction/(?P<id>\w+)/$',DeleteIdeologyConstruction),
 
     url(r'^createLecture/$',createLecture),
     url(r'^lecture/(?P<id>\w+)/$',lecture),

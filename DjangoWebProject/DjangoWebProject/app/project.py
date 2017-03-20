@@ -12,11 +12,16 @@ from DjangoWebProject import settings
 from django.http import HttpRequest
 from django.template import RequestContext
 from django.template.loader import get_template
+from __builtin__ import getattr
 
 def ProjectDetail(rank,link,request,id):
     try:  
         project = rank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
+        fields = rank._meta.fields
+        FieldProject = {}
+        for field in fields :
+            FieldProject[field.verbose_name] = getattr(project,field.name) #该项目键值对
         links = link.objects.filter(rankNum = project).filter(status = '通过') #已加入的关系
         joins = link.objects.filter(rankNum = project).filter(status = '待审核') #待审核的关系
         members = []
@@ -41,12 +46,12 @@ def ProjectDetail(rank,link,request,id):
             joinlink.save()
             alert = '审核成功！' 
         return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),
-            {'project':project,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert})
+            {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert})
     elif members.count(student) == 1: #如果为该项目已通过的成员
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'hasJoin':True,'members':members})
-    return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project})
+        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'FPS':FieldProject,'hasJoin':True,'members':members})
+    return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'FPS':FieldProject})
 
-def ProjectIndex(rank,link,request):
+def ProjectIndex(rank,link,request,alert):
     try:  
         student = Students.objects.get(user = request.user)
         linksP = link.objects.filter(StudentNum = student).filter(status = '通过') #所有加入的项目
@@ -58,7 +63,7 @@ def ProjectIndex(rank,link,request):
         for link in links: join.append(link.rankNum)
         for link in linksNP: joinNP.append(link.rankNum)
     except Exception,e: 
-        return render_with_type(request,'app/login.html',{'alert':e})
+        return render_with_type(request,'app/login.html',{'alert':alert if alert else e})
     if student.auth.isTeacher and student.auth.ideologyConstruction: #如果是教师，返回待审核的项目
         return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
             {'projects':rank.objects.filter(status = '待审核'),'can':True})
@@ -69,7 +74,8 @@ def ProjectIndex(rank,link,request):
             'JprojectsP':joined,
             'Jprojects':join,
             'JprojectsNP':joinNP,
-            'can':False})
+            'can':False,
+            'alert':alert})
 
 def ProjectCheck(rank,link,f,request,id):
     error = None
@@ -77,8 +83,12 @@ def ProjectCheck(rank,link,f,request,id):
         project = rank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
         inspector = Inspectors.objects.get(user = request.user)
+        fields = rank._meta.fields
+        FieldProject = {}
+        for field in fields :
+            FieldProject[field.verbose_name] = getattr(project,field.name)#该项目键值对
     except Exception,e:  
-        return render_with_type(request,'{name}.html'.format(name = link._meta.object_name),{'alert':e})
+        return render_with_type(request,'Pcheck.html',{'alert':e})
     if project.status == '待审核':
         if request.method == 'POST':
             form = f(request.POST)
@@ -102,7 +112,7 @@ def ProjectCheck(rank,link,f,request,id):
                 error = '请确认是否有审核权限！'
         else:
             form = f()
-            return render_with_type(request,'{name}.html'.format(name = link._meta.object_name),{'form':form,'project':project})
+            return render_with_type(request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'FPS':FieldProject})
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
              {'projects':rank.objects.filter(status = '待审核'),'alert':e,'can':True})
@@ -125,15 +135,12 @@ def createProject(rank,link,f,request):
         if form.is_valid():
             try:
                 cd = form.cleaned_data
-                project = rank(rankName = cd['ProjectName'],
-                                type = cd['type'],
-                                teacher = student,
-                                startingTime = cd['startingTime'],
-                                organizer = cd['organizer'],
-                                Location = cd['Location'],
-                                Content = cd['Content'],
+                project = rank(teacher = student,
                                 status = '待审核',
                                 inspector = insp,)
+                for field in form:
+                    name = field.label
+                    project.name = field.value
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:

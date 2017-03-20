@@ -9,25 +9,18 @@
 	<table class="table table-striped">
 		    {% for item in error %}
 		<p style="color:red;">{{item}}</p>
-	{% endfor %}
+	        {% endfor %}
 		<tbody>
-			<tr>
-				<td width="100px">活动名称：</td>
-				<td>{{project.rankName}}</td>
-			</tr>
-			<tr>
-				<td>开始时间：</td>
-				<td>{{project.startingTime}}</td>
-			</tr>
-			<tr>
-				<td>指导老师：</td>
-				<td>{{project.teacher.rankName}}</td>
-			</tr>
             <tr>
-				<td>详细介绍：</td>
-				<td>{{project.SupportText}}</td>
-			</tr>
-
+				<td><b>创建者姓名：</b></td>
+				<td>{{project.teacher.name}}</td>
+			</tr> 
+			{% for key,value in FPS.items%}
+			<tr>
+				<td><b>{{key}}：</b></td>
+				<td>{{value}}</td>
+			</tr> 
+            {%endfor%}
             <tr>
 				<td>项目成员：</td>
 			</tr>
@@ -60,7 +53,7 @@
                 </form>
             {%endfor%}
             <tr>
-				<td>管理项目：<a class="btn btn-info" href= "/DeleteIdeologyConstruction/{{project.id}}" >删除</a></td>
+				<td>管理项目：<a class="btn btn-primary" href= "/DeleteIdeologyConstruction/{{project.id}}" >删除</a></td>
                 <a class="btn btn-info" href= "/AddIdeologyConstruction/{{project.id}}" >批量加入</a></td>
 			</tr>
             {% endif %}

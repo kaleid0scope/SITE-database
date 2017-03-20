@@ -28,6 +28,74 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 import DjangoWebProject.settings
     
+'''思建活动(目前用于测试)
+'''
+#创建
+def createIdeologyConstruction(request): 
+    error = None
+    try:
+            student = Students.objects.get(user = request.user)
+            insp = Inspectors.objects.get(number = 10002)
+            project = IdeologyConstructionRank.objects.filter(teacher = student)
+    except Exception,e:
+            error = e
+    if not project:
+        return render_with_type(request,'Index/IdeologyConstructionIndex.html',
+        {'projects':project,'alert':'您已经创建过项目！','can':False})
+    if request.method == 'POST':
+        form = CreateIdeologyConstructionForm(request.POST)
+        if form.is_valid():
+                cd = form.cleaned_data
+                project = IdeologyConstructionRank(teacher = student,
+                                status = '待审核',
+                                inspector = insp,)
+                for field in form:
+                    name = field.label
+                    project.name = field.value
+                project.save()
+                return render_with_type(request,'first.html',{'alert':'okkkk!'})
+        else:
+            error = '请确认是否已经输入相关信息'
+    else:
+        form = CreateIdeologyConstructionForm()
+    return render_with_type(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
+#评价审核（审核结果输入）
+def ideologyConstruction(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
+#项目详情
+def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id)
+#申请加入
+def JoinIdeologyConstruction(request,id): return JoinProject(IdeologyConstructionRank,IdeologyConstruction,request,id)
+#申请者的列表
+def IdeologyConstructionIndex(request): return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request,None)
+#手动加入
+def AddIdeologyConstruction(request,id,sid):
+    try:
+        owner = Students.objects.get(user = request.user)
+        projects = IdeologyConstructionRank.objects.get(id = id)
+        student = Students.objects.get(StudentNum = sid)
+        if not projects: alert = '请确认您是否已创建思建活动！'
+    except Exception,e: alert = e
+    join = IdeologyConstruction(status = '通过',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join.save()
+    alert = '成功添加!'
+    return render_with_type(request,'first.html',{'alert':error})
+def DeleteIdeologyConstruction(request,id):
+    try:
+        student = Students.objects.get(user = request.user)
+        project = IdeologyConstructionRank.objects.get(id = id)
+        links = IdeologyConstruction.objects.filter(rankNum = project)
+    except Exception,e: alert = e
+    if project.teacher == student:
+        project.delete()
+        links.delete()
+        return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request,'已删除~~~')
+        
+    
+
+
+
+
+
 def construction(request):
     return render_with_type(request,'app/construction.html')
 
@@ -536,34 +604,6 @@ def CheckResearchProject(request,id,isok):
             join.status = '未通过'
         join.save()
     return render_with_type(request,'ResearchProjectSDetail.html',{'alert':'您无权审核此报名信息！'})
-
-
-'''思建活动
-'''
-#创建
-def createIdeologyConstruction(request): return createProject(IdeologyConstructionRank,IdeologyConstruction,CreateIdeologyConstructionForm,request,id)
-#评价审核（审核结果输入）
-def ideologyConstruction(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
-#项目详情
-def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id)
-#申请加入
-def JoinIdeologyConstruction(request,id): return JoinProject(IdeologyConstructionRank,IdeologyConstruction,request,id)
-#申请者的列表
-def IdeologyConstructionIndex(request): return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request)
-#手动加入
-def AddIdeologyConstruction(request,id):
-    try:
-        owner = Students.objects.get(user = request.user)
-        projects = IdeologyConstructionRank.objects.filter(teacher = owner)
-        student = Students.objects.get(StudentNum = id)
-        if len(projects) == 1: project = projects[0]
-        else: alert = '请确认您是否已创建思建活动！'
-    except Exception,e: alert = e
-    join = IdeologyConstruction(status = '通过',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
-    join.save()
-    alert = '成功添加!'
-    return render_with_type(request,'first.html',{'alert':error})
-    
 
 
 
