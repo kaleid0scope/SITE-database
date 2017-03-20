@@ -17,15 +17,15 @@ def ProjectDetail(rank,link,request,id):
     try:  
         project = rank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
-        links = link.objects.filter(rankNum = project).filter(status = 'Í¨¹ı') #ËùÓĞ¼ÓÈë¸ÃÏîÄ¿µÄ¹ØÏµ
-        joins = link.objects.filter(rankNum = project).filter(status = '´ıÉóºË') #ËùÓĞÉêÇë¸ÃÏîÄ¿µÄ¹ØÏµ
+        links = link.objects.filter(rankNum = project).filter(status = 'é€šè¿‡') #å·²åŠ å…¥çš„å…³ç³»
+        joins = link.objects.filter(rankNum = project).filter(status = 'å¾…å®¡æ ¸') #å¾…å®¡æ ¸çš„å…³ç³»
         members = []
         for link in links:
-            members.append(link.StudentNum) #ËùÓĞ¸ÃÏîÄ¿µÄ³ÉÔ±
+            members.append(link.StudentNum) #æ‰€æœ‰å·²åŠ å…¥çš„æˆå‘˜
         members.insert(0,student)
     except Exception,e: 
         return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
-    if project.teacher == student: #Îª¸ÃÏîÄ¿¹ÜÀíÕß
+    if project.teacher == student: #å¦‚æœä¸ºé¡¹ç›®çš„ç®¡ç†è€…
         alert = None
         if request.method == 'POST':
             try:
@@ -35,32 +35,33 @@ def ProjectDetail(rank,link,request,id):
             except Exception,e: 
                 return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
             if request.POST.has_key('passyes'):
-                joinlink.status = 'Í¨¹ı'
+                joinlink.status = 'é€šè¿‡'
             elif request.POST.has_key('passno'):
-                joinlink.status = 'Î´Í¨¹ı'
+                joinlink.status = 'æœªé€šè¿‡'
             joinlink.save()
-            alert = 'ÉóºË³É¹¦£¡' #ÉóºËÑ§ÉúµÄ¼ÓÈë
+            alert = 'å®¡æ ¸æˆåŠŸï¼' 
         return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),
             {'project':project,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert})
-    elif members.count(student) == 1: #ÏîÄ¿°üº¬¸ÃÓÃ»§Îª³ÉÔ±
+    elif members.count(student) == 1: #å¦‚æœä¸ºè¯¥é¡¹ç›®å·²é€šè¿‡çš„æˆå‘˜
         return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'hasJoin':True,'members':members})
     return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project})
 
 def ProjectIndex(rank,link,request):
     try:  
         student = Students.objects.get(user = request.user)
-        links = link.objects.filter(StudentNum = student) #Éæ¼°µ½¸ÃÓÃ»§µÄÏîÄ¿¹ØÏµÊı
+        links = link.objects.filter(StudentNum = student) #æ‰€æœ‰åŠ å…¥çš„é¡¹ç›®
         created = rank.objects.filter(teacher = student)
         joined = []
         for link in links:
             joined.append(link.rankNum)
     except Exception,e: 
-        return render_with_type(request,'index.html',{'constructions':link.objects.filter(StudentNum = student),'alert':e})
-    if student.auth.isTeacher and student.auth.ideologyConstruction: #Èç¹ûÓĞÉóºËÈ¨ÏŞ£¬·µ»ØÉóºËÁĞ±í
-        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),{'projects':rank.objects.filter(status = '´ıÉóºË'),'can':True})
-    else :  #·ñÔò·µ»ØÒÑ¼ÓÈëºÍ¿É¼ÓÈëµÄÏîÄ¿
+        return render_with_type(request,'app/login.html',{'alert':e})
+    if student.auth.isTeacher and student.auth.ideologyConstruction: #å¦‚æœæ˜¯æ•™å¸ˆï¼Œè¿”å›å¾…å®¡æ ¸çš„é¡¹ç›®
         return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
-            {'projects':rank.objects.filter(status = 'Í¨¹ı'),
+            {'projects':rank.objects.filter(status = 'å¾…å®¡æ ¸'),'can':True})
+    else :  #å¦åˆ™ï¼Œè¿”å›å„ç±»é¡¹ç›®
+        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+            {'projects':rank.objects.filter(status = 'é€šè¿‡'),
             'Cprojects':created,
             'Jprojects':joined,
             'can':False})
@@ -73,7 +74,7 @@ def ProjectCheck(rank,link,f,request,id):
         inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type(request,'{name}.html'.format(name = link._meta.object_name),{'alert':e})
-    if project.status == 'Î´Í¨¹ı':
+    if project.status == 'å¾…å®¡æ ¸':
         if request.method == 'POST':
             form = f(request.POST)
             if form.is_valid() and auth.isTeacher and auth.ideologyConstruction:
@@ -83,25 +84,25 @@ def ProjectCheck(rank,link,f,request,id):
                     project.score = choice.score
                     project.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = 'Í¨¹ı'
+                        project.status = 'é€šè¿‡'
                     elif request.POST.has_key('passno'):
-                        project.status = 'Î´Í¨¹ı'
+                        project.status = 'æœªé€šè¿‡'
                     project.inspector = inspector
                     project.save()
-                    return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),\
-                            {'projects':rank.objects.filter(status = '´ıÉóºË'),'alert':'ÉóºË³É¹¦£¡','can':True})
+                    return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+                            {'projects':rank.objects.filter(status = 'å¾…å®¡æ ¸'),'alert':'å®¡æ ¸æˆåŠŸï¼','can':True})
                 except Exception,e:  
                     error = e
             else:
-                error = 'Çë¼ì²éÊÇ·ñÓĞÈ¨ÏŞÉóºË£¡'
+                error = 'è¯·ç¡®è®¤æ˜¯å¦æœ‰å®¡æ ¸æƒé™ï¼'
         else:
             form = f()
             return render_with_type(request,'{name}.html'.format(name = link._meta.object_name),{'form':form,'project':project})
     elif auth.isTeacher and auth.ideologyConstruction:
        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
-             {'projects':rank.objects.filter(status = '´ıÉóºË'),'alert':'ÉóºËÊ§°Ü£¡¸Ã»î¶¯ÒÑÉóºË!´íÎó´æÔÚ{{e}}'.format(e = error),'can':True})
+             {'projects':rank.objects.filter(status = 'å¾…å®¡æ ¸'),'alert':e,'can':True})
     return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
-            {'projects':rank.objects.filter(status = 'Í¨¹ı'),'can':False,'alert':error})
+            {'projects':rank.objects.filter(status = 'é€šè¿‡'),'can':False,'alert':error})
 
 def createProject(rank,link,f,request):
     error = None
@@ -113,7 +114,7 @@ def createProject(rank,link,f,request):
             error = e
     if not project:
         return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
-        {'projects':project,'alert':'ÄúÒÑ¾­´´½¨ÁËÏîÄ¿£¡','can':False})
+        {'projects':project,'alert':'æ‚¨å·²ç»åˆ›å»ºè¿‡é¡¹ç›®ï¼','can':False})
     if request.method == 'POST':
         form = f(request.POST)
         if form.is_valid():
@@ -126,14 +127,14 @@ def createProject(rank,link,f,request):
                                 organizer = cd['organizer'],
                                 Location = cd['Location'],
                                 Content = cd['Content'],
-                                status = '´ıÉóºË',
+                                status = 'å¾…å®¡æ ¸',
                                 inspector = insp,)
                 project.save()
                 return render_with_type(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
                 error = e
         else:
-            error = 'ÇëÈ·ÈÏÊÇ·ñÒÑÌîĞ´Ïà¹ØĞÅÏ¢£¡'
+            error = 'è¯·ç¡®è®¤æ˜¯å¦å·²ç»è¾“å…¥ç›¸å…³ä¿¡æ¯'
     else:
         form = f()
     return render_with_type(request,'Create/create{name}.html'.format(name = link._meta.object_name),{'form':form,'alert':error})
@@ -145,7 +146,7 @@ def JoinProject(rank,link,request,id):
         student = Students.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
-    join = link(status = '´ıÉóºË',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join = link(status = 'å¾…å®¡æ ¸',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
     join.save()
-    alert = '³É¹¦¼ÓÈë£¡'
+    alert = 'ç”³è¯·æˆåŠŸï¼'
     return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),{'alert':alert})
