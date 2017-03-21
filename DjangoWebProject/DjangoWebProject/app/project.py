@@ -14,7 +14,7 @@ from django.template import RequestContext
 from django.template.loader import get_template
 from __builtin__ import getattr
 
-def ProjectDetail(rank,link,request,id):
+def ProjectDetail(rank,link,request,id,alert):
     try:  
         project = rank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
@@ -29,9 +29,9 @@ def ProjectDetail(rank,link,request,id):
             members.append(link.StudentNum) #所有已加入的成员
         members.insert(0,student)
     except Exception,e: 
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
+        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':alert if alert else e})
     if project.teacher == student: #如果为项目的管理者
-        alert = None
+        e = None
         if request.method == 'POST':
             try:
                 num = request.GET.get('num','')
@@ -44,11 +44,12 @@ def ProjectDetail(rank,link,request,id):
             elif request.POST.has_key('passno'):
                 joinlink.status = '未通过'
             joinlink.save()
-            alert = '审核成功！' 
+            e = '审核成功！' 
         return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),
-            {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert})
+            {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert if alert else e})
     elif members.count(student) == 1: #如果为该项目已通过的成员
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'FPS':FieldProject,'hasJoin':True,'members':members})
+        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),
+        {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members})
     return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'FPS':FieldProject})
 
 def ProjectIndex(rank,link,request,alert):

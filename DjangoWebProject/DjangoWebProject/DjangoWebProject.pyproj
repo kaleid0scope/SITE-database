@@ -40,6 +40,9 @@
     <Compile Include="app\project.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\0000test1.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\type.py">
       <SubType>Code</SubType>
     </Compile>
