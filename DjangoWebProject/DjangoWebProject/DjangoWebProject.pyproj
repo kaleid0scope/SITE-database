@@ -92,8 +92,8 @@
     <Content Include="app\templates\fail.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\ideologyConstruction.html" />
-    <Content Include="app\templates\IdeologyConstructionDetail.html" />
-    <Content Include="app\templates\Index\IdeologyConstructionIndex.html" />
+    <Content Include="app\templates\Detail.html" />
+    <Content Include="app\templates\Index.html" />
     <Content Include="app\templates\Verify\Internship.html" />
     <Content Include="app\templates\InternshipDetail.html" />
     <Content Include="app\templates\Index\InternshipIndex.html" />
@@ -103,7 +103,6 @@
     <Content Include="app\templates\Index\LectureIndex.html" />
     <Content Include="app\templates\LectureList.html" />
     <Content Include="app\templates\LectureSDetail.html" />
-    <Content Include="app\templates\index.html" />
     <Content Include="app\templates\Index\StudentCadreIndex.html" />
     <Content Include="app\templates\Index\ExchangeIndex.html" />
     <Content Include="app\templates\Index\CompetitionIndex.html" />

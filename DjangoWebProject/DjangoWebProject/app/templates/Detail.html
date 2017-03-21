@@ -7,9 +7,6 @@
 <div class="container">
 	<h2>活动详情如下：</h2>             
 	<table class="table table-striped">
-		    {% for item in error %}
-		<p style="color:red;">{{item}}</p>
-	        {% endfor %}
 		<tbody>
             <tr>
 				<td><b>创建者姓名：</b></td>
@@ -34,13 +31,17 @@
             {% if hasJoin != True %}
             <tr>
 				<td>报名：</td>
-				<td><a class="btn btn-info" href= "/JoinIdeologyConstruction/{{project.id}}" >加入</a></td>
+				<td><a class="btn btn-info" href= "/Join{{name}}/{{project.id}}" >加入</a></td>
 			</tr>
             {% endif %}
 
             {% if manage == True %}
             <tr>
 				<td>加入申请：</td>
+			</tr>
+            <tr>
+				<td>管理项目：<a class="btn btn-primary" href= "/Delete{{name}}/{{project.id}}" >删除</a>
+                <a class="btn btn-info" href= "/Add{{name}}/{{project.id}}/200000000" >选择加入</a></td>
 			</tr>
 		</tbody>
         </table>
@@ -52,10 +53,6 @@
                 <input type="submit" name="passno" value="拒绝" class="btn btn-default">
                 </form>
             {%endfor%}
-            <tr>
-				<td>管理项目：<a class="btn btn-primary" href= "/DeleteIdeologyConstruction/{{project.id}}" >删除</a>
-                <a class="btn btn-info" href= "/AddIdeologyConstruction/{{project.id}}/200000000" >选择加入</a></td>
-			</tr>
             {% endif %}
 	
 </div>

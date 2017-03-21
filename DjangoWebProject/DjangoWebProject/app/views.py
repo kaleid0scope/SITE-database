@@ -59,44 +59,12 @@ def createIdeologyConstruction(request):
     else:
         form = CreateIdeologyConstructionForm()
     return render_with_type(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
-#评价审核（审核结果输入）
-def ideologyConstruction(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
-#项目详情
+def IdeologyConstructionCheck(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
 def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id,None)
-#申请加入
-def JoinIdeologyConstruction(request,id): return JoinProject(IdeologyConstructionRank,IdeologyConstruction,request,id)
-#申请者的列表
+def JoinIdeologyConstruction(request,id): return ProjectJoin(IdeologyConstructionRank,IdeologyConstruction,request,id)
 def IdeologyConstructionIndex(request): return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request,None)
-#手动加入
-def AddIdeologyConstruction(request,id,sid):
-    alert = None
-    owner = Students.objects.get(user = request.user)
-    project = IdeologyConstructionRank.objects.get(id = id)
-    student = Students.objects.get(StudentNum = sid)
-    links = IdeologyConstruction.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '通过')
-    Jlinks = IdeologyConstruction.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '待审核')
-    if not project: alert = '请确认您是否已创建思建活动！'
-    elif links: alert = '该成员已在项目中！'
-    elif Jlinks: 
-        join = Jlinks[0]
-        join.status = '通过'
-        join.save()
-    else:
-        join = IdeologyConstruction(status = '通过',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
-        join.save()
-        alert = '成功添加!'
-    return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id,alert)
-def DeleteIdeologyConstruction(request,id):
-    try:
-        student = Students.objects.get(user = request.user)
-        project = IdeologyConstructionRank.objects.get(id = id)
-        links = IdeologyConstruction.objects.filter(rankNum = project)
-    except Exception,e: 
-        alert = e
-    if project.teacher == student:
-        project.delete()
-        links.delete()
-        return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request,'已删除~~~' if not e else e)
+def AddIdeologyConstruction(request,id,sid): return ProjectAdd(IdeologyConstructionRank,IdeologyConstruction,request,id,sid)
+def DeleteIdeologyConstruction(request,id): return ProjectDelete(IdeologyConstructionRank,IdeologyConstruction,request,id)
         
     
 
