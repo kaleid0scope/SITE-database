@@ -9,30 +9,55 @@
 	<table class="table table-striped">
 		    {% for item in error %}
 		<p style="color:red;">{{item}}</p>
-	{% endfor %}
+	        {% endfor %}
 		<tbody>
-			<tr>
-				<td width="100px">活动名称：</td>
-				<td>{{project.rankName}}</td>
-			</tr>
-			<tr>
-				<td>开始时间：</td>
-				<td>{{project.startingTime}}</td>
-			</tr>
-			<tr>
-				<td>指导老师：</td>
-				<td>{{project.teacher}}</td>
-			</tr>
             <tr>
-				<td>详细介绍：</td>
-				<td>{{project.SupportText}}</td>
+				<td><b>创建者姓名：</b></td>
+				<td>{{project.teacher.name}}</td>
+			</tr> 
+			{% for key,value in FPS.items%}
+			<tr>
+				<td><b>{{key}}：</b></td>
+				<td>{{value}}</td>
+			</tr> 
+            {%endfor%}
+            <tr>
+				<td>项目成员：</td>
 			</tr>
+            {%for member in members%}
+            <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{member.rankName}}---{{member.StudentNum}}</td>
+			</tr>
+            {%endfor%}
+            
+
+            {% if hasJoin != True %}
             <tr>
 				<td>报名：</td>
 				<td><a class="btn btn-info" href= "/JoinIdeologyConstruction/{{project.id}}" >加入</a></td>
 			</tr>
+            {% endif %}
+
+            {% if manage == True %}
+            <tr>
+				<td>加入申请：</td>
+			</tr>
 		</tbody>
-	</table>
+        </table>
+            {%for member in joiners%}
+                <form action="" method="post">
+			    <input type="hidden"  name="num" value="{{member.StudentNum}}" >
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{member.rankName}}---{{member.StudentNum}}
+                <input type="submit" name="passyes" value="通过" class="btn btn-default">
+                <input type="submit" name="passno" value="拒绝" class="btn btn-default">
+                </form>
+            {%endfor%}
+            <tr>
+				<td>管理项目：<a class="btn btn-primary" href= "/DeleteIdeologyConstruction/{{project.id}}" >删除</a></td>
+                <a class="btn btn-info" href= "/AddIdeologyConstruction/{{project.id}}" >批量加入</a></td>
+			</tr>
+            {% endif %}
+	
 </div>
 </body>
 

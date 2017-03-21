@@ -58,9 +58,6 @@
 					        <li><a href="../VolunteeringIndex">志愿活动</a></li>
 					        <li><a href="../SchoolActivityIndex">校园活动</a></li>
 					        <li><a href="../InternshipIndex">实践实习</a></li>
-					        <li><a href="../PaperIndex">科研论文</a></li>
-					        <li><a href="../CompetitionIndex">学术竞赛</a></li>
-					        <li><a href="../StudentCadreIndex">学生干部经历</a></li>
 					        <li class="divider"></li>
 					        <li><a href="../PaperIndex">论文</a></li>
 					        <li><a href="../CompetitionIndex">学术竞赛</a></li>
@@ -84,7 +81,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                        ©对外经济贸易大学SEA
+                        ©对外经济贸易大学SEA------{{alert}}
                 </div> 
                 <div class="col-sm-6">
                     <ul class="pull-right">
@@ -103,12 +100,6 @@
     <script src="{% static 'app/scripts/jquery.isotope.min.js' %}"></script>
     <script src="{% static 'app/scripts/main.js' %}"></script>
     <script src="{% static 'app/scripts/wow.min.js' %}"></script>
-
-    {% if alert != none %}
-    <script>
-        alert("{{alert}}");
-    </script>
-    {% endif %}
 
 
 </body>

@@ -34,6 +34,12 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\Info.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\project.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\type.py">
       <SubType>Code</SubType>
     </Compile>
@@ -85,8 +91,6 @@
     <Content Include="app\templates\ideologyConstruction.html" />
     <Content Include="app\templates\IdeologyConstructionDetail.html" />
     <Content Include="app\templates\Index\IdeologyConstructionIndex.html" />
-    <Content Include="app\templates\IdeologyConstructionList.html" />
-    <Content Include="app\templates\IdeologyConstructionSDetail.html" />
     <Content Include="app\templates\Verify\Internship.html" />
     <Content Include="app\templates\InternshipDetail.html" />
     <Content Include="app\templates\Index\InternshipIndex.html" />

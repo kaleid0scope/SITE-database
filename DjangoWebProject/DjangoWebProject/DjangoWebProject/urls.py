@@ -9,7 +9,6 @@ import DjangoWebProject.settings
 import app.forms
 import app.views
 import app.testdb
-from app.views import search_form, search, changepassword,changeauth
 from django.contrib import auth
 from app.views import *
 
@@ -48,8 +47,7 @@ urlpatterns = [
     url(r'^search_form/$',search_form),
     url(r'^search/$',search),
     url(r'^reset',app.views.reset),
-    url(r'^changepassword/(?P<username>\w+)/$',changepassword),   
-    url(r'^changeauth/(?P<username>\w+)/$',changeauth),
+    url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
 
     url(r'^first/$',app.views.first),
     url(r'^copy/$',app.views.shit),
@@ -80,11 +78,10 @@ urlpatterns = [
     url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
-
     url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
-    url(r'^IdeologyConstructionSDetail/(?P<id>\w+)/$',app.views.IdeologyConstructionSDetail), 
-    url(r'^CheckIdeologyConstruction/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckIdeologyConstructionx),  
-    url(r'^IdeologyConstructionList/$',app.views.ResearchProjectList), 
+    url(r'^AddIdeologyConstruction/(?P<id>\w+)/(?P<sid>\w+)/$',AddIdeologyConstruction),
+    url(r'^DeleteIdeologyConstruction/(?P<id>\w+)/$',DeleteIdeologyConstruction),
+
     url(r'^createLecture/$',createLecture),
     url(r'^lecture/(?P<id>\w+)/$',lecture),
     url(r'^LectureDetail/(?P<id>\w+)/$',LectureDetail), 
