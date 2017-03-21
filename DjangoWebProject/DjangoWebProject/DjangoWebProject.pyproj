@@ -78,6 +78,7 @@
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\static\app\content\main.css" />
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\construction.html" />
     <Content Include="app\templates\fail.html" />
