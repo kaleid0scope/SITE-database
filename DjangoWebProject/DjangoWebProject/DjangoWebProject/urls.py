@@ -65,8 +65,8 @@ urlpatterns = [
     url(r'^studentCadre/(?P<id>\w+)/$',app.views.studentCadre),
     url(r'^StudentCadreIndex/$',app.views.studentCadreIndex),
 
-    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),
-    url(r'^IdeologyConstruction/(?P<id>\w+)/$',IdeologyConstruction),
+    url(r'^createIdeologyConstruction/$',CreateIdeologyConstruction),
+    url(r'^IdeologyConstruction/(?P<id>\w+)/$',IdeologyConstructionCheck),
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
     url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
