@@ -39,9 +39,6 @@ def createIdeologyConstruction(request):
             project = IdeologyConstructionRank.objects.filter(teacher = student)
     except Exception,e:
             error = e
-    if not project:
-        return render_with_type_(request,'Index/IdeologyConstructionIndex.html',
-        {'projects':project,'alert':'您已经创建过项目！','can':False})
     if request.method == 'POST':
         form = CreateIdeologyConstructionForm(request.POST)
         if form.is_valid():
