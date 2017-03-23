@@ -25,7 +25,7 @@ def ProjectCreate(rank,link,f,request):
     except Exception,e:
             error = e
     if not project:
-        return render_with_type(link,request,'Index.html',
+        return render_with_type(link,request,'List.html',
         {'projects':project,'alert':'您已经创建过项目！','can':False})
     if request.method == 'POST':
         form = f(request.POST)
@@ -112,10 +112,10 @@ def ProjectIndex(rank,link,request,alert):
     except Exception,e: 
         return render_with_type(link,request,'app/login.html',{'alert':alert if alert else e})
     if student.auth.isTeacher and student.auth.ideologyConstruction: #如果是教师，返回待审核的项目
-        return render_with_type(link,request,'Index.html',
+        return render_with_type(link,request,'List.html',
             {'projects':rank.objects.filter(status = '待审核'),'can':True})
     else :  #否则，返回各类项目
-        return render_with_type(link,request,'Index.html',
+        return render_with_type(link,request,'List.html',
             {'projects':rank.objects.filter(status = '通过'),
             'Cprojects':created,
             'JprojectsP':joined,
@@ -151,7 +151,7 @@ def ProjectCheck(rank,link,f,request,id):
                         project.status = '未通过'
                     project.inspector = inspector
                     project.save()
-                    return render_with_type(link,request,'Index.html',
+                    return render_with_type(link,request,'List.html',
                             {'projects':rank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
                     error = e
@@ -161,9 +161,9 @@ def ProjectCheck(rank,link,f,request,id):
             form = f()
             return render_with_type(link,request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'FPS':FieldProject})
     elif auth.isTeacher:
-       return render_with_type(link,request,'Index.html',
+       return render_with_type(link,request,'List.html',
              {'projects':rank.objects.filter(status = '待审核'),'alert':e,'can':True})
-    return render_with_type(link,request,'Index.html',
+    return render_with_type(link,request,'List.html',
             {'projects':rank.objects.filter(status = '通过'),'can':False,'alert':error})
 #申请加入
 def ProjectJoin(rank,link,request,id):
@@ -176,7 +176,7 @@ def ProjectJoin(rank,link,request,id):
     join = link(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
     join.save()
     alert = '申请成功！'
-    return render_with_type(link,request,'Index.html',{'alert':alert})
+    return render_with_type(link,request,'List.html',{'alert':alert})
 #手动加入
 def ProjectAdd(rank,link,request,id,sid):
     alert = None
