@@ -11,6 +11,7 @@ import app.views
 import app.testdb
 from django.contrib import auth
 from app.views import *
+from app.project import *
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -29,19 +30,9 @@ urlpatterns = [
         {
             'template_name': 'app/login.html',
             'authentication_form': app.forms.BootstrapAuthenticationForm,
-            'extra_context':
-            {
-                'title': 'Log in',
-                'year': datetime.now().year,
-            }
         },
         name='login'),
-    url(r'^logout$',
-        django.contrib.auth.views.logout,
-        {
-            'next_page': '/',
-        },
-        name='logout'),
+    url(r'^logout$',django.contrib.auth.views.logout,{'next_page': '/',},name='logout'),
     url(r'^testdb', app.testdb.testdb),
     #url(r'^register$',app.views.register,),
     url(r'^search_form/$',search_form),
@@ -74,8 +65,8 @@ urlpatterns = [
     url(r'^studentCadre/(?P<id>\w+)/$',app.views.studentCadre),
     url(r'^StudentCadreIndex/$',app.views.studentCadreIndex),
 
-    url(r'^createIdeologyConstruction/$',createIdeologyConstruction),
-    url(r'^ideologyConstruction/(?P<id>\w+)/$',ideologyConstruction),
+    url(r'^createIdeologyConstruction/$',CreateIdeologyConstruction),
+    url(r'^IdeologyConstruction/(?P<id>\w+)/$',IdeologyConstructionCheck),
     url(r'^IdeologyConstructionDetail/(?P<id>\w+)/$',IdeologyConstructionDetail), 
     url(r'^IdeologyConstructionIndex/$',IdeologyConstructionIndex), 
     url(r'^JoinIdeologyConstruction/(?P<id>\w+)/$',JoinIdeologyConstruction),
