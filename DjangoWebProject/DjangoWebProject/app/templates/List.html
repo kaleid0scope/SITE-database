@@ -1,135 +1,134 @@
 ﻿{% extends "app/layout.html" %}
 
-
 {% block content %}
 
-<!DOCTYPE html>
-
 <body>
-<div class="container">
-	<h2>活动列表</h2>   
-    <p>{% if can == False %}<a class="btn btn-primary" href= "/createIdeologyConstruction" >创建活动</a></p>
-    <h3>我创建的活动</h3> 
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th>活动名称</th>
-				<th>开始时间</th>
-                <th>审核状态</th>
-                <th>支撑文档</th>
-                <th>查看详细信息</th>
-			</tr>
-		</thead>
-		<tbody>
-            {% for project in Cprojects %}
-			<tr>
-				<td>{{project.rankName}}</td>
-				<td>{{project.startingTime}}</td>
-                <td>{{project.status}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
-			</tr>
-            {% endfor %}
-		</tbody>
-	</table>
-    <h3>我加入的活动</h3> 
-    <h4>已加入</h4> 
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th>活动名称</th>
-				<th>开始时间</th>
-                <th>指导老师</th>
-                <th>支撑文档</th>
-                <th>查看详细信息</th>
-			</tr>
-		</thead>
-		<tbody>
-            {% for project in JprojectsP %}
-			<tr>
-				<td>{{project.rankName}}</td>
-				<td>{{project.startingTime}}</td>
-                <td>{{project.teacher.rankName}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
-			</tr>
-            {% endfor %}
-		</tbody>
-	</table>
-    <h4>申请中</h4> 
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th>活动名称</th>
-				<th>开始时间</th>
-                <th>指导老师</th>
-                <th>支撑文档</th>
-                <th>查看详细信息</th>
-			</tr>
-		</thead>
-		<tbody>
-            {% for project in Jprojects %}
-			<tr>
-				<td>{{project.rankName}}</td>
-				<td>{{project.startingTime}}</td>
-                <td>{{project.teacher.rankName}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
-			</tr>
-            {% endfor %}
-		</tbody>
-	</table>
-    <h4>未通过</h4> 
-    <table class="table table-hover">
-		<thead>
-			<tr>
-				<th>活动名称</th>
-				<th>开始时间</th>
-                <th>指导老师</th>
-                <th>支撑文档</th>
-                <th>查看详细信息</th>
-			</tr>
-		</thead>
-		<tbody>
-            {% for project in JprojectsNP %}
-			<tr>
-				<td>{{project.rankName}}</td>
-				<td>{{project.startingTime}}</td>
-                <td>{{project.teacher.rankName}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
-			</tr>
-            {% endfor %}
-		</tbody>
-	</table>
-
-    <h3>可加入列表</h3> 
-    {% endif %}
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>活动名称</th>
-				<th>开始时间</th>
-                <th>指导老师</th>
-                <th>支撑文档</th>
-                {% if can == False %}<th>查看详细信息</th>{% endif %}
-                {% if can == True %}<th>审核</th>{% endif %}
-			</tr>
-		</thead>
-		<tbody>
-            {% for project in projects %}
-			<tr>
-				<td>{{project.rankName}}</td>
-				<td>{{project.startingTime}}</td>
-                <td>{{project.teacher.rankName}}</td>
-                <td></td>
-                {% if can == True %}<td><a class="btn btn-info" href= "/ideologyConstruction/{{project.id}}" >审核</a></td>{% endif %}
-                {% if can == False %}<td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>{% endif %}
-			</tr>
-            {% endfor %}
-		</tbody>
-	</table>
-</div>
-    <a class="btn btn-info" href= "/first" >返回个人主页</a>
+         <p style="text-align:center;font-size:xx-large;font-family:'Microsoft YaHei'"><b>项目信息</b></p>
+   <style>
+       table.one
+       {
+            border-top:solid;
+            border-bottom:solid;
+            border-width:2px;
+            border-spacing:15px;
+            text-align:center;
+            padding:15px;
+            width:auto;
+            font-family:'Microsoft YaHei';
+            text-align:center;
+       }
+   </style>
+    <center>
+    <table class="one" >
+        <tr>
+            <td width="150px"> 姓名</td>
+            <td width="200px">日期</td>
+            <td width="150px">老师</td>
+            <td width="100px">评分</td>
+            <td width="100px">信息一</td>
+            <td width="100px">信息二</td>
+        </tr>
+       {% for project in projects %}
+           <tr >
+               <td>{{project.rankNum.rankName}} </td>
+               <td>{{project.rankNum.startingTime}} </td>
+               <td>{{project.rankNum.teacherNum}} </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for paper in papers %}
+           <tr >
+               <td>{{paper.rankNum.rankName}}</td>
+               <td>{{paper.rankNum.startingTime}}</td>
+               <td>{{paper.rankNum.teacherNum}} </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for competition in competitions %}
+           <tr >
+               <td>{{competition.rankNum.rankName}}</td>
+               <td>{{competition.rankNum.startingTime}}</td>
+               <td>{{competition.rankNum.teacherNum}}</td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for exchange in exchanges %}
+           <tr >
+               <td>{{exchange.rankNum.rankName}}  </td>
+               <td>{{exchange.startTime}}  </td>
+               <td>{{exchange.rankNum.teacherNum}}  </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for construction in constructions %}
+           <tr >
+               <td>{{construction.rankNum.rankName}}  </td>
+               <td>{{construction.rankNum.startingTime}} </td>
+               <td>{{construction.rankNum.teacherNum}} </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for lecture in lectures %}
+           <tr >
+               <td>{{lecture.rankNum.rankName}}  </td>
+               <td>{{lecture.rankNum.startingTime}}  </td>
+               <td>{{lecture.rankNum.teacherNum}}  </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for volunteering in volunteerings %}
+           <tr >
+               <td>{{volunteering.rankNum.rankName}}  </td>
+               <td>{{volunteering.rankNum.startingTime}}  </td>
+               <td>{{volunteering.rankNum.teacherNum}}  </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for activity in activities %}
+           <tr >
+               <td>{{activity.rankNum.rankName}}  </td>
+               <td>{{activity.rankNum.startingTime}}  </td>
+               <td>{{activity.rankNum.teacherNum}}  </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for internship in internships %}
+           <tr >
+               <td>{{internship.rankNum.rankName}}  </td>
+               <td>{{internship.rankNum.startingTime}}  </td>
+               <td>{{internship.rankNum.teacherNum}}  </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}
+       {% for cadre in cadres %}
+           <tr >
+               <td>{{cadre.rankNum.rankName}}  </td>
+               <td>{{cadre.rankNum.startingTime}}  </td>
+               <td>{{cadre.rankNum.teacherNum}}  </td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+       {% endfor %}          
+   </table>
+   </center>
 </body>
 {% endblock %}
