@@ -289,7 +289,7 @@ class LectureRank(models.Model):
         return self.rankName
 
 class Lecture(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态',verbose_name ='状态')
+    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(LectureRank)
     inspector = models.ForeignKey(Inspectors)
