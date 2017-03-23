@@ -15,7 +15,7 @@ def GetType(request):
         return '教师端'
     return '学生端'
 
-def render_with_type(request,url,list):
+def render_with_type_(request,url,list):
     if 'title' not in list.keys():
         list['title'] = '学生综合测评系统'
     list['type'] = GetType(request)
