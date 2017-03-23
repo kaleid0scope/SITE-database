@@ -29,25 +29,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="app\exchange.py" />
     <Compile Include="app\forms.py" />
-    <Compile Include="app\ideology.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="app\internship.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="app\lecture.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="app\models.py" />
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app\research.py">
+    <Compile Include="app\Info.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app\schoolact.py">
+    <Compile Include="app\project.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\0000test1.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\type.py">
@@ -65,9 +58,6 @@
     </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
-    <Compile Include="app\volunteer.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="manage.py" />
@@ -102,10 +92,8 @@
     <Content Include="app\templates\fail.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\ideologyConstruction.html" />
-    <Content Include="app\templates\IdeologyConstructionDetail.html" />
-    <Content Include="app\templates\Index\IdeologyConstructionIndex.html" />
-    <Content Include="app\templates\IdeologyConstructionList.html" />
-    <Content Include="app\templates\IdeologyConstructionSDetail.html" />
+    <Content Include="app\templates\Detail.html" />
+    <Content Include="app\templates\List.html" />
     <Content Include="app\templates\Verify\Internship.html" />
     <Content Include="app\templates\InternshipDetail.html" />
     <Content Include="app\templates\Index\InternshipIndex.html" />
@@ -115,7 +103,6 @@
     <Content Include="app\templates\Index\LectureIndex.html" />
     <Content Include="app\templates\LectureList.html" />
     <Content Include="app\templates\LectureSDetail.html" />
-    <Content Include="app\templates\index.html" />
     <Content Include="app\templates\Index\StudentCadreIndex.html" />
     <Content Include="app\templates\Index\ExchangeIndex.html" />
     <Content Include="app\templates\Index\CompetitionIndex.html" />

@@ -3,28 +3,30 @@
 {% block content %}
 <html>
 <head>
-	<title>审核思建活动</title>
+	<title>活动审核</title>
    
 </head>
 <body>
 <div style="margin:30px">
-    	<h1 style="text-align:center">审核思建活动</h1>
+    	<h1 style="text-align:center">活动审核</h1>
     <center>
  <div class="container" >            
 	<table class="table table-striped">
 		<tbody>
 			<tr>
-				<td><b>思建活动名称：</b>：</td>
-				<td>{{project.rankName}}</td>
-			</tr>
-			<tr>
-				<td><b>申请者编号：</b></td>
+				<td><b>申请者学号：</b></td>
 				<td>{{project.teacher}}</td>
 			</tr>
+            <tr>
+				<td><b>申请者姓名：</b></td>
+				<td>{{project.teacher.rankName}}</td>
+			</tr>
+            {% for key,value in FPS.items%}
 			<tr>
-				<td><b>思建活动开始时间：</b></td>
-				<td>{{project.startingTime}}</td>
+				<td><b>{{key}}：</b></td>
+				<td>{{value}}</td>
 			</tr> 
+            {%endfor%}
 		</tbody>
 	</table>
 </div>

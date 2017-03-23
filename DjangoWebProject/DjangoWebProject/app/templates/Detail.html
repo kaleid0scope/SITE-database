@@ -1,0 +1,80 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+<body>
+	
+<div class="container">
+	<h2>活动详情如下：</h2>             
+	<table class="table table-striped">
+		<tbody>
+            <tr>
+				<td><b>创建者姓名：</b></td>
+				<td>{{project.teacher.name}}</td>
+			</tr> 
+			{% for key,value in FPS.items%}
+			<tr>
+				<td><b>{{key}}：</b></td>
+				<td>{{value}}</td>
+			</tr> 
+            {%endfor%}
+            <tr>
+				<td>项目成员：</td>
+			</tr>
+            {%for member in members%}
+            <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{member.rankName}}---{{member.StudentNum}}</td>
+			</tr>
+            {%endfor%}
+            
+
+            {% if hasJoin != True %}
+            <tr>
+				<td>报名：</td>
+				<td><a class="btn btn-info" href= "/Join{{name}}/{{project.id}}" >加入</a></td>
+			</tr>
+            {% endif %}
+
+            {% if manage == True %}
+            <tr>
+				<td>加入申请：</td>
+			</tr>
+            <tr>
+				<td>管理项目：<a class="btn btn-primary" onclick="del()" >删除</a>
+                <a class="btn btn-info" onclick="prom()">选择加入</a></td>
+			</tr>
+		</tbody>
+        </table>
+            {%for member in joiners%}
+                <form action="" method="post">
+			    <input type="hidden"  name="num" value="{{member.StudentNum}}" >
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{member.rankName}}---{{member.StudentNum}}
+                <input type="submit" name="passyes" value="通过" class="btn btn-default">
+                <input type="submit" name="passno" value="拒绝" class="btn btn-default">
+                </form>
+            {%endfor%}
+            {% endif %}
+	
+</div>
+<script>
+        function del() 
+        { 
+            if (confirm("您确定要删除该项目吗？")) 
+            { 
+                location.href = "/Delete{{name}}/{{project.id}}"; 
+            } 
+        }
+        function prom() 
+        { 
+            var StudentNum=prompt("请输入您要添加学生的学号","");
+            if (StudentNum) 
+            { 
+                location.href = "/Add{{name}}/{{project.id}}/" + StudentNum; 
+            } 
+        }
+</script>
+
+</body>
+
+
+{% endblock %}
