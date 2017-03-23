@@ -40,8 +40,8 @@
 				<td>加入申请：</td>
 			</tr>
             <tr>
-				<td>管理项目：<a class="btn btn-primary" href= "/Delete{{name}}/{{project.id}}" >删除</a>
-                <a class="btn btn-info" href= "/Add{{name}}/{{project.id}}/200000000" >选择加入</a></td>
+				<td>管理项目：<a class="btn btn-primary" onclick="del()" >删除</a>
+                <a class="btn btn-info" onclick="prom()">选择加入</a></td>
 			</tr>
 		</tbody>
         </table>
@@ -56,18 +56,25 @@
             {% endif %}
 	
 </div>
- <!-- <script>
+<script>
         function del() 
-        { if (confirm("您确定要删除选中的记录吗？")) { location.href = "/DeleteIdeologyConstruction/{{project.id}}"; } else { location.href = "取消后跳转的页面"; } }
-    </script> -->   
+        { 
+            if (confirm("您确定要删除该项目吗？")) 
+            { 
+                location.href = "/Delete{{name}}/{{project.id}}"; 
+            } 
+        }
+        function prom() 
+        { 
+            var StudentNum=prompt("请输入您要添加学生的学号","");
+            if (StudentNum) 
+            { 
+                location.href = "/Add{{name}}/{{project.id}}/" + StudentNum; 
+            } 
+        }
+</script>
 
 </body>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<title>您确定要删除选中的记录吗？</title> 
-<script> 
-function del(){ if(!confirm("确认要删除？")){ window.event.returnValue = false; } } 
-</script> 
 
 
 {% endblock %}
