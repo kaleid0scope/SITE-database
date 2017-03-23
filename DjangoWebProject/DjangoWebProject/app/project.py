@@ -24,9 +24,6 @@ def ProjectCreate(rank,link,f,request):
             project = rank.objects.filter(teacher = student)
     except Exception,e:
             error = e
-    if not project:
-        return render_with_type(link,request,'List.html',
-        {'projects':project,'alert':'您已经创建过项目！','can':False})
     if request.method == 'POST':
         form = f(request.POST)
         if form.is_valid():
@@ -172,7 +169,7 @@ def ProjectJoin(rank,link,request,id):
         project = rank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
     except Exception,e:  
-        return render_with_type(link,request,'}Detail.html',{'alert':e})
+        return render_with_type(link,request,'Detail.html',{'alert':e})
     join = link(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
     join.save()
     alert = '申请成功！'

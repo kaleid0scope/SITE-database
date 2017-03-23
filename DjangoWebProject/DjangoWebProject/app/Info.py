@@ -8,7 +8,7 @@ def getInfo(request,model):
         selfProjects = model.objects.filter(teacher = student)
     except Exception,e:
         error = e
-        return render_with_type(request,error.html,{'alert':error})
+        return render_with_type_(request,error.html,{'alert':error})
     return {'student':student,'insp':insp,'projects':selfProjects}
 
 def getInfo(request):
@@ -17,7 +17,7 @@ def getInfo(request):
         insp = Inspectors.objects.get(number = 10002)
     except Exception,e:
         error = e
-        return render_with_type(request,error.html,{'alert':error})
+        return render_with_type_(request,error.html,{'alert':error})
     return {'student':student,'insp':insp}
 
 def getInfo(request,model,id):
@@ -28,5 +28,5 @@ def getInfo(request,model,id):
         thisProject = model.objects.get(id = int(id))
     except Exception,e:
         error = e
-        return render_with_type(request,error.html,{'alert':error})
+        return render_with_type_(request,error.html,{'alert':error})
     return {'student':student,'insp':insp,'projects':selfProjects,'target':thisProject}
