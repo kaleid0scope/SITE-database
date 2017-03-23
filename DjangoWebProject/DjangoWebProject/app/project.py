@@ -186,7 +186,7 @@ def ProjectAdd(rank,link,request,id,sid):
     links = link.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '通过')
     Jlinks = link.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '待审核')
     if not project: alert = '请确认您是否已创建思建活动！'
-    elif links or owner == student: alert = '该成员已在项目中！'
+    elif links: alert = '该成员已在项目中！'
     elif Jlinks: 
         join = Jlinks[0]
         join.status = '通过'
