@@ -1,0 +1,135 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+
+<body>
+<div class="container">
+	<h2>活动列表</h2>   
+    <p>{% if can == False %}<a class="btn btn-primary" href= "/createIdeologyConstruction" >创建活动</a></p>
+    <h3>我创建的活动</h3> 
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>审核状态</th>
+                <th>支撑文档</th>
+                <th>查看详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in Cprojects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.status}}</td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+    <h3>我加入的活动</h3> 
+    <h4>已加入</h4> 
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>支撑文档</th>
+                <th>查看详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in JprojectsP %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher.rankName}}</td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+    <h4>申请中</h4> 
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>支撑文档</th>
+                <th>查看详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in Jprojects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher.rankName}}</td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+    <h4>未通过</h4> 
+    <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>支撑文档</th>
+                <th>查看详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in JprojectsNP %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher.rankName}}</td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+
+    <h3>可加入列表</h3> 
+    {% endif %}
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动名称</th>
+				<th>开始时间</th>
+                <th>指导老师</th>
+                <th>支撑文档</th>
+                {% if can == False %}<th>查看详细信息</th>{% endif %}
+                {% if can == True %}<th>审核</th>{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+            {% for project in projects %}
+			<tr>
+				<td>{{project.rankName}}</td>
+				<td>{{project.startingTime}}</td>
+                <td>{{project.teacher.rankName}}</td>
+                <td></td>
+                {% if can == True %}<td><a class="btn btn-info" href= "/ideologyConstruction/{{project.id}}" >审核</a></td>{% endif %}
+                {% if can == False %}<td><a class="btn btn-info" href= "/IdeologyConstructionDetail/{{project.id}}" >查看</a></td>{% endif %}
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
+</div>
+    <a class="btn btn-info" href= "/first" >返回个人主页</a>
+</body>
+{% endblock %}
