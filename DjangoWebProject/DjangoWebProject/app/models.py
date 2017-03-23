@@ -25,6 +25,9 @@ class Complete(models.Model):
     complete8 = models.SmallIntegerField()
     complete9 = models.SmallIntegerField()
     complete10 = models.SmallIntegerField()
+    class Meta:
+       verbose_name = u'完成度'
+       verbose_name_plural = u'完成度'
 
 class ChoicesTeam(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='队伍名称' )
@@ -33,16 +36,26 @@ class ChoicesTeam(models.Model):
     managerComplete = models.SmallIntegerField(verbose_name ='队长完成度' )
     memberComplete = models.SmallIntegerField(verbose_name ='队员完成度' )
 
+    class Meta:
+        verbose_name = u'科研立项评价等级'
+        verbose_name_plural = u'科研立项评价等级'
+
 class Choices(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='队伍名称')
     score = models.SmallIntegerField(null = True,blank = True,verbose_name ='分数')
     complete = models.SmallIntegerField(verbose_name ='完成度')
+    
+    class Meta:
+        verbose_name = u'评价等级'
+        verbose_name_plural = u'评价等级'
 
 class Inspectors(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name=('审查者'))
     number = models.PositiveIntegerField(verbose_name ='审查者编号' )
     name = models.CharField(max_length = 20,verbose_name ='审核者名称')
-
+    class Meta:
+        verbose_name = u'审核者'
+        verbose_name_plural = u'审核者'
     def __unicode__(self):
         return self.name
 
@@ -59,6 +72,10 @@ class Authorizations(models.Model):
     schoolActivity = models.BooleanField(verbose_name ='校园活动权限' )
     internship = models.BooleanField(verbose_name ='实践活动权限' )
     studentCadre = models.BooleanField(verbose_name ='学生干部权限' )
+
+    class Meta:
+        verbose_name = u'权限'
+        verbose_name_plural = u'权限'
 
     def __unicode__(self):
         return str(self.id)
@@ -82,7 +99,9 @@ class Students(models.Model):
     speciality = models.CharField(max_length = 50,verbose_name ='专业名称')
     province = models.CharField(max_length = 50,verbose_name ='生源省份')
     collegeEntranceExaminationScore = models.PositiveSmallIntegerField(verbose_name ='高考分数')
-
+    class Meta:
+        verbose_name = u'学生'
+        verbose_name_plural = u'学生'
     def __unicode__(self):
         return str(self.StudentNum)
 
@@ -164,7 +183,9 @@ class ResearchProjectRank(models.Model):
     MemberComplete = models.PositiveSmallIntegerField(null = True,blank = True,verbose_name ='队员完成度')
     inspector = models.ForeignKey(Inspectors,verbose_name ='审核者')
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档
-
+    class Meta:
+        verbose_name = u'科研立项'
+        verbose_name_plural = u'科研立项'
     def __unicode__(self):
         return self.rankName
 
@@ -173,7 +194,9 @@ class ResearchProject(models.Model):
     StudentNum =models.ForeignKey(Students,verbose_name ='学号')
     rankNum = models.ForeignKey(ResearchProjectRank)
     inspector = models.ForeignKey(Inspectors)
-
+    class Meta:
+       verbose_name = u'科研立项其他信息'
+       verbose_name_plural = u'科研立项其他信息'
     def __unicode__(self):
         return str(self.StudentNum)
 
@@ -190,7 +213,9 @@ class PaperRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'论文'
+        verbose_name_plural = u'论文'
     def __unicode__(self):
         return self.rankName
 
@@ -206,7 +231,9 @@ class CompetitionRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'学术竞赛'
+        verbose_name_plural = u'学术竞赛'
     def __unicode__(self):
         return self.rankName
 
@@ -223,7 +250,9 @@ class ExchangeRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'交流交换'
+        verbose_name_plural = u'交流交换'
     def __unicode__(self):
         return self.rankName
 
@@ -238,7 +267,9 @@ class StudentCadreRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     student = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'学生干部'
+        verbose_name_plural = u'学生干部'
     def __unicode__(self):
         return self.rankName 
 
@@ -256,7 +287,9 @@ class IdeologyConstructionRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'思建活动'
+        verbose_name_plural = u'思建活动'
     def __unicode__(self):
         return self.rankName
 
@@ -265,7 +298,9 @@ class IdeologyConstruction(models.Model):
     StudentNum =models.ForeignKey(Students,verbose_name ='学号')
     rankNum = models.ForeignKey(IdeologyConstructionRank,verbose_name ='思建活动编号')
     inspector = models.ForeignKey(Inspectors)
-
+    class Meta:
+       verbose_name = u'思建活动其他信息'
+       verbose_name_plural = u'思建活动其他信息'
     def __unicode__(self):
         return str(self.StudentNum)
 
@@ -284,7 +319,9 @@ class LectureRank(models.Model):
     teacher = models.ForeignKey(Students)
     inspector = models.ForeignKey(Inspectors)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'学术讲座'
+        verbose_name_plural = u'学术讲座'
     def __unicode__(self):
         return self.rankName
 
@@ -293,7 +330,9 @@ class Lecture(models.Model):
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(LectureRank)
     inspector = models.ForeignKey(Inspectors)
-
+    class Meta:
+       verbose_name = u'学术讲座其他信息'
+       verbose_name_plural = u'学术讲座其他信息'
     def __unicode__(self):
         return str(self.StudentNum)
 
@@ -311,7 +350,9 @@ class VolunteeringRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'志愿活动'
+        verbose_name_plural = u'志愿活动'
     def __unicode__(self):
         return self.rankName
 
@@ -320,7 +361,9 @@ class Volunteering(models.Model):
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(VolunteeringRank)
     inspector = models.ForeignKey(Inspectors)
-
+    class Meta:
+       verbose_name = u'志愿活动其他信息'
+       verbose_name_plural = u'志愿活动其他信息'
     def __unicode__(self):
         return str(self.StudentNum)
 
@@ -338,7 +381,9 @@ class SchoolActivityRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'校园活动'
+        verbose_name_plural = u'校园活动'
     def __unicode__(self):
         return self.rankName
 
@@ -347,7 +392,9 @@ class SchoolActivity(models.Model):
     StudentNum =models.ForeignKey(Students)
     rankNum = models.ForeignKey(SchoolActivityRank)
     inspector = models.ForeignKey(Inspectors)
-
+    class Meta:
+       verbose_name = u'校园活动其他信息'
+       verbose_name_plural = u'校园活动其他信息'
     def __unicode__(self):
         return str(self.StudentNum)
 
@@ -362,7 +409,9 @@ class InternshipRank(models.Model):
     inspector = models.ForeignKey(Inspectors)
     teacher = models.ForeignKey(Students)
     SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
-
+    class Meta:
+        verbose_name = u'实习实践'
+        verbose_name_plural = u'实习实践'
     def __unicode__(self):
         return self.rankName 
 
@@ -379,6 +428,8 @@ class Internship(models.Model):
     appraisal = models.TextField(verbose_name ='实习鉴定')
     score = models.PositiveIntegerField(verbose_name ='成绩')
     inspector = models.ForeignKey(Inspectors)
-    
+    class Meta:
+       verbose_name = u'实习实践其他信息'
+       verbose_name_plural = u'实习实践其他信息'
     def __unicode__(self):
         return str(self.StudentNum)
