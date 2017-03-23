@@ -31,7 +31,7 @@ import DjangoWebProject.settings
 '''思建活动(目前用于测试)
 '''
 #创建
-def createIdeologyConstruction(request): 
+def CreateIdeologyConstruction(request): 
     error = None
     try:
             student = Students.objects.get(user = request.user)
@@ -60,7 +60,7 @@ def createIdeologyConstruction(request):
         form = CreateIdeologyConstructionForm()
     return render_with_type_(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
 #评价审核（审核结果输入）
-def ideologyConstruction(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
+def IdeologyConstructionCheck(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
 #项目详情
 def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id)
 #申请加入
