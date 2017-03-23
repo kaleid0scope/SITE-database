@@ -14,7 +14,53 @@ from django.template import RequestContext
 from django.template.loader import get_template
 from __builtin__ import getattr
 
-def ProjectDetail(rank,link,request,id):
+
+#创建
+def ProjectCreate(rank,link,f,request):
+    error = None
+    try:
+            student = Students.objects.get(user = request.user)
+            insp = Inspectors.objects.get(number = 10002)
+            project = rank.objects.filter(teacher = student)
+    except Exception,e:
+            error = e
+    if not project:
+        return render_with_type(link,request,'Index.html',
+        {'projects':project,'alert':'您已经创建过项目！','can':False})
+    if request.method == 'POST':
+        form = f(request.POST)
+        if form.is_valid():
+            try:
+                cd = form.cleaned_data
+                project = rank(teacher = student,
+                                status = '待审核',
+                                inspector = insp,)
+                for field in form:
+                    name = field.label
+                    project.name = field.value
+                project.save()
+                return render_with_type(link,request,'first.html',{'alert':'okkkk!'})
+            except Exception,e:
+                error = e
+        else:
+            error = '请确认是否已经输入相关信息'
+    else:
+        form = f()
+    return render_with_type(link,request,'Create/create{name}.html'.format(name = link._meta.object_name),{'form':form,'alert':error})
+#删除
+def ProjectDelete(rank,link,request,id):
+    try:
+        student = Students.objects.get(user = request.user)
+        project = rank.objects.get(id = id)
+        links = link.objects.filter(rankNum = project)
+    except Exception,e: 
+        alert = e
+    if project.teacher == student:
+        project.delete()
+        links.delete()
+        return ProjectIndex(rank,link,request,'已删除' if not e else e)
+#详情
+def ProjectDetail(rank,link,request,id,alert):
     try:  
         project = rank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
@@ -29,28 +75,29 @@ def ProjectDetail(rank,link,request,id):
             members.append(link.StudentNum) #所有已加入的成员
         members.insert(0,student)
     except Exception,e: 
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
+        return render_with_type(link,request,'Detail.html',{'alert':alert if alert else e})
     if project.teacher == student: #如果为项目的管理者
-        alert = None
+        e = None
         if request.method == 'POST':
             try:
                 num = request.GET.get('num','')
                 joiner = Students.objects.get(StudentNum = num)
                 joinlink = link.objects.filter(rankNum = project).get(StudentNum = joiner)
             except Exception,e: 
-                return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
+                return render_with_type(link,request,'Detail.html',{'alert':e})
             if request.POST.has_key('passyes'):
                 joinlink.status = '通过'
             elif request.POST.has_key('passno'):
                 joinlink.status = '未通过'
             joinlink.save()
-            alert = '审核成功！' 
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),
-            {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert})
+            e = '审核成功！' 
+        return render_with_type(link,request,'Detail.html',
+            {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert if alert else e})
     elif members.count(student) == 1: #如果为该项目已通过的成员
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'FPS':FieldProject,'hasJoin':True,'members':members})
-    return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'project':project,'FPS':FieldProject})
-
+        return render_with_type(link,request,'Detail.html',
+        {'project':project,'FPS':FieldProject,'hasJoin':True,'members':membersn})
+    return render_with_type(link,request,'Detail.html',{'project':project,'FPS':FieldProject})
+#列表
 def ProjectIndex(rank,link,request,alert):
     try:  
         student = Students.objects.get(user = request.user)
@@ -63,12 +110,12 @@ def ProjectIndex(rank,link,request,alert):
         for link in links: join.append(link.rankNum)
         for link in linksNP: joinNP.append(link.rankNum)
     except Exception,e: 
-        return render_with_type(request,'app/login.html',{'alert':alert if alert else e})
+        return render_with_type(link,request,'app/login.html',{'alert':alert if alert else e})
     if student.auth.isTeacher and student.auth.ideologyConstruction: #如果是教师，返回待审核的项目
-        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+        return render_with_type(link,request,'Index.html',
             {'projects':rank.objects.filter(status = '待审核'),'can':True})
     else :  #否则，返回各类项目
-        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+        return render_with_type(link,request,'Index.html',
             {'projects':rank.objects.filter(status = '通过'),
             'Cprojects':created,
             'JprojectsP':joined,
@@ -76,7 +123,7 @@ def ProjectIndex(rank,link,request,alert):
             'JprojectsNP':joinNP,
             'can':False,
             'alert':alert})
-
+#审核
 def ProjectCheck(rank,link,f,request,id):
     error = None
     try:  
@@ -88,11 +135,11 @@ def ProjectCheck(rank,link,f,request,id):
         for field in fields :
             FieldProject[field.verbose_name] = getattr(project,field.name)#该项目键值对
     except Exception,e:  
-        return render_with_type(request,'Pcheck.html',{'alert':e})
+        return render_with_type(link,request,'Pcheck.html',{'alert':e})
     if project.status == '待审核':
         if request.method == 'POST':
             form = f(request.POST)
-            if form.is_valid() and auth.isTeacher and auth.ideologyConstruction:
+            if form.is_valid() and auth.isTeacher:
                 cd = form.cleaned_data
                 try:
                     choice = Choices.objects.get(id = cd['level'])
@@ -104,7 +151,7 @@ def ProjectCheck(rank,link,f,request,id):
                         project.status = '未通过'
                     project.inspector = inspector
                     project.save()
-                    return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+                    return render_with_type(link,request,'Index.html',
                             {'projects':rank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
                     error = e
@@ -112,54 +159,43 @@ def ProjectCheck(rank,link,f,request,id):
                 error = '请确认是否有审核权限！'
         else:
             form = f()
-            return render_with_type(request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'FPS':FieldProject})
-    elif auth.isTeacher and auth.ideologyConstruction:
-       return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+            return render_with_type(link,request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'FPS':FieldProject})
+    elif auth.isTeacher:
+       return render_with_type(link,request,'Index.html',
              {'projects':rank.objects.filter(status = '待审核'),'alert':e,'can':True})
-    return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
+    return render_with_type(link,request,'Index.html',
             {'projects':rank.objects.filter(status = '通过'),'can':False,'alert':error})
-
-def createProject(rank,link,f,request):
-    error = None
-    try:
-            student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
-            project = rank.objects.filter(teacher = student)
-    except Exception,e:
-            error = e
-    if not project:
-        return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),
-        {'projects':project,'alert':'您已经创建过项目！','can':False})
-    if request.method == 'POST':
-        form = f(request.POST)
-        if form.is_valid():
-            try:
-                cd = form.cleaned_data
-                project = rank(teacher = student,
-                                status = '待审核',
-                                inspector = insp,)
-                for field in form:
-                    name = field.label
-                    project.name = field.value
-                project.save()
-                return render_with_type(request,'first.html',{'alert':'okkkk!'})
-            except Exception,e:
-                error = e
-        else:
-            error = '请确认是否已经输入相关信息'
-    else:
-        form = f()
-    return render_with_type(request,'Create/create{name}.html'.format(name = link._meta.object_name),{'form':form,'alert':error})
-
-def JoinProject(rank,link,request,id):
+#申请加入
+def ProjectJoin(rank,link,request,id):
     alert = ''
     try:  
         project = rank.objects.get(id = int(id))
         student = Students.objects.get(user = request.user)
     except Exception,e:  
-        return render_with_type(request,'{name}Detail.html'.format(name = link._meta.object_name),{'alert':e})
+        return render_with_type(link,request,'}Detail.html',{'alert':e})
     join = link(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
     join.save()
     alert = '申请成功！'
-    return render_with_type(request,'Index/{name}Index.html'.format(name = link._meta.object_name),{'alert':alert})
+    return render_with_type(link,request,'Index.html',{'alert':alert})
+#手动加入
+def ProjectAdd(rank,link,request,id,sid):
+    alert = None
+    owner = Students.objects.get(user = request.user)
+    project = rank.objects.get(id = id)
+    student = Students.objects.get(StudentNum = sid)
+    links = link.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '通过')
+    Jlinks = link.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '待审核')
+    if not project: alert = '请确认您是否已创建思建活动！'
+    elif links: alert = '该成员已在项目中！'
+    elif Jlinks: 
+        join = Jlinks[0]
+        join.status = '通过'
+        join.save()
+    else:
+        join = link(status = '通过',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+        join.save()
+        alert = '成功添加!'
+    return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id,alert)
+
+
 
