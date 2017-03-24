@@ -97,15 +97,6 @@ urlpatterns = [
     url(r'^SchoolActivitySDetail/(?P<id>\w+)/$',app.views.SchoolActivitySDetail), 
     url(r'^JoinSchoolActivity/(?P<id>\w+)/$',JoinSchoolActivity),  
 
-    url(r'^createInternship/$',createInternship), 
-    url(r'^internship/(?P<id>\w+)/$',internship),
-    url(r'^InternshipDetail/(?P<id>\w+)/$',InternshipDetail), 
-    url(r'^InternshipIndex/$',app.views.InternshipIndex), 
-    url(r'^InternshipList/$',app.views.InternshipList),  
-    url(r'^CheckInternship/(?P<id>\w+)/(?P<isok>\w+)/$',app.views.CheckInternship),  
-    url(r'^InternshipSDetail/(?P<id>\w+)/$',app.views.InternshipSDetail), 
-    url(r'^JoinInternship/(?P<id>\w+)/$',JoinInternship),  
-
     url(r'^index/$',index,name='index'), 
     url(r'^construction/$',app.views.construction,name='construction'), 
     url(r'^excel/$',Excel),

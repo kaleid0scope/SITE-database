@@ -1,0 +1,22 @@
+﻿{% extends "app/layout.html" %}
+
+
+{% block content %}
+<body>
+	
+<div class="container">
+	<h2>您的完成度如下：</h2>             
+	<table class="table table-striped">
+		<tbody>
+            {%for i in range(10)%}
+            <tr>
+				<td><b>完成度{{i}}：</b></td>
+				<td>{{list[i]}}</td>
+			</tr> 
+		</tbody>
+        </table>
+</div>
+</body>
+
+
+{% endblock %}

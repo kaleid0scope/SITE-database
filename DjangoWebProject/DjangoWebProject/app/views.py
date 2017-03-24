@@ -13,6 +13,7 @@ from app.models import *
 from app.type import *
 from app.Info import *
 from app.project import *
+from app.complete import GetComplete
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
@@ -31,7 +32,7 @@ import DjangoWebProject.settings
 '''思建活动(目前用于测试)
 '''
 #创建
-def createIdeologyConstruction(request): 
+def CreateIdeologyConstruction(request): 
     error = None
     try:
             student = Students.objects.get(user = request.user)
@@ -65,7 +66,13 @@ def DeleteIdeologyConstruction(request,id): return ProjectDelete(IdeologyConstru
     
 
 
-
+def ShowComplete(request):
+    error = None
+    try:
+        student = Students.objects.get(user = request.user)
+    except Exception,e:
+        error = '请先登录'
+    return render_with_type_(request,'complete.html', {'list': GetComplete(request,student)})
 
 
 def construction(request):
@@ -984,133 +991,7 @@ def CheckSchoolActivityx(request,id,isok):
 
 '''实践实习
 '''
-#创建
-def createInternship(request):
-    if request.method == 'POST':
-        error = None
-        try:
-            student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
-        except Exception,e:
-            error = e
-        form = CreateInternshipForm(request.POST)
-        if form.is_valid():
-            try:
-                cd = form.cleaned_data
-                project = InternshipRank(rankName = cd['ProjectName'],
-                                teacher = Students.objects.get(user = request.user),
-                                InternshipTime = cd['startingTime'],
-                                type = cd['type'],
-                                status = '待审核',
-                                inspector = Inspectors.objects.get(number = 10002))
-                project.save()
-                return render_with_type_(request,'first.html',{'alert':'okkkk!'})
-            except Exception,e:
-                error = e
-        else:
-            error.append('Please input information of your project')
-    else:
-        form = CreateInternshipForm()
-        error = None
-    return render_with_type_(request,'Create/createInternship.html',{'form':form,'alert':error})
-#评价审核（审核结果输入）
-def internship(request,id):
-    error = None
-    try:  
-        project = InternshipRank.objects.get(id = int(id))
-        auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
-    except Exception,e:  
-        error = e
-        return render_with_type_(request,'Verify/Internship.html',{'alert':error})
-    if project.status == '待审核':
-        if request.method == 'POST':
-            form = InternshipForm(request.POST)
-            if form.is_valid() and auth.isTeacher and auth.internship:
-                cd = form.cleaned_data
-                try:
-                    choice = Choices.objects.get(id = cd['level'])
-                    project.score = choice.score
-                    project.complete = choice.complete
-                    if request.POST.has_key('passyes'):
-                        project.status = '通过'
-                    elif request.POST.has_key('passno'):
-                        project.status = '未通过'
-                    project.inspector = inspector
-                    project.save()
-                    return render_with_type_(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核成功！','can':True})
-                except Exception,e:  
-                    error = e
-            else:
-                error.append('Please input information of your project')
-        else:
-            form = InternshipForm()
-            return render_with_type_(request,'Verify/Internship.html',{'form':form,'project':project})
-    elif auth.isTeacher and auth.internship:
-       return render_with_type_(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'alert':'实践实习审核失败！该活动已审核','can':True})
-    return render_with_type_(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'can':False})
-#项目详情
-def InternshipDetail(request,id):
-    try:  
-        project = InternshipRank.objects.get(id = int(id))
-    except Exception,e: 
-        return render_with_type_(request,'InternshipDetail.html',{'alert':e})
-    return render_with_type_(request,'InternshipDetail.html',{'project':project})
-#申请加入
-def JoinInternship(request,id):
-    alert = ''
-    try:  
-        project = InternshipRank.objects.get(id = int(id))
-        student = Students.objects.get(user = request.user)
-    except Exception,e:  
-        return render_with_type_(request,'InternshipDetail.html',{'alert':e})
-    join = Internship(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
-    join.save()
-    alert = '成功加入！'
-    return render_with_type_(request,'Index/InternshipIndex.html',{'alert':alert})
-#申请者的列表
-def InternshipIndex(request):
-    try:  
-        student = Students.objects.get(user = request.user)
-        project = Internship.objects.filter(StudentNum= student)
-    except Exception,e: 
-        return render_with_type_(request,'index.html',{'internships':Internship.objects.filter(StudentNum = student),'alert':e})
-    if student.auth.isTeacher and student.auth.ideologyConstruction:
-        return render_with_type_(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '待审核'),'can':True})
-    return render_with_type_(request,'Index/InternshipIndex.html',{'projects':InternshipRank.objects.filter(status = '通过'),'can':False})
-#管理申请的列表
-def InternshipList(request):
-    try:  
-        student = Students.objects.get(user = request.user)
-        project = InternshipRank.objects.get(teacher = student)
-        joins = Internship.objects.filter(rankNum = project)
-    except Exception,e: 
-        return render_with_type_(request,'InternshipList.html',{'alert':e})
-    return render_with_type_(request,'InternshipList.html',{'projects':joins})
-#申请者的详情
-def InternshipSDetail(request,id):
-    try:  
-        join = Internship.objects.get(id = int(id))
-        student = join.StudentNum
-    except Exception,e: 
-        return render_with_type_(request,'InternshipSDetail.html',{'alert':e})
-    if join.StudentNum.user == request.user:
-        return render_with_type_(request,'InternshipSDetail.html',{'project':join,'student':student})
-    return render_with_type_(request,'InternshipSDetail.html',{'alert':'您无权查看此报名信息！'})
-#审核加入
-def CheckInternship(request,id,isok):
-    try:  
-        join = Internship.objects.get(id = int(id))
-        student = join.StudentNum
-    except Exception,e: 
-        return render_with_type_(request,'InternshipSDetail.html',{'alert':e})
-    if join.StudentNum.user == request.user:
-        if isok:
-            join.status = '通过'
-        else:
-            join.status = '未通过'
-        join.save()
-    return render_with_type_(request,'InternshipSDetail.html',{'alert':'您无权审核此报名信息！'})
+
 
 
 def Excel(request):

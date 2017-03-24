@@ -37,6 +37,9 @@
     <Compile Include="app\Info.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\complete.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\project.py">
       <SubType>Code</SubType>
     </Compile>
@@ -89,6 +92,7 @@
   <ItemGroup>
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\construction.html" />
+    <Content Include="app\templates\complete.html" />
     <Content Include="app\templates\fail.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\ideologyConstruction.html" />
