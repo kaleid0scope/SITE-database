@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Definition of urls for DjangoWebProject.
 """
@@ -40,6 +41,7 @@ urlpatterns = [
     url(r'^reset',app.views.reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
 
+    url(r'^complete/$',ShowComplete,name='complete'),
     url(r'^first/$',app.views.first),
     url(r'^copy/$',app.views.shit),
 

@@ -18,11 +18,13 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required  
 import random,time
 import uuid
 import xlrd
 import MySQLdb
 from django.template.context import Context
+from __builtin__ import range
 '''import win32com.client as win32'''
 import sys
 reload(sys)
@@ -32,6 +34,7 @@ import DjangoWebProject.settings
 '''思建活动(目前用于测试)
 '''
 #创建
+@login_required
 def CreateIdeologyConstruction(request): 
     error = None
     try:
@@ -57,26 +60,34 @@ def CreateIdeologyConstruction(request):
     else:
         form = CreateIdeologyConstructionForm()
     return render_with_type_(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
+@login_required
 def IdeologyConstructionCheck(request,id): return ProjectCheck(IdeologyConstructionRank,IdeologyConstruction,IdeologyConstructionForm,request,id)
+@login_required
 def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id,None)
+@login_required
 def JoinIdeologyConstruction(request,id): return ProjectJoin(IdeologyConstructionRank,IdeologyConstruction,request,id)
+@login_required
 def IdeologyConstructionIndex(request): return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request,None)
+@login_required
 def AddIdeologyConstruction(request,id,sid): return ProjectAdd(IdeologyConstructionRank,IdeologyConstruction,request,id,sid)
+@login_required
 def DeleteIdeologyConstruction(request,id): return ProjectDelete(IdeologyConstructionRank,IdeologyConstruction,request,id)
     
 
 
 def ShowComplete(request):
     error = None
-    try:
-        student = Students.objects.get(user = request.user)
-    except Exception,e:
-        error = '请先登录'
-    return render_with_type_(request,'complete.html', {'list': GetComplete(request,student)})
-
+    student = Students.objects.get(user = request.user)
+    complete = GetComplete(request,student)
+    fields = Complete._meta.fields
+    FieldProject = {}
+    for field in fields :
+        if field.verbose_name != 'id': FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
+    return render_with_type_(request,'complete.html', {'complete': FieldProject})
+    
 
 def construction(request):
-    return render_with_type_(request,'app/construction.html')
+    return render_with_type_(request,'app/construction.html',{})
 
 def home(request):
     """Renders the home page."""
@@ -109,7 +120,7 @@ def about(request):
         })
 
 def search_form(request):
-    return render_with_type_(request,'search_form.html')
+    return render_with_type_(request,'search_form.html',{})
 
 def search(request):
     if 'q' in request.GET:#GET是一个dict，使用文本框的name作为key

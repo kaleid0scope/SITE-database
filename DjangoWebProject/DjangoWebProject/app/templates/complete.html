@@ -1,22 +1,16 @@
-﻿{% extends "app/layout.html" %}
-
-
-{% block content %}
-<body>
-	
+﻿<body>
 <div class="container">
-	<h2>您的完成度如下：</h2>             
+    <h2> </h2>  
+	<h2>您的完成度如下：</h2>   
 	<table class="table table-striped">
 		<tbody>
-            {%for i in range(10)%}
+            {% for key,value in complete.items%}
             <tr>
-				<td><b>完成度{{i}}：</b></td>
-				<td>{{list[i]}}</td>
+				<td><b>{{key}}：</b></td>
+				<td>{{value}}</td>
 			</tr> 
+            {%endfor%}
 		</tbody>
         </table>
 </div>
 </body>
-
-
-{% endblock %}
