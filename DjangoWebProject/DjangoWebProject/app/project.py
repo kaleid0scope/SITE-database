@@ -65,8 +65,8 @@ def ProjectDetail(rank,link,request,id,alert):
     links = link.objects.filter(rankNum = project).filter(status = '通过') #已加入的关系
     joins = link.objects.filter(rankNum = project).filter(status = '待审核') #待审核的关系
     members = []
-    for link in links:
-        members.append(link.StudentNum) #所有已加入的成员
+    for linking in links:
+        members.append(linking.StudentNum) #所有已加入的成员
     members.insert(0,project.teacher)
     if project.teacher == student: #如果为项目的管理者
         e = None
@@ -80,14 +80,16 @@ def ProjectDetail(rank,link,request,id,alert):
                 joinlink.status = '未通过'
             joinlink.save()
             e = '审核成功！'
-            return ProjectIndex(rank,link,request,id,e)
+            return ProjectDetail(rank,link,request,id,e)
         return render_with_type(link,request,'Detail.html',
             {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert if alert else e})
     elif members.count(student) == 1: #如果为该项目已通过的成员
         return render_with_type(link,request,'Detail.html',
-        {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members})
-    tryJoin = True if link.objects.filter(rankNum = project).filter(status = '待审核').filter(StudentNum = student) else False
-    return render_with_type(link,request,'Detail.html',{'project':project,'FPS':FieldProject,'members':members,'hasJoin':False,'tryJoin':tryJoin})
+        {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':False})
+    if link.objects.filter(rankNum = project).filter(status = '待审核').filter(StudentNum = student):
+        tryJoin = True  
+    else: tryJoin = False
+    return render_with_type(link,request,'Detail.html',{'project':project,'FPS':FieldProject,'members':members,'manage':False,'hasJoin':False,'tryJoin':tryJoin})
 #列表
 def ProjectIndex(rank,link,request,alert):
     try:  

@@ -31,6 +31,7 @@ def clean(complete):
 def GetCompleteProject(links,ranks,list):
     if links:
       for link in links:
+       if link.rankNum.Choice:
         list.complete0 += link.rankNum.Choice.complete.complete0
         list.complete1 += link.rankNum.Choice.complete.complete1
         list.complete2 += link.rankNum.Choice.complete.complete2
@@ -43,6 +44,7 @@ def GetCompleteProject(links,ranks,list):
         list.complete9 += link.rankNum.Choice.complete.complete9
     if ranks:
      for project in ranks:
+       if project.Choice:
         list.complete0 += project.Choice.complete.complete0
         list.complete1 += project.Choice.complete.complete1
         list.complete2 += project.Choice.complete.complete2
@@ -58,6 +60,7 @@ def GetCompleteProject(links,ranks,list):
 def GetCompleteSingle(ranks,list):
     if ranks:
      for project in ranks:
+       if project.Choice:
         list.complete0 += project.Choice.complete.complete0
         list.complete1 += project.Choice.complete.complete1
         list.complete2 += project.Choice.complete.complete2
@@ -74,6 +77,7 @@ def GetCompleteTeam(links,list,student):
     if links:
      for link in links:
       if project.teacher == student:
+       if link.rankNum.Choice:
         list.complete0 += link.rankNum.Choice.managerComplete.complete0
         list.complete1 += link.rankNum.Choice.managerComplete.complete1
         list.complete2 += link.rankNum.Choice.managerComplete.complete2
@@ -85,6 +89,7 @@ def GetCompleteTeam(links,list,student):
         list.complete8 += link.rankNum.Choice.managerComplete.complete8
         list.complete9 += link.rankNum.Choice.managerComplete.complete9
       else:
+       if link.rankNum.Choice:
         list.complete0 += link.rankNum.Choice.memberComplete.complete0
         list.complete1 += link.rankNum.Choice.memberComplete.complete1
         list.complete2 += link.rankNum.Choice.memberComplete.complete2
