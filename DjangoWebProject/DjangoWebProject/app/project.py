@@ -56,36 +56,31 @@ def ProjectDelete(rank,link,request,id):
         return ProjectIndex(rank,link,request,'已删除' if not e else e)
 #详情
 def ProjectDetail(rank,link,request,id,alert):
-    try:  
-        project = rank.objects.get(id = int(id))
-        student = Students.objects.get(user = request.user)
-        fields = rank._meta.fields
-        FieldProject = {}
-        for field in fields :
-            FieldProject[field.verbose_name] = getattr(project,field.name) #该项目键值对
-        links = link.objects.filter(rankNum = project).filter(status = '通过') #已加入的关系
-        joins = link.objects.filter(rankNum = project).filter(status = '待审核') #待审核的关系
-        members = []
-        for link in links:
-            members.append(link.StudentNum) #所有已加入的成员
-        members.insert(0,project.teacher)
-    except Exception,e: 
-        return render_with_type(link,request,'Detail.html',{'alert':alert if alert else e})
+    project = rank.objects.get(id = int(id))
+    student = Students.objects.get(user = request.user)
+    fields = rank._meta.fields
+    FieldProject = {}
+    for field in fields :
+        FieldProject[field.verbose_name] = getattr(project,field.name) #该项目键值对
+    links = link.objects.filter(rankNum = project).filter(status = '通过') #已加入的关系
+    joins = link.objects.filter(rankNum = project).filter(status = '待审核') #待审核的关系
+    members = []
+    for link in links:
+        members.append(link.StudentNum) #所有已加入的成员
+    members.insert(0,project.teacher)
     if project.teacher == student: #如果为项目的管理者
         e = None
         if request.method == 'POST':
-            try:
-                num = request.GET.get('num','')
-                joiner = Students.objects.get(StudentNum = num)
-                joinlink = link.objects.filter(rankNum = project).get(StudentNum = joiner)
-            except Exception,e: 
-                return render_with_type(link,request,'Detail.html',{'alert':e})
+            num = request.POST['num']
+            joiner = Students.objects.get(StudentNum = int(num))
+            joinlink = link.objects.filter(rankNum = project).get(StudentNum = joiner)
             if request.POST.has_key('passyes'):
                 joinlink.status = '通过'
             elif request.POST.has_key('passno'):
                 joinlink.status = '未通过'
             joinlink.save()
-            e = '审核成功！' 
+            e = '审核成功！'
+            return ProjectIndex(rank,link,request,id,e)
         return render_with_type(link,request,'Detail.html',
             {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert if alert else e})
     elif members.count(student) == 1: #如果为该项目已通过的成员
