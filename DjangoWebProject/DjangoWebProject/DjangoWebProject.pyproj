@@ -95,7 +95,7 @@
     <Content Include="app\templates\complete.html" />
     <Content Include="app\templates\fail.html" />
     <Content Include="app\templates\first.html" />
-    <Content Include="app\templates\ideologyConstruction.html" />
+    <Content Include="app\templates\PCheck.html" />
     <Content Include="app\templates\Detail.html" />
     <Content Include="app\templates\List.html" />
     <Content Include="app\templates\Verify\Internship.html" />

@@ -39,7 +39,6 @@ def CreateIdeologyConstruction(request):
     error = None
     try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
             project = IdeologyConstructionRank.objects.filter(teacher = student)
     except Exception,e:
             error = e
@@ -49,10 +48,13 @@ def CreateIdeologyConstruction(request):
                 cd = form.cleaned_data
                 project = IdeologyConstructionRank(teacher = student,
                                 status = '待审核',
-                                inspector = insp,)
-                for field in form:
-                    name = field.label
-                    project.name = field.value
+                                rankName = cd['ProjectName'],
+                                startingTime = cd['startingTime'],
+                                type = cd['type'],
+                                Location = cd['Location'],
+                                organizer = cd['organizer'],
+                                Content = cd['Content'],
+                                SupportText = cd['SupportText'])
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
         else:
@@ -82,7 +84,7 @@ def ShowComplete(request):
     fields = Complete._meta.fields
     FieldProject = {}
     for field in fields :
-        if field.verbose_name != 'id': FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
+        if field.name != 'id': FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
     return render_with_type_(request,'complete.html', {'complete': FieldProject})
     
 
@@ -180,7 +182,6 @@ def createPaper(request):
         error = None
         getInfo(request)
         student = getInfo(request)['student']
-        insp = getInfo(request)['insp']
         form = CreatePaperForm(request.POST)
         if form.is_valid():
             #try:
@@ -192,7 +193,7 @@ def createPaper(request):
                                 AuthorRanking = cd['AuthorRanking'],
                                 status = '待审核',
                                 rank = '',
-                                inspector = insp,)
+                                )
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             #except Exception,e:
@@ -208,7 +209,6 @@ def paper(request,id):
     try:  
         project = PaperRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
         error = e
         return render_with_type_(request,'Paper.html',{'alert':error})
@@ -225,7 +225,6 @@ def paper(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector 
                     project.save()
                     return render_with_type_(request,'Index/PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
@@ -241,7 +240,6 @@ def paper(request,id):
 def paperIndex(request):
     getInfo(request)
     student = getInfo(request)['student']
-    insp = getInfo(request)['insp']
     if student.auth.isTeacher and student.auth.lecture:
         return render_with_type_(request,'Index/PaperIndex.html',{'projects':PaperRank.objects.filter(status = '待审核')})#teacher
     return render_with_type_(request,'index.html',{'alert':'你没有权限审核！请与管理员联系'})
@@ -250,7 +248,6 @@ def createCompetition(request):
         error = None
         getInfo(request)
         student = getInfo(request)['student']
-        insp = getInfo(request)['insp']
         form = CreateCompetitionForm(request.POST)
         if form.is_valid():
             try:
@@ -260,8 +257,7 @@ def createCompetition(request):
                                 startingTime = cd['ProjectTime'],
                                 status = '待审核',
                                 level = cd['level'],
-                                rank = cd['rank'],
-                                inspector = insp,)
+                                rank = cd['rank'],)
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
@@ -277,7 +273,6 @@ def competition(request,id):
     try:  
         project = CompetitionRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
         error = e
         return render_with_type_(request,'Competition.html',{'alert':error})
@@ -294,7 +289,7 @@ def competition(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector 
+                     
                     project.save()
                     return render_with_type_(request,'Index/CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
@@ -321,7 +316,7 @@ def createStudentCadre(request):
         error = None
         try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
+            
         except Exception,e:
             error = e
         form = CreateStudentCadreForm(request.POST)
@@ -332,7 +327,7 @@ def createStudentCadre(request):
                                 organizitionType = cd['organizitionType'],
                                 organizitionName = cd['organizitionName'],
                                 status = '待审核',
-                               inspector = insp,)
+                               )
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
@@ -348,7 +343,7 @@ def studentCadre(request,id):
     try:  
         project = StudentCadreRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
+        
     except Exception,e:  
         error = e
         return render_with_type_(request,'StudentCadre.html',{'alert':error})
@@ -365,7 +360,6 @@ def studentCadre(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector 
                     project.save()
                     return render_with_type_(request,'Index/StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
@@ -392,7 +386,7 @@ def createExchange(request):
         error = None
         #try:
         student = Students.objects.get(user = request.user)
-        insp = Inspectors.objects.get(number = 10002)
+        
         #except Exception,e:#error = e
         form = CreateExchangeForm(request.POST)
         if form.is_valid():
@@ -407,7 +401,7 @@ def createExchange(request):
                                 status = '待审核',
                                 
                                 
-                               inspector = insp,)
+                               )
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
@@ -423,7 +417,7 @@ def exchange(request,id):
     try:  
         project = ExchangeRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
+        
     except Exception,e:  
         error = e
         return render_with_type_(request,'Exchange.html',{'alert':error})
@@ -440,7 +434,7 @@ def exchange(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector 
+                     
                     project.save()
                     return render_with_type_(request,'Index/ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
                 except Exception,e:  
@@ -472,14 +466,14 @@ def createResearchProject(request):
         error = None
         try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
+            
         except Exception,e:
             error = e
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
             #try:
                 cd = form.cleaned_data
-                project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = student,startingTime = cd['ProjectTime'],status = '待审核',rank = '',inspector = insp,)
+                project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = student,startingTime = cd['ProjectTime'],status = '待审核',rank = '',)
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             #except Exception,e:
@@ -495,7 +489,6 @@ def researchProject(request,id):
     try:  
         project = ResearchProjectRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type_(request,'ResearchProject.html',{'alert':e})
     if project.status == '待审核' and auth.isTeacher and auth.research:
@@ -516,7 +509,7 @@ def researchProject(request,id):
                         project.status = '未通过'
                     else :
                         return render_with_type_(request,'ResearchProject.html',{'form':form,'project':project,'alert':'某还没命名的错误'})
-                    project.inspector = inspector
+                    
                     project.save()
                     return render_with_type_(request,'Index/ResearchProjectIndex.html',{'projects':ResearchProjectRank.objects.filter(status = '待审核'),'alert':'科研立项审核成功！','can':True})
                 except Exception,e:  
@@ -545,7 +538,7 @@ def JoinResearchProject(request,id):
         student = Students.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type_(request,'ResearchProjectDetail.html',{'alert':e})
-    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join = ResearchProject(status = '待审核',StudentNum = student ,rankNum = project )
     join.save()
     alert = '成功加入！'
     return render_with_type_(request,'Index/ResearchProjectIndex.html',{'alert':alert})
@@ -605,7 +598,7 @@ def createLecture(request):
         error = None
         try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
+            
         except Exception,e:
             error = e
         form = CreateLectureForm(request.POST)
@@ -620,8 +613,7 @@ def createLecture(request):
                                 speaker = cd['speaker'],
                                 Location = cd['Location'],
                                 Content = cd['Content'],
-                                status = '待审核',
-                               inspector = insp)
+                                status = '待审核')
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
@@ -638,7 +630,7 @@ def lecture(request,id):
     try:  
         project = LectureRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
+        
     except Exception,e:  
         error = e
         return render_with_type_(request,'IdeologyConstruction.html',{'alert':error})
@@ -655,7 +647,7 @@ def lecture(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector
+                    
                     project.save()
                     return render_with_type_(request,'Index/LectureIndex.html',{'projects':LectureRank.objects.filter(status = '待审核'),'alert':'讲座活动审核成功！','can':True})
                 except Exception,e:  
@@ -683,7 +675,7 @@ def JoinLecture(request,id):
         student = Students.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type_(request,'LectureDetail.html',{'alert':e})
-    join = Lecture(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join = Lecture(status = '待审核',StudentNum = student ,rankNum = project )
     join.save()
     alert = '成功加入！'
     return render_with_type_(request,'Index/LectureIndex.html',{'alert':alert})
@@ -740,7 +732,6 @@ def createVolunteering(request):
         error = None
         try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error = e
         form = CreateVolunteeringForm(request.POST)
@@ -754,8 +745,7 @@ def createVolunteering(request):
                                 organizer = cd['organizer'],
                                 Location = cd['Location'],
                                 Content = cd['Content'],
-                                status = '待审核',
-                                inspector = Inspectors.objects.get(number = 10002))
+                                status = '待审核')
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
@@ -772,7 +762,7 @@ def volunteering(request,id):
     try:  
         project = VolunteeringRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
+        
     except Exception,e:  
         error = e
         return render_with_type_(request,'Volunteering.html',{'alert':error})
@@ -789,7 +779,7 @@ def volunteering(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector
+                    
                     project.save()
                     return render_with_type_(request,'Index/VolunteeringIndex.html',{'projects':VolunteeringRank.objects.filter(status = '待审核'),'alert':'志愿活动审核成功！','can':True})
                 except Exception,e:  
@@ -817,7 +807,7 @@ def JoinVolunteering(request,id):
         student = Students.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type_(request,'VolunteeringDetail.html',{'alert':e})
-    join = Volunteering(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join = Volunteering(status = '待审核',StudentNum = student ,rankNum = project )
     join.save()
     alert = '成功加入！'
     return render_with_type_(request,'Index/VolunteeringIndex.html',{'alert':alert})
@@ -874,7 +864,6 @@ def createSchoolActivity(request):
         error = None
         try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
         except Exception,e:
             error = e
         form = CreateSchoolActivityForm(request.POST)
@@ -888,8 +877,7 @@ def createSchoolActivity(request):
                                 sponsor = cd['sponsor'],
                                 organizer = cd['organizer'],
                                 awardLevel = cd['awardLevel'],
-                                status = '待审核',
-                               inspector = insp)
+                                status = '待审核')
                 project.save()
                 return render_with_type_(request,'first.html',{'alert':'okkkk!'})
             except Exception,e:
@@ -906,7 +894,6 @@ def schoolActivity(request,id):
     try:  
         project = SchoolActivityRank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
     except Exception,e:  
         error = e
         return render_with_type_(request,'SchoolActivity.html',{'alert':error})
@@ -923,7 +910,6 @@ def schoolActivity(request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector
                     project.save()
                     return render_with_type_(request,'Index/SchoolActivityIndex.html',{'projects':SchoolActivityRank.objects.filter(status = '待审核'),'alert':'校园活动审核成功！','can':True})
                 except Exception,e:  
@@ -951,7 +937,7 @@ def JoinSchoolActivity(request,id):
         student = Students.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type_(request,'SchoolActivityDetail.html',{'alert':e})
-    join = SchoolActivity(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join = SchoolActivity(status = '待审核',StudentNum = student ,rankNum = project )
     join.save()
     alert = '成功加入！'
     return render_with_type_(request,'Index/SchoolActivityIndex.html',{'alert':alert})
@@ -1006,7 +992,7 @@ def CheckSchoolActivityx(request,id,isok):
 
 
 def Excel(request):
-    Inspector = Inspectors.objects.get(user = request.user)
+    
     book = xlrd.open_workbook('D:\\test.xls')
     sheet = book.sheets()[0]  
     for r in range(1, sheet.nrows):
@@ -1057,7 +1043,7 @@ def Excel(request):
                              identityNumber =int(IdentityNumber),
                              speciality =Speciality,
                              province =Province,
-                             inspector =Inspector,
+                             complete = Complete(),
                              collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
           student.save()
     return HttpResponseRedirect('/')

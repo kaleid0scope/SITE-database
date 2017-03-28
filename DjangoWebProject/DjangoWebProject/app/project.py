@@ -20,7 +20,6 @@ def ProjectCreate(rank,link,f,request):
     error = None
     try:
             student = Students.objects.get(user = request.user)
-            insp = Inspectors.objects.get(number = 10002)
             project = rank.objects.filter(teacher = student)
     except Exception,e:
             error = e
@@ -30,8 +29,7 @@ def ProjectCreate(rank,link,f,request):
             try:
                 cd = form.cleaned_data
                 project = rank(teacher = student,
-                                status = '待审核',
-                                inspector = insp,)
+                                status = '待审核',)
                 for field in form:
                     name = field.label
                     project.name = field.value
@@ -70,7 +68,7 @@ def ProjectDetail(rank,link,request,id,alert):
         members = []
         for link in links:
             members.append(link.StudentNum) #所有已加入的成员
-        members.insert(0,student)
+        members.insert(0,project.teacher)
     except Exception,e: 
         return render_with_type(link,request,'Detail.html',{'alert':alert if alert else e})
     if project.teacher == student: #如果为项目的管理者
@@ -92,8 +90,9 @@ def ProjectDetail(rank,link,request,id,alert):
             {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members,'manage':True,'joiners':joins,'alert':alert if alert else e})
     elif members.count(student) == 1: #如果为该项目已通过的成员
         return render_with_type(link,request,'Detail.html',
-        {'project':project,'FPS':FieldProject,'hasJoin':True,'members':membersn})
-    return render_with_type(link,request,'Detail.html',{'project':project,'FPS':FieldProject})
+        {'project':project,'FPS':FieldProject,'hasJoin':True,'members':members})
+    tryJoin = True if link.objects.filter(rankNum = project).filter(status = '待审核').filter(StudentNum = student) else False
+    return render_with_type(link,request,'Detail.html',{'project':project,'FPS':FieldProject,'members':members,'hasJoin':False,'tryJoin':tryJoin})
 #列表
 def ProjectIndex(rank,link,request,alert):
     try:  
@@ -101,6 +100,10 @@ def ProjectIndex(rank,link,request,alert):
         linksP = link.objects.filter(StudentNum = student).filter(status = '通过') #所有加入的项目
         links = link.objects.filter(StudentNum = student).filter(status = '待审核') 
         linksNP = link.objects.filter(StudentNum = student).filter(status = '未通过') 
+        RawProject = rank.objects.filter(status = '通过').exclude(teacher = student)
+        project = []
+        for raw in RawProject: 
+            if not link.objects.filter(StudentNum = student).filter(rankNum = raw): project.append(raw)
         created = rank.objects.filter(teacher = student)
         joined,join,joinNP = [],[],[]
         for link in linksP: joined.append(link.rankNum)
@@ -113,11 +116,11 @@ def ProjectIndex(rank,link,request,alert):
             {'projects':rank.objects.filter(status = '待审核'),'can':True})
     else :  #否则，返回各类项目
         return render_with_type(link,request,'List.html',
-            {'projects':rank.objects.filter(status = '通过'),
-            'Cprojects':created,
-            'JprojectsP':joined,
-            'Jprojects':join,
-            'JprojectsNP':joinNP,
+            {'projects':project,
+            'Cprojects':created, #创建的
+            'JprojectsP':joined, #已成功加入
+            'Jprojects':join,    #申请加入的
+            'JprojectsNP':joinNP,#申请未通过
             'can':False,
             'alert':alert})
 #审核
@@ -126,7 +129,6 @@ def ProjectCheck(rank,link,f,request,id):
     try:  
         project = rank.objects.get(id = int(id))
         auth = Students.objects.get(user = request.user).auth
-        inspector = Inspectors.objects.get(user = request.user)
         fields = rank._meta.fields
         FieldProject = {}
         for field in fields :
@@ -146,7 +148,6 @@ def ProjectCheck(rank,link,f,request,id):
                         project.status = '通过'
                     elif request.POST.has_key('passno'):
                         project.status = '未通过'
-                    project.inspector = inspector
                     project.save()
                     return render_with_type(link,request,'List.html',
                             {'projects':rank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
@@ -156,7 +157,7 @@ def ProjectCheck(rank,link,f,request,id):
                 error = '请确认是否有审核权限！'
         else:
             form = f()
-            return render_with_type(link,request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'FPS':FieldProject})
+            return render_with_type(link,request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'project':project,'FPS':FieldProject})
     elif auth.isTeacher:
        return render_with_type(link,request,'List.html',
              {'projects':rank.objects.filter(status = '待审核'),'alert':e,'can':True})
@@ -170,10 +171,10 @@ def ProjectJoin(rank,link,request,id):
         student = Students.objects.get(user = request.user)
     except Exception,e:  
         return render_with_type(link,request,'Detail.html',{'alert':e})
-    join = link(status = '待审核',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+    join = link(status = '待审核',StudentNum = student ,rankNum = project)
     join.save()
     alert = '申请成功！'
-    return render_with_type(link,request,'List.html',{'alert':alert})
+    return ProjectIndex(rank,link,request,alert)
 #手动加入
 def ProjectAdd(rank,link,request,id,sid):
     alert = None
@@ -189,7 +190,7 @@ def ProjectAdd(rank,link,request,id,sid):
         join.status = '通过'
         join.save()
     else:
-        join = link(status = '通过',StudentNum = student ,rankNum = project , inspector = Inspectors.objects.get(number = 10002))
+        join = link(status = '通过',StudentNum = student ,rankNum = project)
         join.save()
         alert = '成功添加!'
     return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id,alert)
