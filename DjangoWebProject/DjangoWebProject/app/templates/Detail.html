@@ -55,7 +55,7 @@
             {%for member in joiners%}
                 <form action="" method="post">
 			    <input type="hidden"  name="num" value="{{member.StudentNum}}" >
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{member.rankName}}---{{member.StudentNum}}
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{member.StudentNum.rankName}}---{{member.StudentNum}}
                 <input type="submit" name="passyes" value="通过" class="btn btn-default">
                 <input type="submit" name="passno" value="拒绝" class="btn btn-default">
                 </form>
