@@ -10,7 +10,7 @@
 		<tbody>
             <tr>
 				<td><b>创建者姓名：</b></td>
-				<td>{{project.teacher.name}}</td>
+				<td>{{project.teacher.rankName}}</td>
 			</tr> 
 			{% for key,value in FPS.items%}
 			<tr>
@@ -28,20 +28,27 @@
             {%endfor%}
             
 
-            {% if hasJoin != True %}
+            {% if hasJoin == False %}
+            {% if tryJoin == True %}
+            <tr>
+				<td>报名：</td>
+				<td><a class="btn btn-warning" href= "" >已申请该项目</a></td>
+			</tr>
+            {% else %}
             <tr>
 				<td>报名：</td>
 				<td><a class="btn btn-info" href= "/Join{{name}}/{{project.id}}" >加入</a></td>
 			</tr>
             {% endif %}
+            {% endif %}
 
             {% if manage == True %}
             <tr>
-				<td>加入申请：</td>
-			</tr>
-            <tr>
 				<td>管理项目：<a class="btn btn-primary" onclick="del()" >删除</a>
                 <a class="btn btn-info" onclick="prom()">选择加入</a></td>
+			</tr>
+            <tr>
+				<td>加入申请：</td>
 			</tr>
 		</tbody>
         </table>
@@ -53,6 +60,7 @@
                 <input type="submit" name="passno" value="拒绝" class="btn btn-default">
                 </form>
             {%endfor%}
+
             {% endif %}
 	
 </div>

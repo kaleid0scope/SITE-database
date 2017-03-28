@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from app.models import PaperRank, Students, Inspectors
+from app.models import PaperRank, Students
 
 
 

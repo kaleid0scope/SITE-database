@@ -34,7 +34,6 @@ urlpatterns = [
         },
         name='login'),
     url(r'^logout$',django.contrib.auth.views.logout,{'next_page': '/',},name='logout'),
-    url(r'^testdb', app.testdb.testdb),
     #url(r'^register$',app.views.register,),
     url(r'^search_form/$',search_form),
     url(r'^search/$',search),

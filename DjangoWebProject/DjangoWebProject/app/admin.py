@@ -3,7 +3,6 @@ from app.models import *
  
  
 admin.site.register(Students)
-admin.site.register(Inspectors)
 admin.site.register(Authorizations)
 admin.site.register(ResearchProjectRank)
 admin.site.register(ResearchProject)
