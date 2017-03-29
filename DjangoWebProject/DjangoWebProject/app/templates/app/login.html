@@ -1,18 +1,20 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
-<body>
-<center><h2>登录界面</h2></center>
-        <section id="loginForm"> 
-            <form action="." method="post">
+<body style="background-image:url(../../static/images/bg2.jpg);background-size:cover;font-size:x-large">
+    <div style="padding-top:60px"> 
+</div>
+        
+    <section id="loginForm"> 
+            <form action="." method="post" >
                 {% csrf_token %}
                 <hr />
                 <center>
-                    <label for="id_username" class="control-label">用户名</label>
+                    <label for="id_username" class="control-label" style="color:white">用户名</label>
                     <br/>
                         {{ form.username }}
                     <br/>
-                    <label for="id_password" class="control-label">密码</label>
+                    <label for="id_password" class="control-label" style="color:white">密码</label>
                     <br/>
                         {{ form.password }}
                     <br/>

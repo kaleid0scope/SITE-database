@@ -90,6 +90,7 @@
     <Folder Include="DjangoWebProject\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\static\images\bg2.jpg" />
     <Content Include="app\static\images\item8.png" />
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\construction.html" />
@@ -99,6 +100,7 @@
     <Content Include="app\templates\PCheck.html" />
     <Content Include="app\templates\Detail.html" />
     <Content Include="app\templates\List.html" />
+    <Content Include="app\templates\Verify\IdeologyConstructionIndex.html" />
     <Content Include="app\templates\Verify\Internship.html" />
     <Content Include="app\templates\InternshipDetail.html" />
     <Content Include="app\templates\Index\InternshipIndex.html" />
