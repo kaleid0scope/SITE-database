@@ -71,6 +71,7 @@ class Authorizations(models.Model):
         return str(self.id)
 
 class Instructor(models.Model):
+    num = models.PositiveIntegerField(verbose_name ='教工号' )
     name = models.CharField(max_length = 20,verbose_name ='姓名')
     sex = models.BooleanField(verbose_name ='性别')
     phone = models.BigIntegerField(verbose_name ='手机号码' )
@@ -78,6 +79,13 @@ class Instructor(models.Model):
     email = models.EmailField(verbose_name ='电子邮箱')
     school = models.CharField(max_length = 50,verbose_name ='学系') 
     level = models.CharField(max_length = 20,verbose_name ='职称')
+
+    class Meta:
+        verbose_name = u'辅导员'
+        verbose_name_plural = u'辅导员'
+
+    def __unicode__(self):
+        return str(self.id)
 
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='StoU')

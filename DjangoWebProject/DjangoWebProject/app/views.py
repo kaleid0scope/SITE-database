@@ -16,21 +16,31 @@ from app.project import *
 from app.complete import GetComplete
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required  
 import random,time
-import uuid
-import xlrd
 import MySQLdb
 from django.template.context import Context
-from __builtin__ import range
-'''import win32com.client as win32'''
 import sys
+from django.core.files.uploadedfile import TemporaryUploadedFile
+import os
+from app.excel import *
 reload(sys)
 sys.setdefaultencoding("utf-8")
 import DjangoWebProject.settings
     
+
+def Excel(request):
+    if request.method == "POST":    # 请求方法为POST时，进行处理  
+        myFile = request.FILES.get("myfile", None)    # 获取上传的文件，如果没有文件，则默认为None  
+        if not myFile:  
+            return HttpResponse("no files for upload!") 
+        if ExcelRegister(myFile.temporary_file_path()):
+            return HttpResponse("over!")  
+        return HttpResponse("fall")
+    else:
+        return render_to_response('app/excel.html')
+
 '''思建活动(目前用于测试)
 '''
 #创建
@@ -92,8 +102,6 @@ def construction(request):
     return render_with_type_(request,'app/construction.html',{})
 
 def home(request):
-    complete = Complete()
-    complete.save()
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
     return render(request,
@@ -986,73 +994,7 @@ def CheckSchoolActivityx(request,id,isok):
             join.status = '未通过'
         join.save()
     return render_with_type_(request,'SchoolActivitySDetail.html',{'alert':'您无权审核此报名信息！'})
-
-
-'''实践实习
-'''
-
-
-'''
-def Excel(request):
     
-    book = xlrd.open_workbook('D:\\test.xls')
-    sheet = book.sheets()[0]  
-    for r in range(1, sheet.nrows):
-          CollegeEntranceExaminationScore  = str(int(sheet.cell(r,0).value))
-          studentNum     = str(int(sheet.cell(r,1).value))
-          Name           = sheet.cell(r,2).value
-          Sex            = str(int(sheet.cell(r,3).value))
-          Year           = str(int(sheet.cell(r,4).value))
-          Phone          = str(int(sheet.cell(r,5).value))
-          Email          = sheet.cell(r,6).value
-          Born           = sheet.cell(r,7).value
-          Root           = sheet.cell(r,8).value
-          Nation         = sheet.cell(r,9).value
-          PoliticalStatus= sheet.cell(r,10).value
-          Location       = sheet.cell(r,11).value
-          IdentityType   = sheet.cell(r,12).value
-          IdentityNumber = str(int(sheet.cell(r,13).value))
-          Major     = sheet.cell(r,14).value
-          Province       = sheet.cell(r,15).value
-          instructor = instructor.objects.get(major = Major)
-          complete = Complete()
-          theuser = User(username = studentNum,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
-          theuser.save()
-          theauth = Authorizations(id = uuid.uuid1(),
-                                   isTeacher = False,
-                                   research = False,
-                                   paper = False,
-                                   competition = False,
-                                   exchange = False,
-                                   ideologyConstruction = False,
-                                   lecture = False,
-                                   volunteering = False,
-                                   schoolActivity = False,
-                                   internship = False,
-                                   studentCadre = False)
-          theauth.save()
-          student = Students(user =theuser,
-                             auth =theauth, 
-                             StudentNum =int(studentNum), 
-                             rankName =Name, 
-                             sex =int(Sex), 
-                             year =int(Year), 
-                             phone = int(Phone),
-                             email = Email,
-                             born = datetime.strptime(Born,'%Y-%m-%d'),
-                             root =Root,nation =Nation,
-                             politicalStatus =PoliticalStatus,
-                             location =Location,
-                             identityType =IdentityType,
-                             identityNumber =int(IdentityNumber),
-                             major =Major,
-                             province =Province,
-                             complete = Complete(),
-                             collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
-          student.save()
-    return HttpResponseRedirect('/')
-'''
-
 #我的项目
 def index(request):
     alert = 'unlogin!'

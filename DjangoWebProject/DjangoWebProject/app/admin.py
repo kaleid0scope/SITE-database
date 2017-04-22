@@ -22,4 +22,4 @@ admin.site.register(Volunteering)
 admin.site.register(SchoolActivityRank)
 admin.site.register(SchoolActivity)
 admin.site.register(InternshipRank)
-
+admin.site.register(Instructor)

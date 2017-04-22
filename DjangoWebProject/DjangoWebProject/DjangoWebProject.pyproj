@@ -43,7 +43,7 @@
     <Compile Include="app\project.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app\0000test1.py">
+    <Compile Include="app\excel.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\type.py">
@@ -82,6 +82,7 @@
     <Folder Include="app\static\img\migrations\" />
     <Folder Include="app\static\img\templates\" />
     <Folder Include="app\static\images\" />
+    <Folder Include="app\static\excel\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
     <Folder Include="app\templates\Create\" />
@@ -150,6 +151,7 @@
     <Content Include="app\templates\Index\VolunteeringIndex.html" />
     <Content Include="app\templates\VolunteeringList.html" />
     <Content Include="app\templates\VolunteeringSDetail.html" />
+    <Content Include="app\templates\app\excel.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

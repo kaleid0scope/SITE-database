@@ -22,7 +22,6 @@ admin.autodiscover()
 
 urlpatterns = [
     #url(r'/(?P<path>.*)','django.views.static.serve',{'document_root':settings.STATIC_ROOT+'/images'}), 
-    # Examples:
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
@@ -100,7 +99,7 @@ urlpatterns = [
 
     url(r'^index/$',index,name='index'), 
     url(r'^construction/$',app.views.construction,name='construction'), 
-    
+    url(r'^excel/$',app.views.Excel),
     #C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\app\static\images
     
 
