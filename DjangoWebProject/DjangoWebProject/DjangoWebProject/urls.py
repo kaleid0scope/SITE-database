@@ -100,7 +100,6 @@ urlpatterns = [
 
     url(r'^index/$',index,name='index'), 
     url(r'^construction/$',app.views.construction,name='construction'), 
-    url(r'^excel/$',Excel),
     
     #C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\app\static\images
     

@@ -92,6 +92,8 @@ def construction(request):
     return render_with_type_(request,'app/construction.html',{})
 
 def home(request):
+    complete = Complete()
+    complete.save()
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
     return render(request,
@@ -990,7 +992,7 @@ def CheckSchoolActivityx(request,id,isok):
 '''
 
 
-
+'''
 def Excel(request):
     
     book = xlrd.open_workbook('D:\\test.xls')
@@ -1010,8 +1012,10 @@ def Excel(request):
           Location       = sheet.cell(r,11).value
           IdentityType   = sheet.cell(r,12).value
           IdentityNumber = str(int(sheet.cell(r,13).value))
-          Speciality     = sheet.cell(r,14).value
+          Major     = sheet.cell(r,14).value
           Province       = sheet.cell(r,15).value
+          instructor = instructor.objects.get(major = Major)
+          complete = Complete()
           theuser = User(username = studentNum,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
           theuser.save()
           theauth = Authorizations(id = uuid.uuid1(),
@@ -1041,12 +1045,13 @@ def Excel(request):
                              location =Location,
                              identityType =IdentityType,
                              identityNumber =int(IdentityNumber),
-                             speciality =Speciality,
+                             major =Major,
                              province =Province,
                              complete = Complete(),
                              collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
           student.save()
     return HttpResponseRedirect('/')
+'''
 
 #我的项目
 def index(request):

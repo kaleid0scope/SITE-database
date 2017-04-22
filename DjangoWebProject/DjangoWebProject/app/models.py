@@ -70,12 +70,21 @@ class Authorizations(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+class Instructor(models.Model):
+    name = models.CharField(max_length = 20,verbose_name ='姓名')
+    sex = models.BooleanField(verbose_name ='性别')
+    phone = models.BigIntegerField(verbose_name ='手机号码' )
+    major = models.CharField(max_length = 50,verbose_name ='所管专业')
+    email = models.EmailField(verbose_name ='电子邮箱')
+    school = models.CharField(max_length = 50,verbose_name ='学系') 
+    level = models.CharField(max_length = 20,verbose_name ='职称')
+
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='StoU')
     auth = models.ForeignKey(Authorizations,verbose_name ='权限' )
     StudentNum = models.PositiveIntegerField(primary_key = True,verbose_name ='学号' )
     rankName = models.CharField(max_length = 20,verbose_name ='学生姓名' )
-    sex = models.BooleanField(verbose_name ='性别' )#初始值
+    sex = models.BooleanField(verbose_name ='性别')#初始值
     year = models.PositiveSmallIntegerField(verbose_name ='入学年份' )
     phone = models.BigIntegerField(verbose_name ='手机号码' )
     email = models.EmailField(verbose_name ='电子邮箱' )#待修改
@@ -86,7 +95,8 @@ class Students(models.Model):
     location = models.CharField(max_length = 50,verbose_name ='国家地区')
     identityType = models.CharField(max_length = 20,verbose_name ='身份证件类型')
     identityNumber = models.BigIntegerField(verbose_name ='身份证号码')
-    speciality = models.CharField(max_length = 50,verbose_name ='专业名称')
+    major = models.CharField(max_length = 50,verbose_name ='专业名称')
+    instructor = models.ForeignKey(Instructor,verbose_name ='辅导员',related_name='StoI')
     province = models.CharField(max_length = 50,verbose_name ='生源省份')
     complete = models.ForeignKey(Complete,verbose_name ='完成度',related_name='StoC')
     collegeEntranceExaminationScore = models.PositiveSmallIntegerField(verbose_name ='高考分数')
@@ -95,13 +105,8 @@ class Students(models.Model):
         verbose_name_plural = u'学生'
     def __unicode__(self):
         return str(self.StudentNum)
-
-'''
-class Major(models.Model):
-    rankNum = models.PositiveIntegerField(primary_key = True)
-    majorName = models.CharField(max_length = 20)
     
-
+'''
 class StudentMajor(models.Model):
     ProjectNum = models.PositiveIntegerField(primary_key = True)
     majorNum = models.ForeignKey(Major)
