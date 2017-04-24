@@ -507,8 +507,8 @@ def researchProject(request,id):
             if form.is_valid():
                 cd = form.cleaned_data
                 try:
-                    choice = ChoicesTeam.objects.get(id = cd['level'])
-                    project.rank = ChoicesTeam.objects.get(id = cd['level']).name
+                    choice = Choices.objects.get(id = cd['level'])
+                    project.rank = Choices.objects.get(id = cd['level']).name
                     project.MemberScore = choice.memberScore
                     project.ManagerScore = choice.managerScore
                     project.memberComplete = choice.memberComplete

@@ -73,7 +73,6 @@ class Instructor(models.Model):
     name = models.CharField(max_length = 20,verbose_name ='姓名')
     sex = models.BooleanField(verbose_name ='性别')
     phone = models.BigIntegerField(verbose_name ='手机号码' )
-    major = models.CharField(max_length = 50,verbose_name ='所管专业')
     email = models.EmailField(verbose_name ='电子邮箱')
     school = models.CharField(max_length = 50,verbose_name ='学系') 
     level = models.CharField(max_length = 20,verbose_name ='职称')
@@ -84,6 +83,15 @@ class Instructor(models.Model):
 
     def __unicode__(self):
         return str(self.id)
+
+class Major(models.Model):
+    name = models.CharField(max_length = 50,verbose_name ='专业名称')
+    instructor = models.ForeignKey(Instructor,verbose_name='辅导员')
+    class Meta:
+        verbose_name = u'专业'
+        verbose_name_plural = u'专业'
+    def __unicode__(self):
+        return str(self.name)
 
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='StoU')
@@ -101,7 +109,7 @@ class Students(models.Model):
     location = models.CharField(max_length = 50,verbose_name ='国家地区')
     identityType = models.CharField(max_length = 20,verbose_name ='身份证件类型')
     identityNumber = models.BigIntegerField(verbose_name ='身份证号码')
-    major = models.ForeignKey(Major,unique = True,verbose_name='专业')
+    major = models.ForeignKey(Major,verbose_name='专业')
     province = models.CharField(max_length = 50,verbose_name ='生源省份')
     complete = models.ForeignKey(Complete,verbose_name ='完成度',related_name='StoC')
     collegeEntranceExaminationScore = models.PositiveSmallIntegerField(verbose_name ='高考分数')
@@ -110,15 +118,6 @@ class Students(models.Model):
         verbose_name_plural = u'学生'
     def __unicode__(self):
         return str(self.StudentNum)
-
-class Major(models.Model):
-    name = models.CharField(max_length = 50,verbose_name ='专业名称')
-    instructor = models.ForeignKey(Instructor,unique = True,verbose_name='辅导员')
-    class Meta:
-        verbose_name = u'专业'
-        verbose_name_plural = u'专业'
-    def __unicode__(self):
-        return str(self.name)
 
 class Lesson(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='课程名称')
@@ -162,7 +161,7 @@ class ResearchProjectRank(models.Model):
 
 class ResearchProject(models.Model):
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
-    Choice = models.ForeignKey(ChoicesTeam,verbose_name ='评价等级',null = True,blank = True)
+    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
     StudentNum =models.ForeignKey(Students,verbose_name ='学号',related_name="ResearchProjectLtoS")
     role = models.BooleanField(default = 0,verbose_name ='身份')
     rankNum = models.ForeignKey(ResearchProjectRank,verbose_name ='项目',related_name="ResearchProjectLtoR")

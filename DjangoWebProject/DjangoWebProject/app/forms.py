@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from cProfile import label
-from app.models import statusChoice,Choices,ChoicesTeam
+from app.models import statusChoice,Choices
 from django.forms.extras.widgets import SelectDateWidget
 
 class BootstrapAuthenticationForm(AuthenticationForm):
@@ -93,7 +93,7 @@ class ResearchProjectForm(forms.Form):
 
     def __init__(self,*args,**kwargs): 
         super(ResearchProjectForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in ChoicesTeam.objects.all())
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
 
     def clean(self):
         if not self.is_valid():
