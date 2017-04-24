@@ -34,17 +34,7 @@ def ExcelRegister(path):
             thecomplete.save()
             theuser = User(username = studentNum ,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
             theuser.save()
-            theauth = Authorizations(isTeacher = False,
-                                   research = False,
-                                   paper = False,
-                                   competition = False,
-                                   exchange = False,
-                                   ideologyConstruction = False,
-                                   lecture = False,
-                                   volunteering = False,
-                                   schoolActivity = False,
-                                   internship = False,
-                                   studentCadre = False)
+            theauth = Authorizations(isTeacher = False)
             theauth.save()
             student = Students(user =theuser,
                              auth =theauth, 

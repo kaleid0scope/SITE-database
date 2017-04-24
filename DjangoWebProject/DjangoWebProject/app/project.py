@@ -108,7 +108,7 @@ def ProjectIndex(rank,link,request,alert):
         for link in linksNP: joinNP.append(link.rankNum)
     except Exception,e: 
         return render_with_type(link,request,'app/login.html',{'alert':alert if alert else e})
-    if student.auth.isTeacher and student.auth.ideologyConstruction: #如果是教师，返回待审核的项目
+    if student.auth.isTeacher: #如果是教师，返回待审核的项目
         return render_with_type(link,request,'List.html',
             {'projects':rank.objects.filter(status = '待审核'),'can':True})
     else :  #否则，返回各类项目
