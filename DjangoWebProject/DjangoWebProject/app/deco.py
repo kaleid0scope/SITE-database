@@ -19,7 +19,7 @@ def teacher_required(func):
         if False:
             Response = func(request)
         else:
-            Response = Ralert(['teacher_required'])(render_to_response('app/index.html',{'title':'学生综合测评系统',}))
+            Response = Ralert('teacher_required')(render_to_response)('app/index.html',{'title':'学生综合测评系统',})
         return Response
     return _deco
     
