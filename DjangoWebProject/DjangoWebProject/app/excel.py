@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import uuid
 import xlrd
 from app.models import *
@@ -26,16 +28,17 @@ def ExcelRegister(path):
           Location       = sheet.cell(r,11).value
           IdentityType   = sheet.cell(r,12).value
           IdentityNumber = str(int(sheet.cell(r,13).value))
-          Major     = sheet.cell(r,14).value
+          MajorName     = sheet.cell(r,14).value
           Province       = sheet.cell(r,15).value
           if not User.objects.filter(username = studentNum):
-            instructor = Instructor.objects.get(major = Major)
             thecomplete = Complete()
             thecomplete.save()
             theuser = User(username = studentNum ,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
             theuser.save()
             theauth = Authorizations(isTeacher = False)
             theauth.save()
+            Instructor = Instructor.objects.get_or_create(name = '未知辅导员',num = 1,user = User.objects.get(username = 'sea'))
+            Major = Major.objects.get_or_create(name = MajorName,instructor = Instructor)
             student = Students(user =theuser,
                              auth =theauth, 
                              StudentNum =int(studentNum), 
@@ -57,4 +60,19 @@ def ExcelRegister(path):
                              complete = thecomplete,
                              collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
             student.save()
+    return True
+
+def ExcelImportLesson(path):
+    book = xlrd.open_workbook(path)
+    sheet = book.sheets()[0]  
+    for r in range(1, sheet.nrows):
+          Name           = sheet.cell(r,0).value            #课程名称
+          Num            = sheet.cell(r,1).value            #课序号
+          Credit         = str(int(sheet.cell(r,2).value))  #学分
+          Time           = str(int(sheet.cell(r,3).value))  #学时
+          Introduction   = sheet.cell(r,4).value            #课程介绍
+          ClassTarget    = sheet.cell(r,5).value            #课程目标
+          ClassSort      = sheet.cell(r,6).value            #课程类别
+          lesson = Lesson(name = Name,num = Num,credit = Credit,time = Time,introduction = Introduction,classSort = ClassSort,classTarget = ClassTarget)
+          lesson.save()
     return True

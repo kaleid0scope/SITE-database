@@ -40,6 +40,12 @@
     <Compile Include="app\complete.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\deco.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\parameter.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\project.py">
       <SubType>Code</SubType>
     </Compile>

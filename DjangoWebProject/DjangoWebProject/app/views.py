@@ -24,20 +24,28 @@ from django.template.context import Context
 import sys
 from django.core.files.uploadedfile import TemporaryUploadedFile
 import os
+from deco import *
 from app.excel import *
 reload(sys)
 sys.setdefaultencoding("utf-8")
 import DjangoWebProject.settings
-    
 
+@teacher_required
 def Excel(request):
-    if request.method == "POST":    # 请求方法为POST时，进行处理  
-        myFile = request.FILES.get("myfile", None)    # 获取上传的文件，如果没有文件，则默认为None  
+    if request.method == 'POST' and request.POST.has_key('register'):
+        myFile = request.FILES.get("register", None)    # 获取上传的文件，如果没有文件，则默认为None  
         if not myFile:  
             return HttpResponse("no files for upload!") 
         if ExcelRegister(myFile.temporary_file_path()):
             return HttpResponse("over!")  
-        return HttpResponse("fall")
+        return HttpResponse("error")
+    elif request.method == 'POST' and request.POST.has_key('lesson'):
+        myFile = request.FILES.get("lesson", None)
+        if not myFile:  
+            return HttpResponse("no files for upload!") 
+        if ExcelImportLesson(myFile.temporary_file_path()):
+            return HttpResponse("over!")  
+        return HttpResponse("error")
     else:
         return render_to_response('app/excel.html')
 
@@ -46,12 +54,12 @@ def Excel(request):
 #创建
 @login_required
 def CreateIdeologyConstruction(request): 
-    error = None
+    error = []
     try:
             student = Students.objects.get(user = request.user)
             project = IdeologyConstructionRank.objects.filter(teacher = student)
     except Exception,e:
-            error = e
+            error.append(e)
     if request.method == 'POST':
         form = CreateIdeologyConstructionForm(request.POST)
         if form.is_valid():
@@ -66,9 +74,9 @@ def CreateIdeologyConstruction(request):
                                 Content = cd['Content'],
                                 SupportText = cd['SupportText'])
                 project.save()
-                return render_with_type_(request,'first.html',{'alert':'okkkk!'})
+                return render_with_type_(request,'first.html',{'alert':['okkkk!']})
         else:
-            error = '请确认是否已经输入相关信息'
+            error.append('请确认是否已经输入相关信息')
     else:
         form = CreateIdeologyConstructionForm()
     return render_with_type_(request,'Create/createIdeologyConstruction.html',{'form':form,'alert':error})
@@ -104,12 +112,7 @@ def construction(request):
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    return render(request,
-        'app/index.html',
-        {
-            'title':'学生综合测评系统',
-            'year':datetime.now().year,
-        })
+    return render(request,'app/index.html',{})
 
 def first(request):
     return render(request,'first.html')

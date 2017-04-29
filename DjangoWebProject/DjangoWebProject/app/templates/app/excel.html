@@ -1,13 +1,51 @@
 ﻿{% extends "app/layout.html" %}
 
-{% block content %}<br>
+{% block content %}
+<style type="text/css">
+#apDiv1 {
+	position: absolute;
+	width: 335px;
+	height: 228px;
+	z-index: 1;
+	left: 94px;
+	top: 89px;
+	background-color: #CCFFFF;
+}
+#apDiv2 {
+	position: absolute;
+	width: 338px;
+	height: 231px;
+	z-index: 2;
+	left: 91px;
+	top: 353px;
+	background-color: #99FFFF;
+}
+</style>
+<body style="font-family:'Microsoft YaHei';">
 <br>
 <br>
 <br>
 <br>
+<br>
+<div id="apDiv1">
+<h1 style="text-align:center">导入学生</h1>
+  <h1 style="text-align:center"></h1>
+  <form enctype="multipart/form-data" action="/excel/" method="post">
+    <input type="file" name="register" />
+    <br/>
+    <input type="submit" value="upload"/>
+  </form>
+</div>
+
+<div id="apDiv2">
+<h1 style="text-align:center">导入课程</h1>
+<p style="text-align:center">&nbsp;</p>
+<p style="text-align:center">&nbsp;</p>
 <form enctype="multipart/form-data" action="/excel/" method="post">  
-   <input type="file" name="myfile" />  
+   <input type="file" name="lesson" />  
    <br/>  
    <input type="submit" value="upload"/>  
 </form>  
+</div>
+</body>
 {% endblock %}

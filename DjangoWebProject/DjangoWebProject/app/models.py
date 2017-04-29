@@ -69,13 +69,14 @@ class Authorizations(models.Model):
         return str(self.id)
 
 class Instructor(models.Model):
-    num = models.PositiveIntegerField(verbose_name ='教工号' )
+    user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='ItoU')
+    num = models.PositiveIntegerField(verbose_name ='教工号')
     name = models.CharField(max_length = 20,verbose_name ='姓名')
-    sex = models.BooleanField(verbose_name ='性别')
-    phone = models.BigIntegerField(verbose_name ='手机号码' )
-    email = models.EmailField(verbose_name ='电子邮箱')
-    school = models.CharField(max_length = 50,verbose_name ='学系') 
-    level = models.CharField(max_length = 20,verbose_name ='职称')
+    sex = models.BooleanField(default= 0,verbose_name ='性别')
+    phone = models.BigIntegerField(null = True,blank = True,verbose_name ='手机号码' )
+    email = models.EmailField(null = True,blank = True,verbose_name ='电子邮箱')
+    school = models.CharField(null = True,blank = True,max_length = 50,verbose_name ='学系') 
+    level = models.CharField(null = True,blank = True,max_length = 20,verbose_name ='职称')
 
     class Meta:
         verbose_name = u'辅导员'
@@ -127,7 +128,6 @@ class Lesson(models.Model):
     introduction = models.CharField(max_length = 200,verbose_name ='课程介绍')
     classTarget = models.CharField(max_length = 200,verbose_name ='课程目标')
     classSort = models.CharField(max_length = 50,verbose_name ='课程类别')
-    orderNum = models.PositiveIntegerField(verbose_name ='课序号')
     class Meta:
         verbose_name = u'课程'
         verbose_name_plural = u'课程'
