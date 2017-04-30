@@ -59,15 +59,6 @@ class Choices(models.Model):
     def __unicode__(self):
         return self.name
 
-class Authorizations(models.Model):
-    isTeacher = models.BooleanField(verbose_name ='教师权限' )
-    class Meta:
-        verbose_name = u'权限'
-        verbose_name_plural = u'权限'
-
-    def __unicode__(self):
-        return str(self.id)
-
 class Instructor(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='ItoU')
     num = models.PositiveIntegerField(verbose_name ='教工号')
@@ -96,7 +87,6 @@ class Major(models.Model):
 
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='StoU')
-    auth = models.ForeignKey(Authorizations,verbose_name ='权限' )
     StudentNum = models.PositiveIntegerField(primary_key = True,verbose_name ='学号' )
     rankName = models.CharField(max_length = 20,verbose_name ='学生姓名' )
     sex = models.BooleanField(verbose_name ='性别')#初始值

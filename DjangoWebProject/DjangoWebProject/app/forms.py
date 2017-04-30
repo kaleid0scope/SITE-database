@@ -556,35 +556,3 @@ class StudentCadreForm(forms.Form):
         else:
             cleaned_data = super(StudentCadreForm, self).clean()
         return cleaned_data
-
-
-class ChangeauthForm(forms.Form):
-    isTeacher = forms.BooleanField(required=False,
-        label=u"是否为教师")
-    research = forms.BooleanField(required=False,
-        label=u"科研立项")
-    paper = forms.BooleanField(required=False,
-        label=u"论文")
-    competition = forms.BooleanField(required=False,
-        label=u"竞赛")
-    exchange = forms.BooleanField(required=False,
-        label=u"交流交换")
-    ideologyConstruction = forms.BooleanField(required=False,
-        label=u"思想活动")
-    lecture = forms.BooleanField(required=False,
-        label=u"讲座活动")
-    volunteering = forms.BooleanField(required=False,
-        label=u"志愿活动")
-    schoolActivity = forms.BooleanField(required=False,
-        label=u"校园活动")
-    internship = forms.BooleanField(required=False,
-        label=u"实践活动")
-    studentCadre = forms.BooleanField(required=False,
-        label=u"学生干部")
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(ChangeauthForm, self).clean()
-        return cleaned_data

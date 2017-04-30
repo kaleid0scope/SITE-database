@@ -5,8 +5,7 @@ from app.models import *
 def user_parameter(request):
     title = '综合测评系统'
     try:
-        auth = Students.objects.get(user = request.user).auth
-        if auth.isTeacher:
+        if request.user.has_perm('auth.is_instructor'):
             type = '教师端'
         else:
             type = '学生端'

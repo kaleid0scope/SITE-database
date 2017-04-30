@@ -35,12 +35,9 @@ def ExcelRegister(path):
             thecomplete.save()
             theuser = User(username = studentNum ,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
             theuser.save()
-            theauth = Authorizations(isTeacher = False)
-            theauth.save()
             Instructor = Instructor.objects.get_or_create(name = '未知辅导员',num = 1,user = User.objects.get(username = 'sea'))
             Major = Major.objects.get_or_create(name = MajorName,instructor = Instructor)
             student = Students(user =theuser,
-                             auth =theauth, 
                              StudentNum =int(studentNum), 
                              rankName =Name, 
                              sex =int(Sex), 

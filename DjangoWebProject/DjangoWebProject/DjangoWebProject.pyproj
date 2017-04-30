@@ -43,6 +43,9 @@
     <Compile Include="app\deco.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\perm.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\parameter.py">
       <SubType>Code</SubType>
     </Compile>

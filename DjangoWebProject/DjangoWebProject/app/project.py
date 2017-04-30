@@ -108,7 +108,7 @@ def ProjectIndex(rank,link,request,alert):
         for link in linksNP: joinNP.append(link.rankNum)
     except Exception,e: 
         return render_with_type(link,request,'app/login.html',{'alert':alert if alert else e})
-    if student.auth.isTeacher: #如果是教师，返回待审核的项目
+    if request.user.has_perm('auth.is_instructor'): #如果是教师，返回待审核的项目
         return render_with_type(link,request,'List.html',
             {'projects':rank.objects.filter(status = '待审核'),'can':True})
     else :  #否则，返回各类项目
@@ -125,7 +125,6 @@ def ProjectCheck(rank,link,f,request,id):
     error = None
     try:  
         project = rank.objects.get(id = int(id))
-        auth = Students.objects.get(user = request.user).auth
         fields = rank._meta.fields
         FieldProject = {}
         for field in fields :
@@ -135,7 +134,7 @@ def ProjectCheck(rank,link,f,request,id):
     if project.status == '待审核':
         if request.method == 'POST':
             form = f(request.POST)
-            if form.is_valid() and auth.isTeacher:
+            if form.is_valid() and request.user.has_perm('auth.is_instructor'):
                 cd = form.cleaned_data
                 try:
                     choice = Choices.objects.get(id = cd['level'])
@@ -155,7 +154,7 @@ def ProjectCheck(rank,link,f,request,id):
         else:
             form = f()
             return render_with_type(link,request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'project':project,'FPS':FieldProject})
-    elif auth.isTeacher:
+    elif request.user.has_perm('auth.is_instructor'):
        return render_with_type(link,request,'List.html',
              {'projects':rank.objects.filter(status = '待审核'),'alert':e,'can':True})
     return render_with_type(link,request,'List.html',
