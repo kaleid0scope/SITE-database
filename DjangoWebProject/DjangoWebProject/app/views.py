@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from django.template import RequestContext
 from django.template.loader import get_template
 from datetime import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import *
 from django.contrib.auth.models import User
 from app.forms import *
 from app.models import *
@@ -52,7 +52,8 @@ def Excel(request):
             return HttpResponse("over!")  
         return HttpResponse("error")
     else:
-        return render_to_response('app/excel.html')
+        assert isinstance(request, HttpRequest)
+        return render(request,'app/excel.html',{})
 
 '''思建活动(目前用于测试)
 '''
@@ -117,7 +118,10 @@ def construction(request):
 def home(request):
     NewWeb()
     assert isinstance(request, HttpRequest)
-    return render(request,'app/index.html',{})
+    if request.user.is_authenticated():
+        return render(request,'app/index.html',{})
+    else:
+        return redirect('/login')
 
 def first(request):
     return render(request,'first.html')

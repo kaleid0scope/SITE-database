@@ -1,5 +1,21 @@
 from app.type import *
 from app.models import *
+from exceptions import NameError
+
+def getModel(str):
+    ModelDic = {
+        'ResearchProjectRank': ResearchProjectRank,
+        'User': User,
+        2: "two", 
+    }
+    return ModelDic.get(str, NameError)
+
+
+
+
+
+
+
 
 def getInfo(request,model):
     try:

@@ -137,29 +137,31 @@ class CompleteLM(models.Model):
     lesson =models.ForeignKey(Lesson,verbose_name ='课程名称')
     complete =models.ForeignKey(Complete,verbose_name ='完成度')
 
+
+class RankLinks(models.Model):
+    rtype = models.CharField(max_length = 50,verbose_name ='项目类型')
+    rnum = models.PositiveSmallIntegerField(verbose_name ='项目主键')
+    role = models.BooleanField(default = 0,verbose_name ='身份')
+    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
+    student =models.ForeignKey(Students,verbose_name ='学号',related_name="LtoS")
+    choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
+    class Meta:
+       verbose_name = u'活动-学生关系表'
+       verbose_name_plural = u'活动-学生关系表'
+    def __unicode__(self):
+        return str(self.student)+str(self.rtype)
+
+
 #ResearchProject
 class ResearchProjectRank(models.Model):
     rankName = models.CharField(max_length = 20,verbose_name ='科研立项名称')
     rank = models.CharField(max_length = 20,verbose_name ='科研立项等级')
     startingTime = models.DateField(verbose_name ='开始时间')
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档
     class Meta:
         verbose_name = u'科研立项'
         verbose_name_plural = u'科研立项'
     def __unicode__(self):
         return self.rankName
-
-class ResearchProject(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    StudentNum =models.ForeignKey(Students,verbose_name ='学号',related_name="ResearchProjectLtoS")
-    role = models.BooleanField(default = 0,verbose_name ='身份')
-    rankNum = models.ForeignKey(ResearchProjectRank,verbose_name ='项目',related_name="ResearchProjectLtoR")
-    class Meta:
-       verbose_name = u'科研立项关系表'
-       verbose_name_plural = u'科研立项关系表'
-    def __unicode__(self):
-        return str(self.StudentNum)
 
 #IdeologyConstruction
 class IdeologyConstructionRank(models.Model):
@@ -168,24 +170,11 @@ class IdeologyConstructionRank(models.Model):
     organizer = models.CharField(max_length = 50,verbose_name ='主办方')
     startingTime = models.DateField(verbose_name ='开始时间')
     Location = models.CharField(max_length = 50,verbose_name ='活动地点')
-    teacher = models.ForeignKey(Students,verbose_name ='学号',related_name="IdeologyConstructionRtoS")
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'思建活动'
         verbose_name_plural = u'思建活动'
     def __unicode__(self):
         return self.rankName
-
-class IdeologyConstruction(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    StudentNum =models.ForeignKey(Students,verbose_name ='学号',related_name="IdeologyConstructionLtoS")
-    rankNum = models.ForeignKey(IdeologyConstructionRank,verbose_name ='项目',related_name="IdeologyConstructionLtoR")
-    class Meta:
-       verbose_name = u'思建活动关系表'
-       verbose_name_plural = u'思建活动关系表'
-    def __unicode__(self):
-        return str(self.StudentNum)
 
 #Lecture
 class LectureRank(models.Model):
@@ -196,23 +185,11 @@ class LectureRank(models.Model):
     startingTime = models.DateField(verbose_name ='开始时间')
     Location = models.CharField(max_length = 50,verbose_name ='讲座地点')
     Content = models.TextField(verbose_name ='内容简介')
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'学术讲座'
         verbose_name_plural = u'学术讲座'
     def __unicode__(self):
         return self.rankName
-
-class Lecture(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    StudentNum =models.ForeignKey(Students,verbose_name ='学号',related_name="LectureLtoS")
-    rankNum = models.ForeignKey(LectureRank,verbose_name ='项目',related_name="LectureLtoR")
-    class Meta:
-       verbose_name = u'学术讲座关系表'
-       verbose_name_plural = u'学术讲座关系表'
-    def __unicode__(self):
-        return str(self.StudentNum)
 
 #Volunteering
 class VolunteeringRank(models.Model):
@@ -222,22 +199,11 @@ class VolunteeringRank(models.Model):
     Location = models.CharField(max_length = 50,verbose_name ='志愿活动地点')
     volunteerTime = models.PositiveIntegerField(verbose_name ='志愿时间')
     Content = models.TextField(verbose_name ='内容简介')
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'志愿活动'
         verbose_name_plural = u'志愿活动'
     def __unicode__(self):
         return self.rankName
-
-class Volunteering(models.Model):
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    StudentNum =models.ForeignKey(Students,verbose_name ='学号',related_name="VolunteeringLtoS")
-    rankNum = models.ForeignKey(VolunteeringRank,verbose_name ='项目',related_name="VolunteeringLtoR")
-    class Meta:
-       verbose_name = u'志愿活动关系表'
-       verbose_name_plural = u'志愿活动关系表'
-    def __unicode__(self):
-        return str(self.StudentNum)
 
 #SchoolActivity
 class SchoolActivityRank(models.Model):
@@ -247,36 +213,19 @@ class SchoolActivityRank(models.Model):
     organizer = models.CharField(max_length = 50,verbose_name ='主办方')
     startingTime = models.DateField(verbose_name ='开始时间')
     awardLevel = models.CharField(max_length = 50,verbose_name ='奖项')
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'校园活动'
         verbose_name_plural = u'校园活动'
     def __unicode__(self):
         return self.rankName
 
-class SchoolActivity(models.Model):
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    StudentNum =models.ForeignKey(Students,verbose_name ='学号',related_name="SchoolActivityLtoS")
-    rankNum = models.ForeignKey(SchoolActivityRank,verbose_name ='项目',related_name="SchoolActivityLtoR")
-    class Meta:
-       verbose_name = u'校园活动关系表'
-       verbose_name_plural = u'校园活动关系表'
-    def __unicode__(self):
-        return str(self.StudentNum)
-
-
-
 #Paper-s
 class PaperRank(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     rankName = models.CharField(max_length = 50,verbose_name ='论文名称')
     journalName = models.CharField(max_length = 20,verbose_name ='期刊名称')
     rank = models.CharField(max_length = 20,verbose_name ='等级')
     AuthorRanking = models.SmallIntegerField(verbose_name ='作者顺序')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
     startingTime = models.DateField(verbose_name ='开始时间')
-    student = models.ForeignKey(Students,verbose_name ='学号',related_name="PaperRtoS")
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'论文'
         verbose_name_plural = u'论文'
@@ -284,14 +233,10 @@ class PaperRank(models.Model):
         return self.rankName
 #Competition-s
 class CompetitionRank(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     rankName = models.CharField(max_length = 50,verbose_name ='学术竞赛名称')
     Level = models.CharField(max_length = 20,verbose_name ='学术竞赛等级')
     rank = models.CharField(max_length = 20,verbose_name ='学生排名')
     startingTime = models.DateField(verbose_name ='开始时间')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    student = models.ForeignKey(Students,verbose_name ='学号',related_name="CompetitionRtoS")
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'学术竞赛'
         verbose_name_plural = u'学术竞赛'
@@ -300,14 +245,10 @@ class CompetitionRank(models.Model):
 #Exchange-s
 class ExchangeRank(models.Model):
     rankName = models.CharField(max_length = 50,verbose_name ='对方院校/机构名称')
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     type = models.CharField(max_length = 50,verbose_name ='交换类别')
     nature = models.CharField(max_length = 20,verbose_name ='交流性质')
     startTime = models.DateField(verbose_name ='开始时间')
     endTime = models.DateField(verbose_name ='结束时间')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    student = models.ForeignKey(Students,verbose_name ='学号',related_name="ExchangeRtoS")
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'交流交换'
         verbose_name_plural = u'交流交换'
@@ -315,13 +256,9 @@ class ExchangeRank(models.Model):
         return self.rankName
 #StudentCadre-s
 class StudentCadreRank(models.Model):
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     organizitionType = models.CharField(max_length = 50,verbose_name ='组织类型')
     organizitionName = models.CharField(max_length = 20,verbose_name ='组织名称')
     rankName = models.CharField(max_length = 20,verbose_name ='学生干部名称')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    student = models.ForeignKey(Students,verbose_name ='学号',related_name="StudentCadreRtoS")
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
         verbose_name = u'学生干部'
         verbose_name_plural = u'学生干部'
@@ -330,17 +267,13 @@ class StudentCadreRank(models.Model):
 #Internship-s
 class InternshipRank(models.Model):
     rankName = models.CharField(max_length = 20,verbose_name ='实习名称')
-    status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     type = models.CharField(max_length = 50,verbose_name ='实习类型')
-    student = models.ForeignKey(Students,verbose_name ='学号',related_name="InternshipRtoS")
     Time = models.DateField(verbose_name ='实习时间')
     location = models.CharField(max_length = 50,verbose_name ='实习地点')
     job = models.CharField(max_length = 50,verbose_name ='实习岗位')
     contribution = models.TextField(verbose_name ='贡献')
     report = models.TextField(verbose_name ='实习实践报告')
     appraisal = models.TextField(verbose_name ='实习鉴定')
-    Choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
-    SupportText = models.TextField(null = True,blank = True,verbose_name ='支撑文档')#支撑文档 
     class Meta:
        verbose_name = u'实习实践'
        verbose_name_plural = u'实习实践'

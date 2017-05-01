@@ -1,6 +1,4 @@
-﻿{% if user.is_authenticated %}
-
-{% if user.is_superuser %}
+﻿{% if type ==  '管理员'%}
 
 <form id="logoutForm" action="/logout" method="post" class="navbar-right">
     {% csrf_token %}
@@ -12,7 +10,7 @@
     
 </form>
 
-{% elif type == 2 %}}
+{% elif type == '教师端' %}}
 
 <form id="logoutForm" action="/logout" method="post" class="navbar-right">
     {% csrf_token %}
@@ -22,6 +20,13 @@
         <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
     </ul>
 </form>
+
+{% elif  type == '未登录' %}
+
+<ul class="nav navbar-nav navbar-right">
+    <li><a href="{% url 'login' %}">登录</a></li>
+</ul>
+
 
 {% else %}
 
@@ -33,13 +38,5 @@
         <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
     </ul>
 </form>
-
-{% endif %}
-
-{% else %}
-
-<ul class="nav navbar-nav navbar-right">
-    <li><a href="{% url 'login' %}">登录</a></li>
-</ul>
 
 {% endif %}

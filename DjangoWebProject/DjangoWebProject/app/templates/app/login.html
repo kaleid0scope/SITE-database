@@ -1,17 +1,24 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
-<body style="background-image:url(../../static/images/bg2.jpg);background-size:cover;font-size:x-large">
+<style type="text/css">
+#loginForm form center .control-label {
+	font-size: medium;
+}
+</style>
+<body style="background-image: url(../../static/images/bg2.jpg); background-size: cover; font-size: small">
     <div style="padding-top:60px"> 
 </div>
         
     <section id="loginForm"> 
             <form action="." method="post" >
                 {% csrf_token %}
-                <hr />
+                
                 <center>
-                    <label for="id_username" class="control-label" style="color:white">用户名</label>
-                    <br/>
+                  <label for="id_username" class="control-label" style="color:white"><span class="control-label"><span class="control-label" style="font-size: medium"><br>
+                    <br>
+                  用户名</span></span></label>
+                    <span class="control-label"><span class="control-label" style="font-size: medium"><br/>
                         {{ form.username }}
                     <br/>
                     <label for="id_password" class="control-label" style="color:white">密码</label>
@@ -20,10 +27,11 @@
                     <br/>
                         <input type="hidden" name="next" value="/" />
                         <input type="submit" value="确定" class="btn btn-default" />
-                 </center>
+                    </span></span>
+                </center>
                 <br/>
                 {% if form.errors %}
-                <center><p class="validation-summary-errors">请确认用户名是否存在或密码是否正确</p></center>
+                <center><p class="validation-summary-errors"><span class="control-label">请确认用户名是否存在或密码是否正确</span></p></center>
                 {% endif %}
                
             </form>
