@@ -2,16 +2,17 @@
 
 from app.forms import *
 from app.models import *
+from app.parameter import *
 from app.type import *
 from app.Info import *
 from app.project import *
-from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.shortcuts import *
 from django.contrib.auth.models import User
 from DjangoWebProject import settings
 from django.http import HttpRequest
 from django.template import RequestContext
 from django.template.loader import get_template
+from django.contrib.auth.decorators import * 
 from __builtin__ import getattr
 
 
@@ -90,41 +91,61 @@ def ProjectDetail(rank,link,request,id,alert):
         tryJoin = True  
     else: tryJoin = False
     return render_with_type(link,request,'Detail.html',{'project':project,'FPS':FieldProject,'members':members,'manage':False,'hasJoin':False,'tryJoin':tryJoin})
+
 #列表
-def ProjectIndex(rank,link,request,alert):
-    try:  
-        student = Students.objects.get(user = request.user)
-        linksP = link.objects.filter(StudentNum = student).filter(status = '通过') #所有加入的项目
-        links = link.objects.filter(StudentNum = student).filter(status = '待审核') 
-        linksNP = link.objects.filter(StudentNum = student).filter(status = '未通过') 
-        RawProject = rank.objects.filter(status = '通过').exclude(teacher = student)
-        project = []
-        for raw in RawProject: 
-            if not link.objects.filter(StudentNum = student).filter(rankNum = raw): project.append(raw)
-        created = rank.objects.filter(teacher = student)
-        joined,join,joinNP = [],[],[]
-        for link in linksP: joined.append(link.rankNum)
-        for link in links: join.append(link.rankNum)
-        for link in linksNP: joinNP.append(link.rankNum)
-    except Exception,e: 
-        return render_with_type(link,request,'app/login.html',{'alert':alert if alert else e})
-    if request.user.has_perm('auth.is_instructor'): #如果是教师，返回待审核的项目
-        return render_with_type(link,request,'List.html',
-            {'projects':rank.objects.filter(status = '待审核'),'can':True})
-    else :  #否则，返回各类项目
-        return render_with_type(link,request,'List.html',
-            {'projects':project,
-            'Cprojects':created, #创建的
-            'JprojectsP':joined, #已成功加入
-            'Jprojects':join,    #申请加入的
-            'JprojectsNP':joinNP,#申请未通过
-            'can':False,
-            'alert':alert})
+@authenticated_required
+def ProjectIndex(request,rankname = None):
+    try:
+        if rankname != None: rank = getModel(rankname)
+        type = user_parameter(request).get('type')
+        if type == '学生端':
+            student = Students.objects.get(user = request.user)
+            if rankname != None: links = RankLinks.objects.filter(student = student,rtype = rankname)#所有涉及的项目
+            else : links = RankLinks.objects.filter(student = student)
+            linksP = links.filter(status = '通过') 
+            linksDS = links.filter(status = '待审核') 
+            linksNP = links.filter(status = '未通过') 
+            assert isinstance(request, HttpRequest)
+            return render(request,'List.html',
+            {'linksP':linksP,
+            'linksDS':linksDS,
+            'linksNP':linksNP})
+        elif type == '教师端':
+            instructor = Instructor.objects.get(user = request.user)
+            majors = Major.objects.filter(instructor = instructor)
+            students = Students.obejects.filter(major__in = majors)
+            if rankname != None: links = RankLinks.objects.filter(student__in = students,rtype = rankname)#所有涉及的项目
+            else : links = RankLinks.objects.filter(student__in = students)
+            linksP = links.filter(status = '通过') 
+            linksDS = links.filter(status = '待审核') 
+            linksNP = links.filter(status = '未通过') 
+            assert isinstance(request, HttpRequest)
+            return render(request,'List.html',
+            {'linksP':linksP,
+            'linksDS':linksDS,
+            'linksNP':linksNP})
+        elif type == '管理员':
+            if rankname != None: links = RankLinks.objects.filter(rtype = rankname)#所有涉及的项目
+            else : links = RankLinks.objects.all()
+            linksP = links.filter(status = '通过') 
+            linksDS = links.filter(status = '待审核') 
+            linksNP = links.filter(status = '未通过') 
+            assert isinstance(request, HttpRequest)
+            return render(request,'List.html',
+            {'linksP':linksP,
+            'linksDS':linksDS,
+            'linksNP':linksNP})
+    except Exception,e:
+        assert isinstance(request, HttpRequest)
+        return render(request,'app/login.html',{'alert':e})
+
 #审核
-def ProjectCheck(rank,link,f,request,id):
-    error = None
-    try:  
-        project = rank.objects.get(id = int(id))
+@authenticated_required
+def ProjectCheck(request,linkid):
+    try: 
+        link = RankLinks.objects.get(pk = int(linkid))
+        rank = getModel(link.rtype)
+        project = rank.objects.get(pk = link.rnum)
         fields = rank._meta.fields
         FieldProject = {}
         for field in fields :

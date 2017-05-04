@@ -93,7 +93,7 @@ def IdeologyConstructionDetail(request,id): return ProjectDetail(IdeologyConstru
 @login_required
 def JoinIdeologyConstruction(request,id): return ProjectJoin(IdeologyConstructionRank,IdeologyConstruction,request,id)
 @login_required
-def IdeologyConstructionIndex(request): return ProjectIndex(IdeologyConstructionRank,IdeologyConstruction,request,None)
+def IdeologyConstructionIndex(request): return ProjectIndex(request,'IdeologyConstructionRank')
 @login_required
 def AddIdeologyConstruction(request,id,sid): return ProjectAdd(IdeologyConstructionRank,IdeologyConstruction,request,id,sid)
 @login_required

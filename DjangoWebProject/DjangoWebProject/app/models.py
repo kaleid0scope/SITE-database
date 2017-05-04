@@ -157,6 +157,7 @@ class ResearchProjectRank(models.Model):
     rankName = models.CharField(max_length = 20,verbose_name ='科研立项名称')
     rank = models.CharField(max_length = 20,verbose_name ='科研立项等级')
     startingTime = models.DateField(verbose_name ='开始时间')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'科研立项'
         verbose_name_plural = u'科研立项'
@@ -170,6 +171,7 @@ class IdeologyConstructionRank(models.Model):
     organizer = models.CharField(max_length = 50,verbose_name ='主办方')
     startingTime = models.DateField(verbose_name ='开始时间')
     Location = models.CharField(max_length = 50,verbose_name ='活动地点')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'思建活动'
         verbose_name_plural = u'思建活动'
@@ -185,6 +187,7 @@ class LectureRank(models.Model):
     startingTime = models.DateField(verbose_name ='开始时间')
     Location = models.CharField(max_length = 50,verbose_name ='讲座地点')
     Content = models.TextField(verbose_name ='内容简介')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'学术讲座'
         verbose_name_plural = u'学术讲座'
@@ -199,6 +202,7 @@ class VolunteeringRank(models.Model):
     Location = models.CharField(max_length = 50,verbose_name ='志愿活动地点')
     volunteerTime = models.PositiveIntegerField(verbose_name ='志愿时间')
     Content = models.TextField(verbose_name ='内容简介')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'志愿活动'
         verbose_name_plural = u'志愿活动'
@@ -213,6 +217,7 @@ class SchoolActivityRank(models.Model):
     organizer = models.CharField(max_length = 50,verbose_name ='主办方')
     startingTime = models.DateField(verbose_name ='开始时间')
     awardLevel = models.CharField(max_length = 50,verbose_name ='奖项')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'校园活动'
         verbose_name_plural = u'校园活动'
@@ -226,6 +231,7 @@ class PaperRank(models.Model):
     rank = models.CharField(max_length = 20,verbose_name ='等级')
     AuthorRanking = models.SmallIntegerField(verbose_name ='作者顺序')
     startingTime = models.DateField(verbose_name ='开始时间')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'论文'
         verbose_name_plural = u'论文'
@@ -237,6 +243,7 @@ class CompetitionRank(models.Model):
     Level = models.CharField(max_length = 20,verbose_name ='学术竞赛等级')
     rank = models.CharField(max_length = 20,verbose_name ='学生排名')
     startingTime = models.DateField(verbose_name ='开始时间')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'学术竞赛'
         verbose_name_plural = u'学术竞赛'
@@ -249,6 +256,7 @@ class ExchangeRank(models.Model):
     nature = models.CharField(max_length = 20,verbose_name ='交流性质')
     startTime = models.DateField(verbose_name ='开始时间')
     endTime = models.DateField(verbose_name ='结束时间')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'交流交换'
         verbose_name_plural = u'交流交换'
@@ -259,6 +267,7 @@ class StudentCadreRank(models.Model):
     organizitionType = models.CharField(max_length = 50,verbose_name ='组织类型')
     organizitionName = models.CharField(max_length = 20,verbose_name ='组织名称')
     rankName = models.CharField(max_length = 20,verbose_name ='学生干部名称')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'学生干部'
         verbose_name_plural = u'学生干部'
@@ -274,6 +283,7 @@ class InternshipRank(models.Model):
     contribution = models.TextField(verbose_name ='贡献')
     report = models.TextField(verbose_name ='实习实践报告')
     appraisal = models.TextField(verbose_name ='实习鉴定')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
        verbose_name = u'实习实践'
        verbose_name_plural = u'实习实践'
