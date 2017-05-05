@@ -6,6 +6,40 @@ from django.utils.translation import ugettext_lazy as _
 from cProfile import label
 from app.models import statusChoice,Choices
 from django.forms.extras.widgets import SelectDateWidget
+from app.Info import *
+
+
+
+class ProjectForm(forms.Form):
+    level = forms.ChoiceField(required=True,label=u"活动分级等级")
+
+    def __init__(self,*args,**kwargs): 
+        super(ProjectForm,self).__init__(*args,**kwargs)        
+        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(ProjectForm, self).clean()
+        return cleaned_data
+
+class CreateLinkForm(forms.Form):
+    rankname = forms.CharField(widget=forms.HiddenInput)
+    project = forms.ModelChoiceField(queryset = None,required = True,label = u'活动',to_field_name = 'rankName')
+    studentNum = forms.IntegerField(required=True,label=u"学号",widget=forms.NumberInput)
+
+    def __init__(self,*args,**kwargs): 
+        super(CreateLinkForm,self).__init__(*args,**kwargs) 
+        rank = getModel(rankname)
+        self.fields['project'].queryset = rank.objects.filter(active = 1)
+    
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(ProjectForm, self).clean()
+        return cleaned_data
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -18,7 +52,6 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
 
-
 class ResetPasswordForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput({
                                    'class': 'form-control'}),        label=u"用户名",
@@ -30,7 +63,6 @@ class ResetPasswordForm(forms.Form):
                                    'class': 'form-control'}),        label=u"新密码",
 )
 
-
 class RegisterForm(forms.Form):  
     username = forms.CharField()  
     email = forms.EmailField()  
@@ -38,7 +70,6 @@ class RegisterForm(forms.Form):
     password2= forms.CharField(label='Confirm',widget=forms.PasswordInput)  
     def pwd_validate(self,p1,p2):  
         return p1==p2  
-
 
 class ChangepwdForm(forms.Form):
     old_pwd = forms.CharField(required=True,
@@ -69,7 +100,6 @@ class ChangepwdForm(forms.Form):
             cleaned_data = super(ChangepwdForm, self).clean()
         return cleaned_data
 
-
 class CreateResearchProjectForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"科研立项名称",
@@ -86,22 +116,6 @@ class CreateResearchProjectForm(forms.Form):
         else:
             cleaned_data = super(CreateResearchProjectForm, self).clean()
         return cleaned_data
-
-
-class ResearchProjectForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(ResearchProjectForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(ResearchProjectForm, self).clean()
-        return cleaned_data
-
 
 class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -132,22 +146,6 @@ class CreatePaperForm(forms.Form):
             cleaned_data = super(CreatePaperForm, self).clean()
         return cleaned_data
 
-
-class PaperForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(PaperForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(PaperForm, self).clean()
-        return cleaned_data
-
-
 class CreateCompetitionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"竞赛名称",
@@ -176,20 +174,6 @@ class CreateCompetitionForm(forms.Form):
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(CreateCompetitionForm, self).clean()
-        return cleaned_data
-
-class CompetitionForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(CompetitionForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-    
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CompetitionForm, self).clean()
         return cleaned_data
 
 class CreateExchangeForm(forms.Form):
@@ -226,34 +210,6 @@ class CreateExchangeForm(forms.Form):
             cleaned_data = super(CreateExchangeForm, self).clean()
         return cleaned_data 
 
-class ExchangeForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(ExchangeForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-    
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(ExchangeForm, self).clean()
-        return cleaned_data
-
-'''    startTime = forms.DateField(required=True,
-        label=u"派出时间",
-        error_messages={'required': u'请输入派出时间'})
-    endTime = forms.DateField(required=True,
-        label=u"返校时间",
-        error_messages={'required': u'请输入竞赛时间'})
-    ProjectContent = forms.Textarea(required=True,
-        label=u"交流内容",
-        error_messages={'required': u'请输入交流内容'})
-    SupportText = forms.Textarea(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'})'''
-
-
 class CreateIdeologyConstructionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"活动名称",
@@ -286,21 +242,6 @@ class CreateIdeologyConstructionForm(forms.Form):
         else:
             cleaned_data = super(CreateIdeologyConstructionForm, self).clean()
         return cleaned_data 
-
-class IdeologyConstructionForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(IdeologyConstructionForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(IdeologyConstructionForm, self).clean()
-
-        return cleaned_data
 
 class CreateLectureForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -345,20 +286,6 @@ class CreateLectureForm(forms.Form):
             cleaned_data = super(CreateLectureForm, self).clean()
         return cleaned_data 
 
-class LectureForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(LectureForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-    
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(LectureForm, self).clean()
-        return cleaned_data
-
 class CreateVolunteeringForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"项目名称",
@@ -398,20 +325,6 @@ class CreateVolunteeringForm(forms.Form):
             cleaned_data = super(CreateVolunteeringForm, self).clean()
         return cleaned_data 
 
-class VolunteeringForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(VolunteeringForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-    
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(VolunteeringForm, self).clean()
-        return cleaned_data
-
 class CreateSchoolActivityForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"校园活动名称",
@@ -450,20 +363,6 @@ class CreateSchoolActivityForm(forms.Form):
             cleaned_data = super(CreateSchoolActivityForm, self).clean()
         return cleaned_data 
 
-class SchoolActivityForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(SchoolActivityForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-    
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(SchoolActivityForm, self).clean()
-        return cleaned_data
-
 class CreateInternshipForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"实践实习名称",
@@ -490,20 +389,6 @@ class CreateInternshipForm(forms.Form):
             cleaned_data = super(CreateInternshipForm, self).clean()
         return cleaned_data 
 
-class InternshipForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(InternshipForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(InternshipForm, self).clean()
-        return cleaned_data
-
 class CreateStudentCadreForm(forms.Form):
     organizitionType = forms.CharField(required=True,
         label=u"组织类型",widget=forms.TextInput({
@@ -528,31 +413,3 @@ class CreateStudentCadreForm(forms.Form):
         else:
             cleaned_data = super(CreateStudentCadreForm, self).clean()
         return cleaned_data 
-
-
-"""    rank = forms.CharField(required=True,
-        label=u"科研立项等级",
-        error_messages={'required': u'请输入科研立项等级'})
-    score = forms.IntegerField(required=True,
-        label=u"科研立项分级评分",
-        error_messages={'required': u'请输入科研立项分级评分'})
-    role = forms.CharField(required=True,
-        label=u"科研立项角色",
-        error_messages={'required': u'请输入“负责人”或“成员”'})
-    startingTime = forms.DateField(required=True,
-        label=u"分级评分起始有效时间",
-        error_messages={'required': u'请输入分级评分起始有效时间'})"""
-
-class StudentCadreForm(forms.Form):
-    level = forms.ChoiceField(required=True,label=u"活动分级等级")
-
-    def __init__(self,*args,**kwargs): 
-        super(StudentCadreForm,self).__init__(*args,**kwargs)        
-        self.fields['level'].choices=((x.id,x.name) for x in Choices.objects.all())
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(StudentCadreForm, self).clean()
-        return cleaned_data

@@ -4,7 +4,6 @@ from django.http.response import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import Permission,User
 from app.views import *
-from app.type import *
 
 def Ralert(*arg):
     def _deco(func):

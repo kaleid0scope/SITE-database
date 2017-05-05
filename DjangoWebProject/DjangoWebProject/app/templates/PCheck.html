@@ -15,11 +15,15 @@
 		<tbody>
 			<tr>
 				<td><b>申请者学号：</b></td>
-				<td>{{project.teacher}}</td>
+				<td>{{link.student}}</td>
 			</tr>
             <tr>
 				<td><b>申请者姓名：</b></td>
-				<td>{{project.teacher.rankName}}</td>
+				<td>{{link.student.rankName}}</td>
+			</tr>
+            <tr>
+				<td><b>活动类型：</b></td>
+				<td>{{link.rtype}}</td>
 			</tr>
             {% for key,value in FPS.items%}
 			<tr>

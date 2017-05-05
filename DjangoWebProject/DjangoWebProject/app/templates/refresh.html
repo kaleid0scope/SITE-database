@@ -1,0 +1,9 @@
+
+{% extends "app/layout.html" %}
+
+{% block content %}
+<br><br><br><br><br><br><p>
+{%if alert%}{{alert}}，{%endif%}两秒钟后转入如下链接，如果长时间没有响应请直接点击：</p>
+<p><a href="{{url}}">{{ url }}</a></p>
+<meta http-equiv="refresh" content="2;url={{ url }}">
+{% endblock %}
