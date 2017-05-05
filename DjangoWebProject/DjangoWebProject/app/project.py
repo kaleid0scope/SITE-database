@@ -24,16 +24,23 @@ def Error(request,alert = None,template_name = None):
         template_name = 'app/index.html'
     return Ralert(alert)(render)(request,template_name,{'error':True})
 
-#创建
-def ProjectCreate(request,rankname):
+
+@authenticated_required
+def ProjectCreate(request,rankname,student = None):
     if request.method == 'POST':
-        project = getView(rankname)(request)
+        if getType(request) == '学生端':project = getView(rankname)(request,Students.objects.get(user = request.user))
+        else:
+            if student == None: return Error(request,'缺少参数')
+            if getType(request) == '管理员':project = getView(rankname)(request,student)
+            if getType(request) == '教师端':
+                instrutor = Instructor.objects.get(user = request.user)
+                if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,'您无权访问')
+                project = getView(rankname)(request,student)
         project.save()
     else:
         form = getForm(rankname)
     return render(request,'create.html',{'form':form})
 
-def InstructorCreate(request,rankname,student):
     
 #创建
 @authenticated_required

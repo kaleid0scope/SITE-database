@@ -3,7 +3,7 @@ from app.models import *
 from app.forms import *
 from django.shortcuts import *
 
-def createIdeologyConstruction(request): 
+def createIdeologyConstruction(request,student): 
         form = CreateIdeologyConstructionForm(request.POST)
         if form.is_valid():
                 cd = form.cleaned_data
@@ -17,7 +17,7 @@ def createIdeologyConstruction(request):
                                 Content = cd['Content'],
                                 SupportText = cd['SupportText'])
                 return project
-def createPaper(request):
+def createPaper(request,student):
         form = CreatePaperForm(request.POST)
         if form.is_valid():
             #try:
@@ -31,7 +31,7 @@ def createPaper(request):
                                 rank = '',
                                 )
                 return project
-def createCompetition(request):
+def createCompetition(request,student):
         form = CreateCompetitionForm(request.POST)
         if form.is_valid():
             try:
@@ -43,7 +43,7 @@ def createCompetition(request):
                                 level = cd['level'],
                                 rank = cd['rank'],)
                 return project
-def createStudentCadre(request):
+def createStudentCadre(request,student):
         form = CreateStudentCadreForm(request.POST)
         if form.is_valid():
             try:
@@ -54,7 +54,7 @@ def createStudentCadre(request):
                                 status = '待审核',
                                )
                 return project
-def createExchange(request):#待修改
+def createExchange(request,student):#待修改
         form = CreateExchangeForm(request.POST)
         if form.is_valid():
             try:
@@ -68,14 +68,14 @@ def createExchange(request):#待修改
                                 status = '待审核',
                                )
                 return project
-def createResearchProject(request):
+def createResearchProject(request,student):
         form = CreateResearchProjectForm(request.POST)
         if form.is_valid():
             #try:
                 cd = form.cleaned_data
                 project = ResearchProjectRank(rankName = cd['ProjectName'],teacher = student,startingTime = cd['ProjectTime'],status = '待审核',rank = '',)
                 return project
-def createLecture(request):
+def createLecture(request,student):
         form = CreateLectureForm(request.POST)
         if form.is_valid():
             try:
@@ -90,7 +90,7 @@ def createLecture(request):
                                 Content = cd['Content'],
                                 status = '待审核')
                 return project
-def createVolunteering(request):
+def createVolunteering(request,student):
         form = CreateVolunteeringForm(request.POST)
         if form.is_valid():
             try:
@@ -104,7 +104,7 @@ def createVolunteering(request):
                                 Content = cd['Content'],
                                 status = '待审核')
                 return project
-def createSchoolActivity(request):
+def createSchoolActivity(request,student):
         form = CreateSchoolActivityForm(request.POST)
         if form.is_valid():
             try:
