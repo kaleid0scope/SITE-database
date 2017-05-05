@@ -13,7 +13,7 @@ from django.http import HttpRequest
 from django.template import RequestContext
 from django.template.loader import get_template
 from django.contrib.auth.decorators import * 
-from __builtin__ import getattr
+from __builtin__ import *
 
 
 #创建
@@ -43,8 +43,9 @@ def ProjectCreate(rank,link,f,request):
     else:
         form = f()
     return render_with_type(link,request,'Create/create{name}.html'.format(name = link._meta.object_name),{'form':form,'alert':error})
+
 #删除
-def ProjectDelete(rank,link,request,id):
+def ProjectDelete(request,linkid):
     try:
         student = Students.objects.get(user = request.user)
         project = rank.objects.get(id = id)
@@ -56,13 +57,16 @@ def ProjectDelete(rank,link,request,id):
         links.delete()
         return ProjectIndex(rank,link,request,'已删除' if not e else e)
 #详情
-def ProjectDetail(rank,link,request,id,alert):
-    project = rank.objects.get(id = int(id))
-    student = Students.objects.get(user = request.user)
+def ProjectDetail(request,linkid):
+    link = RankLinks.objects.filter(pk = int(linkid))
+    rank = getModel(link.rtype)
+    project = rank.objects.get(id = link.rnum)
+
     fields = rank._meta.fields
     FieldProject = {}
     for field in fields :
         FieldProject[field.verbose_name] = getattr(project,field.name) #该项目键值对
+
     links = link.objects.filter(rankNum = project).filter(status = '通过') #已加入的关系
     joins = link.objects.filter(rankNum = project).filter(status = '待审核') #待审核的关系
     members = []
@@ -102,9 +106,16 @@ def ProjectIndex(request,rankname = None):
             student = Students.objects.get(user = request.user)
             if rankname != None: links = RankLinks.objects.filter(student = student,rtype = rankname)#所有涉及的项目
             else : links = RankLinks.objects.filter(student = student)
-            linksP = links.filter(status = '通过') 
-            linksDS = links.filter(status = '待审核') 
-            linksNP = links.filter(status = '未通过') 
+            linksDic,linksP,linksDS,linksNP = {}
+            for link in links:
+                rank = getModel(link.rtype)
+                project = rank.objects.get(pk = link.rnum)
+                if link.status == '待审核':
+                    linksDS[project.rankName] = value
+                elif link.status == '通过':
+                    linksP[project.rankName] = value
+                else:
+                    linksNP[project.rankName] = value
             assert isinstance(request, HttpRequest)
             return render(request,'List.html',
             {'linksP':linksP,
@@ -140,46 +151,43 @@ def ProjectIndex(request,rankname = None):
         return render(request,'app/login.html',{'alert':e})
 
 #审核
-@authenticated_required
-def ProjectCheck(request,linkid):
+@teacher_required
+def ProjectCheck(request,linkid,rankname = None):
     try: 
         link = RankLinks.objects.get(pk = int(linkid))
         rank = getModel(link.rtype)
         project = rank.objects.get(pk = link.rnum)
+        if fromRank == True:
+            name = link.rtype
+        elif isinstance(fromRank, basestring):
+            name = rankname
         fields = rank._meta.fields
         FieldProject = {}
         for field in fields :
             FieldProject[field.verbose_name] = getattr(project,field.name)#该项目键值对
     except Exception,e:  
-        return render_with_type(link,request,'Pcheck.html',{'alert':e})
-    if project.status == '待审核':
+        assert isinstance(request, HttpRequest)
+        return render(request,'app/login.html',{'alert':e})
         if request.method == 'POST':
             form = f(request.POST)
-            if form.is_valid() and request.user.has_perm('auth.is_instructor'):
+            if form.is_valid():
                 cd = form.cleaned_data
                 try:
                     choice = Choices.objects.get(id = cd['level'])
-                    project.score = choice.score
-                    project.complete = choice.complete
+                    link.complete = choice.complete
                     if request.POST.has_key('passyes'):
-                        project.status = '通过'
+                        link.status = '通过'
                     elif request.POST.has_key('passno'):
-                        project.status = '未通过'
-                    project.save()
-                    return render_with_type(link,request,'List.html',
-                            {'projects':rank.objects.filter(status = '待审核'),'alert':'审核成功！','can':True})
+                        link.status = '未通过'
+                    link.save()
+                    return redirect(Palert(ProjectIndex)(request,name))
                 except Exception,e:  
                     error = e
             else:
                 error = '请确认是否有审核权限！'
         else:
-            form = f()
-            return render_with_type(link,request,'Pcheck.html'.format(name = link._meta.object_name),{'form':form,'project':project,'FPS':FieldProject})
-    elif request.user.has_perm('auth.is_instructor'):
-       return render_with_type(link,request,'List.html',
-             {'projects':rank.objects.filter(status = '待审核'),'alert':e,'can':True})
-    return render_with_type(link,request,'List.html',
-            {'projects':rank.objects.filter(status = '通过'),'can':False,'alert':error})
+            form = getForm(link.rtype)
+            return render(request,'Pcheck.html',{'form':form,'link':link,'FPS':FieldProject})
 #申请加入
 def ProjectJoin(rank,link,request,id):
     alert = ''
