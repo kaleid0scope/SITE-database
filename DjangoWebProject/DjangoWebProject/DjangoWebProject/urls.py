@@ -42,6 +42,8 @@ urlpatterns = [
     url(r'^first/$',first),
     url(r'^copy/$',shit),
 
+    url(r'^cci/$',CCi),
+
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)$',LinkAdd),
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)/(?P<student>\w+)$',LinkAdd),
     url(r'^create/(?P<rankname>\w+)$',ProjectCreate),

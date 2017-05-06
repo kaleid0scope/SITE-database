@@ -35,6 +35,29 @@ def NewWeb():
         Permission.objects.create(name=u'是否为辅导员',content_type = ContentType.objects.get_for_model(User),codename='is_instructor')
     user = User.objects.filter()
 
+def CCi(request): 
+    if request.method == 'POST':
+        form = CreateIdeologyConstructionForm(request.POST)
+        body = request.body
+        if form.is_valid():
+                cd = form.cleaned_data
+                project = IdeologyConstructionRank(
+                                active = 0,
+                                rankName = cd['ProjectName'],
+                                startingTime = cd['startingTime'],
+                                type = cd['type'],
+                                Location = cd['Location'],
+                                organizer = cd['organizer'],
+                                Content = cd['Content'],)
+                project.save()
+                return render(request,'createIdeologyConstruction.html',{'form':form,'alert':'ok'})
+        else:
+            error = '请确认是否已经输入相关信息'
+            return render(request,'createIdeologyConstruction.html',{'form':form,'error':error})
+    else:
+        form = CreateIdeologyConstructionForm()
+    return render_to_response('createIdeologyConstruction.html',{'form':form})
+
 @teacher_required
 def Excel(request):
     if request.method == 'POST' and request.POST.has_key('register'):

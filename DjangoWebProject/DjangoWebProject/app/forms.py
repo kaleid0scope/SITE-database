@@ -143,13 +143,6 @@ class CreateIdeologyConstructionForm(forms.Form):
         error_messages={'required': u'请输入活动内容'},
         widget=forms.Textarea)
 
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CreateIdeologyConstructionForm, self).clean()
-        return cleaned_data 
-
 class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"论文题目",

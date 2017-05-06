@@ -102,6 +102,7 @@
     <Content Include="app\templates\List.html" />
     <Content Include="app\templates\register.html" />
     <Content Include="app\templates\reset_form.html" />
+    <Content Include="app\templates\createIdeologyConstruction.html" />
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\search_form.html" />
     <Content Include="app\templates\changepassword.html" />

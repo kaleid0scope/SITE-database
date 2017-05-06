@@ -129,7 +129,7 @@ def ProjectDetail(request,linkid):
     #    return render(request,'app/login.html',{'alert':e})
 #列表
 
-@authenticated_required
+
 def ProjectIndex(request,rankname = None):
     #try:
         if rankname != None: rank = getModel(rankname)
@@ -174,7 +174,6 @@ def ProjectIndex(request,rankname = None):
             linksP = links.filter(status = '通过') 
             linksDS = links.filter(status = '待审核') 
             linksNP = links.filter(status = '未通过') 
-            assert isinstance(request, HttpRequest)
             return render(request,'List.html',
             {'linksP':linksP,
             'linksDS':linksDS,
@@ -183,16 +182,12 @@ def ProjectIndex(request,rankname = None):
         assert isinstance(request, HttpRequest)
         return render(request,'app/login.html',{'alert':e})'''
 #审核
-@teacher_required
 def ProjectCheck(request,linkid,rankname = None):
     #try: 
         link = RankLinks.objects.get(pk = int(linkid))
         rank = getModel(link.rtype)
         project = rank.objects.get(pk = link.rnum)
-        if fromRank == True:
-            name = link.rtype
-        elif isinstance(fromRank, basestring):
-            name = rankname
+        if not rankname:rankname = link.rtype
         fields = rank._meta.fields
         FieldProject = {}
         for field in fields :
@@ -201,7 +196,7 @@ def ProjectCheck(request,linkid,rankname = None):
     #    assert isinstance(request, HttpRequest)
     #    return render(request,'app/login.html',{'alert':e})
         if request.method == 'POST':
-            form = f(request.POST)
+            form = ProjectForm(request.POST)
             if form.is_valid():
                     cd = form.cleaned_data
                 #try:
@@ -214,13 +209,13 @@ def ProjectCheck(request,linkid,rankname = None):
                     elif request.POST.has_key('passno'):
                         link.status = '未通过'
                     link.save()
-                    return redirect(Palert(ProjectIndex)(request,name))
+                    return render(request,'Pcheck.html',{'form':form,'link':link,'FPS':FieldProject})
                 #except Exception,e:  
                 #    error = e
             else:
                 error = '请确认是否有审核权限！'
         else:
-            form = getForm(link.rtype)
+            form = ProjectForm()
             return render(request,'Pcheck.html',{'form':form,'link':link,'FPS':FieldProject})
 
 
