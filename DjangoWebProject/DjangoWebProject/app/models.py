@@ -141,7 +141,6 @@ class CompleteLM(models.Model):
 class RankLinks(models.Model):
     rtype = models.CharField(max_length = 50,verbose_name ='项目类型')
     rnum = models.PositiveSmallIntegerField(verbose_name ='项目主键')
-    role = models.BooleanField(default = 0,verbose_name ='身份')
     status = models.CharField(choices= statusChoice,max_length = 10,default = '待审核',verbose_name ='状态')
     student =models.ForeignKey(Students,verbose_name ='学号',related_name="LtoS")
     choice = models.ForeignKey(Choices,verbose_name ='评价等级',null = True,blank = True)
@@ -157,24 +156,11 @@ class ResearchProjectRank(models.Model):
     rankName = models.CharField(max_length = 20,verbose_name ='科研立项名称')
     rank = models.CharField(max_length = 20,verbose_name ='科研立项等级')
     startingTime = models.DateField(verbose_name ='开始时间')
+    role = models.CharField(max_length = 20,verbose_name ='身份')
     active = models.BooleanField(default = 1,verbose_name ='可用性')
     class Meta:
         verbose_name = u'科研立项'
         verbose_name_plural = u'科研立项'
-    def __unicode__(self):
-        return self.rankName
-
-#IdeologyConstruction
-class IdeologyConstructionRank(models.Model):
-    type = models.CharField(max_length = 50,verbose_name ='活动类别')
-    rankName = models.CharField(max_length = 20,verbose_name ='活动名称')
-    organizer = models.CharField(max_length = 50,verbose_name ='主办方')
-    startingTime = models.DateField(verbose_name ='开始时间')
-    Location = models.CharField(max_length = 50,verbose_name ='活动地点')
-    active = models.BooleanField(default = 1,verbose_name ='可用性')
-    class Meta:
-        verbose_name = u'思建活动'
-        verbose_name_plural = u'思建活动'
     def __unicode__(self):
         return self.rankName
 
@@ -224,11 +210,26 @@ class SchoolActivityRank(models.Model):
     def __unicode__(self):
         return self.rankName
 
+#IdeologyConstruction
+class IdeologyConstructionRank(models.Model):
+    type = models.CharField(max_length = 50,verbose_name ='活动类别')
+    rankName = models.CharField(max_length = 20,verbose_name ='活动名称')
+    organizer = models.CharField(max_length = 50,verbose_name ='主办方')
+    startingTime = models.DateField(verbose_name ='开始时间')
+    Location = models.CharField(max_length = 50,verbose_name ='活动地点')
+    Content = models.TextField(default = '',verbose_name = '活动内容')
+    active = models.BooleanField(default = 1,verbose_name ='可用性')
+    class Meta:
+        verbose_name = u'思建活动'
+        verbose_name_plural = u'思建活动'
+    def __unicode__(self):
+        return self.rankName
+
 #Paper-s
 class PaperRank(models.Model):
     rankName = models.CharField(max_length = 50,verbose_name ='论文名称')
     journalName = models.CharField(max_length = 20,verbose_name ='期刊名称')
-    rank = models.CharField(max_length = 20,verbose_name ='等级')
+    rank = models.CharField(max_length = 20,verbose_name ='论文等级')
     AuthorRanking = models.SmallIntegerField(verbose_name ='作者顺序')
     startingTime = models.DateField(verbose_name ='开始时间')
     active = models.BooleanField(default = 1,verbose_name ='可用性')

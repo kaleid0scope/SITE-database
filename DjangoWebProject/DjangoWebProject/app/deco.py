@@ -51,10 +51,9 @@ def teacher_required(func):
 def authenticated_required(func):
     def _deco(request,rankname = None):
         if Students.objects.filter(user = request.user) or request.user.has_perm('auth.is_instructor'):
-            Response = func(request)
+            Response = func(request,rankname)
         else:
             assert isinstance(request, HttpRequest)
             Response = Ralert('student_required')(render)(request,'app/index.html',{})
         return Response
     return _deco
-    

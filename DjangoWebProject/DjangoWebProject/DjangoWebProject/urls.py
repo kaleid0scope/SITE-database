@@ -7,11 +7,10 @@ from datetime import datetime
 from django.conf.urls import url
 import django.contrib.auth.views
 import DjangoWebProject.settings
-import app.forms
-import app.views
-import app.testdb
 from django.contrib import auth
+import app
 from app.views import *
+from app.project import *
 from app.project import *
 
 # Uncomment the next lines to enable the admin:
@@ -22,9 +21,9 @@ admin.autodiscover()
 
 urlpatterns = [
     #url(r'/(?P<path>.*)','django.views.static.serve',{'document_root':settings.STATIC_ROOT+'/images'}), 
-    url(r'^$', app.views.home, name='home'),
-    url(r'^contact$', app.views.contact, name='contact'),
-    url(r'^about', app.views.about, name='about'),
+    url(r'^$', home, name='home'),
+    url(r'^contact$', contact, name='contact'),
+    url(r'^about', about, name='about'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
@@ -33,29 +32,30 @@ urlpatterns = [
         },
         name='login'),
     url(r'^logout$',django.contrib.auth.views.logout,{'next_page': '/',},name='logout'),
-    #url(r'^register$',app.views.register,),
+    #url(r'^register$',register,),
     url(r'^search_form/$',search_form),
     url(r'^search/$',search),
-    url(r'^reset',app.views.reset),
+    url(r'^reset',reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
 
     url(r'^complete/$',ShowComplete,name='complete'),
-    url(r'^first/$',app.views.first),
-    url(r'^copy/$',app.views.shit),
+    url(r'^first/$',first),
+    url(r'^copy/$',shit),
 
-    url(r'^createlink/(?P<rankname>\w+)$',app.project.LinkCreate),
-    url(r'^create/(?P<rankname>\w+)$',app.project.ProjectCreate),
-    url(r'^Index/$',app.project.ProjectIndex),
-    url(r'^Index/(?P<rankname>\w+)$',app.project.ProjectIndex),
-    url(r'^check/(?P<linkid>\w+)$',app.project.ProjectCheck),
-    url(r'^check/(?P<rankname>\w+)/(?P<linkid>\w+)$',app.project.ProjectCheck),
-    url(r'^delete/(?P<linkid>\w+)$',app.project.ProjectDelete),
-    url(r'^detail/(?P<linkid>\w+)$',app.project.ProjectDetail),
+    url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)$',LinkAdd),
+    url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)/(?P<student>\w+)$',LinkAdd),
+    url(r'^create/(?P<rankname>\w+)$',ProjectCreate),
+    url(r'^Index/$',ProjectIndex),
+    url(r'^Index/(?P<rankname>\w+)$',ProjectIndex),
+    url(r'^check/(?P<linkid>\w+)$',ProjectCheck),
+    url(r'^check/(?P<rankname>\w+)/(?P<linkid>\w+)$',ProjectCheck),
+    url(r'^delete/(?P<linkid>\w+)$',ProjectDelete),
+    url(r'^detail/(?P<linkid>\w+)$',ProjectDetail),
 
 
     url(r'^index/$',index,name='index'), 
-    url(r'^construction/$',app.views.construction,name='construction'), 
-    url(r'^excel/$',app.views.Excel),
+    url(r'^construction/$',construction,name='construction'), 
+    url(r'^excel/$',Excel),
     #C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\app\static\images
     
 

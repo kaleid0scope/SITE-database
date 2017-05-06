@@ -1,5 +1,7 @@
+import app
 from app.parameter import *
 from app.models import *
+from app.forms import *
 from app.create import *
 from exceptions import NameError
 
@@ -32,67 +34,68 @@ def getModel(str):
 
 def getForm(str):
     FormDic = {
-        'Project':ProjectForm,
+        'Project':app.forms.ProjectForm,
 
-        'ResearchProjectRank': CreateResearchProjectForm,
-        'IdeologyConstructionRank':CreateIdeologyConstructionForm, 
-        'LectureRank':CreateLectureForm,
-        'VolunteeringRank':CreateVolunteeringForm,
-        'SchoolActivityRank':CreateSchoolActivityForm,
-        'PaperRank':CreatePaperForm,
-        'CompetitionRank':CreateCompetitionForm,
-        'ExchangeRank':CreateExchangeForm,
-        'StudentCadreRank':CreateStudentCadreForm,
-        'InternshipRank':CreateInternshipForm,
+        'ResearchProjectRank': app.forms.CreateResearchProjectForm,
+        'IdeologyConstructionRank':app.forms.CreateIdeologyConstructionForm, 
+        'LectureRank':app.forms.CreateLectureForm,
+        'VolunteeringRank':app.forms.CreateVolunteeringForm,
+        'SchoolActivityRank':app.forms.CreateSchoolActivityForm,
+        'PaperRank':app.forms.CreatePaperForm,
+        'CompetitionRank':app.forms.CreateCompetitionForm,
+        'ExchangeRank':app.forms.CreateExchangeForm,
+        'StudentCadreRank':app.forms.CreateStudentCadreForm,
+        'InternshipRank':app.forms.CreateInternshipForm,
 
-        'ResearchProject':CreateResearchProjectForm,
-        'IdeologyConstruction':CreateIdeologyConstructionForm, 
-        'Lecture':CreateLectureForm,
-        'Volunteering':CreateVolunteeringForm,
-        'SchoolActivity':CreateSchoolActivityForm,
-        'Paper':CreatePaperForm,
-        'Competition':CreateCompetitionForm,
-        'Exchange':CreateExchangeForm,
-        'StudentCadre':CreateStudentCadreForm,
-        'Internship':CreateInternshipForm,
+        'ResearchProject':app.forms.CreateResearchProjectForm,
+        'IdeologyConstruction':app.forms.CreateIdeologyConstructionForm, 
+        'Lecture':app.forms.CreateLectureForm,
+        'Volunteering':app.forms.CreateVolunteeringForm,
+        'SchoolActivity':app.forms.CreateSchoolActivityForm,
+        'Paper':app.forms.CreatePaperForm,
+        'Competition':app.forms.CreateCompetitionForm,
+        'Exchange':app.forms.CreateExchangeForm,
+        'StudentCadre':app.forms.CreateStudentCadreForm,
+        'Internship':app.forms.CreateInternshipForm,
 
-        'CreateResearchProjectRank': CreateResearchProjectForm,
-        'CreateIdeologyConstructionRank':CreateIdeologyConstructionForm, 
-        'CreateLectureRank':CreateLectureForm,
-        'CreateVolunteeringRank':CreateVolunteeringForm,
-        'CreateSchoolActivityRank':CreateSchoolActivityForm,
-        'CreatePaperRank':CreatePaperForm,
-        'CreateCompetitionRank':CreateCompetitionForm,
-        'CreateExchangeRank':CreateExchangeForm,
-        'CreateStudentCadreRank':CreateStudentCadreForm,
-        'CreateInternshipRank':CreateInternshipForm,
+        'CreateResearchProjectRank':app.forms.CreateResearchProjectForm,
+        'CreateIdeologyConstructionRank':app.forms.CreateIdeologyConstructionForm, 
+        'CreateLectureRank':app.forms.CreateLectureForm,
+        'CreateVolunteeringRank':app.forms.CreateVolunteeringForm,
+        'CreateSchoolActivityRank':app.forms.CreateSchoolActivityForm,
+        'CreatePaperRank':app.forms.CreatePaperForm,
+        'CreateCompetitionRank':app.forms.CreateCompetitionForm,
+        'CreateExchangeRank':app.forms.CreateExchangeForm,
+        'CreateStudentCadreRank':app.forms.CreateStudentCadreForm,
+        'CreateInternshipRank':app.forms.CreateInternshipForm,
 
-        'CreateResearchProject': CreateResearchProjectForm,
-        'CreateIdeologyConstruction':CreateIdeologyConstructionForm, 
-        'CreateLecture':CreateLectureForm,
-        'CreateVolunteering':CreateVolunteeringForm,
-        'CreateSchoolActivity':CreateSchoolActivityForm,
-        'CreatePaper':CreatePaperForm,
-        'CreateCompetition':CreateCompetitionForm,
-        'CreateExchange':CreateExchangeForm,
-        'CreateStudentCadre':CreateStudentCadreForm,
-        'CreateInternship':CreateInternshipForm,
+        'CreateResearchProject':app.forms.CreateResearchProjectForm,
+        'CreateIdeologyConstruction':app.forms.CreateIdeologyConstructionForm, 
+        'CreateLecture':app.forms.CreateLectureForm,
+        'CreateVolunteering':app.forms.CreateVolunteeringForm,
+        'CreateSchoolActivity':app.forms.CreateSchoolActivityForm,
+        'CreatePaper':app.forms.CreatePaperForm,
+        'CreateCompetition':app.forms.CreateCompetitionForm,
+        'CreateExchange':app.forms.CreateExchangeForm,
+        'CreateStudentCadre':app.forms.CreateStudentCadreForm,
+        'CreateInternship':app.forms.CreateInternshipForm,
     }
     return FormDic.get(str, NameError)
 
 def getView(str):
     ViewDic = {
-        'ResearchProjectRank': createResearchProject,
-        'IdeologyConstructionRank': createIdeologyConstruction, 
-        'LectureRank':createLecture,
-        'VolunteeringRank':createVolunteering,
-        'SchoolActivityRank':createSchoolActivity,
-        'PaperRank':createPaper,
-        'CompetitionRank':createCompetition,
-        'ExchangeRank':createExchange,
-        'StudentCadreRank':createStudentCadre,
-        'InternshipRank':createInternship,
+        'ResearchProjectRank':app.create.createResearchProject,
+        'IdeologyConstructionRank': app.create.createIdeologyConstruction, 
+        'LectureRank':app.create.createLecture,
+        'VolunteeringRank':app.create.createVolunteering,
+        'SchoolActivityRank':app.create.createSchoolActivity,
+        'PaperRank':app.create.createPaper,
+        'CompetitionRank':app.create.createCompetition,
+        'ExchangeRank':app.create.createExchange,
+        'StudentCadreRank':app.create.createStudentCadre,
+        'InternshipRank':app.create.createInternship,
 }
+    return ViewDic.get(str, NameError)
 
 def getType(request):
     return user_parameter(request)['type']

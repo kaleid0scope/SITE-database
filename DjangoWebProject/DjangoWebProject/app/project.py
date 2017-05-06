@@ -16,7 +16,7 @@ from django.template.loader import get_template
 from django.contrib.auth.decorators import * 
 from __builtin__ import *
 from django.contrib.auth.decorators import * 
-from app.views import home
+from app.views import *
 
 def Error(request,alert = None,template_name = None):
     assert isinstance(request, HttpRequest)
@@ -25,51 +25,59 @@ def Error(request,alert = None,template_name = None):
     return Ralert(alert)(render)(request,template_name,{'error':True})
 
 
-@authenticated_required
 def ProjectCreate(request,rankname,student = None):
+    if not Students.objects.filter(user = request.user) or request.user.has_perm('auth.is_instructor'):
+            assert isinstance(request, HttpRequest)
+            return Ralert('student_required')(render)(request,'app/index.html',{})
     if request.method == 'POST':
-        if getType(request) == '学生端':project = getView(rankname)(request,Students.objects.get(user = request.user))
+        if getType(request) == '学生端':
+            project = getView(rankname)(request)
+            student = Students.objects.filter(user = request.user)
         else:
-            if student == None: return Error(request,'缺少参数')
-            if getType(request) == '管理员':project = getView(rankname)(request,student)
+            if student == None: return Error(request,u'缺少参数')
+            if getType(request) == '管理员':project = getView(rankname,1)(request)
             if getType(request) == '教师端':
                 instrutor = Instructor.objects.get(user = request.user)
-                if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,'您无权访问')
+                if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,u'您无权访问')
                 project = getView(rankname)(request,student)
+        if not project:
+            assert isinstance(request, HttpRequest)
+            return render(request,'Pcreate.html',{'alert':u'表格信息有错误'})
         project.save()
+        return LinkAdd(request,project = project,student = student)
     else:
-        form = getForm(rankname)
-    return render(request,'create.html',{'form':form})
+        form = getForm(rankname)()
+    assert isinstance(request, HttpRequest)
+    return render(request,'Pcreate.html',{'form':form})
 
-    
-#创建
-@authenticated_required
-def LinkCreate(request,rankname = None,rankid = None,project = None,student = None,from_url = None):
+def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,from_url = None):
    #try:
+    if not Students.objects.filter(user = request.user) or request.user.has_perm('auth.is_instructor'):
+            assert isinstance(request, HttpRequest)
+            return Ralert('student_required')(render)(request,'app/index.html',{})
     if project == None and rankid != None and rankname != None:
         rank = getModel(rankname)
         project = rank.objects.get(pk = rankid)
-    elif rankid == None and rankname == None :return Error(request,'缺少参数')#get project
+    elif rankid == None and rankname == None :return Error(request,u'缺少参数')#get project
     type = getType(request)
     if type == '教师端':
-        if student == None: return Error(request,'请指定学生')
+        if student == None: return Error(request,u'请指定学生')
         instructor = Instructor.objects.get(user = request.user)
         majors = Major.objects.filter(instructor = instructor).filter(pk = student.major.pk)
-        if not majors: return Error(request,'您无权访问')
+        if not majors: return Error(request,u'您无权访问')
     elif type == '管理员':
-        if student == None: return Error(request,'请指定学生')
+        if student == None: return Error(request,u'请指定学生')
     elif type == '学生端':
         student = Students.objects.get(user = request.user)
-    else: return Error(request,'您无权访问')
+    else: return Error(request,u'您无权访问')
     link = RankLinks(student = student,rtype = project._meta.object_name,rnum = project.pk)
     link.save()
     if from_url == None:
-        return redirect(Palert('创建成功')(ProjectIndex)(request,rankname if rankname else None))
-    else: return refresh(request,from_url,'创建成功')
+        return redirect(Palert(u'创建成功')(ProjectIndex)(request,rankname if rankname else None))
+    else: return refresh(request,from_url,u'创建成功')
    #except Exception,e:
    #         error = e
 
-#删除
 @permission_required('auth.is_superuser')
 def ProjectDelete(request,linkid):
     #try:
@@ -83,7 +91,6 @@ def ProjectDelete(request,linkid):
     #    alert = e
         return ProjectIndex(rank,link,request,'已删除' if not e else e)
 
-#详情
 @authenticated_required
 def ProjectDetail(request,linkid):
     #try:
@@ -131,7 +138,7 @@ def ProjectIndex(request,rankname = None):
             student = Students.objects.get(user = request.user)
             if rankname != None: links = RankLinks.objects.filter(student = student,rtype = rankname)#所有涉及的项目
             else : links = RankLinks.objects.filter(student = student)
-            linksDic,linksP,linksDS,linksNP = {}
+            linksDic,linksP,linksDS,linksNP = {},{},{},{}
             for link in links:
                 rank = getModel(link.rtype)
                 project = rank.objects.get(pk = link.rnum)
@@ -145,7 +152,8 @@ def ProjectIndex(request,rankname = None):
             return render(request,'List.html',
             {'linksP':linksP,
             'linksDS':linksDS,
-            'linksNP':linksNP})
+            'linksNP':linksNP,
+            'rankname':rankname,})
         elif type == '教师端':
             instructor = Instructor.objects.get(user = request.user)
             majors = Major.objects.filter(instructor = instructor)
@@ -214,26 +222,6 @@ def ProjectCheck(request,linkid,rankname = None):
         else:
             form = getForm(link.rtype)
             return render(request,'Pcheck.html',{'form':form,'link':link,'FPS':FieldProject})
-
-#手动加入
-def ProjectAdd(rank,link,request,id,sid):
-    alert = None
-    owner = Students.objects.get(user = request.user)
-    project = rank.objects.get(id = id)
-    student = Students.objects.get(StudentNum = sid)
-    links = link.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '通过')
-    Jlinks = link.objects.filter(rankNum = project).filter(StudentNum = student).filter(status = '待审核')
-    if not project: alert = '请确认您是否已创建思建活动！'
-    elif links or owner == student: alert = '该成员已在项目中！'
-    elif Jlinks: 
-        join = Jlinks[0]
-        join.status = '通过'
-        join.save()
-    else:
-        join = link(status = '通过',StudentNum = student ,rankNum = project)
-        join.save()
-        alert = '成功添加!'
-    return ProjectDetail(IdeologyConstructionRank,IdeologyConstruction,request,id,alert)
 
 
 

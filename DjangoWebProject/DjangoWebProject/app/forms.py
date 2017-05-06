@@ -9,7 +9,6 @@ from django.forms.extras.widgets import SelectDateWidget
 from app.Info import *
 
 
-
 class ProjectForm(forms.Form):
     level = forms.ChoiceField(required=True,label=u"活动分级等级")
 
@@ -103,12 +102,17 @@ class ChangepwdForm(forms.Form):
 class CreateResearchProjectForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"科研立项名称",
-        error_messages={'required': u'请输入科研立项名称'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
+        error_messages={'required': u'请输入科研立项名称'},widget=forms.TextInput({'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
         error_messages={'required': u'请输入项目时间'},
         widget = SelectDateWidget())
+    Role = forms.CharField(required=True,
+        label=u"身份",
+        error_messages={'required': u'请输入身份'},widget=forms.TextInput({'class': 'form-control',}))
+    Rank = forms.CharField(required=True,
+        label=u"科研立项等级",
+        error_messages={'required': u'请输入科研立项等级'},widget=forms.TextInput({'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
@@ -116,99 +120,6 @@ class CreateResearchProjectForm(forms.Form):
         else:
             cleaned_data = super(CreateResearchProjectForm, self).clean()
         return cleaned_data
-
-class CreatePaperForm(forms.Form):
-    ProjectName = forms.CharField(required=True,
-        label=u"论文题目",
-        error_messages={'required': u'请输入论文题目'},
-                        widget=forms.TextInput({'class': 'form-control',}))
-    ProjectTime = forms.DateField(required=True,
-        label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'},
-        widget = SelectDateWidget())
-    AuthorRanking = forms.IntegerField(required=True,
-        label=u"第几作者",
-        error_messages={'required': u'请输入第几作者'},
-        widget = forms.TextInput({'class': 'form-control',}))
-    JournalName = forms.CharField(required=True,
-        label=u"期刊名称",
-        error_messages={'required': u'请输入期刊名称'},
-        widget=forms.TextInput({'class': 'form-control',}))
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({'class': 'form-control',}))
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CreatePaperForm, self).clean()
-        return cleaned_data
-
-class CreateCompetitionForm(forms.Form):
-    ProjectName = forms.CharField(required=True,
-        label=u"竞赛名称",
-        error_messages={'required': u'请输入竞赛名称'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    level = forms.CharField(required=True,
-        label=u"竞赛等级",
-        error_messages={'required': u'请输入竞赛等级'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    rank = forms.CharField(required=True,
-        label=u"学生角色（队长/队员）",
-        error_messages={'required': u'请输入学生角色（队长/队员）'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    ProjectTime = forms.DateField(required=True,
-        label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'},
-        widget = SelectDateWidget())
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CreateCompetitionForm, self).clean()
-        return cleaned_data
-
-class CreateExchangeForm(forms.Form):
-    ProjectName = forms.CharField(required=True,
-        label=u"对方院校/公司名称名称",
-        error_messages={'required': u'请输入对方院校/公司名称名称'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    type = forms.CharField(required=True,
-        label=u"交流类型",
-        error_messages={'required': u'请输入交流交换项目名称'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    nature = forms.CharField(required=True,
-        label=u"交流性质",
-        error_messages={'required': u'请输入交流性质'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    startTime = forms.DateField(required=True,
-        label=u"派出时间",
-        error_messages={'required': u'请输入派出时间'},
-        widget = SelectDateWidget())
-    endTime = forms.DateField(required=True,
-        label=u"返校时间",
-        error_messages={'required': u'请输入返校时间'},
-        widget = SelectDateWidget(),)
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CreateExchangeForm, self).clean()
-        return cleaned_data 
 
 class CreateIdeologyConstructionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
@@ -231,16 +142,153 @@ class CreateIdeologyConstructionForm(forms.Form):
         label=u"活动内容",
         error_messages={'required': u'请输入活动内容'},
         widget=forms.Textarea)
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea)
 
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(CreateIdeologyConstructionForm, self).clean()
+        return cleaned_data 
+
+class CreatePaperForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
+        label=u"论文题目",
+        error_messages={'required': u'请输入论文题目'},
+                        widget=forms.TextInput({'class': 'form-control',}))
+    ProjectTime = forms.DateField(required=True,
+        label=u"项目时间",
+        error_messages={'required': u'请输入项目时间'},
+        widget = SelectDateWidget())
+    AuthorRanking = forms.IntegerField(required=True,
+        label=u"第几作者",
+        error_messages={'required': u'请输入第几作者'},
+        widget = forms.TextInput({'class': 'form-control',}))
+    JournalName = forms.CharField(required=True,
+        label=u"期刊名称",
+        error_messages={'required': u'请输入期刊名称'},
+        widget=forms.TextInput({'class': 'form-control',}))
+    Rank = forms.CharField(required=True,
+        label=u"论文等级",
+        error_messages={'required': u'请输入论文等级'},
+        widget=forms.TextInput({'class': 'form-control',}))
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreatePaperForm, self).clean()
+        return cleaned_data
+class CreateCompetitionForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
+        label=u"竞赛名称",
+        error_messages={'required': u'请输入竞赛名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    level = forms.CharField(required=True,
+        label=u"竞赛等级",
+        error_messages={'required': u'请输入竞赛等级'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    rank = forms.CharField(required=True,
+        label=u"学生排名",
+        error_messages={'required': u'请输入学生排名'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    ProjectTime = forms.DateField(required=True,
+        label=u"项目时间",
+        error_messages={'required': u'请输入项目时间'},
+        widget = SelectDateWidget())
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateCompetitionForm, self).clean()
+        return cleaned_data
+class CreateExchangeForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
+        label=u"对方院校/公司名称名称",
+        error_messages={'required': u'请输入对方院校/公司名称名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    type = forms.CharField(required=True,
+        label=u"交流类型",
+        error_messages={'required': u'请输入交流交换项目名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    nature = forms.CharField(required=True,
+        label=u"交流性质",
+        error_messages={'required': u'请输入交流性质'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    startTime = forms.DateField(required=True,
+        label=u"派出时间",
+        error_messages={'required': u'请输入派出时间'},
+        widget = SelectDateWidget())
+    endTime = forms.DateField(required=True,
+        label=u"返校时间",
+        error_messages={'required': u'请输入返校时间'},
+        widget = SelectDateWidget(),)
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateExchangeForm, self).clean()
+        return cleaned_data 
+class CreateStudentCadreForm(forms.Form):
+    organizitionType = forms.CharField(required=True,
+        label=u"组织类型",widget=forms.TextInput({
+                                   'class': 'form-control',}),
+        error_messages={'required': u'请输入组织类型'})
+    organizitionName = forms.CharField(required=True,
+        label=u"组织名称",widget=forms.TextInput({
+                                   'class': 'form-control',}),
+        error_messages={'required': u'请输入组织名称'})
+    rankName = forms.CharField(required=True,
+        label=u"学生干部名称",widget=forms.TextInput({
+                                   'class': 'form-control',}),
+        error_messages={'required': u'请输入学生干部名称'})
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateStudentCadreForm, self).clean()
+        return cleaned_data 
+class CreateInternshipForm(forms.Form):
+    ProjectName = forms.CharField(required=True,
+        label=u"实践实习名称",
+        error_messages={'required': u'请输入实践实习名称'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    type = forms.CharField(required=True,
+        label=u"实践实习类别",
+        error_messages={'required': u'请输入实践实习类别'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    locaton = forms.CharField(required=True,
+        label=u"实践实习地点",
+        error_messages={'required': u'请输入实践实习地点'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    job = forms.CharField(required=True,
+        label=u"实践实习岗位",
+        error_messages={'required': u'请输入实践实习岗位'},widget=forms.TextInput({
+                                   'class': 'form-control',}))
+    startingTime = forms.DateField(required=True,
+        label=u"实践实习时间",
+        error_messages={'required': u'请输入实践实习时间'},
+        widget = SelectDateWidget())
+    Contribution = forms.CharField(required=True,
+        label=u"贡献",
+        error_messages={'required': u'请输入贡献'},
+        widget=forms.Textarea({'class': 'form-control',}))
+    Report = forms.CharField(required=True,
+        label=u"实习实践报告",
+        error_messages={'required': u'请输入实习实践报告'},
+        widget=forms.Textarea({'class': 'form-control',}))
+    Appraisal = forms.CharField(required=True,
+        label=u"实习鉴定",
+        error_messages={'required': u'请输入实习鉴定'},
+        widget=forms.Textarea({'class': 'form-control',}))
+
+    def clean(self):
+        if not self.is_valid():
+            raise forms.ValidationError(u"错误")
+        else:
+            cleaned_data = super(CreateInternshipForm, self).clean()
         return cleaned_data 
 
 class CreateLectureForm(forms.Form):
@@ -271,11 +319,6 @@ class CreateLectureForm(forms.Form):
     Content = forms.CharField(required=True,
         label=u"内容简介",
         error_messages={'required': u'请输入讲座内容简介'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
         widget=forms.Textarea({
                                    'class': 'form-control',}))
 
@@ -310,14 +353,7 @@ class CreateVolunteeringForm(forms.Form):
     Content = forms.CharField(required=True,
         label=u"活动内容简介",
         error_messages={'required': u'请输入活动内容简介'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
-
+        widget=forms.Textarea({'class': 'form-control',}))
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
@@ -350,66 +386,10 @@ class CreateSchoolActivityForm(forms.Form):
         label=u"奖项",
         error_messages={'required': u'请输入校园活动奖项'},widget=forms.TextInput({
                                    'class': 'form-control',}))
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
 
     def clean(self):
         if not self.is_valid():
             raise forms.ValidationError(u"错误")
         else:
             cleaned_data = super(CreateSchoolActivityForm, self).clean()
-        return cleaned_data 
-
-class CreateInternshipForm(forms.Form):
-    ProjectName = forms.CharField(required=True,
-        label=u"实践实习名称",
-        error_messages={'required': u'请输入实践实习名称'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    type = forms.CharField(required=True,
-        label=u"实践实习类别",
-        error_messages={'required': u'请输入实践实习类别'},widget=forms.TextInput({
-                                   'class': 'form-control',}))
-    startingTime = forms.DateField(required=True,
-        label=u"实践实习时间",
-        error_messages={'required': u'请输入实践实习时间'},
-        widget = SelectDateWidget())
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",
-        error_messages={'required': u'请输入支撑文档'},
-        widget=forms.Textarea({
-                                   'class': 'form-control',}))
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CreateInternshipForm, self).clean()
-        return cleaned_data 
-
-class CreateStudentCadreForm(forms.Form):
-    organizitionType = forms.CharField(required=True,
-        label=u"组织类型",widget=forms.TextInput({
-                                   'class': 'form-control',}),
-        error_messages={'required': u'请输入组织类型'})
-    organizitionName = forms.CharField(required=True,
-        label=u"组织名称",widget=forms.TextInput({
-                                   'class': 'form-control',}),
-        error_messages={'required': u'请输入组织名称'})
-    rankName = forms.CharField(required=True,
-        label=u"学生干部名称",widget=forms.TextInput({
-                                   'class': 'form-control',}),
-        error_messages={'required': u'请输入学生干部名称'})
-    SupportText = forms.CharField(required=True,
-        label=u"支撑文档",widget=forms.Textarea({
-                                   'class': 'form-control',}),
-        error_messages={'required': u'请输入支撑文档'})
-
-    def clean(self):
-        if not self.is_valid():
-            raise forms.ValidationError(u"错误")
-        else:
-            cleaned_data = super(CreateStudentCadreForm, self).clean()
         return cleaned_data 

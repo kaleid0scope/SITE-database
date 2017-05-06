@@ -10,7 +10,6 @@ from django.shortcuts import *
 from django.contrib.auth.models import User
 from app.forms import *
 from app.models import *
-from app.type import *
 from app.Info import *
 from app.project import *
 from app.complete import GetComplete
@@ -56,8 +55,6 @@ def Excel(request):
         assert isinstance(request, HttpRequest)
         return render(request,'app/excel.html',{})
 
-
-
 def ShowComplete(request):
     error = None
     student = Students.objects.get(user = request.user)
@@ -68,7 +65,6 @@ def ShowComplete(request):
         if field.name != 'id': FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
     return render(request,'complete.html', {'complete': FieldProject})
     
-
 def construction(request):
     return render(request,'app/construction.html',{})
 
@@ -175,19 +171,3 @@ def index(request):
         except Exception,e:
             alert = 'unregister!'
     return render_to_response('/home',{'alert':alert})
-
-
-#single model do not need index
-'''
-def PaperIndex(request):
-    return render(request,'Index/PaperIndex.html',{'projects':PaperRank.objects.filter(status = '通过')})
-
-def CompetitionIndex(request):
-    return render(request,'Index/CompetitionIndex.html',{'projects':CompetitionRank.objects.filter(status = '通过')})
-
-def ExchangeIndex(request):
-    return render(request,'Index/ExchangeIndex.html',{'projects':ExchangeRank.objects.filter(status = '通过')})
-
-def StudentCadreIndex(request):
-    return render(request,'Index/StudentCadreIndex.html',{'projects':StudentCadreRank.objects.filter(status = '通过')})
-'''
