@@ -100,6 +100,5 @@ def getView(str):
 def getType(request):
     return user_parameter(request)['type']
 
-def refresh(request,url):
-    assert isinstance(request, HttpRequest)
-    return render(request,'refresh.html',{'url':url})
+def refresh(request,url,alert):
+    return render(request,'refresh.html',{'url':url,'al':alert})

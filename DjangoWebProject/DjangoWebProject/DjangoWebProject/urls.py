@@ -42,8 +42,6 @@ urlpatterns = [
     url(r'^first/$',first),
     url(r'^copy/$',shit),
 
-    url(r'^cci/$',CCi),
-
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)$',LinkAdd),
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)/(?P<student>\w+)$',LinkAdd),
     url(r'^create/(?P<rankname>\w+)$',ProjectCreate),
@@ -53,6 +51,8 @@ urlpatterns = [
     url(r'^check/(?P<rankname>\w+)/(?P<linkid>\w+)$',ProjectCheck),
     url(r'^delete/(?P<linkid>\w+)$',ProjectDelete),
     url(r'^detail/(?P<linkid>\w+)$',ProjectDetail),
+    url(r'^Detail/(?P<linkid>\w+)$',ProjectDetail),
+    url(r'^Add/(?P<linkid>\w+)/(?P<sid>\w+)$',ProjectAdd),
 
 
     url(r'^index/$',index,name='index'), 

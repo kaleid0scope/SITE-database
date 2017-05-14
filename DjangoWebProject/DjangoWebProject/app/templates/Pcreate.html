@@ -18,7 +18,8 @@
        <p style="font-size:xx-large">创建活动</p>
     <form action="#" method="post">
 		<table>
-			{{ form }}
+            {% csrf_token %}
+			{{ form.as_table }}
 		</table>
 		<input type="submit" value="提交"class="btn btn-default">
 	</form>
