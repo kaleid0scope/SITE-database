@@ -56,7 +56,7 @@ def CCi(request):
             return render(request,'createIdeologyConstruction.html',{'form':form,'error':error})
     else:
         form = CreateIdeologyConstructionForm()
-    return render_to_response('createIdeologyConstruction.html',{'form':form})
+    return render(request,'createIdeologyConstruction.html',{'form':form})
 
 @teacher_required
 def Excel(request):

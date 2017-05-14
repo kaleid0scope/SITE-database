@@ -95,6 +95,7 @@
     <Content Include="app\static\images\item8.png" />
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\construction.html" />
+    <Content Include="app\templates\app\index.html" />
     <Content Include="app\templates\refresh.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\PCheck.html" />
@@ -102,7 +103,6 @@
     <Content Include="app\templates\List.html" />
     <Content Include="app\templates\register.html" />
     <Content Include="app\templates\reset_form.html" />
-    <Content Include="app\templates\createIdeologyConstruction.html" />
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\search_form.html" />
     <Content Include="app\templates\changepassword.html" />
@@ -135,7 +135,6 @@
     <Content Include="app\static\app\scripts\_references.js" />
     <Content Include="app\templates\app\about.html" />
     <Content Include="app\templates\app\contact.html" />
-    <Content Include="app\templates\app\index.html" />
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
     <Content Include="app\templates\app\loginpartial.html" />
