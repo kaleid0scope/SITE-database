@@ -8,24 +8,27 @@
 <body>
 <div class="container">
 	<h2>活动列表</h2>   
+    {%if rankname %}<p><a class="btn btn-primary" href= "/create/{{rankname}}" >创建活动</a></p>{%endif%}
     {% if type == '学生端' %}
-    <p><a class="btn btn-primary" href= "/create/{{rankname}}" >创建活动</a></p>
     <h4>已通过审核</h4>  
     <table class="table table-hover">
 		<thead>
 			<tr>
 				<th>活动类型</th>
 				<th>活动名称</th>
-                <th>查看详细信息</th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>查看活动详细信息</th>
 			</tr>
 		</thead>
 		<tbody>
-            {% for rankname,link in linksP.items %}
+            {% for viewlink in linksP %}
 			<tr>
-				<td>{{link.rtype}}</td>
-				<td>{{rankname}}</td>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
                 <td></td>
-                <td><a class="btn btn-info" href= "/Detail/{{link.id}}" >查看</a></td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
 			</tr>
             {% endfor %}
 		</tbody>
@@ -36,16 +39,19 @@
 			<tr>
 				<th>活动类型</th>
 				<th>活动名称</th>
-                <th>查看详细信息</th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>查看活动详细信息</th>
 			</tr>
 		</thead>
 		<tbody>
-            {% for rankname,link in linksDS.items %}
+            {% for viewlink in linksDS %}
 			<tr>
-				<td>{{link.rtype}}</td>
-				<td>{{rankname}}</td>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
                 <td></td>
-                <td><a class="btn btn-info" href= "/Detail/{{link.id}}" >查看</a></td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
 			</tr>
             {% endfor %}
 		</tbody>
@@ -56,21 +62,24 @@
 			<tr>
 				<th>活动类型</th>
 				<th>活动名称</th>
-                <th>查看详细信息</th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th>查看活动详细信息</th>
 			</tr>
 		</thead>
 		<tbody>
-            {% for rankname,link in linksNP.items %}
+            {% for viewlink in linksNP %}
 			<tr>
-				<td>{{link.rtype}}</td>
-				<td>{{rankname}}</td>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
                 <td></td>
-                <td><a class="btn btn-info" href= "/Detail/{{link.id}}" >查看</a></td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
 			</tr>
             {% endfor %}
 		</tbody>
 	</table>
-    <a class="btn btn-info" href= "/first" >返回个人主页</a>
+    <a class="btn btn-info" href= "/" >返回个人主页</a>
     {% endif %}
 
     {% if type == '教师端' or type == '管理员'%}
@@ -78,18 +87,21 @@
     <table class="table table-hover">
 		<thead>
 			<tr>
+                <th>申请者学号</th>
 				<th>活动类型</th>
 				<th>活动名称</th>
-                <th>查看详细信息</th>
+				<th>查看活动详细信息</th>
+                <th>审核申请</th>
 			</tr>
 		</thead>
 		<tbody>
-            {% for rankname,link in linksP.items %}
+            {% for viewlink in linksDS %}
 			<tr>
-				<td>{{link.rtype}}</td>
-				<td>{{rankname}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/Check/{{link.id}}" >审核</a></td>
+				<td>{{viewlink.l.student}}</td>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
+                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >审核</a></td>
 			</tr>
             {% endfor %}
 		</tbody>
@@ -98,18 +110,21 @@
     <table class="table table-hover">
 		<thead>
 			<tr>
+                <th>申请者学号</th>
 				<th>活动类型</th>
 				<th>活动名称</th>
-                <th>查看详细信息</th>
+				<th>查看活动详细信息</th>
+                <th>审核申请</th>
 			</tr>
 		</thead>
 		<tbody>
-            {% for rankname,link in linksDS.items %}
+            {% for viewlink in linksP %}
 			<tr>
-				<td>{{link.rtype}}</td>
-				<td>{{rankname}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/Detail/{{link.id}}" >查看</a></td>
+				<td>{{viewlink.l.student}}</td>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
+                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >审核</a></td>
 			</tr>
             {% endfor %}
 		</tbody>
@@ -118,18 +133,21 @@
     <table class="table table-hover">
 		<thead>
 			<tr>
+                <th>申请者学号</th>
 				<th>活动类型</th>
 				<th>活动名称</th>
-                <th>查看详细信息</th>
+				<th>查看活动详细信息</th>
+                <th>审核申请</th>
 			</tr>
 		</thead>
 		<tbody>
-            {% for rankname,link in linksDS.items %}
+            {% for viewlink in linksNP %}
 			<tr>
-				<td>{{link.rtype}}</td>
-				<td>{{rankname}}</td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/Detail/{{link.id}}" >查看</a></td>
+				<td>{{viewlink.l.student}}</td>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
+                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >审核</a></td>
 			</tr>
             {% endfor %}
 		</tbody>

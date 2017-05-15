@@ -1,9 +1,26 @@
-
+<style type="text/css">
+.aa {
+	font-family: "微软雅黑";
+	font-size: 36px;
+}
+.bb {
+	text-align: center;
+}
+#apDiv1 {
+	position: absolute;
+	left: 610px;
+	top: 521px;
+	width: 646px;
+	height: 176px;
+	z-index: 1;
+}
+</style>
 {% extends "app/layout.html" %}
 
 {% block content %}
 <br><br><br><br><br><br><p>
-{%if al%}{{al}}，{%endif%}两秒钟后转入如下链接，如果长时间没有响应请直接点击：</p>
-<p><a href="{{url}}">{{ url }}</a></p>
+<span class="aa">{%if al%}{{al}}，{%endif%}两秒钟后转入如下链接，如果长时间没有响应请直接点击：</span></p>
+<p><a href="{{url}}" class="aa">
+<div id="apDiv1"><a href="{{url}}" class="aa"><span class="bb">点我跳转</span></a></div></a></p>
 <meta http-equiv="refresh" content="2;url={{ url }}">
 {% endblock %}

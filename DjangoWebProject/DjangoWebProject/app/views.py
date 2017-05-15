@@ -36,7 +36,7 @@ def NewWeb():
     user = User.objects.filter()
 
 @teacher_required
-def Excel(request):
+def Excel(request,linkid = None):
     if request.method == 'POST' and request.POST.has_key('register'):
         myFile = request.FILES.get("register", None)    # 获取上传的文件，如果没有文件，则默认为None  
         if not myFile:  
@@ -50,6 +50,17 @@ def Excel(request):
             return HttpResponse("no files for upload!") 
         if ExcelImportLesson(myFile.temporary_file_path()):
             return HttpResponse("over!")  
+        return HttpResponse("error")
+    elif request.method == 'POST' and request.POST.has_key('link'):
+        myFile = request.FILES.get("link", None)
+        if not myFile:  
+            return HttpResponse("no files for upload!") 
+        if linkid != None:
+          if getType(request) != '管理员':
+            instrutor = Instructor.objects.get(user = request.user)
+            if Major.objects.filter(instructor = instructor).filter(pk = link.student.major.pk):
+                if ExcelImportLink(myFile.temporary_file_path(),linkid):
+                    return HttpResponse("over!")  
         return HttpResponse("error")
     else:
         assert isinstance(request, HttpRequest)

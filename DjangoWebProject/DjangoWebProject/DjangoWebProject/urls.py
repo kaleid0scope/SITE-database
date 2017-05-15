@@ -49,6 +49,8 @@ urlpatterns = [
     url(r'^Index/(?P<rankname>\w+)$',ProjectIndex),
     url(r'^check/(?P<linkid>\w+)$',ProjectCheck),
     url(r'^check/(?P<rankname>\w+)/(?P<linkid>\w+)$',ProjectCheck),
+    url(r'^Check/(?P<linkid>\w+)$',ProjectCheck),
+    url(r'^Check/(?P<rankname>\w+)/(?P<linkid>\w+)$',ProjectCheck),
     url(r'^delete/(?P<linkid>\w+)$',ProjectDelete),
     url(r'^detail/(?P<linkid>\w+)$',ProjectDetail),
     url(r'^Detail/(?P<linkid>\w+)$',ProjectDetail),

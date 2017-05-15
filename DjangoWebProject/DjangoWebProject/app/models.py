@@ -5,10 +5,25 @@ from django.contrib.auth.models import User, AbstractUser
 # Create your models here.
 
 statusChoice = (
+        ('待审核', '待审核'),
         ('未通过', '未通过'),
-        ('通过', '通过'),
-        ('待审核', '待审核'),)
+        ('通过', '通过'),)
 
+def getVerboseName(str):
+    NameDic = {
+        'User': u'用户',
+        'ResearchProjectRank': u'科研立项',
+        'IdeologyConstructionRank': u'思建活动', 
+        'LectureRank': u'学术讲座',
+        'VolunteeringRank': u'志愿活动',
+        'SchoolActivityRank': u'校园活动',
+        'PaperRank': u'论文',
+        'CompetitionRank': u'学术竞赛',
+        'ExchangeRank': u'交流交换',
+        'StudentCadreRank': u'学生干部',
+        'InternshipRank': u'实习实践',
+    }
+    return NameDic.get(str, NameError)
 
 class CompleteInformation(models.Model):
     Complete = models.PositiveIntegerField(primary_key = True,verbose_name ='完成度' )
@@ -148,7 +163,7 @@ class RankLinks(models.Model):
        verbose_name = u'活动-学生关系表'
        verbose_name_plural = u'活动-学生关系表'
     def __unicode__(self):
-        return str(self.student)+str(self.rtype)
+        return u'学号'+str(self.student)+getVerboseName(self.rtype)+u'编号'+str(self.rnum)
 
 
 #ResearchProject
