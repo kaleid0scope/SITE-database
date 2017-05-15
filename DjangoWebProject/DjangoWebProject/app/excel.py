@@ -6,6 +6,7 @@ from app.models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from __builtin__ import range
+from app.Info import *
 import os
 import random,time
 from datetime import datetime
@@ -72,4 +73,16 @@ def ExcelImportLesson(path):
           ClassSort      = sheet.cell(r,6).value            #课程类别
           lesson = Lesson(name = Name,num = Num,credit = Credit,time = Time,introduction = Introduction,classSort = ClassSort,classTarget = ClassTarget)
           lesson.save()
+    return True
+
+def ExcelImportLink(path,project):
+    book = xlrd.open_workbook(path)
+    sheet = book.sheets()[0]  
+    for r in range(1, sheet.nrows):
+          num           = sheet.cell(r,0).value         #学生学号
+
+          link = RankLinks.objects.get(pk = linkid)
+          student = Students.objects.get(pk = num)
+          newlink = RankLinks(student = student,rtype= link.rtype,rum = link.rnum,status = '通过')
+          newlink.save()
     return True

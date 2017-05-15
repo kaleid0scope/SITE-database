@@ -54,6 +54,12 @@
                 <input type="submit" name="passyes" value="通过" class="btn btn-default">
                 <input type="submit" name="passno" value="拒绝" class="btn btn-default">
                 </form>{%endfor%}-->
+                {% if type == '管理员' or '教师端'%}
+                <form enctype="multipart/form-data" action="/excel/{{link.id}}" method="post">  
+                    <input type="file" name="link" /> 
+                <input type="submit" value="批量导入"/>  
+                </form>  
+                {% endif %}
             {% endif %}
 	
 </div>

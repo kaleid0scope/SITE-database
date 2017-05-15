@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import app
 from app.parameter import *
 from app.models import *
