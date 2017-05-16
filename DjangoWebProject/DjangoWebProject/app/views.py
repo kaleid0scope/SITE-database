@@ -56,7 +56,7 @@ def Excel(request,linkid = None):
         if not myFile:  
             return HttpResponse("no files for upload!") 
         if linkid != None:
-          if getType(request) != '管理员':
+          if getType(request) == '管理员':
             instructor = Instructor.objects.get(user = request.user)
             if Major.objects.filter(instructor = instructor).filter(pk = link.student.major.pk):
                 if ExcelImportLink(myFile.temporary_file_path(),linkid):

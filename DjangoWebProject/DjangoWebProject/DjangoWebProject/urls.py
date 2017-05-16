@@ -39,6 +39,8 @@ urlpatterns = [
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
 
     url(r'^complete/$',ShowComplete,name='complete'),
+    url(r'^complete/(?P<id>\w+)$',ShowComplete,name='complete'),
+    url(r'^studentIndex/(?P<studentid>\w+)$',ProjectIndex),
     url(r'^first/$',first),
     url(r'^copy/$',shit),
 

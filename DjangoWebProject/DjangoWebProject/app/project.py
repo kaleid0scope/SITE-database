@@ -148,25 +148,10 @@ def ProjectIndex(request,rankname = None,studentid = None):
             majors = Major.objects.filter(instructor = instructor)
             students = Students.objects.filter(major__in = majors)
             if studentid != None:
-                if students.filter(pk = studentid):students.filter(pk = studentid)
+                if students.filter(pk = studentid):students = students.filter(pk = studentid)
                 else :return Error(request,u'学生不存在或权限验证未通过')
             if rankname != None: links = RankLinks.objects.filter(student__in = students,rtype = rankname)#所有涉及的项目
             else : links = RankLinks.objects.filter(student__in = students)
-            linksP,linksDS,linksNP = [],[],[]
-            for link in links:
-                rank = getModel(link.rtype)
-                project = rank.objects.get(pk = link.rnum)
-                if link.status == '待审核':
-                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-                elif link.status == '通过':
-                    linksP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-                else:
-                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-            return render(request,'List.html',
-            {'linksP':linksP,
-            'linksDS':linksDS,
-            'linksNP':linksNP,
-            'rankname':rankname,})
         elif type == '管理员':
             if studentid != None:
                 student = Students.objects.filter(pk = studentid)
@@ -175,21 +160,6 @@ def ProjectIndex(request,rankname = None,studentid = None):
             else:
                 if rankname != None: links = RankLinks.objects.filter(rtype = rankname)#所有涉及的项目
                 else : links = RankLinks.objects.all()
-            linksP,linksDS,linksNP = [],[],[]
-            for link in links:
-                rank = getModel(link.rtype)
-                project = rank.objects.get(pk = link.rnum)
-                if link.status == '待审核':
-                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-                elif link.status == '通过':
-                    linksP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-                else:
-                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-            return render(request,'List.html',
-            {'linksP':linksP,
-            'linksDS':linksDS,
-            'linksNP':linksNP,
-            'rankname':rankname,})
         linksP,linksDS,linksNP = [],[],[]
         for link in links:
                 rank = getModel(link.rtype)

@@ -96,6 +96,9 @@
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\construction.html" />
     <Content Include="app\templates\app\index.html" />
+    <Content Include="app\templates\complete.html" />
+    <Content Include="app\templates\frame.html" />
+    <Content Include="app\templates\index.html" />
     <Content Include="app\templates\refresh.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\PCheck.html" />
@@ -109,6 +112,7 @@
     <Content Include="app\templates\changeauth.html" />
     <Content Include="app\templates\Pcreate.html" />
     <Content Include="app\templates\app\excel.html" />
+    <Content Include="app\templates\studentList.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

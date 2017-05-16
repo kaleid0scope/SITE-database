@@ -28,6 +28,6 @@ def Mix(list):
     complete = Complete()
     for comp in list:
         complete.complete0 += comp.complete0
-        complete.complete1 += comp.complete0
+        complete.complete1 += comp.complete1
         complete.complete2 += comp.complete2
     return complete
