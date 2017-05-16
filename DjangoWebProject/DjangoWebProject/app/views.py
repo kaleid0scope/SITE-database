@@ -57,7 +57,7 @@ def Excel(request,linkid = None):
             return HttpResponse("no files for upload!") 
         if linkid != None:
           if getType(request) != '管理员':
-            instrutor = Instructor.objects.get(user = request.user)
+            instructor = Instructor.objects.get(user = request.user)
             if Major.objects.filter(instructor = instructor).filter(pk = link.student.major.pk):
                 if ExcelImportLink(myFile.temporary_file_path(),linkid):
                     return HttpResponse("over!")  
@@ -66,15 +66,28 @@ def Excel(request,linkid = None):
         assert isinstance(request, HttpRequest)
         return render(request,'app/excel.html',{})
 
-def ShowComplete(request):
-    error = None
-    student = Students.objects.get(user = request.user)
+def ShowComplete(request,id = None):
+    if getType(request) in ('管理员','教师端'):
+        if id != None:student = Students.objects.get(pk = id)
+        else:return StudentList(request)
+    elif getType(request) == '学生端':student = Students.objects.get(user = request.user)
+    else: return Error(request,u'您无权访问')
     complete = GetComplete(request,student)
     fields = Complete._meta.fields
     FieldProject = {}
     for field in fields :
         if field.name != 'id': FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
-    return render(request,'complete.html', {'complete': FieldProject})
+    return render(request,'complete.html', {'FPS': FieldProject})
+
+def StudentList(request):
+    if getType(request) == '教师端':
+        instructor = Instructor.objects.get(user = request.user)
+        majors = Major.objects.filter(instructor = instructor)
+        students = Students.objects.filter(major__in = majors)
+    elif getType(request) == '管理员':
+        students = Students.objects.all()
+    else: return Error(request,u'您无权访问')
+    return render(request,'studentList.html', {'students': students})
     
 def construction(request):
     return render(request,'app/construction.html',{})

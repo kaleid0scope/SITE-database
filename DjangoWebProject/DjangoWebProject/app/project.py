@@ -33,7 +33,7 @@ def ProjectCreate(request,rankname,student = None):
             if student == None: return Error(request,u'缺少参数')
             if getType(request) == '管理员':project = getView(rankname)(request)
             if getType(request) == '教师端':
-                instrutor = Instructor.objects.get(user = request.user)
+                instructor = Instructor.objects.get(user = request.user)
                 if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,u'您无权访问')
                 project = getView(rankname)(request,student)
         if not project: return render(request,'Pcreate.html',{'alert':u'表格信息有错误'})
@@ -135,7 +135,7 @@ class ViewLink(object):
         self.rn = rn
     pass
 
-def ProjectIndex(request,rankname = None):
+def ProjectIndex(request,rankname = None,studentid = None):
     #try:
         if rankname != None: rank = getModel(rankname)
         type = getType(request)
@@ -143,26 +143,13 @@ def ProjectIndex(request,rankname = None):
             student = Students.objects.get(user = request.user)
             if rankname != None: links = RankLinks.objects.filter(student = student,rtype = rankname)#所有涉及的项目
             else : links = RankLinks.objects.filter(student = student)
-            linksP,linksDS,linksNP = [],[],[]
-            for link in links:
-                rank = getModel(link.rtype)
-                project = rank.objects.get(pk = link.rnum)
-                if link.status == '待审核':
-                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-                elif link.status == '通过':
-                    linksP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-                else:
-                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
-            assert isinstance(request, HttpRequest)
-            return render(request,'List.html',
-            {'linksP':linksP,
-            'linksDS':linksDS,
-            'linksNP':linksNP,
-            'rankname':rankname,})
         elif type == '教师端':
             instructor = Instructor.objects.get(user = request.user)
             majors = Major.objects.filter(instructor = instructor)
             students = Students.objects.filter(major__in = majors)
+            if studentid != None:
+                if students.filter(pk = studentid):students.filter(pk = studentid)
+                else :return Error(request,u'学生不存在或权限验证未通过')
             if rankname != None: links = RankLinks.objects.filter(student__in = students,rtype = rankname)#所有涉及的项目
             else : links = RankLinks.objects.filter(student__in = students)
             linksP,linksDS,linksNP = [],[],[]
@@ -181,8 +168,13 @@ def ProjectIndex(request,rankname = None):
             'linksNP':linksNP,
             'rankname':rankname,})
         elif type == '管理员':
-            if rankname != None: links = RankLinks.objects.filter(rtype = rankname)#所有涉及的项目
-            else : links = RankLinks.objects.all()
+            if studentid != None:
+                student = Students.objects.filter(pk = studentid)
+                if rankname != None: links = RankLinks.objects.filter(rtype = rankname,student = student)#所有涉及的项目
+                else : links = RankLinks.objects.filter(student = student)
+            else:
+                if rankname != None: links = RankLinks.objects.filter(rtype = rankname)#所有涉及的项目
+                else : links = RankLinks.objects.all()
             linksP,linksDS,linksNP = [],[],[]
             for link in links:
                 rank = getModel(link.rtype)
@@ -194,6 +186,22 @@ def ProjectIndex(request,rankname = None):
                 else:
                     linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
             return render(request,'List.html',
+            {'linksP':linksP,
+            'linksDS':linksDS,
+            'linksNP':linksNP,
+            'rankname':rankname,})
+        linksP,linksDS,linksNP = [],[],[]
+        for link in links:
+                rank = getModel(link.rtype)
+                project = rank.objects.get(pk = link.rnum)
+                if link.status == '待审核':
+                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
+                elif link.status == '通过':
+                    linksP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
+                else:
+                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
+        assert isinstance(request, HttpRequest)
+        return render(request,'List.html',
             {'linksP':linksP,
             'linksDS':linksDS,
             'linksNP':linksNP,
@@ -260,7 +268,7 @@ def ProjectAdd(request,linkid,sid):
       try:
         student = Students.objects.get(StudentNum = sid)
         if getType(request) == '教师端':
-            instrutor = Instructor.objects.get(user = request.user)
+            instructor = Instructor.objects.get(user = request.user)
             if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk):return Error(request,u'您无权访问')
         if projectlinks.filter(student = student): alert = '该成员已在项目中！'
         join = RankLinks(status = '待审核',student = student ,rtype = link.rtype,rnum = link.rnum)
