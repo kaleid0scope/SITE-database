@@ -7,27 +7,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="images/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="images/icons/favicon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/icons/favicon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/icons/favicon-114x114.png">
     <!--Loading bootstrap css-->
     <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
     <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
-    <link type="text/css" rel="stylesheet" href="styles/jquery-ui-1.10.4.custom.min.css">
     <link type="text/css" rel="stylesheet" href="styles/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/all.css">
     <link type="text/css" rel="stylesheet" href="styles/main.css">
-    <link type="text/css" rel="stylesheet" href="styles/zabuto_calendar.min.css">
     <style type="text/css">
     #apDiv1 {
 	position: absolute;
 	width: 1387px;
-	height: 100%;
+	height: 546px;
 	z-index: 2;
 	left: 253px;
-	top: 82px;
+	top: 180px;
 }
     </style>
 </head>
@@ -41,60 +34,48 @@
                     
                      <div class="clearfix"></div>
                     <li class="active"><a href="dashboard.html"><i class="fa fa-tachometer fa-fw">
-                        <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">活动列表</span></a></li>
                     <li><a href="Layout.html"><i class="fa fa-desktop fa-fw">
-                    <div class="icon-bg bg-pink"></div>
                     </i><span class="menu-title">科研立项</span></a>
                        
                     </li>
-                    <li><a href="UIElements.html"><i class="fa fa-send-o fa-fw">
-                        <div class="icon-bg bg-green"></div>
+                    <li><a href="UIElements.html"><i class="fa fa-gift fa-fw">
                     </i><span class="menu-title">思建活动</span></a>
                        
                     </li>
                     <li><a href="Forms.html"><i class="fa fa-edit fa-fw">
-                        <div class="icon-bg bg-violet"></div>
                     </i><span class="menu-title">讲座</span></a>
                       
                     </li>
                     <li><a href="Tables.html"><i class="fa fa-th-list fa-fw">
-                        <div class="icon-bg bg-blue"></div>
                     </i><span class="menu-title">志愿活动</span></a>
                           
                     </li>
-                    <li><a href="DataGrid.html"><i class="fa fa-database fa-fw">
-                        <div class="icon-bg bg-red"></div>
+                    <li><a href="DataGrid.html"><i class="fa fa-sitemap fa-fw">
                     </i><span class="menu-title">校园活动</span></a>
                       
                     </li>
                     <li><a href="Pages.html"><i class="fa fa-file-o fa-fw">
-                        <div class="icon-bg bg-yellow"></div>
                     </i><span class="menu-title">实践实习</span></a>
                        
                     </li>
                     <li><a href="Extras.html"><i class="fa fa-gift fa-fw">
-                        <div class="icon-bg bg-grey"></div>
                     </i><span class="menu-title">科研论文</span></a>
                       
                     </li>
                     <li><a href="Dropdown.html"><i class="fa fa-sitemap fa-fw">
-                        <div class="icon-bg bg-dark"></div>
                     </i><span class="menu-title">学术竞赛</span></a>
                       
                     </li>
                     <li><a href="Email.html"><i class="fa fa-envelope-o">
-                        <div class="icon-bg bg-primary"></div>
                     </i><span class="menu-title">待审核活动</span></a>
                       
                     </li>
                     <li><a href="Charts.html"><i class="fa fa-bar-chart-o fa-fw">
-                        <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">未通过活动</span></a>
                        
                     </li>
                     <li><a href="Animation.html"><i class="fa fa-slack fa-fw">
-                        <div class="icon-bg bg-green"></div>
                     </i><span class="menu-title">返回我的课程列表</span></a></li>
                 </ul>
             </div>
@@ -105,29 +86,40 @@
                         <div class="page-title"></div>
                         <a class="btn btn-primary" href="">查看活动</a><a class="btn btn-primary" href="">创建活动</a><a class="btn btn-primary" href="">审核活动</a> <div><input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
 <button class="btn hasTooltip" type="submit" title="" data-original-title="搜索">搜索</button>
-<button class="btn hasTooltip" type="button" onclick="document.id('filter_search').value='';this.form.submit();" title="" data-original-title="清除">清空</button></div>
+<button class="btn hasTooltip" type="button" onClick="document.id('filter_search').value='';this.form.submit();" title="" data-original-title="清除">清空</button></div>
                     </div>
                     <div class="clearfix">
                     </div>
                 </div>
             </div>
         </div>
-    </div>、
-    <div id="apDiv1"><body>
+    </div>
+    <div id="apDiv1">
 <br>
-
-
-<p></p>
-<br>
-<br>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
+        <table class="table table-hover">
+		<thead>
+			<tr>
+				<th>活动类型</th>
+				<th>活动名称</th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>查看活动详细信息</th>
+			</tr>
+		</thead>
+		<tbody>
+            {% for viewlink in linksP %}
+			<tr>
+				<td>{{viewlink.n}}</td>
+				<td>{{viewlink.rn}}</td>
+                <td></td>
+                <td></td>
+                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
+			</tr>
+            {% endfor %}
+		</tbody>
+	</table>
 
 </div>
-    <script src="script/main.js"></script>
     
 </body>
 </html>

@@ -44,7 +44,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   line-height: 1.42857143;
-  color: #999999;
+  color: #5d5d5d;
   background-color: #f0f2f5;
   height: 100%;
 }
@@ -57,7 +57,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #999999;
+  color: #252525;
   text-decoration: none;
 }
 a:hover,
@@ -3993,7 +3993,7 @@ h4,
 h5,
 h6 {
   font-family: "Open Sans", sans-serif;
-  font-weight: 300;
+  font-weight: 500;
 }
 .note {
   margin: 0 0 20px 0;
@@ -4014,7 +4014,7 @@ h6 {
 }
 .note code,
 .note .highlight {
-  background-color: #fff;
+  background-color: #ffffff;
 }
 .note-success {
   border-color: #5cb85c;
@@ -5263,9 +5263,9 @@ fieldset[disabled] .btn-white.active {
 [class*=" icon-"] {
   display: inline-block;
   margin-top: 1px;
-  font-size: 14px;
+  font-size: 60px;
   *margin-right: .3em;
-  line-height: 14px;
+  line-height: 60px;
   -webkit-font-smoothing: antialiased;
 }
 li [class^="fa-"],
@@ -6459,7 +6459,6 @@ li [class*=" icon-"].icon-large {
   line-height: 17px;
   cursor: pointer;
   color: #ccc;
-  -ms-transition: color 0.3s;
   -moz-transition: color 0.3s;
   -webkit-transition: color 0.3s;
 }
@@ -6468,7 +6467,6 @@ li [class*=" icon-"].icon-large {
 }
 .table thead tr th,
 .table thead tr td {
-  border-bottom: 0;
 }
 .table.table-sm {
   font-size: .875em;
@@ -6619,7 +6617,7 @@ li [class*=" icon-"].icon-large {
   color: #999999;
 }
 .table.table-hover-color tbody tr:hover td:first-child {
-  border-left: 4px solid #dc6767;
+  border-left: 4px solid #28283f;
 }
 .table-actions {
   margin-bottom: 20px;
@@ -7073,7 +7071,7 @@ ul.chats li.out .message {
   position: absolute;
   width: 100%;
   display: block !important;
-  height: 730px;
+  height: 900px;
   -webkit-transition: opacity ease-in-out 500ms;
   -moz-transition: opacity ease-in-out 500ms;
   -o-transition: opacity ease-in-out 500ms;
@@ -7171,6 +7169,7 @@ ul.chats li.out .message {
   -o-animation: fadeInUp 300ms linear 300ms both;
   -ms-animation: fadeInUp 300ms linear 300ms both;
   animation: fadeInUp 300ms linear 300ms both;
+  color:white;
 }
 
 #main-slider .active .animation.animated-item-2 {
@@ -8072,4 +8071,70 @@ ul.social_icons li  a i{
   border-width: 11px;
   border-color: transparent transparent #DDD transparent;
   z-index: 0;
+}
+
+/***********************
+********* Footer ******
+************************/
+#bottom {
+  background: #f5f5f5;
+  border-bottom: 5px solid #c52d2f;
+  font-size: 14px;
+}
+
+#bottom h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-size:22px;
+  color: #000;
+}
+
+#bottom ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#bottom ul li {
+  display: block;
+  padding: 5px 0;
+}
+
+#bottom ul li a {
+  color: #808080;
+}
+
+#bottom ul li a:hover {
+  color: #c52d2f;
+}
+
+#bottom .widget {
+  margin-bottom: 0;
+}
+
+#footer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #fff;
+  background: #2e2e2e;
+}
+
+#footer a {
+  color: #fff;
+}
+
+#footer a:hover {
+  color: #c52d2f;
+}
+
+#footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#footer ul > li {
+  display: inline-block;
+  margin-left: 15px;
 }
