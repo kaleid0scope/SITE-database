@@ -125,6 +125,16 @@ class Students(models.Model):
     def __unicode__(self):
         return str(self.StudentNum)
 
+class Teacher(models.Model):
+    user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='TtoU')
+    id = models.PositiveIntegerField(primary_key = True,verbose_name ='教工号' )
+    name = models.CharField(max_length = 20,verbose_name ='姓名' )
+    sex = models.BooleanField(verbose_name ='性别')#初始值
+    phone = models.BigIntegerField(verbose_name ='手机号码' )
+    email = models.EmailField(verbose_name ='电子邮箱' )#待修改
+    rank = models.CharField(max_length = 50,verbose_name ='职称')
+    department = models.CharField(max_length = 50,verbose_name='学系')
+
 class Lesson(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='课程名称')
     num = models.CharField(max_length = 10,verbose_name ='课序号')
@@ -133,12 +143,13 @@ class Lesson(models.Model):
     introduction = models.CharField(max_length = 200,verbose_name ='课程介绍')
     classTarget = models.CharField(max_length = 200,verbose_name ='课程目标')
     classSort = models.CharField(max_length = 50,verbose_name ='课程类别')
+    teacher = models.ForeignKey(Complete,verbose_name ='教师',related_name='LtoT')
     class Meta:
         verbose_name = u'课程'
         verbose_name_plural = u'课程'
     def __unicode__(self):
         return str(self.num)
-    
+
 class Score(models.Model):
     student =models.ForeignKey(Students,verbose_name ='学生学号')
     lesson =models.ForeignKey(Lesson,verbose_name ='课程名称')

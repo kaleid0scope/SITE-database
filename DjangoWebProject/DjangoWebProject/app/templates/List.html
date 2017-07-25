@@ -8,7 +8,7 @@
 <body>
 <div class="container">
 	<h2>活动列表</h2>   
-    {%if rankname %}<p><a class="btn btn-primary" href= "/create/{{rankname}}" >创建活动</a></p>{%endif%}
+    {% if rankname %}<p><a class="btn btn-primary" href= "/create/{{ rankname }}" >创建活动</a></p>{%endif%}
     {% if type == '学生端' %}
     <h4>已通过审核</h4>  
     <table class="table table-hover">
@@ -82,7 +82,7 @@
     <a class="btn btn-info" href= "/" >返回个人主页</a>
     {% endif %}
 
-    {% if type == '教师端' or type == '管理员'%}
+    {% if type == '辅导员' or type == '管理员'%}
     <h4>待审核</h4>  
     <table class="table table-hover">
 		<thead>
@@ -124,7 +124,7 @@
 				<td>{{viewlink.n}}</td>
 				<td>{{viewlink.rn}}</td>
                 <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
-                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >审核</a></td>
+                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >修改</a></td>
 			</tr>
             {% endfor %}
 		</tbody>
@@ -147,7 +147,7 @@
 				<td>{{viewlink.n}}</td>
 				<td>{{viewlink.rn}}</td>
                 <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
-                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >审核</a></td>
+                <td><a class="btn btn-info" href= "/Check/{{viewlink.l.id}}" >修改</a></td>
 			</tr>
             {% endfor %}
 		</tbody>

@@ -35,6 +35,9 @@ def NewWeb():
         Permission.objects.create(name=u'是否为辅导员',content_type = ContentType.objects.get_for_model(User),codename='is_instructor')
     user = User.objects.filter()
 
+def test(request):
+    return render(request,'projects/index.html',{})
+
 @teacher_required
 def Excel(request,linkid = None):
     if request.method == 'POST' and request.POST.has_key('register'):
@@ -67,7 +70,7 @@ def Excel(request,linkid = None):
         return render(request,'app/excel.html',{})
 
 def ShowComplete(request,id = None):
-    if getType(request) in ('管理员','教师端'):
+    if getType(request) in ('管理员','辅导员'):
         if id != None:student = Students.objects.get(pk = id)
         else:return StudentList(request)
     elif getType(request) == '学生端':student = Students.objects.get(user = request.user)
@@ -80,7 +83,7 @@ def ShowComplete(request,id = None):
     return render(request,'complete.html', {'FPS': FieldProject})
 
 def StudentList(request):
-    if getType(request) == '教师端':
+    if getType(request) == '辅导员':
         instructor = Instructor.objects.get(user = request.user)
         majors = Major.objects.filter(instructor = instructor)
         students = Students.objects.filter(major__in = majors)

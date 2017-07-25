@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from app.forms import *
 from app.models import *
 from app.parameter import *
@@ -23,6 +22,8 @@ def Error(request,alert = None,template_name = None):
         template_name = 'app/index.html'
     return Ralert(alert)(render)(request,template_name,{'error':True})
 
+'''管理员访问时带student参数,学生访问时不带
+'''
 @authenticated_required
 def ProjectCreate(request,rankname,student = None):
     if request.method == 'POST':
@@ -32,7 +33,7 @@ def ProjectCreate(request,rankname,student = None):
         else:
             if student == None: return Error(request,u'缺少参数')
             if getType(request) == '管理员':project = getView(rankname)(request)
-            if getType(request) == '教师端':
+            if getType(request) == '辅导员':
                 instructor = Instructor.objects.get(user = request.user)
                 if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,u'您无权访问')
                 project = getView(rankname)(request,student)
@@ -54,7 +55,7 @@ def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,
             project = rank.objects.get(pk = rankid)
         else :return Error(request,u'缺少参数')#get project
     type = getType(request)
-    if type == '教师端':
+    if type == '辅导员':
         if student == None: return Error(request,u'请指定学生')
         instructor = Instructor.objects.get(user = request.user)
         majors = Major.objects.filter(instructor = instructor).filter(pk = student.major.pk)
@@ -73,7 +74,7 @@ def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,
    #         error = e
 
 def ProjectDelete(request,linkid):
-        if getType(request) not in ('学生端','教师端','管理员'):
+        if getType(request) not in ('学生端','辅导员','管理员'):
             return Error(request,u'您无权访问')
     #try:
         link = RankLinks.objects.get(pk = int(linkid))
@@ -81,7 +82,7 @@ def ProjectDelete(request,linkid):
         project = rank.objects.get(id = link.rnum)
         if getType(request) == '学生端':
             if link.student != Students.objects.get(user = request.user):return Error(request,u'您无权访问')
-        if getType(request) == '教师端':
+        if getType(request) == '辅导员':
             instructor = Instructor.objects.get(user = request.user)
             if not Major.objects.filter(instructor = instructor).filter(pk = link.student.major.pk): return Error(request,u'您无权访问')
         link.delete()
@@ -93,7 +94,7 @@ def ProjectDelete(request,linkid):
 
 def ProjectDetail(request,linkid,Valert = None):
     #try:
-        if getType(request) not in ('学生端','教师端','管理员'):
+        if getType(request) not in ('学生端','辅导员','管理员'):
             Error(request,u'您未认证')
         link = RankLinks.objects.get(pk = int(linkid))
         rank = getModel(link.rtype)
@@ -114,7 +115,7 @@ def ProjectDetail(request,linkid,Valert = None):
                 return Ralert('您只能查看您自己的项目')(render)(request,'app/index.html',{})
             manage = True if projectlinks.order_by('id')[0] == link else False
             return render(request,'Detail.html',{'project':project,'link':link,'FPS':FieldProject,'manage':manage,'members':members,'alert':Valert})
-        elif type == '教师端':
+        elif type == '辅导员':
             instructor = Instructor.objects.get(user = request.user)
             if not Major.objects.filter(instructor = instructor).filter(pk__in = majors): return Error(request,u'您无权访问')
             return render(request,'Detail.html',{'project':project,'link':link,'FPS':FieldProject,'members':members,'manage':True,'alert':Valert})
@@ -143,7 +144,7 @@ def ProjectIndex(request,rankname = None,studentid = None):
             student = Students.objects.get(user = request.user)
             if rankname != None: links = RankLinks.objects.filter(student = student,rtype = rankname)#所有涉及的项目
             else : links = RankLinks.objects.filter(student = student)
-        elif type == '教师端':
+        elif type == '辅导员':
             instructor = Instructor.objects.get(user = request.user)
             majors = Major.objects.filter(instructor = instructor)
             students = Students.objects.filter(major__in = majors)
@@ -234,10 +235,10 @@ def ProjectAdd(request,linkid,sid):
         alert = '成功添加!'
       except Exception,e:
         alert = '学号对应的学生不存在！'
-    if getType(request) == '教师端' or getType(request) == '管理员':
+    if getType(request) == '辅导员' or getType(request) == '管理员':
       try:
         student = Students.objects.get(StudentNum = sid)
-        if getType(request) == '教师端':
+        if getType(request) == '辅导员':
             instructor = Instructor.objects.get(user = request.user)
             if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk):return Error(request,u'您无权访问')
         if projectlinks.filter(student = student): alert = '该成员已在项目中！'

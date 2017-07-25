@@ -6,6 +6,9 @@ from app.models import *
 from app.forms import *
 from app.create import *
 from exceptions import NameError
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
 
 def getModel(str):
     ModelDic = {
@@ -104,3 +107,14 @@ def getType(request):
 
 def refresh(request,url,alert):
     return render(request,'refresh.html',{'url':url,'al':alert})
+
+def page(query,num = None):
+    if num == None:num = 10
+    paginator = Paginator(query, num)
+    try:
+        query = paginator.page(page_num)
+    except PageNotAnInteger:
+        query = paginator.page(1)
+    except EmptyPage:
+        query = paginator.page(paginator.num_pages)
+    return query
