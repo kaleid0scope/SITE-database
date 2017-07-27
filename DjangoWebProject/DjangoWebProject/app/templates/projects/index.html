@@ -85,7 +85,7 @@
                   <div class="page-header pull-left">
                         <div class="page-title"></div>
                         <a class="btn btn-primary" href="">查看活动</a><a class="btn btn-primary" href="">创建活动</a><a class="btn btn-primary" href="">审核活动</a> <div><input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
-<button class="btn hasTooltip" type="submit" title="" data-original-title="搜索">搜索</button>
+<button class="btn hasTooltip" type="submit" title="" data-original-title="搜索" onClick="search()">搜索</button>
 <button class="btn hasTooltip" type="button" onClick="document.id('filter_search').value='';this.form.submit();" title="" data-original-title="清除">清空</button></div>
                     </div>
                     <div class="clearfix">
@@ -96,7 +96,7 @@
     </div>
     <div id="apDiv1">
 <br>
-        <table class="table table-hover">
+        <table class="table table-hover" id="mtab">
 		<thead>
 			<tr>
 				<th>活动类型</th>
@@ -106,17 +106,9 @@
                 <th>查看活动详细信息</th>
 			</tr>
 		</thead>
-		<tbody>
-            {% for viewlink in linksP %}
-			<tr>
-				<td>{{viewlink.n}}</td>
-				<td>{{viewlink.rn}}</td>
-                <td></td>
-                <td></td>
-                <td><a class="btn btn-info" href= "/Detail/{{viewlink.l.id}}" >查看</a></td>
-			</tr>
-            {% endfor %}
-		</tbody>
+        <tbody id="mainlist">
+
+        </tbody>
 	</table>
 
 </div>
@@ -124,4 +116,68 @@
 </body>
 </html>
 
+<script>
+    var vl = [];
+    {%for viewlink in linksDS%}
+     vl.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}
+    var list = vl;
+    initial();
+
+    function initial()
+    {
+        for(var i = 0;i<list.length;i++){
+
+    var tr = document.createElement("tr");  
+    var new_obj = list[i];
+
+    var tdn = document.createElement("td");  
+    tdn.innerHTML = new_obj.n;
+    var tdrn = document.createElement("td");  
+    tdrn.innerHTML = new_obj.rn;
+    var blank1 = document.createElement("td");  
+    blank1.innerHTML = "";    
+    var blank2 = document.createElement("td");  
+    blank2.innerHTML = "";
+    var tdadd = document.createElement("td");  
+    tdadd.innerHTML = "<a class='btn btn-info' href= '/Detail/" + new_obj.id.toString() + "'>查看</a>";
+    
+    tr.appendChild(tdn); 
+    tr.appendChild(tdrn);
+    tr.appendChild(blank1); 
+    tr.appendChild(blank2);  
+    tr.appendChild(tdadd); 
+
+    var listbody = document.getElementById("mainlist");  
+    listbody.appendChild(tr);  
+        }
+    }
+
+    function search(string)
+    {
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].rn.indexOf(string) > 0)
+            {
+                list.push(vl[i]);
+            }
+        }
+        var list = document.getElementById("mainlist");
+        tab = document.getElementById("mtab");
+        var num = tab.rows.length;
+
+        for(var i=1;i<num;i++){                           
+        tab.deleteRow(1);
+        }
+        
+        initial();
+    }
+
+    function Link(n,rn,id) {
+        this.n = n;
+        this.rn = rn;
+        this.id = id;
+    }
+</script>
 {% endblock %}

@@ -88,4 +88,3 @@ ENV/
 # Rope project settings
 .ropeproject
 /DjangoWebProject/DjangoWebProject/obj/Release
-/DjangoWebProject/DjangoWebProject/app/templates/Verify/IdeologyConstructionIndex.html

@@ -172,7 +172,7 @@ def ProjectIndex(request,rankname = None,studentid = None):
                 else:
                     linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = link))
         assert isinstance(request, HttpRequest)
-        return render(request,'List.html',
+        return render(request,'projects/index.html',
             {'linksP':linksP,
             'linksDS':linksDS,
             'linksNP':linksNP,

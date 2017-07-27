@@ -178,23 +178,3 @@ def changepassword(request,username):
 	else:
 		form = ChangepwdForm()
 	return render(request,'changepassword.html',{'form':form,'alert':error})
-
-
-def index(request):
-    alert = 'unlogin!'
-    if request.user.is__authenticated():
-        try:
-            student = Students.objects.get(user = request.user)
-            return render(request,'index.html',{'projects':ResearchProject.objects.filter(StudentNum = student),
-                                            'constructions':IdeologyConstruction.objects.filter(StudentNum = student),
-                                            'lectures':Lecture.objects.filter(StudentNum = student),
-                                            'volunteerings':Volunteering.objects.filter(StudentNum = student),
-                                            'activities':SchoolActivity.objects.filter(StudentNum = student),
-                                            'internships':Internship.objects.filter(StudentNum = student),
-                                            'cadres':StudentCadreRank.objects.filter(StudentNum = student),
-                                            'papers':PaperRank.objects.filter(StudentNum = student),
-                                            'exchanges':ExchangeRank.objects.filter(StudentNum = student),
-                                            'competitions':CompetitionRank.objects.filter(StudentNum = student)})
-        except Exception,e:
-            alert = 'unregister!'
-    return render_to_response('/home',{'alert':alert})

@@ -60,8 +60,6 @@ urlpatterns = [
     url(r'^Detail/(?P<linkid>\w+)$',ProjectDetail),
     url(r'^Add/(?P<linkid>\w+)/(?P<sid>\w+)$',ProjectAdd),
 
-
-    url(r'^index/$',index,name='index'), 
     url(r'^construction/$',construction,name='construction'), 
     url(r'^excel/$',Excel),
     #C:\Users\Administrator\Source\Repos\SITE-database\DjangoWebProject\DjangoWebProject\app\static\images
