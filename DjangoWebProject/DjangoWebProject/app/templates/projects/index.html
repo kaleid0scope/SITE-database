@@ -3,7 +3,7 @@
 {% block content %}
 <html>
 <head>
-    <title>title</title>
+    <title>活动列表</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,48 +33,50 @@
                 <ul id="side-menu" class="nav">
                     
                      <div class="clearfix"></div>
-                    <li class="active"><a href="dashboard.html"><i class="fa fa-tachometer fa-fw">
-                    </i><span class="menu-title">活动列表</span></a></li>
-                    <li><a href="Layout.html"><i class="fa fa-desktop fa-fw">
-                    </i><span class="menu-title">科研立项</span></a>
-                       
-                    </li>
-                    <li><a href="UIElements.html"><i class="fa fa-gift fa-fw">
-                    </i><span class="menu-title">思建活动</span></a>
-                       
-                    </li>
-                    <li><a href="Forms.html"><i class="fa fa-edit fa-fw">
-                    </i><span class="menu-title">讲座</span></a>
+                    <li class="active"><a onClick="vl()"><i class="fa fa-tachometer fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">活动列表</span></a></li>
+
+                    <li><a onClick="ds()"><i class="fa fa-envelope-o">
+                    </i><span class="menu-title" style="cursor:pointer">查看待审核活动</span></a>
                       
                     </li>
-                    <li><a href="Tables.html"><i class="fa fa-th-list fa-fw">
-                    </i><span class="menu-title">志愿活动</span></a>
+                    <li><a onClick="np()"><i class="fa fa-bar-chart-o fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">查看未通过活动</span></a>
+                       
+                    </li>
+                    <li><a onClick="rank('科研立项')"><i class="fa fa-desktop fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">科研立项</span></a>
+                       
+                    </li>
+                    <li><a onClick="rank('思建活动')"><i class="fa fa-gift fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">思建活动</span></a>
+                       
+                    </li>
+                    <li><a onClick="rank('讲座')"><i class="fa fa-edit fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">讲座</span></a>
+                      
+                    </li>
+                    <li><a onClick="rank('志愿活动')"><i class="fa fa-th-list fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">志愿活动</span></a>
                           
                     </li>
-                    <li><a href="DataGrid.html"><i class="fa fa-sitemap fa-fw">
-                    </i><span class="menu-title">校园活动</span></a>
+                    <li><a onClick="rank('校园活动')"><i class="fa fa-sitemap fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">校园活动</span></a>
                       
                     </li>
-                    <li><a href="Pages.html"><i class="fa fa-file-o fa-fw">
-                    </i><span class="menu-title">实践实习</span></a>
+                    <li><a onClick="rank('实践实习')"><i class="fa fa-file-o fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">实践实习</span></a>
                        
                     </li>
-                    <li><a href="Extras.html"><i class="fa fa-gift fa-fw">
-                    </i><span class="menu-title">科研论文</span></a>
+                    <li><a onClick="rank('科研论文')"><i class="fa fa-gift fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">科研论文</span></a>
                       
                     </li>
-                    <li><a href="Dropdown.html"><i class="fa fa-sitemap fa-fw">
-                    </i><span class="menu-title">学术竞赛</span></a>
+                    <li><a onClick="rank('学术竞赛')"><i class="fa fa-sitemap fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">学术竞赛</span></a>
                       
                     </li>
-                    <li><a href="Email.html"><i class="fa fa-envelope-o">
-                    </i><span class="menu-title">待审核活动</span></a>
-                      
-                    </li>
-                    <li><a href="Charts.html"><i class="fa fa-bar-chart-o fa-fw">
-                    </i><span class="menu-title">未通过活动</span></a>
-                       
-                    </li>
+                    
                     <li><a href="Animation.html"><i class="fa fa-slack fa-fw">
                     </i><span class="menu-title">返回我的课程列表</span></a></li>
                 </ul>
@@ -83,10 +85,11 @@
             <div id="page-wrapper">
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                   <div class="page-header pull-left">
-                        <div class="page-title"></div>
-                        <a class="btn btn-primary" href="">查看活动</a><a class="btn btn-primary" href="">创建活动</a><a class="btn btn-primary" href="">审核活动</a> <div><input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
-<button class="btn hasTooltip" type="submit" title="" data-original-title="搜索" onClick="search()">搜索</button>
-<button class="btn hasTooltip" type="button" onClick="document.id('filter_search').value='';this.form.submit();" title="" data-original-title="清除">清空</button></div>
+                      <div class="page-title"></div>
+                      <a class="btn btn-primary" href="">查看活动</a><a class="btn btn-primary" href="">创建活动</a><a class="btn btn-primary" href="">审核活动</a> 
+                      <div><input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
+                      <button class="btn hasTooltip" type="submit" title="" data-original-title="搜索" onClick="search()">搜索</button>
+                      <button class="btn hasTooltip" type="button" title="" data-original-title="清除" onClick="reset()" >清空</button></div>
                     </div>
                     <div class="clearfix">
                     </div>
@@ -117,16 +120,32 @@
 </html>
 
 <script>
-    var vl = [];
-    {%for viewlink in linksDS%}
+    var vl = [];var vlDS = [];var vlNP = [];var list = [];
+
+    {%for viewlink in linksP%}
      vl.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}    
+
+    {%for viewlink in linksDS%}
+     vlDS.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}  
+
+    {%for viewlink in linksNP%}
+     vlNP.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
     {%endfor%}
-    var list = vl;
-    initial();
+
+    vl()
 
     function initial()
     {
-        for(var i = 0;i<list.length;i++){
+    tab = document.getElementById("mtab");
+    var num = tab.rows.length;
+    if(num >1 )//清除表格
+        {
+        for(var i=1;i<num;i++){                           
+        tab.deleteRow(1);
+        }}
+    for(var i = 0;i<list.length;i++){
 
     var tr = document.createElement("tr");  
     var new_obj = list[i];
@@ -153,27 +172,48 @@
         }
     }
 
-    function search(string)
+    function search()
     {
+        var string = document.getElementById("filter_search").value;
         list = [];
         for(var i in vl)
         {
-            if ( vl[i].rn.indexOf(string) > 0)
+            if ( vl[i].rn.indexOf(string) > -1)
             {
                 list.push(vl[i]);
             }
         }
-        var list = document.getElementById("mainlist");
-        tab = document.getElementById("mtab");
-        var num = tab.rows.length;
-
-        for(var i=1;i<num;i++){                           
-        tab.deleteRow(1);
+        
+        initial();
+    }
+    function reset() {
+        document.id('filter_search').value='';
+        search();
+    }
+    function rank(rankname){
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].n.indexOf(rankname) > -1)
+            {
+                list.push(vl[i]);
+            }
         }
         
         initial();
     }
-
+    function vl(){
+        list = vl;
+        initial();
+    }
+    function ds(){
+        list = vlDS;
+        initial();
+    }
+    function np(){
+        list = vlNP;
+        initial();
+    }
     function Link(n,rn,id) {
         this.n = n;
         this.rn = rn;
