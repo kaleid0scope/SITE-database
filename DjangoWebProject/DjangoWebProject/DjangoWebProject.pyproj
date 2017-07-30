@@ -108,8 +108,6 @@
     <Content Include="app\templates\frame.html" />
     <Content Include="app\templates\index.html" />
     <Content Include="app\templates\projects\index.html" />
-    <Content Include="app\templates\projects\layout-left.html" />
-    <Content Include="app\templates\projects\layout-top.html" />
     <Content Include="app\templates\refresh.html" />
     <Content Include="app\templates\first.html" />
     <Content Include="app\templates\PCheck.html" />
