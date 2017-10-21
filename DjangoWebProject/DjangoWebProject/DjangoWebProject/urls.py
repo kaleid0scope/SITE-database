@@ -48,8 +48,8 @@ urlpatterns = [
 
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)$',LinkAdd),
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)/(?P<student>\w+)$',LinkAdd),
-    url(r'^create/(?P<rankname>\w+)$',ProjectCreate),
-    url(r'^Index/$',ProjectIndex),
+    url(r'^create/(?P<rankname>\w+)$',ProjectCreate,name = 'create'),
+    url(r'^Index/$',ProjectIndex,name = 'project'),
     url(r'^Index/(?P<rankname>\w+)$',ProjectIndex),
     url(r'^check/(?P<linkid>\w+)$',ProjectCheck),
     url(r'^check/(?P<rankname>\w+)/(?P<linkid>\w+)$',ProjectCheck),

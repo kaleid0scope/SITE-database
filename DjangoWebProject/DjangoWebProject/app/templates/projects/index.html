@@ -86,10 +86,31 @@
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                   <div class="page-header pull-left">
                       <div class="page-title"></div>
-                      <a class="btn btn-primary" href="">查看活动</a><a class="btn btn-primary" href="">创建活动</a><a class="btn btn-primary" href="">审核活动</a> 
-                      <div><input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
-                      <button class="btn hasTooltip" type="submit" title="" data-original-title="搜索" onClick="search()">搜索</button>
-                      <button class="btn hasTooltip" type="button" title="" data-original-title="清除" onClick="reset()" >清空</button></div>
+                      
+                      <li class="dropdown">
+				        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+					        创建活动
+					        <b class="caret"></b>
+				        </a>
+				        <ul class="dropdown-menu">
+					        <li><a href="{% url 'create' 'ResearchProject'%}">科研立项</a></li>
+					        <li><a href="{% url 'create' 'IdeologyConstruction'%}">思建活动</a></li>
+					        <li><a href="{% url 'create' 'Lecture'%}">讲座</a></li>
+					        <li><a href="{% url 'create' 'Volunteering'%}">志愿活动</a></li>
+					        <li><a href="{% url 'create' 'SchoolActivity'%}">校园活动</a></li>
+					        <li><a href="{% url 'create' 'Internship'%}">实践实习</a></li>
+					        <li><a href="{% url 'create' 'Paper'%}">科研论文</a></li>
+					        <li><a href="{% url 'create' 'Competition'%}">学术竞赛</a></li>
+					        <li><a href="{% url 'create' 'StudentCadre'%}">学生干部经历</a></li>
+					        <li><a href="{% url 'create' 'Exchange'%}">交流交换</a></li>
+				        </ul>
+			        </li>
+                      <a class="btn btn-primary" href="{% url 'project'%}">查看活动</a>
+                      <div>
+                        <input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
+                        <button class="btn hasTooltip" type="submit" title="" data-original-title="搜索" onClick="search()">搜索</button> 
+                        <button class="btn hasTooltip" type="button" title="" data-original-title="清除" onClick="reset()" >清空</button>
+                      </div>
                     </div>
                     <div class="clearfix">
                     </div>
@@ -115,7 +136,6 @@
 	</table>
 
 </div>
-    
 </body>
 </html>
 
@@ -134,7 +154,7 @@
      vlNP.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
     {%endfor%}
 
-    vl()
+    vlP()
 
     function initial()
     {
@@ -202,7 +222,7 @@
         
         initial();
     }
-    function vl(){
+    function vlP(){
         list = vl;
         initial();
     }
