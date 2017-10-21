@@ -27,16 +27,20 @@ urlpatterns = [
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
-            'template_name': 'app/login.html',
+            'template_name': 'app/login2.html',
             'authentication_form': app.forms.BootstrapAuthenticationForm,
         },
         name='login'),
     url(r'^logout$',django.contrib.auth.views.logout,{'next_page': '/',},name='logout'),
-    #url(r'^register$',register,),
+    url(r'^register/$',register),
     url(r'^search_form/$',search_form),
     url(r'^search/$',search),
     url(r'^reset',reset),
     url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
+
+    url(r'^student/papers$',papers),
+
+
 
     url(r'^test',test),
 

@@ -1,0 +1,279 @@
+{% extends "app/base.html" %}
+
+{% block basecontent %}
+		<header id="header" >
+			<div class="headerbar">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="headerbar-left">
+					<ul class="header-nav header-nav-options">
+						<li class="header-nav-brand" >
+							<div class="brand-holder">
+								<a href="{% url 'home' %}">
+									<span class="text-lg text-bold text-primary">经贸学院综合评价系统</span>
+								</a>
+							</div>
+						</li>
+						<li>
+							<a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+								<i class="fa fa-bars"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="headerbar-right">
+					<ul class="header-nav header-nav-options">
+						<li>
+							<!-- Search form -->
+							<form class="navbar-search" role="search">
+								<div class="form-group">
+									<input type="text" class="form-control" name="headerSearch" placeholder="Enter your keyword">
+								</div>
+								<button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
+							</form>
+						</li>
+						<li class="dropdown hidden-xs">
+							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
+								<i class="fa fa-bell"></i><sup class="badge style-danger">4</sup>
+							</a>
+							<ul class="dropdown-menu animation-expand">
+								<li class="dropdown-header">Today's messages</li>
+								<li>
+									<a class="alert alert-callout alert-warning" href="javascript:void(0);">
+										<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/avatar2.jpg?1404026449" alt="" />
+										<strong>{{ user.username }}</strong><br/>
+										<small>Testing functionality...</small>
+									</a>
+								</li>
+								<li>
+									<a class="alert alert-callout alert-info" href="javascript:void(0);">
+										<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/avatar3.jpg?1404026799" alt="" />
+										<strong>Alicia Adell</strong><br/>
+										<small>Reviewing last changes...</small>
+									</a>
+								</li>
+								<li class="dropdown-header">Options</li>
+								<li><a href="../../html/pages/login.html">View all messages <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+								<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+							</ul><!--end .dropdown-menu -->
+						</li><!--end .dropdown -->
+						<li class="dropdown hidden-xs">
+							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
+								<i class="fa fa-area-chart"></i>
+							</a>
+							<ul class="dropdown-menu animation-expand">
+								<li class="dropdown-header">Server load</li>
+								<li class="dropdown-progress">
+									<a href="javascript:void(0);">
+										<div class="dropdown-label">
+											<span class="text-light">Server load <strong>Today</strong></span>
+											<strong class="pull-right">93%</strong>
+										</div>
+										<div class="progress"><div class="progress-bar progress-bar-danger" style="width: 93%"></div></div>
+									</a>
+								</li><!--end .dropdown-progress -->
+								<li class="dropdown-progress">
+									<a href="javascript:void(0);">
+										<div class="dropdown-label">
+											<span class="text-light">Server load <strong>Yesterday</strong></span>
+											<strong class="pull-right">30%</strong>
+										</div>
+										<div class="progress"><div class="progress-bar progress-bar-success" style="width: 30%"></div></div>
+									</a>
+								</li><!--end .dropdown-progress -->
+								<li class="dropdown-progress">
+									<a href="javascript:void(0);">
+										<div class="dropdown-label">
+											<span class="text-light">Server load <strong>Lastweek</strong></span>
+											<strong class="pull-right">74%</strong>
+										</div>
+										<div class="progress"><div class="progress-bar progress-bar-warning" style="width: 74%"></div></div>
+									</a>
+								</li><!--end .dropdown-progress -->
+							</ul><!--end .dropdown-menu -->
+						</li><!--end .dropdown -->
+					</ul><!--end .header-nav-options -->
+					<ul class="header-nav header-nav-profile">
+						<li class="dropdown">
+							<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
+								<img src="../../assets/img/avatar1.jpg?1403934956" alt="" />
+								<span class="profile-info">
+									{{ user.username }}
+									<small>{{type}}</small>
+								</span>
+							</a>
+							<ul class="dropdown-menu animation-dock">
+								<li class="dropdown-header">设置</li>
+								<li><a href="../../html/pages/profile.html">个人信息</a></li>
+								
+								<li><a href="../../html/pages/calendar.html">活动日程表</a></li>
+								<li class="divider"></li>
+								<li><a href="/changepassword/{{user}}"><i class="fa fa-fw fa-lock"></i> 修改密码</a></li>
+								<li><a href="{%url 'logout'%}"><i class="fa fa-fw fa-power-off text-danger"></i> 登出</a></li>
+							</ul><!--end .dropdown-menu -->
+						</li><!--end .dropdown -->
+					</ul><!--end .header-nav-profile -->
+
+				</div><!--end #header-navbar-collapse -->
+			</div>
+		</header>
+		<!-- END HEADER-->
+
+		<!-- BEGIN BASE-->
+		<div id="base">
+
+			<!-- BEGIN OFFCANVAS LEFT -->
+			<div class="offcanvas">
+			</div><!--end .offcanvas-->
+			<!-- END OFFCANVAS LEFT -->
+            
+
+			<!-- BEGIN CONTENT-->
+			<div id="content">
+            
+				<!-- BEGIN BLANK SECTION -->
+            {% block content %}
+				<section>
+
+					<div class="section-header">
+						<ol class="breadcrumb">
+							<li><a href="../../html/.html">home</a></li>
+							<li class="active">Blank page</li>
+						</ol>
+					</div><!--end .section-header -->
+					<div class="section-body">
+					</div><!--end .section-body -->
+            
+				</section>
+            {% endblock %}
+				<!-- BEGIN BLANK SECTION -->
+            
+			</div><!--end #content-->
+			<!-- END CONTENT -->
+
+			<!-- BEGIN MENUBAR-->
+			<div id="menubar" class="menubar ">
+				<div class="menubar-fixed-panel">
+					<div>
+						<a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+							<i class="fa fa-bars"></i>
+						</a>
+					</div>
+					<div class="expanded">
+						<a href="../../html/dashboards/dashboard.html">
+							<span class="text-lg text-bold text-primary ">经贸学院&nbsp;综合评价系统</span>
+						</a>
+					</div>
+				</div>
+				<div class="menubar-scroll-panel">
+
+                    <!-- BEGIN MAIN MENU -->
+                    <ul id="main-menu" class="gui-controls">
+
+                        <!-- BEGIN DASHBOARD -->
+						<li>
+							<a href="{% url 'home' %}" >
+								<div class="gui-icon"><i class="md md-home"></i></div>
+								<span class="title">概况</span>
+							</a>
+						</li><!--end /menu-li -->
+						<!-- END DASHBOARD -->
+
+						<!-- BEGIN EMAIL -->
+						<li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="md md-event-note"></i></div>
+								<span class="title">参与的活动</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="/student/papers" ><span class="title">论文</span></a></li>
+								<li><a href="../../html/mail/compose.html" ><span class="title">学术竞赛</span></a></li>
+								<li><a href="../../html/mail/reply.html" ><span class="title">学生干部</span></a></li>
+								<li><a href="../../html/mail/message.html" ><span class="title">实习实践</span></a></li>
+                                <li><a href="../../html/mail/inbox.html" ><span class="title">科研立项</span></a></li>
+								<li><a href="../../html/mail/compose.html" ><span class="title">志愿活动</span></a></li>
+								<li><a href="../../html/mail/reply.html" ><span class="title">思建活动</span></a></li>
+                                <li><a href="../../html/mail/reply.html" ><span class="title">校园活动</span></a></li>
+								<li><a href="../../html/mail/message.html" ><span class="title">学术讲座</span></a></li>
+							</ul><!--end /submenu -->
+						</li>
+                        <!--end /menu-li -->
+						<!-- END EMAIL -->
+
+						<!-- BEGIN STUDENTLESSONS -->
+						<li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="md md-school"></i></div>
+								<span class="title">修读的课程</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="../../html/mail/inbox.html" ><span class="title">培养方案</span></a></li>
+								<li><a href="../../html/mail/compose.html" ><span class="title">我的课程</span></a></li>
+								<li><a href="../../html/mail/reply.html" ><span class="title">成绩单</span></a></li>
+							</ul><!--end /submenu -->
+						</li><!--end /menu-li -->
+						<!-- END DASHBOARD --><!--end /menu-li -->
+
+                        <!-- 学生部分结束 -->
+
+                        <!--辅导员部分-->
+                        <li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="md md-event-note"></i></div>
+								<span class="title">活动管理</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="../../html/mail/inbox.html" ><span class="title">论文</span></a></li>
+								<li><a href="../../html/mail/compose.html" ><span class="title">学术竞赛</span></a></li>
+								<li><a href="../../html/mail/reply.html" ><span class="title">学生干部</span></a></li>
+								<li><a href="../../html/mail/message.html" ><span class="title">实习实践</span></a></li>
+                                <li><a href="../../html/mail/inbox.html" ><span class="title">科研立项</span></a></li>
+								<li><a href="../../html/mail/compose.html" ><span class="title">志愿活动</span></a></li>
+								<li><a href="../../html/mail/reply.html" ><span class="title">思建活动</span></a></li>
+                                <li><a href="../../html/mail/reply.html" ><span class="title">校园活动</span></a></li>
+								<li><a href="../../html/mail/message.html" ><span class="title">学术讲座</span></a></li>
+							</ul><!--end /submenu -->
+						</li>
+
+                        <li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="md md-group"></i></div>
+								<span class="title">学生管理</span>
+							</a>
+							<!--start submenu -->
+							<ul>
+								<li><a href="../../html/mail/inbox.html" ><span class="title">学生信息管理</span></a></li>
+							</ul><!--end /submenu -->
+						</li>
+                        <!---->
+
+                        <!--老师部分-->
+                        <li>
+							<a>
+								<div class="gui-icon"><i class="md md-school"></i></div>
+								<span class="title">课程管理</span>
+							</a>
+						</li>
+                        
+                        <!--老师部分结束-->
+
+                    </ul>
+					<!-- END MAIN MENU -->
+
+					<div class="menubar-foot-panel">
+						<small class="no-linebreak hidden-folded">
+							<span class="opacity-75">Developed by </span> <strong>SEADEV</strong>
+						</small>
+					</div>
+				</div><!--end .menubar-scroll-panel-->
+			</div><!--end #menubar-->
+			<!-- END MENUBAR -->
+
+			
+
+		</div><!--end #base-->
+		<!-- END BASE -->
+{% endblock %}

@@ -50,3 +50,6 @@ D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\b
 D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\bin\wfastcgi.py
 D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.config
 D:\最后一次克隆！！！\SITE-database\DjangoWebProject\DjangoWebProject\obj\Debug\web.debug.config
+C:\Users\27695\Source\Repos\SITE-database2\DjangoWebProject\DjangoWebProject\obj\Debug\DjangoWebProject.pyproj.CoreCompileInputs.cache
+C:\Users\27695\Source\Repos\SITE-database2\DjangoWebProject\DjangoWebProject\bin\Microsoft.PythonTools.WebRole.dll
+C:\Users\27695\Source\Repos\SITE-database2\DjangoWebProject\DjangoWebProject\bin\wfastcgi.py

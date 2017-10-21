@@ -99,9 +99,12 @@ def home(request):
     NewWeb()
     assert isinstance(request, HttpRequest)
     if request.user.is_authenticated():
-        return render(request,'app/index.html',{})
+        return render(request,'app/index2.html',{})
     else:
         return redirect('/login')
+
+def papers(request):
+    return render(request,'app/student/papers.html')
 
 def first(request):
     return render(request,'first.html')
@@ -122,6 +125,9 @@ def about(request):
             'message':'Your application description page.',
             'year':datetime.now().year,
         })
+
+def register(request):
+    return render(request,'register2.html',{})
 
 def search_form(request):
     return render(request,'search_form.html',{})
