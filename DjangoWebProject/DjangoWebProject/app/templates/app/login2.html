@@ -1,0 +1,66 @@
+﻿{% extends "app/base.html" %}
+
+{% block basecontent %}
+{% load staticfiles %}
+		<!-- BEGIN LOGIN SECTION -->
+		{#<section class="section-account">#}
+        <section id="loginForm">
+			{#<div class="img-backdrop" style="background-image: url({% static 'app/assets/img/img16.jpg' %})"></div>#}
+			<div class="spacer"></div>
+			<div class="card contain-sm style-transparent">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-6">
+							<br/>
+							<span class="text-lg text-bold text-primary">SITE 综合测评系统</span>
+							<br/><br/>
+							<form class="form floating-label" action="." accept-charset="utf-8" method="post">
+                                {% csrf_token %}
+								<div class="form-group">
+									{#<input type="text" class="form-control" id="username" name="username">#}
+                                    {{form.username}}
+									<label for="username">用户名</label>
+								</div>
+
+								<div class="form-group">
+									{#<input type="password" class="form-control" id="password" name="password">#}
+                                    {{form.password}}
+									<label for="password">密码</label>
+									<p class="help-block"><a href="#">密码忘了？</a></p>
+								</div>
+                                <input type="hidden" name="next" value="/" />
+								<br/>
+                                <!--{% if form.errors %}-->
+                                <script>
+                                alert('密码不正确或没有注册.');
+                                </script>
+                                
+                                <!--{% endif %}-->
+								<div class="row">
+									<div class="col-xs-6 text-left">
+										<div class="checkbox checkbox-inline checkbox-styled">
+											<label>
+												<input type="checkbox"> <span>记住</span>
+											</label>
+										</div>
+									</div><!--end .col -->
+									<div class="col-xs-6 text-right">
+										<button class="btn btn-primary btn-raised" type="submit">登录</button>
+									</div><!--end .col -->
+								</div><!--end .row -->
+							</form>
+						</div><!--end .col -->
+						<div class="col-sm-5 col-sm-offset-1 text-center">
+							<br><br>
+								<h3 class="text-light">
+									还没有注册吗？
+								</h3>
+								<a class="btn btn-block btn-raised btn-primary" href="../register/">注册</a>
+								<br><br>
+								</div><!--end .col -->
+							</div><!--end .row -->
+						</div><!--end .card-body -->
+					</div><!--end .card -->
+				</section>
+				<!-- END LOGIN SECTION -->
+{% endblock %}

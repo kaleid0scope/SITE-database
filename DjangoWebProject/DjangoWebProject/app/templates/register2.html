@@ -1,0 +1,55 @@
+﻿{% extends "app/base.html" %}
+
+{% block basecontent %}
+
+    <div class="row">
+	    <div class="col-lg-offset-3 col-md-6">
+		    <form action="/register/" method="post" class="form">
+                {% csrf_token %}
+			    <div class="card">
+				    <div class="card-head style-primary">
+					    <header>注册</header>
+				    </div>
+				    <div class="card-body">
+					    <br/>
+                        <div>
+						    <label class="radio-inline radio-styled">
+							    <input type="radio" name="type" checked><span>学生</span>
+						    </label>
+						    <label class="radio-inline radio-styled">
+							    <input type="radio" name="type"><span>老师</span>
+						    </label>
+						</div>
+                        <br />
+					    <div class="form-group">
+						    <input type="text" class="form-control" id="Username1">
+						    <label for="Username1">用户名</label>
+					    </div>
+                    	<div class="form-group">
+						    <input type="text" class="form-control" id="Phone">
+						    <label for="Username1">手机</label>
+					    </div>
+                         <div class="form-group">
+						    <input type="text" class="form-control" id="Email">
+						    <label for="Username1">邮件</label>
+					    </div>
+					    <div class="form-group">
+						    <input type="password" class="form-control" id="Password1">
+						    <label for="Password1">密码</label>
+					    </div>
+                        <div class="form-group">
+						    <input type="password" class="form-control" id="Password2">
+						    <label for="Password2">确认密码</label>
+					    </div>
+				    </div><!--end .card-body -->
+				    <div class="card-actionbar">
+					    <div class="card-actionbar-row">
+						    <button type="submit" value="Register" class="btn btn-flat btn-primary ink-reaction">注册</button>
+					    </div>
+				    </div>
+			    </div><!--end .card -->
+		    </form>
+	    </div><!--end .col -->
+    </div>
+</section>
+{% endblock %}

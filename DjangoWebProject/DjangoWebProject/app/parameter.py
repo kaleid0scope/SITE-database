@@ -3,7 +3,7 @@
 from app.models import *
 
 def user_parameter(request):
-    title = '综合测评系统'
+    title = 'SITE综合测评系统'
     if request.user.is_authenticated():
         if request.user.is_superuser:
             type = '管理员'

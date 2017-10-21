@@ -45,11 +45,12 @@ class BootstrapAuthenticationForm(AuthenticationForm):
     username = forms.CharField(max_length=254,
                                widget=forms.TextInput({
                                    'class': 'form-control',
-                                   'placeholder': 'User name'}))
+                                   'required data-rule-minlength':"1",
+                                   'placeholder': ''}))
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput({
                                    'class': 'form-control',
-                                   'placeholder':'Password'}))
+                                   'placeholder':''}))
 
 class ResetPasswordForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput({
@@ -72,22 +73,22 @@ class RegisterForm(forms.Form):
 
 class ChangepwdForm(forms.Form):
     old_pwd = forms.CharField(required=True,
-        label=u"原密码",
+        label="",
         error_messages={'required': u'请输入原密码'},
         widget=forms.PasswordInput(attrs={
-                'placeholder':u"原密码", 'class': 'form-control',
+                 'class': 'form-control',
             }),) 
     new_pwd = forms.CharField(required=True,
-        label=u"新密码",
+        label="",
         error_messages={'required': u'请输入新密码'},
         widget=forms.PasswordInput(attrs={
-                'placeholder':u"新密码", 'class': 'form-control',
+                 'class': 'form-control',
             }),)
     new_pwd2 = forms.CharField(required=True,
-        label=u"确认密码",
+        label="",
         error_messages={'required': u'请再次输入新密码'},
         widget=forms.PasswordInput(attrs={
-                'placeholder':u"确认密码", 'class': 'form-control',
+                 'class': 'form-control',
             }),)
 
     def clean(self):
