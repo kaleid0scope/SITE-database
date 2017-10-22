@@ -22,3 +22,7 @@ def user_parameter(request):
     else:
         type = '未登录'
     return {'type':type,'title':title}
+
+def messages(request):
+    messages = Message.objects.filter(reciver = request.user).order_by('isRead')
+    return {'messages', messages}

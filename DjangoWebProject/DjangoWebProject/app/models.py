@@ -316,3 +316,12 @@ class InternshipRank(models.Model):
        verbose_name_plural = u'实习实践'
     def __unicode__(self):
         return self.rankName 
+
+class Message(models.Model):
+    type = models.CharField(max_length = 20,default = "普通",verbose_name ='消息类型')
+    isRead = models.BooleanField(default = 0,verbose_name ='是否已读')
+    text = models.TextField(verbose_name ='正文')
+    Time = models.DateTimeField(verbose_name ='发送时间')
+    sender = models.ForeignKey(User,verbose_name ='发送人',related_name="Msender")
+    reciver = models.ForeignKey(User,verbose_name ='接收人',related_name="Mreciver")
+    linkid = models.PositiveSmallIntegerField(null = True,blank = True,verbose_name ='项目信息编号')

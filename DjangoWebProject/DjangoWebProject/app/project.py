@@ -38,7 +38,8 @@ def ProjectCreate(request,rankname,student = None):
                 if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,u'您无权访问')
                 project = getView(rankname)(request,student)
         if not project: return render(request,'Pcreate.html',{'alert':u'表格信息有错误'})
-        if getModel(rankname).objects.filter(rankName = project.rankName): return render(request,'Pcreate.html',{'alert':u'已有相同名称活动！'})
+        if getModel(rankname).objects.filter(rankName = project.rankName): 
+            return render(request,'Pcreate.html',{'alert':u'已有相同名称活动！'})
         project.save()
         return LinkAdd(request,project = project,student = student)
     else:
@@ -49,11 +50,13 @@ def ProjectCreate(request,rankname,student = None):
 @authenticated_required
 def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,from_url = None):
    #try:
+#get project
     if project == None:
         if rankid != None and rankname != None:
             rank = getModel(rankname)
             project = rank.objects.get(pk = rankid)
-        else :return Error(request,u'缺少参数')#get project
+        else :return Error(request,u'缺少参数')
+#get student
     type = getType(request)
     if type == '辅导员':
         if student == None: return Error(request,u'请指定学生')
@@ -65,6 +68,7 @@ def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,
     elif type == '学生端':
         student = Students.objects.get(user = request.user)
     else: return Error(request,u'您无权访问')
+
     link = RankLinks(student = student,rtype = project._meta.object_name,rnum = project.pk,status = '待审核')
     link.save()
     if from_url == None:
@@ -181,12 +185,12 @@ def ProjectIndex(request,rankname = None,studentid = None):
         assert isinstance(request, HttpRequest)
         return render(request,'app/login.html',{'alert':e})'''
 #审核
-def ProjectCheck(request,linkid,rankname = None):
+def ProjectCheck(request,linkid):
     #try: 
         link = RankLinks.objects.get(pk = int(linkid))
         rank = getModel(link.rtype)
         project = rank.objects.get(pk = link.rnum)
-        if not rankname:rankname = link.rtype
+        rankname = link.rtype
         fields = rank._meta.fields
         FieldProject = {}
         for field in fields :
