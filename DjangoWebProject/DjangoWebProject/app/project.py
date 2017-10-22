@@ -136,6 +136,10 @@ class ViewLink(object):
         self.rn = rn
     pass
 
+def Papers(request):
+    form = getForm('Paper')
+    return render(request,'app/student/papers.html',{'form':form})
+
 def ProjectIndex(request,rankname = None,studentid = None):
     #try:
         if rankname != None: rank = getModel(rankname)

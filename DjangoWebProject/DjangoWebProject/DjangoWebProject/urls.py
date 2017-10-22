@@ -36,14 +36,9 @@ urlpatterns = [
     url(r'^search_form/$',search_form),
     url(r'^search/$',search),
     url(r'^reset',reset),
-    url(r'^changepassword/(?P<username>\w+)/$',changepassword),  
-
-    url(r'^student/papers$',papers),
-
-
-
+    url(r'^changepassword/(?P<username>\w+)/$',changepassword),
     url(r'^test',test),
-
+    url(r'^student/papers$',Papers,name='papers'),
     url(r'^complete/$',ShowComplete,name='complete'),
     url(r'^complete/(?P<id>\w+)$',ShowComplete,name='complete'),
     url(r'^studentIndex/(?P<studentid>\w+)$',ProjectIndex),
