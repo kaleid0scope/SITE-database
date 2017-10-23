@@ -37,6 +37,21 @@ def getModel(str):
     }
     return ModelDic.get(str, NameError)
 
+def getUrl(str):
+    UrlDict={
+        'ResearchProject':app.forms.CreateResearchProjectForm,
+        'IdeologyConstruction':app.forms.CreateIdeologyConstructionForm, 
+        'Lecture':app.forms.CreateLectureForm,
+        'Volunteering':app.forms.CreateVolunteeringForm,
+        'SchoolActivity':app.forms.CreateSchoolActivityForm,
+        'Paper':'app/project/papers.html',
+        'Competition':app.forms.CreateCompetitionForm,
+        'Exchange':app.forms.CreateExchangeForm,
+        'StudentCadre':app.forms.CreateStudentCadreForm,
+        'Internship':app.forms.CreateInternshipForm,
+        }
+    return UrlDict.get(str,NameError)
+
 def getForm(str):
     FormDic = {
         'Project':app.forms.ProjectForm,

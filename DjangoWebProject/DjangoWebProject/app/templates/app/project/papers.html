@@ -55,7 +55,7 @@
                 </div>
 	        </div><!--end .col -->
         </div>
-        {{indexForm.as_form}}
+
         {#<hr class="ruler-xl">#}
 
         <div class="row">
@@ -77,16 +77,16 @@
 													<div class="tab-pane active" id="step1">
                                                     <br/><br/>	
 														<div class="form-group">
-                                                            {{createForm.ProjectName}}
+                                                            {{form.ProjectName}}
 															<label for="title" class="control-label">论文题目</label>
 														</div>
 														<div class="form-group control-width-normal">
-                                                            {{createForm.AuthorRanking}}																
+                                                            {{form.AuthorRanking}}																
 															    <label for="author" {#class="control-label"#}>第几作者</label>
 														</div>
                                                         <div>
                                                             <div class="form-group control-width-normal">
-                                                                {{createForm.ProjectTime}}
+                                                                {{form.ProjectTime}}
                                                                 <label>时间</label>												                
 											                </div>
                                                         </div>
@@ -94,11 +94,11 @@
 													<div class="tab-pane" id="step2">
 														<br/><br/>
 														<div class="form-group">
-                                                            {{createForm.JournalName}}
+                                                            {{form.JournalName}}
                                                             <label class="control-label">期刊名称</label>
 														</div>
 														<div class="form-group">
-                                                            {{createForm.Rank}}
+                                                            {{form.Rank}}
                                                             <label class="control-label">期刊等级</label>
 														</div>
 													</div><!--end #step2 -->

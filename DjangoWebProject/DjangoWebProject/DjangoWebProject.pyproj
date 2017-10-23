@@ -813,6 +813,7 @@
     <Folder Include="app\templates\app\" />
     <Folder Include="app\templates\app\instructor\" />
     <Folder Include="app\templates\app\manager\" />
+    <Folder Include="app\templates\app\project\" />
     <Folder Include="app\templates\app\teacher\" />
     <Folder Include="app\templates\app\student\" />
     <Folder Include="app\templates\projects\" />
@@ -4383,6 +4384,7 @@
     <Content Include="app\static\images\bg2.jpg" />
     <Content Include="app\static\images\item8.png" />
     <Content Include="app\static\img\templates\index.html" />
+    <Content Include="app\templates\app\project\papers.html" />
     <Content Include="app\templates\app\base.html" />
     <Content Include="app\templates\app\index2.html" />
     <Content Include="app\templates\app\layout2.html" />

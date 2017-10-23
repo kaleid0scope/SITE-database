@@ -22,6 +22,31 @@ def Error(request,alert = None,template_name = None):
         template_name = 'app/index.html'
     return Ralert(alert)(render)(request,template_name,{'error':True})
 
+
+def ProjectManage(request,rankname,student = None):
+    html = getUrl(rankname)
+    if request.method == 'POST':#提交的部分
+        if getType(request) == '学生端':
+            project = getView(rankname)(request)
+            student = Students.objects.filter(user = request.user)
+        else:
+            if student == None: return Error(request,u'缺少参数')
+            if getType(request) == '管理员':project = getView(rankname)(request)
+            if getType(request) == '辅导员':
+                instructor = Instructor.objects.get(user = request.user)
+                if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,u'您无权访问')
+                project = getView(rankname)(request,student)
+        if not project: return render(request,html,{'alert':u'表格信息有错误'})
+        if getModel(rankname).objects.filter(rankName = project.rankName): return render(request,html,{'alert':u'已有相同名称活动！'})
+        project.save()
+        return LinkAdd(request,project = project,student = student)
+    else:
+        createform = getForm(rankname)()
+        indexform = 
+    assert isinstance(request, HttpRequest)#为什么不提前检验它是HttpRequest?
+
+    return render(request,html,{'createForm':createform})#空的表
+
 '''管理员访问时带student参数,学生访问时不带
 '''
 @authenticated_required
@@ -43,8 +68,8 @@ def ProjectCreate(request,rankname,student = None):
         return LinkAdd(request,project = project,student = student)
     else:
         form = getForm(rankname)()
-    assert isinstance(request, HttpRequest)
-    return render(request,'Pcreate.html',{'form':form})
+    assert isinstance(request, HttpRequest)#为什么不提前检验它是HttpRequest?
+    return render(request,'Pcreate.html',{'createForm':form})#空的表
 
 @authenticated_required
 def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,from_url = None):
