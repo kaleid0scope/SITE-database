@@ -148,15 +148,15 @@ class CreatePaperForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"论文题目",
         error_messages={'required': u'请输入论文题目'},
-                        widget=forms.TextInput({'class': 'form-control',}))
+                        widget=forms.TextInput({'class': 'form-control','name':"title",'id':"title",'data-rule-minlength':"2"}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'},
+        error_messages={'required': u'请输入项目时间','id':"time",},
         widget = SelectDateWidget())
     AuthorRanking = forms.IntegerField(required=True,
         label=u"第几作者",
         error_messages={'required': u'请输入第几作者'},
-        widget = forms.TextInput({'class': 'form-control',}))
+        widget = forms.TextInput({'class': 'form-control','id':"author"}))
     JournalName = forms.CharField(required=True,
         label=u"期刊名称",
         error_messages={'required': u'请输入期刊名称'},
