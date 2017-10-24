@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^first/$',first),
     url(r'^copy/$',shit),
 
-    url(r'^Activity/(?P<rankname>\w+)$',ProjectIndex),
+    url(r'^Project/(?P<rankname>\w+)$',ProjectManage),
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)$',LinkAdd),
     url(r'^add/(?P<rankname>\w+)/(?P<rankid>\w+)/(?P<student>\w+)$',LinkAdd),
     url(r'^create/(?P<rankname>\w+)$',ProjectCreate),

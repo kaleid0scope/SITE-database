@@ -19,33 +19,90 @@ from app.views import *
 def Error(request,alert = None,template_name = None):
     assert isinstance(request, HttpRequest)
     if template_name == None:
-        template_name = 'app/index.html'
-    return Ralert(alert)(render)(request,template_name,{'error':True})
+        template_name = 'app/project/paper.html'
+    return {'error':alert}
+    #return Ralert(alert)(render)(request,template_name,{'error':True})
+
+def Success(request,success=None):
+    return {'success':success}
+
 
 
 def ProjectManage(request,rankname,student = None):
     html = getUrl(rankname)
+    result={}
     if request.method == 'POST':#提交的部分
-        if getType(request) == '学生端':
-            project = getView(rankname)(request)
-            student = Students.objects.filter(user = request.user)
-        else:
-            if student == None: return Error(request,u'缺少参数')
-            if getType(request) == '管理员':project = getView(rankname)(request)
-            if getType(request) == '辅导员':
-                instructor = Instructor.objects.get(user = request.user)
-                if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): return Error(request,u'您无权访问')
-                project = getView(rankname)(request,student)
-        if not project: return render(request,html,{'alert':u'表格信息有错误'})
-        if getModel(rankname).objects.filter(rankName = project.rankName): return render(request,html,{'alert':u'已有相同名称活动！'})
-        project.save()
-        return LinkAdd(request,project = project,student = student)
-    else:
-        createform = getForm(rankname)()
-        indexform = 
+        result= ProjectManagePost(request,rankname,student)
+    #获取的部分
+    linkDict = ProjectManageGetList(request,rankname,student)
+    createform = getForm(rankname)()
+    if result:
+        linkDict.update(result)
     assert isinstance(request, HttpRequest)#为什么不提前检验它是HttpRequest?
+    return render(request,html,dict(linkDict,**{'createForm':createform}))#所有需要的放到模板里去
 
-    return render(request,html,{'createForm':createform})#空的表
+def ProjectManagePost(request,rankname,student = None):
+    html = getUrl(rankname)
+    if getType(request) == '学生端':
+        project = getView(rankname)(request)
+        student = Students.objects.filter(user = request.user)
+    else:
+        if student == None: 
+            #return Error(request,u'缺少参数')
+            student = Students.objects.get(StudentNum=201602063)#それは僕！
+        if getType(request) == '管理员':
+            project = getView(rankname)(request)
+        if getType(request) == '辅导员':
+            instructor = Instructor.objects.get(user = request.user)
+            if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk): 
+                return Error(request,u'您无权访问')
+            project = getView(rankname)(request,student)
+    if not project: 
+        return {'alert':u'表格信息有错误，请确认完整填写'}
+    if getModel(rankname).objects.filter(rankName = project.rankName): 
+        return {'alert':u'已有相同名称活动！'}
+    project.save()
+    return LinkAdd(request,project = project,student = student)
+
+def ProjectManageGetList(request,rankname,studentid = None,student = None):
+    html = getUrl(rankname)
+    if rankname != None: 
+        rank = getModel(rankname)
+        type = getType(request)
+        if type == '学生端':
+            student = Students.objects.get(user = request.user)
+            if rankname != None: links = RankLinks.objects.filter(student = student,rtype = rankname)#所有涉及的项目
+            else : links = RankLinks.objects.filter(student = student)
+        elif type == '辅导员':
+            instructor = Instructor.objects.get(user = request.user)
+            majors = Major.objects.filter(instructor = instructor)
+            students = Students.objects.filter(major__in = majors)
+            if studentid != None:
+                if students.filter(pk = studentid):students = students.filter(pk = studentid)
+                else :return Error(request,u'学生不存在或权限验证未通过')
+            if rankname != None: links = RankLinks.objects.filter(student__in = students,rtype = rankname)#所有涉及的项目
+            else : links = RankLinks.objects.filter(student__in = students)
+        elif type == '管理员':
+            if studentid != None:
+                student = Students.objects.filter(pk = studentid)
+                if rankname != None: links = RankLinks.objects.filter(rtype = rankname,student = student)#所有涉及的项目
+                else : links = RankLinks.objects.filter(student = student)
+            else:
+                if rankname != None: links = RankLinks.objects.filter(rtype = rankname)#所有涉及的项目
+                else : links = RankLinks.objects.all()
+        linksP,linksDS,linksNP = [],[],[]
+        for link in links:
+                rank = getModel(link.rtype)
+                project = rank.objects.get(pk = link.rnum)
+                if link.status == '待审核':
+                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = project))
+                elif link.status == '通过':
+                    linksP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = project))
+                else:
+                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = project))
+        assert isinstance(request, HttpRequest)
+        return {'linksP':linksP,'linksDS':linksDS,'linksNP':linksNP}
+    #拿到所有的list，已经把里面的类型改成project（XXRank）了
 
 '''管理员访问时带student参数,学生访问时不带
 '''
@@ -86,15 +143,15 @@ def LinkAdd(request,rankname = None,rankid = None,project = None,student = None,
         majors = Major.objects.filter(instructor = instructor).filter(pk = student.major.pk)
         if not majors: return Error(request,u'您无权访问')
     elif type == '管理员':
-        if student == None: return Error(request,u'请指定学生')
+        if student == None: return Error(request,u'请指定学生',template_name=GetUrl(rankname))
     elif type == '学生端':
         student = Students.objects.get(user = request.user)
     else: return Error(request,u'您无权访问')
     link = RankLinks(student = student,rtype = project._meta.object_name,rnum = project.pk,status = '待审核')
     link.save()
     if from_url == None:
-        from_url = '/Index/{name}'.format(name = project.__class__.__name__)
-    return refresh(request,from_url,u'创建成功')
+        from_url = '/Project/{name}'.format(name = project.__class__.__name__)
+    return Success(request,u'创建成功')
    #except Exception,e:
    #         error = e
 
