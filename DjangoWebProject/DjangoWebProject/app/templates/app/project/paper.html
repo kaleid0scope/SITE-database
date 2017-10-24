@@ -25,45 +25,48 @@
 								</tr>
 							</thead>
 							<tbody>
-                                <tr>
+
                                 {% if linksP %}
                                     {% for p in linksP%}
-                                    <td></td>
-                                    <td>{{p.l.rankName}}</td>
-                                    <td>{{p.l.AuthorRanking}}</td>
-                                    <td>{{p.l.journalName}}</td>
-                                    <td>{{p.l.rank}}</td>
-                                    <td>{{p.l.startingTime}}</td>
+                                    <tr>
+                                        <td>通过</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
                                     {% endfor %}
                                 {% else %}
                                 {% endif %}
-                                </tr>
-                                <tr>
+
                                 {% if linksDS %}
                                     {% for p in linksDS%}
-                                    <td></td>
-                                    <td>{{p.l.rankName}}</td>
-                                    <td>{{p.l.AuthorRanking}}</td>
-                                    <td>{{p.l.journalName}}</td>
-                                    <td>{{p.l.rank}}</td>
-                                    <td>{{p.l.startingTime}}</td>
+                                    <tr>
+                                        <td>待审核</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
                                     {% endfor %}
                                 {% else %}
                                 {% endif %}
-                                </tr>
-                                <tr>
+
                                 {% if linksNP %}
                                     {% for p in linksNP%}
-                                    <td></td>
-                                    <td>{{p.l.rankName}}</td>
-                                    <td>{{p.l.AuthorRanking}}</td>
-                                    <td>{{p.l.journalName}}</td>
-                                    <td>{{p.l.rank}}</td>
-                                    <td>{{p.l.startingTime}}</td>
+                                    <tr>
+                                        <td>未通过</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
                                     {% endfor %}
                                 {% else %}
                                 {% endif %}
-                                </tr>
 								<tr>
 									<td>1</td>
 									<td>Markkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>

@@ -49,6 +49,18 @@ def getUrl(str):
         'Exchange':app.forms.CreateExchangeForm,
         'StudentCadre':app.forms.CreateStudentCadreForm,
         'Internship':app.forms.CreateInternshipForm,
+
+        'User': User,
+        'ResearchProjectRank': ResearchProjectRank,
+        'IdeologyConstructionRank': IdeologyConstructionRank, 
+        'LectureRank':LectureRank,
+        'VolunteeringRank':VolunteeringRank,
+        'SchoolActivityRank':SchoolActivityRank,
+        'PaperRank':'app/project/paper.html',
+        'CompetitionRank':CompetitionRank,
+        'ExchangeRank':ExchangeRank,
+        'StudentCadreRank':StudentCadreRank,
+        'InternshipRank':InternshipRank,
         }
     return UrlDict.get(str,NameError)
 
