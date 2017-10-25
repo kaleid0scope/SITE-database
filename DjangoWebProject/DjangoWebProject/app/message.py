@@ -23,28 +23,28 @@ def createMessage(request,toUser,text,type = None,linkid = None):
     message.save()
     return True
   except Exception,e:
-    return Error(request,e.message)#ÔÚÊµ¼ÊÊ¹ÓÃÖĞÓ¦Ê¹ÓÃÓÃ»§ÄÜ½ÓÊÜµÄÓïÑÔ´úÌæe.messages,Èç"´´½¨Ê§°Ü£¬blablablabla..."
+    return Error(request,e.message)#å®é™…ä½¿ç”¨ä¸­e.messagesç”¨ç‰¹å®šæç¤ºæ›¿ä»£ï¼ˆåˆ›å»ºå¤±è´¥ï¼‰ä¹‹ç±»"
 
 @authenticated_required
-def reply(request,messageid):
+def reply(request,messageid,result):
   try:
     message = Message.objects.get(id = messageid)
-    if message.reciver != request.user: return Error(request,"ÄúÎŞÈ¨»Ø¸´´ËÏûÏ¢")
-    if message.linkid and not result:  return Error(request,"ÄúÎ´¶Ô´ËÏûÏ¢×ö³öÓĞĞ§»Ø¸´")
+    if message.reciver != request.user: return Error(request,"æ‚¨æ— æƒå›å¤æ­¤æ¶ˆæ¯")
+    if not result:  return Error(request,"æ‚¨å°šæœªä½œå‡ºå›å¤")
     type = getType(request)
-    if message.type == "ÑûÇë":
-        if not type == "Ñ§Éú¶Ë": return Error(request,"Äú²¢·ÇÑ§Éú£¬ÎŞ·¨»Ø¸´´ËÏûÏ¢")
+    if message.type == "é‚€è¯·":
+        if not type == "å­¦ç”Ÿç«¯": return Error(request,"æ‚¨æ— æ³•å›å¤æ­¤æ¶ˆæ¯")
         if result == 1:
-            if not createMessage(request,message.sender,"ÄúºÃ£¬ÎÒÒÑ¾­Í¬ÒâÁËÄúµÄÑûÇëblablabla","»Ø¸´"): return Error(request,"´´½¨ĞÅÏ¢Ê±Ê§°Ü")
+            if not createMessage(request,message.sender,"æˆ‘å·²ç»åŒæ„äº†æ‚¨çš„è¯·æ±‚blablabla","å›å¤"): return Error(request,"å›å¤å¤±è´¥")
             try:ranklink = RankLinks.objects.get(id = message.linkid)
-            except Exception,e: return Error(request,"ÕÒ²»µ½ÑûÇëÖĞÌáµ½µÄÏîÄ¿")
+            except Exception,e: return Error(request,"æ‰¾ä¸åˆ°é‚€è¯·ä¸­çš„é¡¹ç›®ï¼Œå›å¤å¤±è´¥")
             LinkAdd(request,rankname = ranklink.rname,rankid = ranklink.rtype,student = Students.objects.get(user = request.user))
         if result == 0:
-            if not createMessage(request,message.sender,"ÄúºÃ£¬ÎÒ¾Ü¾øÁËÄúµÄÑûÇëblablabla","»Ø¸´"): return Error(request,"´´½¨ĞÅÏ¢Ê±Ê§°Ü")
-    if message.type == "ÉóºË":
-        if not type == "¸¨µ¼Ô±" and not type == "¹ÜÀíÔ±" : return Error(request,"Äú²¢·ÇÑ§Éú£¬ÎŞ·¨»Ø¸´´ËÏûÏ¢")
+            if not createMessage(request,message.sender,"æˆ‘æ‹’ç»äº†æ‚¨çš„è¯·æ±‚blablabla","å›å¤"): return Error(request,"å›å¤å¤±è´¥")
+    if message.type == "å®¡æ ¸":
+        if not type == "ç®¡ç†å‘˜" and not type == "è¾…å¯¼å‘˜" : return Error(request,"æ‚¨æ— æƒå›å¤æ­¤æ¶ˆæ¯")
         return ProjectCheck(request,message.linkid)
-    else :return Error(request,"ÄúÎŞ·¨¶Ô´ËÏûÏ¢×ö³ö»Ø¸´")
+    else :return Error(request,"è¯¥æ¶ˆæ¯æ— æ³•å›å¤")
   except Exception,e:
-    return Error(request,e.message)#ÔÚÊµ¼ÊÊ¹ÓÃÖĞÓ¦Ê¹ÓÃÓÃ»§ÄÜ½ÓÊÜµÄÓïÑÔ´úÌæe.messages,Èç"ÕÒ²»µ½ÄúÒª»Ø¸´µÄÏûÏ¢"
+    return Error(request,e.message)#å®é™…ä½¿ç”¨ä¸­e.messagesç”¨ç‰¹å®šæç¤ºæ›¿ä»£"
     
