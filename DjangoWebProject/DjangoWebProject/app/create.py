@@ -18,7 +18,7 @@ def createIdeologyConstruction(request,is_active = None):
                                 Content = cd['Content'],)
                 return project
         else: return None
-def createPaper(request,is_active = None):
+def createPaper(request,is_active = None):#active:应该是 是否通过审批
         form = app.forms.CreatePaperForm(request.POST)
         if form.is_valid():
                 cd = form.cleaned_data

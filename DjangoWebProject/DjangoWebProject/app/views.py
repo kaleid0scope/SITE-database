@@ -103,8 +103,7 @@ def home(request):
     else:
         return redirect('/login')
 
-def papers(request):
-    return render(request,'app/student/papers.html')
+
 
 def first(request):
     return render(request,'first.html')
