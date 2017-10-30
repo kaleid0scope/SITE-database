@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.csrf',
                 'app.parameter.user_parameter',
+                #'app.parameter.messages',
             ],
         },
     },
@@ -85,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'djangodb',
         'USER': 'root',
-        'PASSWORD': '66667',
+        'PASSWORD': 'supersea',
         'HOST':'',
         'PORT':'',
     }
