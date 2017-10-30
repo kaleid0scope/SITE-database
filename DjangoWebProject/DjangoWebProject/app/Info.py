@@ -57,7 +57,7 @@ def getUrl(str):
         'VolunteeringRank':VolunteeringRank,
         'SchoolActivityRank':SchoolActivityRank,
         'PaperRank':'app/project/paper.html',
-        'CompetitionRank':CompetitionRank,
+        'CompetitionRank':'app/project/competition.html',
         'ExchangeRank':ExchangeRank,
         'StudentCadreRank':StudentCadreRank,
         'InternshipRank':InternshipRank,

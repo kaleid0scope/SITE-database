@@ -18,6 +18,7 @@ def createIdeologyConstruction(request,is_active = None):
                                 Content = cd['Content'],)
                 return project
         else: return None
+
 def createPaper(request,is_active = None):#active:应该是 是否通过审批
         form = app.forms.CreatePaperForm(request.POST)
         if form.is_valid():
@@ -31,6 +32,7 @@ def createPaper(request,is_active = None):#active:应该是 是否通过审批
                                 )
                 return project
         else: return None
+
 def createCompetition(request,is_active = None):
         form = app.forms.CreateCompetitionForm(request.POST)
         if form.is_valid():
@@ -38,7 +40,7 @@ def createCompetition(request,is_active = None):
                 project = CompetitionRank(rankName = cd['ProjectName'],
                                 startingTime = cd['ProjectTime'],
                                 active = 0 if is_active == None else 1,
-                                level = cd['level'],
+                                Level = cd['level'],
                                 rank = cd['rank'],)
                 return project
         else: return None

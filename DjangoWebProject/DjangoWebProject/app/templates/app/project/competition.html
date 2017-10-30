@@ -7,7 +7,7 @@
     <div>
         <div class="row">
 	        <div class="col-md-12">
-		        <h2> 论文列表 </h2>
+		        <h2> 学术竞赛列表 </h2>
                 <br/>
 	        </div><!--end .col -->
 	        <div class="col-lg-12">
@@ -17,11 +17,10 @@
 							<thead>
 								<tr>
 									<th>状态</th>
-									<th>论文题目</th>
-									<th>第几作者</th>
-									<th>期刊名称</th>
-                                    <th>期刊等级</th>
-                                    <th>项目时间</th>
+									<th>竞赛名称</th>
+									<th>竞赛等级</th>
+									<th>奖项/名次</th>
+                                    <th>开始时间</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -31,8 +30,7 @@
                                     <tr>
                                         <td>通过</td>
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.Level}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                     </tr>
@@ -45,8 +43,7 @@
                                     <tr class="warning">
                                         <td>待审核</td>
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.Level}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                     </tr>
@@ -59,8 +56,7 @@
                                     <tr class="danger">
                                         <td>未通过</td>
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.Level}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                     </tr>
@@ -69,7 +65,6 @@
                                 {% endif %}
 								<tr>
 									<td>1</td>
-									<td>Markkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk</td>
 									<td>Otto</td>
 									<td>@mdokkkkkkkkkkkkkk</td>
                                     <td>Otto</td>
@@ -78,7 +73,6 @@
 								<tr>
 									<td>2</td>
 									<td>Jacob</td>
-									<td>Thornton</td>
 									<td>@fat</td>
                                     <td>Thornton</td>
 									<td>@fat</td>
@@ -86,7 +80,6 @@
 								<tr>
 									<td>3</td>
 									<td>Larry</td>
-									<td>the Bird</td>
 									<td>@twitter</td>
                                     <td>the Bird</td>
 									<td>@twitter</td>
@@ -102,7 +95,7 @@
 
         <div class="row">
 		    <div class="col-lg-12">
-            <h2> 添加论文 </h2>
+            <h2> 添加竞赛 </h2>
             <br/>
 
             
@@ -128,8 +121,8 @@
 												<div class="form-wizard-nav">
 													<div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
 													<ul class="nav nav-justified">
-														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">论文信息</span></a></li>
-														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">期刊信息</span></a></li>
+														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">竞赛信息</span></a></li>
+														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">获奖信息</span></a></li>
 													</ul>
 												</div><!--end .form-wizard-nav -->
 												<div class="tab-content clearfix">
@@ -138,26 +131,22 @@
                                                     {% csrf_token %}
 														<div class="form-group">
                                                             {{createForm.ProjectName}}
-															<label for="title" class="control-label">论文题目</label>
+															<label for="title" class="control-label">竞赛名称</label>
 														</div>
 														<div class="form-group control-width-normal">
-                                                            {{createForm.AuthorRanking}}																
-															<label for="author" {#class="control-label"#}>第几作者</label>
+                                                            {{createForm.level}}																
+															<label for="author" {#class="control-label"#}>竞赛等级</label>
 														</div>                                                        
                                                         <div class="form-group control-width-normal">
                                                             {{createForm.ProjectTime}}
-                                                            <label>时间</label>												                
+                                                            <label>开始时间</label>												                
 											            </div>                                                    
 													</div><!--end #step1 -->
 													<div class="tab-pane" id="step2">
 														<br/><br/>
 														<div class="form-group">
-                                                            {{createForm.JournalName}}
-                                                            <label class="control-label">期刊名称</label>
-														</div>
-														<div class="form-group">
-                                                            {{createForm.Rank}}
-                                                            <label class="control-label">期刊等级</label>
+                                                            {{createForm.rank}}
+                                                            <label class="control-label">奖项/排名</label>
 														</div>
 													</div><!--end #step2 -->
 													
