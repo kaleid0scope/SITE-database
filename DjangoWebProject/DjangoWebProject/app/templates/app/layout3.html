@@ -34,27 +34,27 @@
 						</li>
 						<li class="dropdown hidden-xs">
 							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-								<i class="fa fa-bell"></i><sup class="badge style-danger">4</sup>
+								<i class="fa fa-bell"></i><sup class="badge style-danger">{%if messageCount != 0%}{{messageCount}}{%endif%}</sup>
 							</a>
 							<ul class="dropdown-menu animation-expand">
-								<li class="dropdown-header">Today's messages</li>
+								<li class="dropdown-header">messages</li>
+								{% if Vmsg %}
+                                {% for message in Vmsg%}
 								<li>
-									<a class="alert alert-callout alert-warning" href="javascript:void(0);">
-										<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/avatar2.jpg?1404026449" alt="" />
-										<strong>{{ user.username }}</strong><br/>
-										<small>Testing functionality...</small>
-									</a>
-								</li>
-								<li>
-									<a class="alert alert-callout alert-info" href="javascript:void(0);">
+									<a class="alert alert-callout alert-info" href="/Message/{{message.msg.id}}">
 										<img class="pull-right img-circle dropdown-avatar" src="../../assets/img/avatar3.jpg?1404026799" alt="" />
-										<strong>Alicia Adell</strong><br/>
-										<small>Reviewing last changes...</small>
+										<strong>{{message.msg.sender.username}}</strong><br/>
+                                        <strong>{{message.msg.type}}</strong><br/>
+										<small>{{message.shortText}}</small><br/>
 									</a>
+                                        {%if message.msg.linkid %}<a href="/Reply/{{message.msg.id}}/1">同意</a>
+                                        <a href="/Reply/{{message.msg.id}}/0">拒绝</a>{%endif%}
 								</li>
+                                {% endfor %}
+                                {% endif %}
 								<li class="dropdown-header">Options</li>
-								<li><a href="../../html/pages/login.html">View all messages <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
-								<li><a href="../../html/pages/login.html">Mark as read <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+								<li><a href="/Message">View all messages <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
+								<li><a href="/Mark">Mark as read all <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 							</ul><!--end .dropdown-menu -->
 						</li><!--end .dropdown -->
 						<li class="dropdown hidden-xs">
@@ -104,9 +104,10 @@
 							</a>
 							<ul class="dropdown-menu animation-dock">
 								<li class="dropdown-header">设置</li>
-								<li><a href="../../html/pages/profile.html">个人信息</a></li>
+								{%if type == '管理员' %}<li><a href="/admin">admin</a></li>
+                            <li><a href="/excel">excel</a></li>{%endif%}
 								
-								<li><a href="../../html/pages/calendar.html">活动日程表</a></li>
+								
 								<li class="divider"></li>
 								<li><a href="/changepassword/{{user}}"><i class="fa fa-fw fa-lock"></i> 修改密码</a></li>
 								<li><a href="{%url 'logout'%}"><i class="fa fa-fw fa-power-off text-danger"></i> 登出</a></li>

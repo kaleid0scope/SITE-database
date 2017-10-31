@@ -33,7 +33,9 @@ import DjangoWebProject.settings
 def NewWeb():
     if not Permission.objects.filter(codename = 'is_instructor'): 
         Permission.objects.create(name=u'是否为辅导员',content_type = ContentType.objects.get_for_model(User),codename='is_instructor')
-    user = User.objects.filter()
+    if not Message.objects.all():
+        admin = User.objects.get(username = 'sea')
+        Message.objects.create(type = u'普通',text = u'飒风沾，问途寒，谁与共饮，谁敢挡关？燕戟归命人不还',Time = datetime.now() ,sender = admin ,reciver = admin)
 
 def test(request):
     return render(request,'projects/index.html',{})

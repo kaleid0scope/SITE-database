@@ -15,13 +15,13 @@ from django.template.loader import get_template
 from django.contrib.auth.decorators import * 
 from __builtin__ import *
 from app.views import *
+from app.message import creatMessage
 
 def Error(request,alert = None,template_name = None):
     assert isinstance(request, HttpRequest)
     if template_name == None:
-        template_name = 'app/project/paper.html'
-    return {'error':alert}
-    #return Ralert(alert)(render)(request,template_name,{'error':True})
+        template_name = 'refresh.html'
+    return render(request,template_name,{'error':True,'alert':alert})
 
 def Success(request,success=None):
     return {'success':success}
@@ -48,7 +48,6 @@ def ProjectManage(request,rankname,student = None):
     if result:
         linkDict.update(result)
     linkDict.update({'createForm':createform})
-    assert isinstance(request, HttpRequest)#为什么不提前检验它是HttpRequest?
     return render(request,html,linkDict)#所有需要的放到模板里去
 
 def ProjectManagePost(request,rankname,student = None):
