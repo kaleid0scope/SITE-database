@@ -27,6 +27,15 @@ def Success(request,success=None):
     return {'success':success}
 
 
+class ViewLink(object):
+    rl = RankLinks
+    n = u''
+    l = object
+    def __init__(self, l, n, rl):
+        self.l = l
+        self.n = n
+        self.rl = rl
+    pass
 
 def ProjectManage(request,rankname,student = None):
     html = getUrl(rankname)
@@ -95,11 +104,11 @@ def ProjectManageGetList(request,rankname,studentid = None,student = None):
                 rank = getModel(link.rtype)
                 project = rank.objects.get(pk = link.rnum)
                 if link.status == '待审核':
-                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = project))
+                    linksDS.append(ViewLink(n = getVerboseName(link.rtype),l = project,rl = link))
                 elif link.status == '通过':
-                    linksP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = project))
+                    linksP.append(ViewLink(n = getVerboseName(link.rtype),l = project,rl = link))
                 else:
-                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),rn = project.rankName,l = project))
+                    linksNP.append(ViewLink(n = getVerboseName(link.rtype),l = project,rl = link))
         assert isinstance(request, HttpRequest)
         return {'linksP':linksP,'linksDS':linksDS,'linksNP':linksNP}
     #拿到所有的list，已经把里面的类型改成project（XXRank）了
@@ -211,16 +220,6 @@ def ProjectDetail(request,linkid,Valert = None):
     #    assert isinstance(request, HttpRequest)
     #    return render(request,'app/login.html',{'alert':e})
 #列表
-
-class ViewLink(object):
-    l = RankLinks
-    n = u''
-    rn = u''
-    def __init__(self, l, n, rn):
-        self.l = l
-        self.n = n
-        self.rn = rn
-    pass
 
 def Papers(request):
     form = getForm('Paper')

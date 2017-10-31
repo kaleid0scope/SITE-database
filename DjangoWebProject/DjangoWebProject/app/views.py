@@ -40,9 +40,9 @@ def test(request):
 
 @teacher_required
 def Excel(request,linkid = None):
-    if request.method == 'POST' and request.POST.has_key('register'):
+    if request.method == 'POST':
         myFile = request.FILES.get("register", None)    # 获取上传的文件，如果没有文件，则默认为None  
-        if not myFile:  
+        if not myFile:
             return HttpResponse("no files for upload!") 
         if ExcelRegister(myFile.temporary_file_path()):
             return HttpResponse("over!")  
