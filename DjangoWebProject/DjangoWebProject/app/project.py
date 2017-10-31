@@ -44,11 +44,12 @@ def ProjectManage(request,rankname,student = None):
         result= ProjectManagePost(request,rankname,student)
     #获取的部分
     linkDict = ProjectManageGetList(request,rankname,student)
-    createform = getForm(rankname)()
+    createform = getForm(rankname)()#找到对应的form
     if result:
         linkDict.update(result)
+    linkDict.update({'createForm':createform})
     assert isinstance(request, HttpRequest)#为什么不提前检验它是HttpRequest?
-    return render(request,html,dict(linkDict,**{'createForm':createform}))#所有需要的放到模板里去
+    return render(request,html,linkDict)#所有需要的放到模板里去
 
 def ProjectManagePost(request,rankname,student = None):
     html = getUrl(rankname)

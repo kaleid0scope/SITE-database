@@ -187,7 +187,7 @@ class CreateCompetitionForm(forms.Form):
                                    'class': 'form-control',}))
     ProjectTime = forms.DateField(required=True,
         label=u"项目时间",
-        error_messages={'required': u'请输入项目时间'},
+        error_messages={'required': u'请输入开始时间'},
         widget = SelectDateWidget())
 
     def clean(self):

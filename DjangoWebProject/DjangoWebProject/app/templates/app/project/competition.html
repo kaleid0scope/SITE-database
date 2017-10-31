@@ -1,0 +1,196 @@
+{% extends "app/layout3.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<section class="style-default-bright">
+    <div>
+        <div class="row">
+	        <div class="col-md-12">
+		        <h2> 学术竞赛列表 </h2>
+                <br/>
+	        </div><!--end .col -->
+	        <div class="col-lg-12">
+            	<div class="card">
+				    <div class="card-body ">
+		                <table class="table no-margin">
+							<thead>
+								<tr>
+									<th>状态</th>
+									<th>竞赛名称</th>
+									<th>竞赛等级</th>
+									<th>奖项/名次</th>
+                                    <th>开始时间</th>
+								</tr>
+							</thead>
+							<tbody>
+
+                                {% if linksP %}
+                                    {% for p in linksP%}
+                                    <tr>
+                                        <td>通过</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.Level}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+
+                                {% if linksDS %}
+                                    {% for p in linksDS%}
+                                    <tr class="warning">
+                                        <td>待审核</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.Level}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+
+                                {% if linksNP %}
+                                    {% for p in linksNP%}
+                                    <tr class="danger">
+                                        <td>未通过</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.Level}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                {% endif %}
+								<tr>
+									<td>1</td>
+									<td>Otto</td>
+									<td>@mdokkkkkkkkkkkkkk</td>
+                                    <td>Otto</td>
+									<td>@mdokkkkkkkkk</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>Jacob</td>
+									<td>@fat</td>
+                                    <td>Thornton</td>
+									<td>@fat</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>Larry</td>
+									<td>@twitter</td>
+                                    <td>the Bird</td>
+									<td>@twitter</td>
+								</tr>
+							</tbody>
+						</table>
+                    </div>
+                </div>
+	        </div><!--end .col -->
+        </div>
+
+        {#<hr class="ruler-xl">#}
+
+        <div class="row">
+		    <div class="col-lg-12">
+            <h2> 添加竞赛 </h2>
+            <br/>
+
+            
+			    <div class="card">
+				    <div class="card-body ">
+                    {% if error %}
+                    <div class="alert alert-danger" role="alert">
+					        <strong>错误</strong> {{error}}
+			        </div>
+                    {% endif %}
+                    {% if alert %}
+                    <div class="alert alert-warning" role="alert">
+				        <strong>警告</strong> {{alert}}
+			        </div>
+                    {% endif %}
+                    {% if success %}
+                    <div class="alert alert-success" role="alert">
+				        <strong></strong> {{success}}
+			        </div>
+                    {% endif %}
+					    <div id="rootwizard2" class="form-wizard form-wizard-horizontal">
+											<form class="form floating-label form-validation" method="post" action="#" id="paperSubmit" role="form" novalidate="novalidate">
+												<div class="form-wizard-nav">
+													<div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
+													<ul class="nav nav-justified">
+														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">竞赛信息</span></a></li>
+														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">获奖信息</span></a></li>
+													</ul>
+												</div><!--end .form-wizard-nav -->
+												<div class="tab-content clearfix">
+													<div class="tab-pane active" id="step1">
+                                                    <br/><br/>	
+                                                    {% csrf_token %}
+														<div class="form-group">
+                                                            {{createForm.ProjectName}}
+															<label for="title" class="control-label">竞赛名称</label>
+														</div>
+														<div class="form-group control-width-normal">
+                                                            {{createForm.level}}																
+															<label for="author" {#class="control-label"#}>竞赛等级</label>
+														</div>                                                        
+                                                        <div class="form-group control-width-normal">
+                                                            {{createForm.ProjectTime}}
+                                                            <label>开始时间</label>												                
+											            </div>                                                    
+													</div><!--end #step1 -->
+													<div class="tab-pane" id="step2">
+														<br/><br/>
+														<div class="form-group">
+                                                            {{createForm.rank}}
+                                                            <label class="control-label">奖项/排名</label>
+														</div>
+													</div><!--end #step2 -->
+													
+												</div><!--end .tab-content -->
+												<ul class="pager wizard">										
+													<li class="previous"><a class="btn-raised" href="javascript:void(0);">上一步</a></li>
+													<li class="next last"><a class="btn-raised" href="javascript:void(0);">下一步</a></li>
+                                                    <li><a class="btn-raised" type="submit" href="javascript:void(0);" onclick="document.getElementById('paperSubmit').submit()" >提交</a></li>
+												</ul>
+											</form>
+										</div><!--end #rootwizard -->
+				    </div><!--end .card-body -->
+			    </div><!--end .card -->
+			    {#<em class="text-caption">Form wizard with validation</em>#}
+		    </div><!--end .col -->
+            
+	    </div>
+
+       
+    </div>
+</section>
+
+{% endblock %}
+
+{% block jscript %}
+
+<script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/DataTables/jquery.dataTables.min.js'%}"></script>
+
+<script src="{%static 'app/assets/js/libs/DataTables/extensions/ColVis/js/dataTables.colVis.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js'%}"></script>
+<script src="{%static 'app/assets/js/core/demo/DemoFormComponents.js'%}"></script>
+
+<script src="{%static 'app/assets/js/core/demo/DemoFormWizard.js'%}"></script>
+<script src="{%static 'app/assets/js/core/demo/DemoUIMessages.js'%}"></script>
+
+{% endblock %}
+
+{%block css%}
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/wizard/wizard.css'%}" />
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/DataTables/jquery.dataTables.css'%}"/>
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/DataTables/extensions/dataTables.colVis.css'%}" />
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/DataTables/extensions/dataTables.tableTools.css'%}" />
+
+{%endblock%}
