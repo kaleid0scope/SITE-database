@@ -15,7 +15,7 @@ from django.template.loader import get_template
 from django.contrib.auth.decorators import * 
 from __builtin__ import *
 from app.views import *
-from app.message import creatMessage
+from app.message import createMessage
 
 def Error(request,alert = None,template_name = None):
     assert isinstance(request, HttpRequest)
