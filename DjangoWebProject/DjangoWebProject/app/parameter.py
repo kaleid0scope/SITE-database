@@ -39,4 +39,4 @@ def messages(request):
     for message in messages :
         try:Vmsg.append(ViewMessage(msg = message,shortText = message.text[:20]))
         except Exception,e: pass
-    return {'Vmsg': Vmsg,'messageCount': Message.objects.filter(reciver = request.user).filter(isRead = 0).count}
+    return {'Vmsg': Vmsg,'messageCount': messages.filter(isRead = 0).count()}

@@ -5063,6 +5063,19 @@ a.thumbnail:focus {
   color: #2d6987;
 }
 
+.alert-read {
+  color: #737373;
+  background-color: #e8e8e8;
+  border-color: #d6d6d6;
+}
+
+.alert-read hr {
+  border-top-color: #c9c9c9;
+}
+
+.alert-read .alert-link {
+  color: #999;
+}
 .alert-warning {
   color: #c09853;
   background-color: #fcf8e3;
