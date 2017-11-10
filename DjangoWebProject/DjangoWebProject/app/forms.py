@@ -125,10 +125,12 @@ class CreateResearchProjectForm(forms.Form):
 class CreateIdeologyConstructionForm(forms.Form):
     ProjectName = forms.CharField(required=True,
         label=u"活动名称",
-        error_messages={'required': u'请输入活动名称'})
+        error_messages={'required': u'请输入活动名称'},
+        widget=forms.TextInput({'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"活动类型",
-        error_messages={'required': u'请输入活动类型'})
+        error_messages={'required': u'请输入活动类型'},
+        widget=forms.TextInput({'class': 'form-control',}))
     organizer = forms.CharField(required=True,
         label=u"主办方",
         error_messages={'required': u'请输入活动主办方'})
@@ -138,10 +140,12 @@ class CreateIdeologyConstructionForm(forms.Form):
         widget = SelectDateWidget())
     Location = forms.CharField(required=True,
         label=u"活动地点",
-        error_messages={'required': u'请输入活动地点'})
+        error_messages={'required': u'请输入活动地点'},
+        widget=forms.TextInput({'class': 'form-control',}))
     Content = forms.CharField(required=True,
         label=u"活动内容",
         error_messages={'required': u'请输入活动内容'},
+        #widget=forms.TextInput({'class': 'form-control',}))
         widget=forms.Textarea)
 
 class CreatePaperForm(forms.Form):
@@ -198,8 +202,8 @@ class CreateCompetitionForm(forms.Form):
         return cleaned_data
 class CreateExchangeForm(forms.Form):
     ProjectName = forms.CharField(required=True,
-        label=u"对方院校/公司名称名称",
-        error_messages={'required': u'请输入对方院校/公司名称名称'},widget=forms.TextInput({
+        label=u"对方院校/公司名称",
+        error_messages={'required': u'请输入对方院校/公司名称'},widget=forms.TextInput({
                                    'class': 'form-control',}))
     type = forms.CharField(required=True,
         label=u"交流类型",

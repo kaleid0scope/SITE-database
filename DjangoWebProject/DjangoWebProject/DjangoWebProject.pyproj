@@ -1826,6 +1826,14 @@
     <Content Include="app\static\images\bg2.jpg" />
     <Content Include="app\static\images\item8.png" />
     <Content Include="app\static\img\templates\index.html" />
+    <Content Include="app\templates\app\project\research.html" />
+    <Content Include="app\templates\app\project\lecture.html" />
+    <Content Include="app\templates\app\project\internship.html" />
+    <Content Include="app\templates\app\project\volunteering.html" />
+    <Content Include="app\templates\app\project\schoolactivity.html" />
+    <Content Include="app\templates\app\project\exchange.html" />
+    <Content Include="app\templates\app\project\studentcadre.html" />
+    <Content Include="app\templates\app\project\ideology.html" />
     <Content Include="app\templates\app\project\competition.html" />
     <Content Include="app\templates\app\project\paper.html" />
     <Content Include="app\templates\app\base.html" />

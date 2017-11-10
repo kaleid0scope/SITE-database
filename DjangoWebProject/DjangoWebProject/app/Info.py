@@ -51,16 +51,16 @@ def getUrl(str):
         'Internship':app.forms.CreateInternshipForm,
 
         'User': User,
-        'ResearchProjectRank': ResearchProjectRank,
-        'IdeologyConstructionRank': IdeologyConstructionRank, 
-        'LectureRank':LectureRank,
-        'VolunteeringRank':VolunteeringRank,
-        'SchoolActivityRank':SchoolActivityRank,
+        'ResearchProjectRank': 'app/project/research.html',
+        'IdeologyConstructionRank': 'app/project/ideology.html',
+        'LectureRank':'app/project/lecture.html',
+        'VolunteeringRank':'app/project/volunteering.html',
+        'SchoolActivityRank':'app/project/schoolactivity.html',
         'PaperRank':'app/project/paper.html',
         'CompetitionRank':'app/project/competition.html',
-        'ExchangeRank':ExchangeRank,
-        'StudentCadreRank':StudentCadreRank,
-        'InternshipRank':InternshipRank,
+        'ExchangeRank':'app/project/exchange.html',
+        'StudentCadreRank':'app/project/studentcadre.html',
+        'InternshipRank':'app/project/internship.html',
         }
     return UrlDict.get(str,NameError)
 

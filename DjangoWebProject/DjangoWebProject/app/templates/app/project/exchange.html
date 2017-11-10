@@ -7,7 +7,7 @@
     <div>
         <div class="row">
 	        <div class="col-md-12">
-		        <h2> 论文列表 </h2>
+		        <h2> 交换项目 </h2>
                 <br/>
 	        </div><!--end .col -->
 	        <div class="col-lg-12">
@@ -17,11 +17,11 @@
 							<thead>
 								<tr>
 									<th>状态</th>
-									<th>论文题目</th>
-									<th>第几作者</th>
-									<th>期刊名称</th>
-                                    <th>期刊等级</th>
-                                    <th>项目时间</th>
+									<th>院校/机构名称</th>
+									<th>交换类别</th>
+									<th>交流性质</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -31,10 +31,10 @@
                                     <tr>
                                         <td>通过</td>
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
+                                        <td>{{p.l.type}}</td>
+                                        <td>{{p.l.nature}}</td>
+                                        <td>{{p.l.startTime}}</td>
+                                        <td>{{endTime}}</td>
                                     </tr>
                                     {% endfor %}
                                 {% else %}
@@ -45,10 +45,10 @@
                                     <tr class="warning">
                                         <td>待审核</td>
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
+                                        <td>{{p.l.type}}</td>
+                                        <td>{{p.l.nature}}</td>
+                                        <td>{{p.l.startTime}}</td>
+                                        <td>{{endTime}}</td>
                                     </tr>
                                     {% endfor %}
                                 {% else %}
@@ -59,10 +59,10 @@
                                     <tr class="danger">
                                         <td>未通过</td>
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
+                                        <td>{{p.l.type}}</td>
+                                        <td>{{p.l.nature}}</td>
+                                        <td>{{p.l.startTime}}</td>
+                                        <td>{{endTime}}</td>
                                     </tr>
                                     {% endfor %}
                                 {% else %}
@@ -72,7 +72,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><i>暂时没有论文记录</i></td>
+                                        <td><i>暂时没有交换记录</i></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -88,7 +88,7 @@
 
         <div class="row">
 		    <div class="col-lg-12">
-            <h2> 添加论文 </h2>
+            <h2> 添加交换项目 </h2>
             <br/>
 
             
@@ -114,8 +114,9 @@
 												<div class="form-wizard-nav">
 													<div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
 													<ul class="nav nav-justified">
-														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">论文信息</span></a></li>
-														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">期刊信息</span></a></li>
+														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">交换基本信息</span></a></li>
+                                                        <li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">开始时间</span></a></li>
+                                                        <li><a href="#step3" data-toggle="tab"><span class="step">3</span> <span class="title">结束时间</span></a></li>
 													</ul>
 												</div><!--end .form-wizard-nav -->
 												<div class="tab-content clearfix">
@@ -124,29 +125,35 @@
                                                     {% csrf_token %}
 														<div class="form-group">
                                                             {{createForm.ProjectName}}
-															<label for="title" class="control-label">论文题目</label>
+															<label for="title" class="control-label">院校/公司名称</label>
 														</div>
 														<div class="form-group control-width-normal">
-                                                            {{createForm.AuthorRanking}}																
-															<label for="author" {#class="control-label"#}>第几作者</label>
-														</div>                                                        
-                                                        <div class="form-group control-width-normal">
-                                                            {{createForm.ProjectTime}}
-                                                            <label>时间</label>												                
-											            </div>                                                    
-													</div><!--end #step1 -->
+                                                            {{createForm.type}}																
+															<label for="author">交流类型</label>
+														</div>                    
+														<div class="form-group control-width-normal">
+                                                            {{createForm.nature}}																
+															<label for="author">交流性质</label>
+														</div>               
+                                                    </div><!--end #step1 -->		
 													<div class="tab-pane" id="step2">
 														<br/><br/>
-														<div class="form-group">
-                                                            {{createForm.JournalName}}
-                                                            <label class="control-label">期刊名称</label>
-														</div>
-														<div class="form-group">
-                                                            {{createForm.Rank}}
-                                                            <label class="control-label">期刊等级</label>
+														<div class="form-group control-width-normal">
+                                                            <br/>
+                                                            {{createForm.startTime}}
+                                                            <label>开始时间</label>		
 														</div>
 													</div><!--end #step2 -->
-													
+													<div class="tab-pane" id="step3">
+														<br/><br/>
+														<div class="form-group">
+                                                            <br/>
+                                                            {{createForm.endTime}}
+                                                            <label>结束时间</label>					
+														</div>
+													</div><!--end #step2 -->
+    
+	
 												</div><!--end .tab-content -->
 												<ul class="pager wizard">										
 													<li class="previous"><a class="btn-raised" href="javascript:void(0);">上一步</a></li>
