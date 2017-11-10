@@ -33,16 +33,18 @@ import DjangoWebProject.settings
 def NewWeb():
     if not Permission.objects.filter(codename = 'is_instructor'): 
         Permission.objects.create(name=u'是否为辅导员',content_type = ContentType.objects.get_for_model(User),codename='is_instructor')
-    user = User.objects.filter()
+    if not Message.objects.all():
+        admin = User.objects.get(username = 'sea')
+        Message.objects.create(type = u'普通',text = u'飒风沾，问途寒，谁与共饮，谁敢挡关？燕戟归命人不还',Time = datetime.now() ,sender = admin ,reciver = admin)
 
 def test(request):
     return render(request,'projects/index.html',{})
 
 @teacher_required
 def Excel(request,linkid = None):
-    if request.method == 'POST' and request.POST.has_key('register'):
+    if request.method == 'POST':
         myFile = request.FILES.get("register", None)    # 获取上传的文件，如果没有文件，则默认为None  
-        if not myFile:  
+        if not myFile:
             return HttpResponse("no files for upload!") 
         if ExcelRegister(myFile.temporary_file_path()):
             return HttpResponse("over!")  

@@ -69,7 +69,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.csrf',
                 'app.parameter.user_parameter',
-                #'app.parameter.messages',
+                'app.parameter.messages',
             ],
         },
     },

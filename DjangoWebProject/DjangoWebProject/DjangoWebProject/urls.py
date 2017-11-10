@@ -9,6 +9,7 @@ import django.contrib.auth.views
 import DjangoWebProject.settings
 from django.contrib import auth
 import app
+from app.message import *
 from app.views import *
 from app.project import *
 from app.project import *
@@ -57,6 +58,12 @@ urlpatterns = [
     url(r'^detail/(?P<linkid>\w+)$',ProjectDetail),
     url(r'^Detail/(?P<linkid>\w+)$',ProjectDetail),
     url(r'^Add/(?P<linkid>\w+)/(?P<sid>\w+)$',ProjectAdd),
+
+    url(r'^Reply/(?P<messageid>\w+)/$',replyMessage),
+    url(r'^Reply/(?P<messageid>\w+)/(?P<result>\w+)/$',replyMessage),
+    url(r'^Mark/$',markMessage),
+    url(r'^Message/$',readMessage),
+    url(r'^Message/(?P<messageid>\w+)/$',readMessage),
 
     url(r'^construction/$',construction,name='construction'), 
     url(r'^excel/$',Excel),

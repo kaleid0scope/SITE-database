@@ -13,10 +13,10 @@
 	        <div class="col-lg-12">
             	<div class="card">
 				    <div class="card-body ">
-		                <table class="table no-margin">
+		                <table class="table table-banded no-margin">
 							<thead>
 								<tr>
-									<th>状态</th>
+									<th>是否通过</th>
 									<th>论文题目</th>
 									<th>第几作者</th>
 									<th>期刊名称</th>
@@ -42,7 +42,7 @@
 
                                 {% if linksDS %}
                                     {% for p in linksDS%}
-                                    <tr class="warning">
+                                    <tr>
                                         <td>待审核</td>
                                         <td>{{p.l.rankName}}</td>
                                         <td>{{p.l.AuthorRanking}}</td>
@@ -56,7 +56,7 @@
 
                                 {% if linksNP %}
                                     {% for p in linksNP%}
-                                    <tr class="danger">
+                                    <tr>
                                         <td>未通过</td>
                                         <td>{{p.l.rankName}}</td>
                                         <td>{{p.l.AuthorRanking}}</td>
@@ -124,26 +124,26 @@
                                                     {% csrf_token %}
 														<div class="form-group">
                                                             {{createForm.ProjectName}}
-															<label for="title" class="control-label">论文题目</label>
+															<label for="title" class="control-label">{{createForm.ProjectName.label_tag}}</label>
 														</div>
 														<div class="form-group control-width-normal">
-                                                            {{createForm.AuthorRanking}}																
-															<label for="author" {#class="control-label"#}>第几作者</label>
+                                                            {{createForm.AuthorRanking}}											
+															<label for="author" {#class="control-label"#}>{{createForm.AuthorRanking.label_tag}}	</label>
 														</div>                                                        
                                                         <div class="form-group control-width-normal">
                                                             {{createForm.ProjectTime}}
-                                                            <label>时间</label>												                
+                                                            <label>{{createForm.ProjectTime.label_tag}}</label>												                
 											            </div>                                                    
 													</div><!--end #step1 -->
 													<div class="tab-pane" id="step2">
 														<br/><br/>
 														<div class="form-group">
                                                             {{createForm.JournalName}}
-                                                            <label class="control-label">期刊名称</label>
+                                                            <label class="control-label">{{createForm.JournalName.label_tag}}</label>
 														</div>
 														<div class="form-group">
                                                             {{createForm.Rank}}
-                                                            <label class="control-label">期刊等级</label>
+                                                            <label class="control-label">{{createForm.Rank.label_tag}}</label>
 														</div>
 													</div><!--end #step2 -->
 													
@@ -169,7 +169,109 @@
 {% endblock %}
 
 {% block jscript %}
+<script>
+    var vl = [];var vlDS = [];var vlNP = [];var list = [];
 
+    {%for viewlink in linksP%}
+     vl.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}    
+
+    {%for viewlink in linksDS%}
+     vlDS.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}  
+
+    {%for viewlink in linksNP%}
+     vlNP.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}
+
+    //vl()
+
+    function initial()
+    {
+    tab = document.getElementById("mtab");
+    var num = tab.rows.length;
+    if(num >1 )//清除表格
+        {
+        for(var i=1;i<num;i++){                           
+        tab.deleteRow(1);
+        }}
+    for(var i = 0;i<list.length;i++){
+
+    var tr = document.createElement("tr");  
+    var new_obj = list[i];
+    
+    var tdf = document.createElement("td"); 
+    tdn.innerHTML = new_obj.l.;
+    var tdn = document.createElement("td");  
+    tdn.innerHTML = new_obj.l.rankName;
+    var tdrn = document.createElement("td");  
+    tdrn.innerHTML = new_obj.l.AuthorRanking;
+    var blank1 = document.createElement("td");  
+    blank1.innerHTML = new_obj.l.journalName;    
+    var blank2 = document.createElement("td");  
+    blank2.innerHTML = new_obj.l.rank;
+    var tdadd = document.createElement("td");  
+    tdadd.innerHTML = new_obj.l.startingTime;
+    
+    tr.appendChild(tdn); 
+    tr.appendChild(tdrn);
+    tr.appendChild(blank1); 
+    tr.appendChild(blank2);  
+    tr.appendChild(tdadd); 
+
+    var listbody = document.getElementById("mainlist");  
+    listbody.appendChild(tr);  
+        }
+    }
+
+    function search()
+    {
+        var string = document.getElementById("filter_search").value;
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].rn.indexOf(string) > -1)
+            {
+                list.push(vl[i]);
+            }
+        }
+        
+        initial();
+    }
+    function reset() {
+        document.id('filter_search').value='';
+        search();
+    }
+    function rank(rankname){
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].n.indexOf(rankname) > -1)
+            {
+                list.push(vl[i]);
+            }
+        }
+        
+        initial();
+    }
+    function vl(){
+        list = vl;
+        initial();
+    }
+    function ds(){
+        list = vlDS;
+        initial();
+    }
+    function np(){
+        list = vlNP;
+        initial();
+    }
+    function Link(n,rn,id) {
+        this.n = n;
+        this.rn = rn;
+        this.id = id;
+    }
+</script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>
