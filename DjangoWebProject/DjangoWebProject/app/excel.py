@@ -31,13 +31,21 @@ def ExcelRegister(path):
           IdentityNumber = str(int(sheet.cell(r,13).value))
           MajorName     = sheet.cell(r,14).value
           Province       = sheet.cell(r,15).value
-          if not User.objects.filter(username = studentNum):
+          if True : #not User.objects.filter(username = studentNum):
             thecomplete = Complete()
             thecomplete.save()
             theuser = User(username = studentNum ,password = make_password('uibe'+IdentityNumber[-6:]),email = Email)
             theuser.save()
-            Instructor = Instructor.objects.get_or_create(name = '未知辅导员',num = 1,user = User.objects.get(username = 'sea'))
-            Major = Major.objects.get_or_create(name = MajorName,instructor = Instructor)
+            Inst = Instructor.objects.get_or_create(name = '未知辅导员',num = 1,user = User.objects.get(username = 'sea'))[0]
+            if not type(Inst) == Instructor: 
+                inst = Inst[0]
+                inst.save()
+            else:inst = Inst
+            major = Major.objects.get_or_create(name = MajorName,instructor = Inst)
+            if not type(major) == Major:
+                mj = major[0]
+                mj.save()
+            else:mj = major
             student = Students(user =theuser,
                              StudentNum =int(studentNum), 
                              rankName =Name, 
@@ -52,8 +60,7 @@ def ExcelRegister(path):
                              location =Location,
                              identityType =IdentityType,
                              identityNumber =int(IdentityNumber),
-                             instructor = instructor,
-                             major =Major,
+                             major = mj,
                              province =Province,
                              complete = thecomplete,
                              collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
