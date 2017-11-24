@@ -27,7 +27,7 @@ from app.excel import *
 from django.contrib.contenttypes.models import ContentType
 import DjangoWebProject.settings
 
-'''  课程相关。
+'''  课程学生相关。
 
                '''
 
@@ -54,11 +54,12 @@ def getls(request):
     else:return Error(request,u'您无权访问')
     return {'lessons':lessons,'students':students,'scores':scores}
 
+#注意scores和projects也是queryset
 class SL(object):
-    def __init__(self, st, score, ct):
+    def __init__(self, st, score, rl ,ct):
         self.student = st
-        self.score = score
-        self.count = ct
+        self.scores = score
+        self.projects = rl
     pass
 
 def studentList(request):
@@ -66,8 +67,9 @@ def studentList(request):
     sls = []
     for student in students:
         score = Score.objects.filter(student = student)
-        sls.append(SL(student,score,score.count()))
-    return render(request,'app/stlist.html',sls)
+        ranklinks = RankLinks.projects.filter(student = student)
+        sls.append(SL(student,score,ranklinks))
+    return render(request,'app/stlist.html',{'list':sls})
 
 class LS(object):
     def __init__(self, st, score, ct):
@@ -82,4 +84,4 @@ def lessonList(request):
     for lesson in lessons:
         score = Score.objects.filter(lesson = lesson)
         lss.append(SL(lesson,score,score.count()))
-    return render(request,'app/stlist.html',lss)
+    return render(request,'app/stlist.html',{'list':lss})
