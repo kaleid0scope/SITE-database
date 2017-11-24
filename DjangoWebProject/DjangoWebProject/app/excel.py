@@ -15,22 +15,23 @@ def ExcelRegister(path):
     book = xlrd.open_workbook(path)
     sheet = book.sheets()[0]  
     for r in range(1, sheet.nrows):
-          CollegeEntranceExaminationScore  = str(int(sheet.cell(r,0).value))
-          studentNum     = str(int(sheet.cell(r,1).value))
-          Name           = sheet.cell(r,2).value
-          Sex            = str(int(sheet.cell(r,3).value))
-          Year           = str(int(sheet.cell(r,4).value))
-          Phone          = str(int(sheet.cell(r,5).value))
-          Email          = sheet.cell(r,6).value
-          Born           = sheet.cell(r,7).value
-          Root           = sheet.cell(r,8).value
-          Nation         = sheet.cell(r,9).value
-          PoliticalStatus= sheet.cell(r,10).value
-          Location       = sheet.cell(r,11).value
-          IdentityType   = sheet.cell(r,12).value
-          IdentityNumber = str(int(sheet.cell(r,13).value))
-          MajorName     = sheet.cell(r,14).value
-          Province       = sheet.cell(r,15).value
+          studentNum     = str(int(sheet.cell(r,0).value))
+          Name           = sheet.cell(r,1).value
+          IdentityNumber = str(int(sheet.cell(r,2).value))
+          MajorName     = sheet.cell(r,3).value
+
+          Sex            = str(int(sheet.cell(r,4).value))
+          Year           = str(int(sheet.cell(r,5).value))
+          Phone          = str(int(sheet.cell(r,6).value))
+          Email          = sheet.cell(r,7).value
+          Born           = sheet.cell(r,8).value
+          Root           = sheet.cell(r,9).value
+          Nation         = sheet.cell(r,10).value
+          PoliticalStatus= sheet.cell(r,11).value
+          Location       = sheet.cell(r,12).value
+          IdentityType   = sheet.cell(r,13).value
+          Province       = sheet.cell(r,14).value
+          CollegeEntranceExaminationScore  = str(int(sheet.cell(r,15).value))
           if True : #not User.objects.filter(username = studentNum):
             thecomplete = Complete()
             thecomplete.save()
@@ -46,14 +47,16 @@ def ExcelRegister(path):
                 mj = major[0]
                 mj.save()
             else:mj = major
-            student = Students(user =theuser,
+            if Born != u'':Born = datetime.strptime(Born,'%Y-%m-%d')
+            else:Born = None
+            Students.objects.create(user =theuser,
                              StudentNum =int(studentNum), 
                              rankName =Name, 
                              sex =int(Sex), 
                              year =int(Year), 
                              phone = int(Phone),
                              email = Email,
-                             born = datetime.strptime(Born,'%Y-%m-%d'),
+                             born = Born,
                              root =Root,
                              nation =Nation,
                              politicalStatus =PoliticalStatus,
@@ -64,7 +67,6 @@ def ExcelRegister(path):
                              province =Province,
                              complete = thecomplete,
                              collegeEntranceExaminationScore =CollegeEntranceExaminationScore)
-            student.save()
     return True
 
 def ExcelImportLesson(path):

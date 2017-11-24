@@ -103,22 +103,25 @@ class Major(models.Model):
 class Students(models.Model):
     user = models.OneToOneField(User,unique=True,verbose_name='用户',related_name='StoU')
     StudentNum = models.PositiveIntegerField(primary_key = True,verbose_name ='学号' )
-    rankName = models.CharField(max_length = 20,verbose_name ='学生姓名' )
-    sex = models.BooleanField(verbose_name ='性别')#初始值
-    year = models.PositiveSmallIntegerField(verbose_name ='入学年份' )
-    phone = models.BigIntegerField(verbose_name ='手机号码' )
-    email = models.EmailField(verbose_name ='电子邮箱' )#待修改
-    born = models.DateField(verbose_name ='出生年月' )
-    root = models.CharField(max_length = 50,verbose_name ='籍贯')
-    nation = models.CharField(max_length = 50,verbose_name ='民族')
-    politicalStatus = models.CharField(max_length = 50,verbose_name ='政治面貌')
-    location = models.CharField(max_length = 50,verbose_name ='国家地区')
-    identityType = models.CharField(max_length = 20,verbose_name ='身份证件类型')
+    rankName = models.CharField(max_length = 20,verbose_name ='学生姓名')
+
+    sex = models.BooleanField(verbose_name ='性别',default = True)
+    year = models.PositiveSmallIntegerField(verbose_name ='入学年份' ,null = True,blank = True)
+    phone = models.BigIntegerField(verbose_name ='手机号码',null = True,blank = True)
+    email = models.EmailField(verbose_name ='电子邮箱',null = True,blank = True)#待修改
+    born = models.DateField(verbose_name ='出生年月',null = True,blank = True)
+    root = models.CharField(max_length = 50,verbose_name ='籍贯',default = '未知')
+    nation = models.CharField(max_length = 50,verbose_name ='民族',default = '未知')
+    politicalStatus = models.CharField(max_length = 50,verbose_name ='政治面貌',default = '未知')
+    location = models.CharField(max_length = 50,verbose_name ='国家地区',default = '未知')
+    identityType = models.CharField(max_length = 20,verbose_name ='身份证件类型',default = '身份证')
+    province = models.CharField(max_length = 50,verbose_name ='生源省份',default = '未知')
+    collegeEntranceExaminationScore = models.PositiveSmallIntegerField(verbose_name ='高考分数' ,null = True,blank = True)
+
     identityNumber = models.BigIntegerField(verbose_name ='身份证号码')
+
     major = models.ForeignKey(Major,verbose_name='专业')
-    province = models.CharField(max_length = 50,verbose_name ='生源省份')
     complete = models.ForeignKey(Complete,verbose_name ='完成度',related_name='StoC')
-    collegeEntranceExaminationScore = models.PositiveSmallIntegerField(verbose_name ='高考分数')
     class Meta:
         verbose_name = u'学生'
         verbose_name_plural = u'学生'

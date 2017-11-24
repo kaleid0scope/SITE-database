@@ -1,0 +1,290 @@
+{% extends "app/layout3.html" %}
+
+{% block content %}
+{% load staticfiles %}
+				<section>
+					<div class="section-header">
+						<ol class="breadcrumb">
+							<li class="active">批量导入</li>
+						</ol>
+					</div>
+					<div class="section-body">
+						<div class="container">
+							<h2 class="text-light text-center">类别 &amp; 要求<br><small class="text-primary">选择要上传的类别，使用excel导入</small></h2>
+							<br>
+
+							<!-- BEGIN PRICING CARDS 1 -->
+							<div class="row">
+								<div class="col-md-3">
+									<div class="card card-type-pricing text-center">
+										<div class="card-body style-gray">
+											<h2 class="text-light">学生<span>导入</span></h2>
+											<br>
+											<p class="opacity-50"><span class="glyphicon glyphicon-pencil"></span><em>在Excel中每行依次输入以下内容</em></p>
+										</div>
+                                        <form enctype="multipart/form-data" action="#" method="post">
+                                        {% csrf_token %}
+										<div class="card-body no-padding">
+                                        <div class="card tabs-left style-default-light">
+									<ul class="card-head nav nav-tabs" data-toggle="tabs">
+										<li class="active"><a href="#first1">必填项</a></li>
+										<li class=""><a href="#second1">选填项</a></li>
+									</ul>
+									<div class="card-body tab-content style-default-bright">
+										<div class="tab-pane active" id="first1"><h4><strong>列1至列4</strong></h4>
+											<ul class="list-unstyled">
+												<li>学号</li>
+												<li>姓名</li>
+												<li>身份证号</li>
+												<li>专业</li>
+											</ul>
+										</div>
+										<div class="tab-pane" id="second1"><h4><strong>列5至列16</strong></h4>
+											<ul class="list-unstyled">
+												<li>性别</li>
+												<li>入学年份</li>
+												<li>手机号</li>
+												<li>电子邮箱</li>
+												<li>出生年月</li>
+												<li>籍贯</li>
+												<li>民族</li>
+												<li>政治面貌</li>
+												<li>国家地区</li>
+												<li>身份证件类型</li>
+												<li>生源省份</li>
+												<li>高考分数</li>
+											</ul>
+										</div>
+									</div><!--end .card-body -->
+								        </div>
+
+
+											<ul class="list-unstyled">
+                                                <li><input type="file" name="register"/></li>
+											</ul>
+										</div>
+										<div class="card-body">
+                                        <input class="btn btn-accent" type="submit" value="上传"/>
+										</div>
+                                        </form>
+									</div>
+								</div>
+						    	<div class="col-md-3">
+									<div class="card card-type-pricing text-center">
+										<div class="card-body style-accent-bright">
+											<h2 class="text-light">课程<span>导入</span></h2>
+											<br>
+											<p class="opacity-50"><span class="glyphicon glyphicon-pencil"></span><em>在Excel中每行依次输入以下内容</em></p>
+										</div>
+                                        <form enctype="multipart/form-data" action="#" method="post">
+                                        {% csrf_token %}
+								<div class="card-body no-padding">
+                                        <div class="card tabs-left style-default-light">
+									<ul class="card-head nav nav-tabs" data-toggle="tabs">
+										<li class="active"><a href="#first2">必填项</a></li>
+										<li class=""><a href="#second2">选填项</a></li>
+									</ul>
+									<div class="card-body tab-content style-default-bright">
+										<div class="tab-pane active" id="first2"><h4><strong>列1至列3</strong></h4>
+											<ul class="list-unstyled"><li>课程名称</li>
+												<li>课序号</li>
+												<li>学分</li>
+											</ul>
+										</div>
+										<div class="tab-pane" id="second2"><h4><strong>列4至列7</strong></h4>
+											<ul class="list-unstyled">
+												<li>学时</li>
+												<li>课程介绍</li>
+												<li>课程目标</li>
+												<li>课程类别</li>
+											</ul>
+										</div>
+									</div><!--end .card-body -->
+								        </div>
+								</div><!--end .card-body --><ul class="list-unstyled">
+                                                <li><input type="file" name="register"/></li>
+											</ul>
+                                            <div class="card-body">
+                                            <input class="btn btn-accent-light" type="submit" value="上传"/>
+										</div>
+                                        </form>
+								</div><!--end .card -->
+								</div><!--end .col -->
+						    	<div class="col-md-3">
+									<div class="card card-type-pricing text-center">
+										<div class="card-body style-primary">
+											<h2 class="text-light">课程<span>导入</span></h2>
+											<br>
+											<p class="opacity-50"><span class="glyphicon glyphicon-pencil"></span><em>在Excel中每行依次输入以下内容</em></p>
+										</div>
+                                        <form enctype="multipart/form-data" action="#" method="post">
+                                        {% csrf_token %}
+								<div class="card-body no-padding">
+                                        <div class="card tabs-left style-default-light">
+									<ul class="card-head nav nav-tabs" data-toggle="tabs">
+										<li class="active"><a href="#first3">必填项</a></li>
+										<li class=""><a href="#second3">选填项</a></li>
+									</ul>
+									<div class="card-body tab-content style-default-bright">
+										<div class="tab-pane active" id="first3"><h4><strong>列1至列3</strong></h4>
+											<ul class="list-unstyled"><li>课程名称</li>
+												<li>课序号</li>
+												<li>学分</li>
+											</ul>
+										</div>
+										<div class="tab-pane" id="second3"><h4><strong>列4至列7</strong></h4>
+											<ul class="list-unstyled">
+												<li>学时</li>
+												<li>课程介绍</li>
+												<li>课程目标</li>
+												<li>课程类别</li>
+											</ul>
+										</div>
+									</div><!--end .card-body -->
+								        </div>
+								</div><!--end .card-body --><ul class="list-unstyled">
+                                                <li><input type="file" name="register"/></li>
+											</ul>
+                                            <div class="card-body">
+                                            <input class="btn btn-primary-;ight" type="submit" value="上传"/>
+										</div>
+                                        </form>
+								</div><!--end .card -->
+								</div><!--end .col -->
+								<div class="col-md-3">
+									<div class="card card-type-pricing text-center">
+										<div class="card-body style-gray">
+											<h2 class="text-light">Enterprise</h2>
+											<div class="price">
+												<span class="text-lg">$</span><h2><span class="text-xxxl">56</span></h2> <span>/mo</span>
+											</div>
+											<br>
+											<p class="opacity-50"><em>Rame aute irure dolor in reprehenderit pariatur.</em></p>
+										</div><!--end .card-body -->
+										<div class="card-body no-padding">
+											<ul class="list-unstyled">
+												<li>Unlimited</li>
+												<li>1 TB Bandwidth</li>
+												<li>10 GB Storage</li>
+												<li>24/7 Customer Support</li>
+											</ul>
+										</div><!--end .card-body -->
+										<div class="card-body">
+											<a class="btn btn-default">Sign up</a>
+										</div><!--end .card-body -->
+									</div><!--end .card -->
+								</div><!--end .col -->
+							</div><!--end .row -->
+							<!-- END PRICING CARDS 1 -->
+
+						</div><!--end .container -->
+					</div><!--end .section-body -->
+				</section>
+				<section>
+					<div class="section-body">
+						<div class="container">
+							<h2 class="text-light text-center">Plans &amp; pricing<br><small class="opacity-75">Choose from 3 plans</small></h2>
+							<br>
+
+							<!-- BEGIN PRICING CARDS 2 -->
+							<div class="row">
+								<div class="col-md-4">
+									<div class="card card-type-pricing">
+										<div class="card-body text-center style-gray">
+											<h2 class="text-light">Basic</h2>
+											<div class="price">
+												<span class="text-lg">$</span><h2><span class="text-xxxl">7</span></h2> <span>/mo</span>
+											</div>
+											<br>
+											<p class="opacity-50"><em>Rame aute irure dolor in reprehenderit pariatur.</em></p>
+										</div><!--end .card-body -->
+										<div class="card-body no-padding">
+											<ul class="list-unstyled text-left">
+												<li>20 Pages</li>
+												<li>100 GB Bandwidth</li>
+												<li>1 GB Storage</li>
+												<li>24/7 Customer Support</li>
+											</ul>
+										</div><!--end .card-body -->
+										<div class="card-body">
+											<a class="btn btn-default">Sign up</a>
+										</div><!--end .card-body -->
+									</div><!--end .card -->
+								</div><!--end .col -->
+								<div class="col-md-4">
+									<div class="card card-type-pricing">
+										<div class="card-body text-center style-accent">
+											<h2 class="text-light">Standard</h2>
+											<div class="price">
+												<span class="text-lg">$</span><h2><span class="text-xxxl">15</span></h2> <span>/mo</span>
+											</div>
+											<br>
+											<p class="opacity-50"><em>Rame aute irure dolor in reprehenderit pariatur.</em></p>
+										</div><!--end .card-body -->
+										<div class="card-body no-padding">
+											<ul class="list-unstyled text-left">
+												<li>40 Pages</li>
+												<li>200 GB Bandwidth</li>
+												<li>2 GB Storage</li>
+												<li>24/7 Customer Support</li>
+											</ul>
+										</div><!--end .card-body -->
+										<div class="card-body">
+											<a class="btn btn-accent">Sign up</a>
+										</div><!--end .card-body -->
+									</div><!--end .card -->
+								</div><!--end .col -->
+								<div class="col-md-4">
+									<div class="card card-type-pricing">
+										<div class="card-body text-center style-gray">
+											<h2 class="text-light">Pro</h2>
+											<div class="price">
+												<span class="text-lg">$</span><h2><span class="text-xxxl">28</span></h2> <span>/mo</span>
+											</div>
+											<br>
+											<p class="opacity-50"><em>Rame aute irure dolor in reprehenderit pariatur.</em></p>
+										</div><!--end .card-body -->
+										<div class="card-body no-padding">
+											<ul class="list-unstyled text-left">
+												<li>Unlimited</li>
+												<li>500 GB Bandwidth</li>
+												<li>6 GB Storage</li>
+												<li>24/7 Customer Support</li>
+											</ul>
+										</div><!--end .card-body -->
+										<div class="card-body">
+											<a class="btn btn-default">Sign up</a>
+										</div><!--end .card-body -->
+									</div><!--end .card -->
+								</div><!--end .col -->
+							</div><!--end .row -->
+							<!-- END PRICING CARDS 2 -->
+
+						</div><!--end .container -->
+					</div><!--end .section-body -->
+				</section>
+
+{% endblock %}
+
+{% block jscript %}
+<script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/DataTables/jquery.dataTables.min.js'%}"></script>
+
+<script src="{%static 'app/assets/js/libs/DataTables/extensions/ColVis/js/dataTables.colVis.min.js'%}"></script>
+<script src="{%static 'app/assets/js/libs/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js'%}"></script>
+<script src="{%static 'app/assets/js/core/demo/DemoFormComponents.js'%}"></script>
+
+<script src="{%static 'app/assets/js/core/demo/DemoFormWizard.js'%}"></script>
+<script src="{%static 'app/assets/js/core/demo/DemoUIMessages.js'%}"></script>
+
+{% endblock %}
+
+{%block css%}
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/wizard/wizard.css'%}" />
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/DataTables/jquery.dataTables.css'%}"/>
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/DataTables/extensions/dataTables.colVis.css'%}" />
+<link type="text/css" rel="stylesheet" href="{%static 'app/assets/css/theme-5/libs/DataTables/extensions/dataTables.tableTools.css'%}" />
+
+{%endblock%}

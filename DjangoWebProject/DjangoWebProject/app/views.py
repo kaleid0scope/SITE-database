@@ -69,7 +69,7 @@ def Excel(request,linkid = None):
         return HttpResponse("error")
     else:
         assert isinstance(request, HttpRequest)
-        return render(request,'app/excel.html',{})
+        return render(request,'app/excel2.html',{})
 
 def ShowComplete(request,id = None):
     if getType(request) in ('管理员','辅导员'):

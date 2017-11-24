@@ -31,7 +31,7 @@ import DjangoWebProject.settings
 
                '''
 
-def lessonlist(request):
+def getls(request):
     if getType(request) == '教师端':
         teacher = Teacher.objects.get(user = request.user)
         lessons = Lesson.objects.filter(teacher = teacher)
@@ -52,4 +52,34 @@ def lessonlist(request):
         students = Students.objects.all()
         scores = Score.objects.all()
     else:return Error(request,u'您无权访问')
-    return render(request,'Llist.html',{'lessons':lessons,'students':students,'scores':scores})
+    return {'lessons':lessons,'students':students,'scores':scores}
+
+class SL(object):
+    def __init__(self, st, score, ct):
+        self.student = st
+        self.score = score
+        self.count = ct
+    pass
+
+def studentList(request):
+    students = getls(request)['students']
+    sls = []
+    for student in students:
+        score = Score.objects.filter(student = student)
+        sls.append(SL(student,score,score.count()))
+    return render(request,'app/stlist.html',sls)
+
+class LS(object):
+    def __init__(self, st, score, ct):
+        self.student = st
+        self.score = score
+        self.count = ct
+    pass
+
+def lessonList(request):
+    lessons = getls(request)['lessons']
+    lss = []
+    for lesson in lessons:
+        score = Score.objects.filter(lesson = lesson)
+        lss.append(SL(lesson,score,score.count()))
+    return render(request,'app/stlist.html',lss)

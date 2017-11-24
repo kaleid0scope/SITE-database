@@ -22,30 +22,9 @@
 									<th>期刊名称</th>
                                     <th>期刊等级</th>
                                     <th>项目时间</th>
-                                    <th>{% if type == '管理员' or type == '辅导员' %}审核{% endif%}
-                                    {% if type == '学生端' %}查看{% endif%}</th>
 								</tr>
 							</thead>
 							<tbody>
-                                {% if linksDS %}
-                                    {% for p in linksDS%}
-                                    <tr>
-                                        <td>待审核</td>
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% endif %}
-
-                                
 
                                 {% if linksP %}
                                     {% for p in linksP%}
@@ -56,13 +35,23 @@
                                         <td>{{p.l.journalName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
+                                {% else %}
+                                {% endif %}
+
+                                {% if linksDS %}
+                                    {% for p in linksDS%}
+                                    <tr>
+                                        <td>待审核</td>
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
                                 {% endif %}
 
                                 {% if linksNP %}
@@ -74,13 +63,9 @@
                                         <td>{{p.l.journalName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
+                                {% else %}
                                 {% endif %}
                                 {% if not linksNP and not linksDS and not linksP %}
                                     <tr>

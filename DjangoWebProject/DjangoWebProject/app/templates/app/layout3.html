@@ -208,6 +208,7 @@
 						<!-- END EMAIL -->
 
 						<!-- BEGIN STUDENTLESSONS -->
+                        {% if type == "学生端"%}
 						<li class="gui-folder">
 							<a>
 								<div class="gui-icon"><i class="md md-school"></i></div>
@@ -220,11 +221,13 @@
 								<li><a href="../../html/mail/reply.html" ><span class="title">成绩单</span></a></li>
 							</ul><!--end /submenu -->
 						</li><!--end /menu-li -->
+                        {% endif %}
 						<!-- END DASHBOARD --><!--end /menu-li -->
 
                         <!-- 学生部分结束 -->
 
                         <!--辅导员部分-->
+                        {% if type == "辅导员" or type == "管理员"%}
                         <li class="gui-folder">
 							<a>
 								<div class="gui-icon"><i class="md md-event-note"></i></div>
@@ -232,18 +235,37 @@
 							</a>
 							<!--start submenu -->
 							<ul>
-								<li><a href="../../html/mail/inbox.html" ><span class="title">论文</span></a></li>
-								<li><a href="../../html/mail/compose.html" ><span class="title">学术竞赛</span></a></li>
-								<li><a href="../../html/mail/reply.html" ><span class="title">学生干部</span></a></li>
-								<li><a href="../../html/mail/message.html" ><span class="title">实习实践</span></a></li>
-                                <li><a href="../../html/mail/inbox.html" ><span class="title">科研立项</span></a></li>
-								<li><a href="../../html/mail/compose.html" ><span class="title">志愿活动</span></a></li>
-								<li><a href="../../html/mail/reply.html" ><span class="title">思建活动</span></a></li>
-                                <li><a href="../../html/mail/reply.html" ><span class="title">校园活动</span></a></li>
-								<li><a href="../../html/mail/message.html" ><span class="title">学术讲座</span></a></li>
+								<li><a href="/Project/PaperRank" ><span class="title">论文</span></a></li>
+								<li><a href="/Project/CompetitionRank" ><span class="title">学术竞赛</span></a></li>
+								<li><a href="/Project/StudentCadreRank" ><span class="title">学生干部</span></a></li>
+								<li><a href="/Project/InternshipRank" ><span class="title">实习实践</span></a></li>
+                                <li><a href="/Project/ResearchProjectRank" ><span class="title">科研立项</span></a></li>
+								<li><a href="/Project/VolunteeringRank" ><span class="title">志愿活动</span></a></li>
+								<li><a href="/Project/IdeologyConstructionRank" ><span class="title">思建活动</span></a></li>
+                                <li><a href="/Project/SchoolActivityRank" ><span class="title">校园活动</span></a></li>
+                                <li><a href="/Project/ExchangeRank" ><span class="title">交流交换</span></a></li>
+								<li><a href="/Project/LectureRank" ><span class="title">学术讲座</span></a></li>
 							</ul><!--end /submenu -->
 						</li>
+                        {% endif %}
+                        <!--辅导员部分结束-->
 
+                        <!--老师部分-->
+                        {%if type == "管理员" or type == "教师端" %}
+                        <li class="gui-folder">
+							<a>
+								<div class="gui-icon"><i class="md md-school"></i></div>
+								<span class="title">课程管理</span>
+							</a><!--start submenu -->
+							<ul>
+								<li><a href="/excel" ><span class="title">课程信息管理</span></a></li>
+							</ul><!--end /submenu -->
+						</li>
+                        {% endif %}
+                        
+                        <!--老师部分结束-->
+
+                        {% if type == "辅导员" or type == "管理员" or type == "教师端"%}
                         <li class="gui-folder">
 							<a>
 								<div class="gui-icon"><i class="md md-group"></i></div>
@@ -254,17 +276,14 @@
 								<li><a href="../../html/mail/inbox.html" ><span class="title">学生信息管理</span></a></li>
 							</ul><!--end /submenu -->
 						</li>
-                        <!---->
-
-                        <!--老师部分-->
                         <li>
-							<a>
-								<div class="gui-icon"><i class="md md-school"></i></div>
-								<span class="title">课程管理</span>
+							<a href="/excel">
+								<div class="gui-icon"><i class="md md-public "></i></div>
+								<span class="title">批量导入</span>
 							</a>
 						</li>
-                        
-                        <!--老师部分结束-->
+                        {% endif %}
+
 
                     </ul>
 					<!-- END MAIN MENU -->
