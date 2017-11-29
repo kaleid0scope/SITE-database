@@ -60,7 +60,7 @@
 								<li><a href="/Message">View all messages <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 								<li><a href="/Mark">Mark as read all <span class="pull-right"><i class="fa fa-arrow-right"></i></span></a></li>
 							</ul><!--end .dropdown-menu -->
-						</li><!--end .dropdown -->
+						</li><!--end .dropdown 
 						<li class="dropdown hidden-xs">
 							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
 								<i class="fa fa-area-chart"></i>
@@ -75,7 +75,7 @@
 										</div>
 										<div class="progress"><div class="progress-bar progress-bar-danger" style="width: 93%"></div></div>
 									</a>
-								</li><!--end .dropdown-progress -->
+								</li>
 								<li class="dropdown-progress">
 									<a href="javascript:void(0);">
 										<div class="dropdown-label">
@@ -84,7 +84,7 @@
 										</div>
 										<div class="progress"><div class="progress-bar progress-bar-success" style="width: 30%"></div></div>
 									</a>
-								</li><!--end .dropdown-progress -->
+								</li>
 								<li class="dropdown-progress">
 									<a href="javascript:void(0);">
 										<div class="dropdown-label">
@@ -93,10 +93,11 @@
 										</div>
 										<div class="progress"><div class="progress-bar progress-bar-warning" style="width: 74%"></div></div>
 									</a>
-								</li><!--end .dropdown-progress -->
-							</ul><!--end .dropdown-menu -->
-						</li><!--end .dropdown -->
-					</ul><!--end .header-nav-options -->
+								</li>
+							</ul>
+						</li> -->
+					</ul>
+                <!--end .header-nav-options -->
 					<ul class="header-nav header-nav-profile">
 						<li class="dropdown">
 							<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
@@ -108,8 +109,7 @@
 							</a>
 							<ul class="dropdown-menu animation-dock">
 								<li class="dropdown-header">设置</li>
-								{%if type == '管理员' %}<li><a href="/admin">admin</a></li>
-                            <li><a href="/excel">excel</a></li>{%endif%}
+								{%if type == '管理员' %}<li><a href="/admin">后台管理</a></li>{%endif%}
 								
 								
 								<li class="divider"></li>
@@ -150,6 +150,8 @@
 					</div><!--end .section-body -->
             
 				</section>
+
+
             {% endblock %}
 				<!-- BEGIN BLANK SECTION -->
             
@@ -185,6 +187,7 @@
 						<!-- END DASHBOARD -->
 
 						<!-- BEGIN EMAIL -->
+                        {% if type == "学生端"%}
 						<li class="gui-folder">
 							<a>
 								<div class="gui-icon"><i class="md md-event-note"></i></div>
@@ -204,6 +207,7 @@
 								<li><a href="/Project/LectureRank" ><span class="title">学术讲座</span></a></li>
 							</ul><!--end /submenu -->
 						</li>
+                        {%endif%}
                         <!--end /menu-li -->
 						<!-- END EMAIL -->
 
@@ -217,7 +221,6 @@
 							<!--start submenu -->
 							<ul>
 								<li><a href="/Lesson/plan" ><span class="title">培养方案</span></a></li>
-								<li><a href="/Lesson/list" ><span class="title">我的课程</span></a></li>
 								<li><a href="/score/list" ><span class="title">成绩单</span></a></li>
 							</ul><!--end /submenu -->
 						</li><!--end /menu-li -->
@@ -259,6 +262,7 @@
 							</a><!--start submenu -->
 							<ul>
 								<li><a href="/Lesson/list" ><span class="title">课程信息管理</span></a></li>
+								<li><a href="/score/list" ><span class="title">学生成绩管理</span></a></li>
 							</ul><!--end /submenu -->
 						</li>
                         {% endif %}

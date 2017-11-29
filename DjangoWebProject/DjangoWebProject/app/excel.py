@@ -84,7 +84,7 @@ def ExcelImportLesson(path):
           lesson.save()
     return True
 
-def ExcelImportLink(path,project):
+def ExcelImportLink(path,linkid):
     book = xlrd.open_workbook(path)
     sheet = book.sheets()[0]  
     for r in range(1, sheet.nrows):
@@ -92,6 +92,11 @@ def ExcelImportLink(path,project):
 
           link = RankLinks.objects.get(pk = linkid)
           student = Students.objects.get(pk = num)
+
+          rll = []
+          rls = RankLinks.objects.filter(rnum = link.rnum)
+          for rl in rls:
+              if rl.student == student: continue
           newlink = RankLinks(student = student,rtype= link.rtype,rum = link.rnum,status = '通过')
           newlink.save()
     return True

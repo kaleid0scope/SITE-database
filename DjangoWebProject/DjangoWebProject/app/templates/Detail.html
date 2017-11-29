@@ -44,9 +44,8 @@
 
             <tr>
 				<td><span class="glyphicon glyphicon-plus"></span>邀请成员：</td>
-                <td><a class="btn btn-info" onclick="prom()">选择加入</a></td>
-                {% if type == '管理员' or type == '辅导员'%}
-                <td><a class="btn btn-warning" onclick="del()" >删除</a></td>
+                <td><a class="btn btn-info" onclick="prom()">选择加入</a>
+                {% if type == '管理员' or type == '辅导员'%}<a class="btn btn-warning" onclick="del()" >删除</a></td>
 			</tr>
  <!--
      <tr><td>加入申请：</td><td></td></tr>  
@@ -64,8 +63,8 @@
                 {% if type == '管理员' or type == '辅导员'%}
                 <form enctype="multipart/form-data" action="/excel/{{link.id}}" method="post">  
                     <input type="file" name="link" /> 
-                <input type="submit" value="批量导入"/>  
-                </form>  
+                <input class="btn btn-accent" type="submit" value="批量导入"/>  
+                </form>
                 {% endif %}
             {% endif %}
 	

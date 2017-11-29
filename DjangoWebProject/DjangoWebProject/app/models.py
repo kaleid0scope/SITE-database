@@ -68,7 +68,14 @@ class Complete(models.Model):
        verbose_name = u'完成度'
        verbose_name_plural = u'完成度'
     def __unicode__(self):
-        return self.name + '(' + self.type + ')'+ '完成度信息'
+        if self.name and self.type:
+            return self.name + '(' + self.type + ')完成度信息'
+        elif self.name:
+            return self.name + '(未知类型)完成度信息'
+        elif self.name:
+            return '未命名(' + self.type + ')完成度信息'
+        else:
+            return '完成度'
 
 class Choices(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='评价名称')
@@ -154,7 +161,7 @@ class Lesson(models.Model):
     introduction = models.CharField(max_length = 200,verbose_name ='课程介绍')
     classTarget = models.CharField(max_length = 200,verbose_name ='课程目标')
     classSort = models.CharField(max_length = 50,verbose_name ='课程类别')
-    teacher = models.ForeignKey(Complete,verbose_name ='教师',related_name='LtoT')
+    teacher = models.ForeignKey(Teacher,verbose_name ='教师',related_name='LtoT')
     class Meta:
         verbose_name = u'课程'
         verbose_name_plural = u'课程'
@@ -168,11 +175,18 @@ class Score(models.Model):
     class Meta:
         verbose_name = u'成绩'
         verbose_name_plural = u'成绩'
+    def __unicode__(self):
+        return str(self.student.StudentNum)+'---'+str(self.lesson.name)+'成绩'
 
 class CompleteLM(models.Model):
     major =models.ForeignKey(Major,verbose_name ='专业名称')
     lesson =models.ForeignKey(Lesson,verbose_name ='课程名称')
     complete =models.ForeignKey(Complete,verbose_name ='完成度')
+    class Meta:
+        verbose_name = u'专业课程对照表'
+        verbose_name_plural = u'专业课程对照表'
+    def __unicode__(self):
+        return str(self.major.name)+'---'+str(self.lesson.name)
 
 
 class RankLinks(models.Model):

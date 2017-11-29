@@ -32,7 +32,7 @@ import DjangoWebProject.settings
                '''
 
 def getls(request,sid = None):
-    if sid: st = Students.objects.get(id = sid)
+    if sid: st = Students.objects.get(StudentNum = sid)
     if getType(request) == '教师端':
         teacher = Teacher.objects.get(user = request.user)
         lessons = Lesson.objects.filter(teacher = teacher)
@@ -60,6 +60,11 @@ def getls(request,sid = None):
         if sid :
             lessons = []
             for score in scores: lessons.append(score.lesson)
+    elif getType(request) == '学生端':
+        students = Students.objects.filter(user = request.user)
+        scores = Score.objects.filter(student = students[0])
+        lessons = []
+        for score in scores: lessons.append(score.lesson)
     else:return Error(request,u'您无权访问')
     return {'lessons':lessons,'students':students,'scores':scores}
 
@@ -93,25 +98,29 @@ def studentList(request):
     return render(request,'app/stlist.html',{'list':sls})
 
 class LS(object):
-    def __init__(self, st, score, ct):
-        self.student = st
+    def __init__(self, ls, score, ct):
+        self.lesson = ls
         self.score = score
         self.count = ct
     pass
 
 def lessonList(request,sid = None):
-    if sid: student = Students.objects.get(id = sid)
+    if sid: student = Students.objects.get(StudentNum = sid)
     lessons = getls(request,sid)['lessons']
     lss = []
     for lesson in lessons:
         score = Score.objects.filter(lesson = lesson)
-        lss.append(SL(lesson,score,score.count()))
+        lss.append(LS(lesson,score,score.count()))
     return render(request,'app/lessonlist.html',{'list':lss})
 
-def scoreList(request,lid = None):
-    scores = getls(request,sid)['scores'] if not lid else getls(request,sid)['scores'].filter(student = Students.objects.get(id = sid))
-    return render(request,'app/scorelist.html',{'list':scores})
-    
+def scoreList(request,lid = None,sid = None):
+    scores = getls(request,sid)['scores'] if sid else getls(request)['scores']
+    #try: st = Students.objects.get(user = request.user)
+    #except Exception,e: st = None
+    #sti =  Students.objects.get(id = sid) if sid else st
+    sc = scores.filter(lesson = Lesson.objects.get(StudentNum = lid)) if lid else scores
+    return render(request,'app/scorelist.html',{'list':sc})#,'st': sti})
+
 def readPlan(request):
     if getType(request) not in ('学生端'):
         Error(request,u'学生才能访问')

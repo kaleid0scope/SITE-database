@@ -7,8 +7,7 @@
     <div>
         <div class="row">
 	        <div class="col-md-12">
-		        <h2> 论文列表 </h2>
-                <br/>
+		        <h2> 成绩列表 </h2>
 	        </div><!--end .col -->
 	        <div class="col-lg-12">
             	<div class="card">
@@ -16,82 +15,47 @@
 		                <table class="table table-banded no-margin">
 							<thead>
 								<tr>
-									<th>是否通过</th>
-                                    {% if type == '管理员' or type == '辅导员' %}<th>学生学号</th><th>学生姓名</th>{% endif%}
-									<th>论文题目</th>
-									<th>第几作者</th>
-									<th>期刊名称</th>
-                                    <th>期刊等级</th>
-                                    <th>项目时间</th>
-                                    <th>{% if type == '管理员' or type == '辅导员' %}审核{% endif%}
-                                    {% if type == '学生端' %}查看{% endif%}</th>
+                                    {% if type == '学生端' %}
+                                    <th>教师</th>
+                                    {% endif%}
+                                    {% if type == '教师端' or type == '管理员'%}
+                                    <th>学生学号</th>
+                                    <th>学生姓名</th>
+                                    {% endif%}
+									<th>课程名称</th>
+									<th>课序号</th>
+									<th>学分</th>
+									<th>课程类别</th>
+                                    <th>成绩</th>
 								</tr>
 							</thead>
 							<tbody>
-                                {% if linksDS %}
-                                    {% for p in linksDS%}
+                                {% if list %}
+                                    {% for s in list%}
                                     <tr>
-                                        <td>待审核</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
                                         {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
+                                        <td>{{ s.lesson.teacher.name }}</td>
+                                        {% endif%}
+                                        {% if type == '教师端' or type == '管理员'%}
+                                        <td>{{s.student}}</td>
+                                        <td>{{s.student.rankName}}</td>
+                                        {% endif%}
+									    <td>{{s.lesson.name}}</td>
+									    <td>{{s.lesson.num}}</td>
+									    <td>{{s.lesson.credit}}</td>
+									    <td>{{s.lesson.classSort}}</td>
+                                        <td>{{s.score}}</td>
                                     </tr>
                                     {% endfor %}
                                 {% endif %}
-
-                                
-
-                                {% if linksP %}
-                                    {% for p in linksP%}
+                                {% if not list %}
                                     <tr>
-                                        <td>通过</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
                                         {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% endif %}
-
-                                {% if linksNP %}
-                                    {% for p in linksNP%}
-                                    <tr>
-                                        <td>未通过</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% endif %}
-                                {% if not linksNP and not linksDS and not linksP %}
-                                    <tr>
+                                        <td></td>
+                                        {% endif%}
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td><i>暂时没有论文记录</i></td>
+                                        <td><i>暂时没有记录</i></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -104,81 +68,6 @@
         </div>
 
         {#<hr class="ruler-xl">#}
-
-        <div class="row">
-		    <div class="col-lg-12">
-            <h2> 添加论文 </h2>
-            <br/>
-
-            
-			    <div class="card">
-				    <div class="card-body ">
-                    {% if error %}
-                    <div class="alert alert-danger" role="alert">
-					        <strong>错误</strong> {{error}}
-			        </div>
-                    {% endif %}
-                    {% if alert %}
-                    <div class="alert alert-warning" role="alert">
-				        <strong>警告</strong> {{alert}}
-			        </div>
-                    {% endif %}
-                    {% if success %}
-                    <div class="alert alert-success" role="alert">
-				        <strong></strong> {{success}}
-			        </div>
-                    {% endif %}
-					    <div id="rootwizard2" class="form-wizard form-wizard-horizontal">
-											<form class="form floating-label form-validation" method="post" action="#" id="paperSubmit" role="form" novalidate="novalidate">
-												<div class="form-wizard-nav">
-													<div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
-													<ul class="nav nav-justified">
-														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">论文信息</span></a></li>
-														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">期刊信息</span></a></li>
-													</ul>
-												</div><!--end .form-wizard-nav -->
-												<div class="tab-content clearfix">
-													<div class="tab-pane active" id="step1">
-                                                    <br/><br/>	
-                                                    {% csrf_token %}
-														<div class="form-group">
-                                                            {{createForm.ProjectName}}
-															<label for="title" class="control-label">{{createForm.ProjectName.label_tag}}</label>
-														</div>
-														<div class="form-group control-width-normal">
-                                                            {{createForm.AuthorRanking}}											
-															<label for="author" {#class="control-label"#}>{{createForm.AuthorRanking.label_tag}}	</label>
-														</div>                                                        
-                                                        <div class="form-group control-width-normal">
-                                                            {{createForm.ProjectTime}}
-                                                            <label>{{createForm.ProjectTime.label_tag}}</label>												                
-											            </div>                                                    
-													</div><!--end #step1 -->
-													<div class="tab-pane" id="step2">
-														<br/><br/>
-														<div class="form-group">
-                                                            {{createForm.JournalName}}
-                                                            <label class="control-label">{{createForm.JournalName.label_tag}}</label>
-														</div>
-														<div class="form-group">
-                                                            {{createForm.Rank}}
-                                                            <label class="control-label">{{createForm.Rank.label_tag}}</label>
-														</div>
-													</div><!--end #step2 -->
-													
-												</div><!--end .tab-content -->
-												<ul class="pager wizard">										
-                                                    <li><a class="btn-raised" type="submit" href="javascript:void(0);" onclick="document.getElementById('paperSubmit').submit()" >提交</a></li>
-												</ul>
-											</form>
-										</div><!--end #rootwizard -->
-				    </div><!--end .card-body -->
-			    </div><!--end .card -->
-			    {#<em class="text-caption">Form wizard with validation</em>#}
-		    </div><!--end .col -->
-            
-	    </div>
-
        
     </div>
 </section>
@@ -186,109 +75,6 @@
 {% endblock %}
 
 {% block jscript %}
-<script>
-    var vl = [];var vlDS = [];var vlNP = [];var list = [];
-
-    {%for viewlink in linksP%}
-     vl.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
-    {%endfor%}    
-
-    {%for viewlink in linksDS%}
-     vlDS.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
-    {%endfor%}  
-
-    {%for viewlink in linksNP%}
-     vlNP.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
-    {%endfor%}
-
-    //vl()
-
-    function initial()
-    {
-    tab = document.getElementById("mtab");
-    var num = tab.rows.length;
-    if(num >1 )//清除表格
-        {
-        for(var i=1;i<num;i++){                           
-        tab.deleteRow(1);
-        }}
-    for(var i = 0;i<list.length;i++){
-
-    var tr = document.createElement("tr");  
-    var new_obj = list[i];
-    
-    var tdf = document.createElement("td"); 
-    tdn.innerHTML = new_obj.l.;
-    var tdn = document.createElement("td");  
-    tdn.innerHTML = new_obj.l.rankName;
-    var tdrn = document.createElement("td");  
-    tdrn.innerHTML = new_obj.l.AuthorRanking;
-    var blank1 = document.createElement("td");  
-    blank1.innerHTML = new_obj.l.journalName;    
-    var blank2 = document.createElement("td");  
-    blank2.innerHTML = new_obj.l.rank;
-    var tdadd = document.createElement("td");  
-    tdadd.innerHTML = new_obj.l.startingTime;
-    
-    tr.appendChild(tdn); 
-    tr.appendChild(tdrn);
-    tr.appendChild(blank1); 
-    tr.appendChild(blank2);  
-    tr.appendChild(tdadd); 
-
-    var listbody = document.getElementById("mainlist");  
-    listbody.appendChild(tr);  
-        }
-    }
-
-    function search()
-    {
-        var string = document.getElementById("filter_search").value;
-        list = [];
-        for(var i in vl)
-        {
-            if ( vl[i].rn.indexOf(string) > -1)
-            {
-                list.push(vl[i]);
-            }
-        }
-        
-        initial();
-    }
-    function reset() {
-        document.id('filter_search').value='';
-        search();
-    }
-    function rank(rankname){
-        list = [];
-        for(var i in vl)
-        {
-            if ( vl[i].n.indexOf(rankname) > -1)
-            {
-                list.push(vl[i]);
-            }
-        }
-        
-        initial();
-    }
-    function vl(){
-        list = vl;
-        initial();
-    }
-    function ds(){
-        list = vlDS;
-        initial();
-    }
-    function np(){
-        list = vlNP;
-        initial();
-    }
-    function Link(n,rn,id) {
-        this.n = n;
-        this.rn = rn;
-        this.id = id;
-    }
-</script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>

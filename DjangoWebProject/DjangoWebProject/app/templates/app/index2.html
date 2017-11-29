@@ -1,7 +1,7 @@
 ﻿{% extends "app/layout3.html" %}
 
 {% block content %}
-{% load staticfiles %}
+{% load staticfiles %}{%if type == '学生端'%}
 				<!-- BEGIN PROFILE HEADER -->
 				<section class="full-bleed">
 					<div class="section-body style-default-light force-padding {#text-shadow#}">
@@ -26,7 +26,6 @@
 					</div><!--end .section-body -->
 				</section>
 				<!-- END PROFILE HEADER  -->
-
 				<section>
 					<div class="section-body no-margin">
 						<div class="row">
@@ -173,5 +172,7 @@
 						</div><!--end .row -->
 					</div><!--end .section-body -->
 				</section>
-
+{%endif%}
+{%if type == '管理员'%}
+{%endif%}
 {% endblock %}

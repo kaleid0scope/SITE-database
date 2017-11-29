@@ -55,9 +55,10 @@ def ProjectManagePost(request,rankname,student = None):
         project = getView(rankname)(request)
         student = Students.objects.filter(user = request.user)
     else:
+#        if request.POST['stn'] != 0: student = Students.objects.filter(pk = int(request.POST['stn']))
         if student == None: 
             #return Error(request,u'缺少参数')
-            student = Students.objects.get(StudentNum=201602063)#それは僕！
+            student = Students.objects.get(StudentNum=201530037)#.。。
         if getType(request) == '管理员':
             project = getView(rankname)(request)
         if getType(request) == '辅导员':
@@ -121,6 +122,7 @@ def ProjectCreate(request,rankname,student = None):
             project = getView(rankname)(request)
             student = Students.objects.filter(user = request.user)
         else:
+            if request.POST['stn'] != 0: student = Students.objects.filter(pk = int(request.POST['stn']))
             if student == None: return Error(request,u'缺少参数')
             if getType(request) == '管理员':project = getView(rankname)(request)
             if getType(request) == '辅导员':
@@ -295,7 +297,7 @@ def ProjectCheck(request,linkid):
                     elif request.POST.has_key('passno'):
                         link.status = '未通过'
                         link.save()
-                    return refresh(request,'/Index/{name}'.format(name = project.__class__.__name__),'审核成功')
+                    return redirect('/Project/{name}'.format(name = project.__class__.__name__))
                 #except Exception,e:  
                 #    error = e
             else:

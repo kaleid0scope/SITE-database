@@ -7,13 +7,13 @@
     <div>
         <div class="row">
 	        <div class="col-md-12">
-		        <h2> 论文列表 </h2>
+		        <h2>学生列表 </h2>
                 <br/>
 	        </div><!--end .col -->
 	        <div class="col-lg-12">
             	<div class="card">
 				    <div class="card-body ">
-		                <table class="table table-banded no-margin">
+		                <table class="table table-banded no-margin" id="stab">
 							<thead>
 								<tr>
 									<th>学号</th>
@@ -27,7 +27,7 @@
                                     <th>查看参加的课程</th>{% endif%}
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="slist">
                                 {% if list %}
                                     {% for sl in list%}
                                     <tr>
@@ -37,7 +37,7 @@
                                         <td>{{sl.student.phone}}</td>
                                         <td><a class="btn btn-raised" href= "/complete/{{sl.student.StudentNum}}">查看</a></td>
                                         {% if type == '管理员' or type == '辅导员' %}
-                                        <td><a class="btn btn-primary" href= "javascript:void(0)" onClick="project({{sl.rl}})" >查看</a></td>{% endif%}
+                                        <td><a class="btn btn-primary" href= "javascript:void(0)" onClick="project({{sl.student.id}})" >查看</a></td>{% endif%}
                                         {% if type == '管理员' or type == '辅导员' %}
                                         <td><a class="btn btn-info" href= "/Lesson/list/{{sl.student.StudentNum}}" >查看</a></td>{% endif%}
                                     </tr>
@@ -83,7 +83,17 @@
 {% block jscript %}
 
 <script>
-
+/*    var sllist = [];
+    {%for sl in list%}
+        rl = [];sc = [];
+        {%for r in sl.rl%}
+            rl.push(new RL("{{r.name}}",{{r.project.id}},{{r.ranklink.id}}))
+        {%endfor%}
+        {%for e in sl.scores%}
+            sc.push(new RL("{{e.student.rankName}}","{{e.lesson.name}}",{{e.lesson.id}},{{e.score}}))
+        {%endfor%}
+        sllist.push(new SL("{{sl.student.id}}",sc,rl))
+    {%endfor%}*/
     
 function project(l)
 {
@@ -115,6 +125,16 @@ function project(l)
     var listbody = document.getElementById("mainlist");  
     listbody.appendChild(tr);  
         }
+    }
+    function SL(s,sc,rl) {
+        this.student = s;
+        this.scores = sc;
+        this.rl = rl
+    }
+    function RL(name,project,link) {
+        this.name = name;
+        this.project = project;
+        this.link = link;
     }
 </script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
