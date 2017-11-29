@@ -200,21 +200,19 @@ def ProjectDetail(request,linkid,Valert = None):
 
         projectlinks = RankLinks.objects.filter(rnum = project.id)
         members,majors = [],[]
-        for link in projectlinks: 
-            members.append(link.student) #所有已加入的成员
-            majors.append(link.student.major.pk)
+        for l in projectlinks: 
+            members.append(l.student) #所有已加入的成员
+            majors.append(l.student.major.pk)
         type = getType(request)
         if type == '学生端':
             if not link.student == Students.objects.get(user = request.user):
                 return Ralert('您只能查看您自己的项目')(render)(request,'app/index.html',{})
-            manage = True if projectlinks.order_by('id')[0] == link else False
-            return render(request,'Detail.html',{'project':project,'link':link,'FPS':FieldProject,'manage':manage,'members':members,'alert':Valert})
+#            manage = True if projectlinks.order_by('id')[0] == link else False
+#            return render(request,'Detail.html',{'project':project,'link':link,'FPS':FieldProject,'manage':manage,'members':members,'alert':Valert})
         elif type == '辅导员':
             instructor = Instructor.objects.get(user = request.user)
             if not Major.objects.filter(instructor = instructor).filter(pk__in = majors): return Error(request,u'您无权访问')
-            return render(request,'Detail.html',{'project':project,'link':link,'FPS':FieldProject,'members':members,'manage':True,'alert':Valert})
-        elif type == '管理员':
-            return render(request,'Detail.html',{'project':project,'link':link,'FPS':FieldProject,'members':members,'manage':True,'alert':Valert})
+        return render(request,'Detail.html',{'project':project,'verboseName':rank._meta.verbose_name,'link':link,'FPS':FieldProject,'members':members,'alert':Valert})
     #except Exception,e:
     #    assert isinstance(request, HttpRequest)
     #    return render(request,'app/login.html',{'alert':e})
@@ -308,33 +306,37 @@ def ProjectCheck(request,linkid):
 
 #手动加入
 def ProjectAdd(request,linkid,sid):
+    if getType(request) not in ('学生端','辅导员','管理员'):
+        Error(request,u'您未认证')
+
     link = RankLinks.objects.get(pk = int(linkid))
     rank = getModel(link.rtype)
     project = rank.objects.get(id = link.rnum)
+
     projectlinks = RankLinks.objects.filter(rnum = project.id)
+
     if getType(request) == '学生端':
-      try:
+#      try:
         if not link.student == Students.objects.get(user = request.user):
             return Ralert('您只能查看您自己的项目')(render)(request,'app/index.html',{})
+
         student = Students.objects.get(StudentNum = sid)
         if projectlinks.filter(student = student): alert = '该成员已在项目中！'
-        join = RankLinks(status = '待审核',student = student ,rtype = link.rtype,rnum = link.rnum)
-        join.save()
+        
+        app.message.createMessage(request,toUser = student.user,text = '您好，您的同学'+link.student.rankName+'邀请您参加['+ rank._meta.verbose_name +']'+ project.rankName +'。',type = '邀请',linkid = link.id)
         alert = '成功添加!'
-      except Exception,e:
-        alert = '学号对应的学生不存在！'
+#      except Exception,e:
+#        alert = '学号对应的学生不存在！'
     if getType(request) == '辅导员' or getType(request) == '管理员':
-      try:
+#      try:
         student = Students.objects.get(StudentNum = sid)
-        if getType(request) == '辅导员':
-            instructor = Instructor.objects.get(user = request.user)
-            if not Major.objects.filter(instructor = instructor).filter(pk = student.major.pk):return Error(request,u'您无权访问')
         if projectlinks.filter(student = student): alert = '该成员已在项目中！'
-        join = RankLinks(status = '待审核',student = student ,rtype = link.rtype,rnum = link.rnum)
-        join.save()
+        
+        app.message.createMessage(request,toUser = student.user,text = '您好，您的辅导员邀请您参加['+ rank._meta.verbose_name +']'+project.rankName+'。',type = '邀请',linkid = link.id)
         alert = '成功添加!'
-      except Exception,e:
-        alert = '学号对应的学生不存在！'
+
+#      except Exception,e:
+#        alert = '学号对应的学生不存在！'
     
     return ProjectDetail(request,linkid,alert)
 

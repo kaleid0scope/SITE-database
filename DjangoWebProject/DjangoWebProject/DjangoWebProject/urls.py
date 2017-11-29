@@ -12,7 +12,7 @@ import app
 from app.message import *
 from app.views import *
 from app.project import *
-from app.project import *
+from app.lesson import *
 
 # Uncomment the next lines to enable the admin:
 from django.conf.urls import include
@@ -58,6 +58,14 @@ urlpatterns = [
     url(r'^detail/(?P<linkid>\w+)$',ProjectDetail),
     url(r'^Detail/(?P<linkid>\w+)$',ProjectDetail),
     url(r'^Add/(?P<linkid>\w+)/(?P<sid>\w+)$',ProjectAdd),
+
+    url(r'^Lesson/plan/$',readPlan),
+    url(r'^Lesson/plan/(?P<id>\w+)$',readPlan),
+    url(r'^Lesson/list/$',lessonList),
+    url(r'^Lesson/list/(?P<sid>\w+)$',lessonList),
+    url(r'^student/list/$',studentList),
+    url(r'^score/list/$',scoreList),
+    url(r'^score/list/(?P<lid>\w+)$',scoreList),
 
     url(r'^Reply/(?P<messageid>\w+)/$',replyMessage),
     url(r'^Reply/(?P<messageid>\w+)/(?P<result>\w+)/$',replyMessage),

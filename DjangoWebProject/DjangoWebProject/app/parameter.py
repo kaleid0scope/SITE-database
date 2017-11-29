@@ -33,11 +33,11 @@ class ViewMessage(object):
 
 def messages(request):
     Vmsg = []
+    mcount = 0
     if request.user.is_authenticated():
         messages = Message.objects.filter(reciver = request.user).order_by('isRead')
         for message in messages :
             try:Vmsg.append(ViewMessage(msg = message,shortText = message.text[:20]))
             except Exception,e: pass
         mcount = messages.filter(isRead = 0).count()
-    else : mcount = 0
     return {'Vmsg': Vmsg,'messageCount': mcount}

@@ -138,11 +138,9 @@
 </html>
 
 <script>
-    var vl = [];var vlDS = [];var vlNP = [];var list = [];
-
-    {%for viewlink in linksP%}
-     vl.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
-    {%endfor%}    
+    {%for viewlink in linksDS%}
+     vlDS.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}  
 
     {%for viewlink in linksDS%}
      vlDS.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))

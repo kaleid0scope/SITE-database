@@ -7,26 +7,47 @@
     <div>
         <div class="row">
 	        <div class="col-md-12">
-		        <h2> 学术竞赛列表 </h2>
+		        <h2> 论文列表 </h2>
                 <br/>
 	        </div><!--end .col -->
 	        <div class="col-lg-12">
             	<div class="card">
 				    <div class="card-body ">
-		                <table class="table no-margin">
+		                <table class="table table-banded no-margin">
 							<thead>
 								<tr>
-									<th>状态</th>
+									<th>课程名称</th>
                                     {% if type == '管理员' or type == '辅导员' %}<th>学生学号</th><th>学生姓名</th>{% endif%}
-									<th>竞赛名称</th>
-									<th>竞赛等级</th>
-									<th>奖项/名次</th>
-                                    <th>开始时间</th>
-                                    <th>{% if type == '管理员' or type == '辅导员' %}审核{% endif%}
+									<th>课序号</th>
+									<th>学分</th>
+									<th>课程类别</th>
+                                    <th>教师</th>
+                                    <th>成绩</th>
+                                    <th>{% if type == '管理员' or type == '辅导员' %}查看{% endif%}
                                     {% if type == '学生端' %}查看{% endif%}</th>
 								</tr>
 							</thead>
 							<tbody>
+                                {% if linksDS %}
+                                    {% for p in linksDS%}
+                                    <tr>
+                                        <td>待审核</td>
+                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
+                                        <td>{{p.l.rankName}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
+                                        <td>{{p.l.rank}}</td>
+                                        <td>{{p.l.startingTime}}</td>
+                                        <td>
+                                        {% if type == '管理员' or type == '辅导员' %}
+                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
+                                        {% if type == '学生端' %}
+                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% endif %}
+
+                                
 
                                 {% if linksP %}
                                     {% for p in linksP%}
@@ -34,77 +55,47 @@
                                         <td>通过</td>
                                         {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.Level}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                         <td>
                                         {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
+                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
                                         {% if type == '学生端' %}
                                         <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
-                                {% else %}
-                                {% endif %}
-
-                                {% if linksDS %}
-                                    {% for p in linksDS%}
-                                    <tr class="warning">
-                                        <td>待审核</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.Level}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
                                 {% endif %}
 
                                 {% if linksNP %}
                                     {% for p in linksNP%}
-                                    <tr class="danger">
+                                    <tr>
                                         <td>未通过</td>
                                         {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
                                         <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.Level}}</td>
+                                        <td>{{p.l.AuthorRanking}}</td>
+                                        <td>{{p.l.journalName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                         <td>
                                         {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
+                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
                                         {% if type == '学生端' %}
                                         <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
-                                {% else %}
                                 {% endif %}
-								<tr>
-									<td>1</td>
-									<td>Otto</td>
-									<td>@mdokkkkkkkkkkkkkk</td>
-                                    <td>Otto</td>
-									<td>@mdokkkkkkkkk</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Jacob</td>
-									<td>@fat</td>
-                                    <td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>Larry</td>
-									<td>@twitter</td>
-                                    <td>the Bird</td>
-									<td>@twitter</td>
-								</tr>
+                                {% if not linksNP and not linksDS and not linksP %}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><i>暂时没有论文记录</i></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                {% endif %}
 							</tbody>
 						</table>
                     </div>
@@ -116,7 +107,7 @@
 
         <div class="row">
 		    <div class="col-lg-12">
-            <h2> 添加竞赛 </h2>
+            <h2> 添加论文 </h2>
             <br/>
 
             
@@ -142,8 +133,8 @@
 												<div class="form-wizard-nav">
 													<div class="progress"><div class="progress-bar progress-bar-primary"></div></div>
 													<ul class="nav nav-justified">
-														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">竞赛信息</span></a></li>
-														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">获奖信息</span></a></li>
+														<li class="active"><a href="#step1" data-toggle="tab"><span class="step">1</span> <span class="title">论文信息</span></a></li>
+														<li><a href="#step2" data-toggle="tab"><span class="step">2</span> <span class="title">期刊信息</span></a></li>
 													</ul>
 												</div><!--end .form-wizard-nav -->
 												<div class="tab-content clearfix">
@@ -152,29 +143,31 @@
                                                     {% csrf_token %}
 														<div class="form-group">
                                                             {{createForm.ProjectName}}
-															<label for="title" class="control-label">竞赛名称</label>
+															<label for="title" class="control-label">{{createForm.ProjectName.label_tag}}</label>
 														</div>
 														<div class="form-group control-width-normal">
-                                                            {{createForm.level}}																
-															<label for="author" {#class="control-label"#}>竞赛等级</label>
+                                                            {{createForm.AuthorRanking}}											
+															<label for="author" {#class="control-label"#}>{{createForm.AuthorRanking.label_tag}}	</label>
 														</div>                                                        
                                                         <div class="form-group control-width-normal">
                                                             {{createForm.ProjectTime}}
-                                                            <label>开始时间</label>												                
+                                                            <label>{{createForm.ProjectTime.label_tag}}</label>												                
 											            </div>                                                    
 													</div><!--end #step1 -->
 													<div class="tab-pane" id="step2">
 														<br/><br/>
 														<div class="form-group">
-                                                            {{createForm.rank}}
-                                                            <label class="control-label">奖项/排名</label>
+                                                            {{createForm.JournalName}}
+                                                            <label class="control-label">{{createForm.JournalName.label_tag}}</label>
+														</div>
+														<div class="form-group">
+                                                            {{createForm.Rank}}
+                                                            <label class="control-label">{{createForm.Rank.label_tag}}</label>
 														</div>
 													</div><!--end #step2 -->
 													
 												</div><!--end .tab-content -->
 												<ul class="pager wizard">										
-													<li class="previous"><a class="btn-raised" href="javascript:void(0);">上一步</a></li>
-													<li class="next last"><a class="btn-raised" href="javascript:void(0);">下一步</a></li>
                                                     <li><a class="btn-raised" type="submit" href="javascript:void(0);" onclick="document.getElementById('paperSubmit').submit()" >提交</a></li>
 												</ul>
 											</form>
@@ -193,7 +186,109 @@
 {% endblock %}
 
 {% block jscript %}
+<script>
+    var vl = [];var vlDS = [];var vlNP = [];var list = [];
 
+    {%for viewlink in linksP%}
+     vl.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}    
+
+    {%for viewlink in linksDS%}
+     vlDS.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}  
+
+    {%for viewlink in linksNP%}
+     vlNP.push(new Link("{{viewlink.n}}","{{viewlink.rn}}",{{viewlink.l.id}}))
+    {%endfor%}
+
+    //vl()
+
+    function initial()
+    {
+    tab = document.getElementById("mtab");
+    var num = tab.rows.length;
+    if(num >1 )//清除表格
+        {
+        for(var i=1;i<num;i++){                           
+        tab.deleteRow(1);
+        }}
+    for(var i = 0;i<list.length;i++){
+
+    var tr = document.createElement("tr");  
+    var new_obj = list[i];
+    
+    var tdf = document.createElement("td"); 
+    tdn.innerHTML = new_obj.l.;
+    var tdn = document.createElement("td");  
+    tdn.innerHTML = new_obj.l.rankName;
+    var tdrn = document.createElement("td");  
+    tdrn.innerHTML = new_obj.l.AuthorRanking;
+    var blank1 = document.createElement("td");  
+    blank1.innerHTML = new_obj.l.journalName;    
+    var blank2 = document.createElement("td");  
+    blank2.innerHTML = new_obj.l.rank;
+    var tdadd = document.createElement("td");  
+    tdadd.innerHTML = new_obj.l.startingTime;
+    
+    tr.appendChild(tdn); 
+    tr.appendChild(tdrn);
+    tr.appendChild(blank1); 
+    tr.appendChild(blank2);  
+    tr.appendChild(tdadd); 
+
+    var listbody = document.getElementById("mainlist");  
+    listbody.appendChild(tr);  
+        }
+    }
+
+    function search()
+    {
+        var string = document.getElementById("filter_search").value;
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].rn.indexOf(string) > -1)
+            {
+                list.push(vl[i]);
+            }
+        }
+        
+        initial();
+    }
+    function reset() {
+        document.id('filter_search').value='';
+        search();
+    }
+    function rank(rankname){
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].n.indexOf(rankname) > -1)
+            {
+                list.push(vl[i]);
+            }
+        }
+        
+        initial();
+    }
+    function vl(){
+        list = vl;
+        initial();
+    }
+    function ds(){
+        list = vlDS;
+        initial();
+    }
+    function np(){
+        list = vlNP;
+        initial();
+    }
+    function Link(n,rn,id) {
+        this.n = n;
+        this.rn = rn;
+        this.id = id;
+    }
+</script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>

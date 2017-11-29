@@ -42,8 +42,12 @@ def markMessage(request):
     #实际使用中e.messages用特定提示替代"
     return Error(request,e.message)
 
-def readMessage(request):
-  pass
+def readMessage(request,messageid = None):
+    if messageid: 
+        message = Message.objects.get(id = messageid)
+        message.isRead = 1
+        message.save()
+    return redirect(request.META['HTTP_REFERER'])
 
 def replyMessage(request,messageid,result):
  # try:

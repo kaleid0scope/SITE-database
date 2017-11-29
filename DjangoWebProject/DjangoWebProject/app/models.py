@@ -2,6 +2,8 @@
 
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser
+from django.core.files.storage import FileSystemStorage
+
 # Create your models here.
 
 statusChoice = (
@@ -30,6 +32,8 @@ class CompleteInformation(models.Model):
     CompleteExplain = models.TextField(verbose_name ='完成度简介' )
 
 class Complete(models.Model):
+    type = models.CharField(max_length = 50,verbose_name ='类型',null = True,blank = True)
+    name = models.CharField(max_length = 50,verbose_name ='名称',null = True,blank = True)
     complete1 = models.SmallIntegerField(default = 0)
     complete2 = models.SmallIntegerField(default = 0)
     complete3 = models.SmallIntegerField(default = 0)
@@ -63,6 +67,8 @@ class Complete(models.Model):
     class Meta:
        verbose_name = u'完成度'
        verbose_name_plural = u'完成度'
+    def __unicode__(self):
+        return self.name + '(' + self.type + ')'+ '完成度信息'
 
 class Choices(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='评价名称')
@@ -93,6 +99,8 @@ class Instructor(models.Model):
 
 class Major(models.Model):
     name = models.CharField(max_length = 50,verbose_name ='专业名称')
+    year = models.PositiveSmallIntegerField(verbose_name ='入学年份' ,null = True,blank = True)
+    plan = models.FileField(storage = FileSystemStorage(location='/media'),verbose_name ='培养方案' ,null = True,blank = True)
     instructor = models.ForeignKey(Instructor,verbose_name='辅导员')
     class Meta:
         verbose_name = u'专业'
@@ -328,3 +336,8 @@ class Message(models.Model):
     sender = models.ForeignKey(User,verbose_name ='发送人',related_name="Msender")
     reciver = models.ForeignKey(User,verbose_name ='接收人',related_name="Mreciver")
     linkid = models.PositiveSmallIntegerField(null = True,blank = True,verbose_name ='项目信息编号')
+    class Meta:
+       verbose_name = u'消息'
+       verbose_name_plural = u'消息'
+    def __unicode__(self):
+        return self.type+'消息:'+ text[:20]

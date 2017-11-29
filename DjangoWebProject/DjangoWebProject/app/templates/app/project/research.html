@@ -17,10 +17,13 @@
 							<thead>
 								<tr>
 									<th>状态</th>
+                                    {% if type == '管理员' or type == '辅导员' %}<th>学生学号</th><th>学生姓名</th>{% endif%}
 									<th>科研立项名称</th>
 									<th>科研立项等级</th>
 									<th>身份</th>
                                     <th>开始时间</th>
+                                    <th>{% if type == '管理员' or type == '辅导员' %}审核{% endif%}
+                                    {% if type == '学生端' %}查看{% endif%}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -29,10 +32,16 @@
                                     {% for p in linksP%}
                                     <tr>
                                         <td>通过</td>
+                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
                                         <td>{{p.l.rankName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                         <td>{{p.l.role}}</td>
+                                        <td>
+                                        {% if type == '管理员' or type == '辅导员' %}
+                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
+                                        {% if type == '学生端' %}
+                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
                                 {% else %}
@@ -42,10 +51,16 @@
                                     {% for p in linksDS%}
                                     <tr class="warning">
                                         <td>待审核</td>
+                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
                                         <td>{{p.l.rankName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                         <td>{{p.l.role}}</td>
+                                        <td>
+                                        {% if type == '管理员' or type == '辅导员' %}
+                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
+                                        {% if type == '学生端' %}
+                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
                                 {% else %}
@@ -55,10 +70,16 @@
                                     {% for p in linksNP%}
                                     <tr class="danger">
                                         <td>未通过</td>
+                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
                                         <td>{{p.l.rankName}}</td>
                                         <td>{{p.l.rank}}</td>
                                         <td>{{p.l.startingTime}}</td>
                                         <td>{{p.l.role}}</td>
+                                        <td>
+                                        {% if type == '管理员' or type == '辅导员' %}
+                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
+                                        {% if type == '学生端' %}
+                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
                                     </tr>
                                     {% endfor %}
                                 {% else %}

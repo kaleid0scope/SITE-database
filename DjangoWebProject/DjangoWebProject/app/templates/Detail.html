@@ -1,11 +1,15 @@
-﻿{% extends "app/layout.html" %}
+﻿{% extends "app/layout3.html" %}
 
 
 {% block content %}
 <body>
 	
 <div class="container">
-	<h2>活动详情如下：</h2>             
+	<h2><i class="md md-event-note"></i>{{verboseName}}详情如下：</h2>  {% if alert %}
+                    <div class="alert alert-warning" role="alert">
+				        <strong>提示:</strong> {{alert}}
+			        </div>
+                    {% endif %}           
 	<table class="table table-striped">
 		<tbody>
 			{% for key,value in FPS.items%}
@@ -19,7 +23,7 @@
 			</tr>
             {%for member in members%}
             <tr>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名：{{member.rankName}}---学号：{{member.StudentNum}}</td><td></td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="md md-group"></i>姓名：{{member.rankName}}---学号：{{member.StudentNum}}</td><td></td>
 			</tr>
             {%endfor%}
             
@@ -38,10 +42,11 @@
             {% endif %}
             {% endif %}-->
 
-            {% if manage == True %}
             <tr>
-				<td>管理项目：</td><td><a class="btn btn-warning" onclick="del()" >删除</a>
-                <a class="btn btn-info" onclick="prom()">选择加入</a></td>
+				<td><span class="glyphicon glyphicon-plus"></span>邀请成员：</td>
+                <td><a class="btn btn-info" onclick="prom()">选择加入</a></td>
+                {% if type == '管理员' or type == '辅导员'%}
+                <td><a class="btn btn-warning" onclick="del()" >删除</a></td>
 			</tr>
  <!--
      <tr><td>加入申请：</td><td></td></tr>  
@@ -56,7 +61,7 @@
                 <input type="submit" name="passno" value="拒绝" class="btn btn-default">
                 </form>{%endfor%}-->
 
-                {% if type == '管理员' or '辅导员'%}
+                {% if type == '管理员' or type == '辅导员'%}
                 <form enctype="multipart/form-data" action="/excel/{{link.id}}" method="post">  
                     <input type="file" name="link" /> 
                 <input type="submit" value="批量导入"/>  

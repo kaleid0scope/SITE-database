@@ -7,7 +7,7 @@ def GetComplete(request,student):
     links = RankLinks.objects.filter(student = student)
     Clist = []
     for link in links:
-        Clist.append(link.choice.complete)
+        if link.choice : Clist.append(link.choice.complete)
     for s in scores:
         Clist.append(Mul(CompleteLM.objects.get(lesson = s.lesson , major = student.major),s.score))
     complete = Mix(Clist)

@@ -132,6 +132,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
+STATIC_URL = '/media/'
+
+MEDIA_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['media']))
+
 LOGIN_URL = '/login/'
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1

@@ -80,6 +80,7 @@
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
     <Folder Include="app\Defs\" />
+    <Folder Include="app\media\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\assets\" />
@@ -1827,6 +1828,9 @@
     <Content Include="app\static\images\item8.png" />
     <Content Include="app\static\img\templates\index.html" />
     <Content Include="app\templates\app\excel2.html" />
+    <Content Include="app\templates\app\stlist.html" />
+    <Content Include="app\templates\app\scorelist.html" />
+    <Content Include="app\templates\app\lessonlist.html" />
     <Content Include="app\templates\app\project\research.html" />
     <Content Include="app\templates\app\project\lecture.html" />
     <Content Include="app\templates\app\project\internship.html" />
@@ -1888,7 +1892,7 @@
     <Content Include="app\static\app\scripts\respond.js" />
     <Content Include="app\static\app\scripts\respond.min.js" />
     <Content Include="app\static\app\scripts\_references.js" />
-    <Content Include="app\templates\app\about.html" />
+    <Content Include="app\templates\app\blank.html" />
     <Content Include="app\templates\app\contact.html" />
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
