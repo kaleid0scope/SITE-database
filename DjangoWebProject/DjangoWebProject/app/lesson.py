@@ -85,9 +85,9 @@ class rl(object):
 
 def studentList(request):
     students = getls(request)['students']
-    sls = []        
-    rls = []
-    for student in students:
+    sls = []  
+    for student in students:      
+        rls = []
         score = Score.objects.filter(student = student)
         ranklinks = RankLinks.objects.filter(student = student)
         for link in ranklinks:

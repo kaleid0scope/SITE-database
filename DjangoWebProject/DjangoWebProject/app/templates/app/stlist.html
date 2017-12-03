@@ -37,7 +37,7 @@
                                         <td>{{sl.student.phone}}</td>
                                         <td><a class="btn btn-raised" href= "/complete/{{sl.student.StudentNum}}">查看</a></td>
                                         {% if type == '管理员' or type == '辅导员' %}
-                                        <td><a class="btn btn-primary" href= "javascript:void(0)" onClick="project({{sl.student.id}})" >查看</a></td>{% endif%}
+                                        <td><a class="btn btn-primary" href= "javascript:void(0)" onClick="readRank({{sl.student.StudentNum}})" >查看</a></td>{% endif%}
                                         {% if type == '管理员' or type == '辅导员' %}
                                         <td><a class="btn btn-info" href= "/Lesson/list/{{sl.student.StudentNum}}" >查看</a></td>{% endif%}
                                     </tr>
@@ -83,21 +83,17 @@
 {% block jscript %}
 
 <script>
-/*    var sllist = [];
+    dic = new Array();
     {%for sl in list%}
-        rl = [];sc = [];
+        var rl = [];
         {%for r in sl.rl%}
-            rl.push(new RL("{{r.name}}",{{r.project.id}},{{r.ranklink.id}}))
+        rl.push(new RL("{{r.name}}","{{r.project.rankName}}",{{r.ranklink.id}}));
         {%endfor%}
-        {%for e in sl.scores%}
-            sc.push(new RL("{{e.student.rankName}}","{{e.lesson.name}}",{{e.lesson.id}},{{e.score}}))
-        {%endfor%}
-        sllist.push(new SL("{{sl.student.id}}",sc,rl))
-    {%endfor%}*/
+        dic["{{sl.student.StudentNum}}"] = rl;
+    {%endfor%}
     
-function project(l)
-{
-    list = l
+    function readRank(id) {
+    list = dic[id.toString()]
 
     tab = document.getElementById("mtab");
     var num = tab.rows.length;
@@ -114,9 +110,9 @@ function project(l)
     var tdn = document.createElement("td");  
     tdn.innerHTML = new_obj.name;
     var tdrn = document.createElement("td");  
-    tdrn.innerHTML = new_obj.project.rankName;
+    tdrn.innerHTML = new_obj.rankName;
     var tdadd = document.createElement("td");  
-    tdadd.innerHTML = "<a class='btn btn-info' href= '/Detail/" + new_obj.ranklink.id.toString() + "'>查看</a>";
+    tdadd.innerHTML = "<a class='btn btn-info' href= '/Detail/" + new_obj.id.toString() + "'>查看</a>";
     
     tr.appendChild(tdn); 
     tr.appendChild(tdrn);
@@ -133,8 +129,8 @@ function project(l)
     }
     function RL(name,project,link) {
         this.name = name;
-        this.project = project;
-        this.link = link;
+        this.rankName = project;
+        this.id = link;
     }
 </script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>

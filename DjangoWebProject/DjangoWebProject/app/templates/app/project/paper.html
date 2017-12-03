@@ -163,20 +163,18 @@
                                                             {{createForm.Rank}}
                                                             <label class="control-label">{{createForm.Rank.label_tag}}</label>
 														</div>
+                    {% if type == "辅导员" or type == '管理员'%}	
+														<div class="form-group">
+                                                            <input  type="text" class="form-control" name="stnn"/>
+                                                            <label class="control-label">学生学号</label>
+														</div>
+                    {% endif %}
 													</div><!--end #step2 -->
 													
 												</div><!--end .tab-content -->
-												<ul class="pager wizard">	
-                    {% if type == "学生端"%}									
+												<ul class="pager wizard">								
                <li><a class="btn-raised" type="submit" href="javascript:void(0);" onclick="document.getElementById('paperSubmit').submit()" >提交</a></li>
-                    {% endif %}
-                    {% if type == "辅导员" or type == '管理员'%}	
-               <li><a class="btn-raised" href="javascript:void(0);" onclick="fdy()" >提交</a></li>
-                    {% endif %}
 												</ul>
-                    {% if type == "辅导员" or type == '管理员'%}	
-                        <p hidden="hidden" id="stnn">0</p>
-                    {% endif %}
 											</form>
 										</div><!--end #rootwizard -->
 				    </div><!--end .card-body -->
@@ -192,17 +190,6 @@
 {% endblock %}
 
 {% block jscript %}
-<script>
-    function fdy() 
-    { 
-        var StudentNum=prompt("请输入加入项目的学生的学号","");
-        if (StudentNum) 
-        {   
-            document.getElementById('stnn').innerHTML = StudentNum;
-            document.getElementById('paperSubmit').submit();
-        } 
-    }
-</script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>

@@ -55,7 +55,7 @@ def ProjectManagePost(request,rankname,student = None):
         project = getView(rankname)(request)
         student = Students.objects.filter(user = request.user)
     else:
-#        if request.POST['stn'] != 0: student = Students.objects.filter(pk = int(request.POST['stn']))
+        if request.has_key('stnn'): student = Students.objects.get(pk = int(request.POST['stnn']))
         if student == None: 
             #return Error(request,u'缺少参数')
             student = Students.objects.get(StudentNum=201530037)#.。。
