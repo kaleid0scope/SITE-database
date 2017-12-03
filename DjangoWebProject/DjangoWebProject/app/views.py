@@ -80,9 +80,11 @@ def ShowComplete(request,id = None):
     complete = GetComplete(request,student)
     fields = Complete._meta.fields
     FieldProject = {}
+    type = getattr(complete,'type')
+    name = getattr(complete,'name')
     for field in fields :
-        if field.name != 'id': FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
-    return render(request,'complete.html', {'FPS': FieldProject})
+        if field.name not in ('id','name','type'): FieldProject[field.verbose_name] = getattr(complete,field.name) #键值对
+    return render(request,'complete.html', {'FPS': FieldProject,'type':type,'name':name})
 
 def StudentList(request):
     if getType(request) == '辅导员':

@@ -13,11 +13,26 @@
 	        <div class="col-lg-12">
             	<div class="card">
 				    <div class="card-body ">
-		                <table class="table table-banded no-margin">
+                    <div><input name="filter_search" type="text" id="filter_search" placeholder="请输入活动关键字。" title="请输入活动关键字。" value="" size="40">
+                      <button class="btn btn-info" type="submit" title="" data-original-title="搜索" onClick="search()">搜索</button>
+                      <button class="btn btn-info" type="button" title="" data-original-title="清除" onClick="reset()" >清空</button></div>
+                    <a onClick="ds()"><i class="fa fa-envelope-o">
+                    </i><span class="menu-title" style="cursor:pointer">查看待审核活动</span></a>
+                    <a onClick="np()"><i class="fa fa-bar-chart-o fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">查看未通过活动</span></a>
+                    <a onClick="p()"><i class="fa fa-bar-chart-o fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">查看已通过活动</span></a>
+                    <a onClick="allv()"><i class="fa fa-bar-chart-o fa-fw">
+                    </i><span class="menu-title" style="cursor:pointer">查看所有活动</span></a>
+                    </div>
+		                <table class="table table-banded no-margin" id="mtab">
 							<thead>
 								<tr>
 									<th>是否通过</th>
-                                    {% if type == '管理员' or type == '辅导员' %}<th>学生学号</th><th>学生姓名</th>{% endif%}
+                                    {% if type == '管理员' or type == '辅导员' %}
+                                    <th>学生学号</th>
+                                    <th>学生姓名</th>
+                                    {% endif%}
 									<th>论文题目</th>
 									<th>第几作者</th>
 									<th>期刊名称</th>
@@ -27,74 +42,7 @@
                                     {% if type == '学生端' %}查看{% endif%}</th>
 								</tr>
 							</thead>
-							<tbody>
-                                {% if linksDS %}
-                                    {% for p in linksDS%}
-                                    <tr>
-                                        <td>待审核</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >审核</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% endif %}
-
-                                
-
-                                {% if linksP %}
-                                    {% for p in linksP%}
-                                    <tr>
-                                        <td>通过</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
-                                        <a class="btn btn-accent" href= "/Detail/{{p.rl.id}}" >查看</a></td>
-                                    </tr>
-                                    {% endfor %}
-                                {% endif %}
-
-                                {% if linksNP %}
-                                    {% for p in linksNP%}
-                                    <tr>
-                                        <td>未通过</td>
-                                        {% if type == '管理员' or type == '辅导员' %}<td>{{p.rl.student.StudentNum}}</td><td>{{p.rl.student.rankName}}</td>{% endif%}
-                                        <td>{{p.l.rankName}}</td>
-                                        <td>{{p.l.AuthorRanking}}</td>
-                                        <td>{{p.l.journalName}}</td>
-                                        <td>{{p.l.rank}}</td>
-                                        <td>{{p.l.startingTime}}</td>
-                                        <td>
-                                        {% if type == '管理员' or type == '辅导员' %}
-                                        <a class="btn btn-info" href= "/Check/{{p.rl.id}}" >修改</a>{% endif%}
-                                        {% if type == '学生端' %}
-                                        <a class="btn btn-info" href= "/Detail/{{p.rl.id}}" >查看</a>{% endif%}</td>
-                                    </tr>
-                                    {% endfor %}
-                                {% endif %}
-                                {% if not linksNP and not linksDS and not linksP %}
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><i>暂时没有论文记录</i></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                {% endif %}
+							<tbody id="mainlist">
 							</tbody>
 						</table>
                     </div>
@@ -163,7 +111,7 @@
                                                             {{createForm.Rank}}
                                                             <label class="control-label">{{createForm.Rank.label_tag}}</label>
 														</div>
-                    {% if type == "辅导员" or type == '管理员'%}	
+                    {% if type == '辅导员' or type == '管理员'%}	
 														<div class="form-group">
                                                             <input  type="text" class="form-control" name="stnn"/>
                                                             <label class="control-label">学生学号</label>
@@ -182,14 +130,203 @@
 			    {#<em class="text-caption">Form wizard with validation</em>#}
 		    </div><!--end .col -->
 	    </div>
-
-       
-    </div>
 </section>
+
+
 
 {% endblock %}
 
 {% block jscript %}
+
+<script>    
+    var vl = [];var vlDS = [];var vlNP = [];var list = [];
+
+    {%for viewlink in linksP%}
+     vl.push(new Link("通过","{{viewlink.rl.student.StudentNum}}","{{viewlink.rl.student.rankName}}","{{viewlink.n}}","{{viewlink.l.rankName}}","{{viewlink.l.AuthorRanking}}","{{viewlink.l.journalName}}","{{viewlink.l.rank}}","{{viewlink.l.startingTime}}",{{viewlink.rl.id}}));
+    {%endfor%} 
+    {%for viewlink in linksDS%}
+     vlDS.push(new Link("待审核","{{viewlink.rl.student.StudentNum}}","{{viewlink.rl.student.rankName}}","{{viewlink.n}}","{{viewlink.l.rankName}}","{{viewlink.l.AuthorRanking}}","{{viewlink.l.journalName}}","{{viewlink.l.rank}}","{{viewlink.l.startingTime}}",{{viewlink.rl.id}}));
+    {%endfor%}  
+
+    {%for viewlink in linksNP%}
+     vlNP.push(new Link("未通过","{{viewlink.rl.student.StudentNum}}","{{viewlink.rl.student.rankName}}","{{viewlink.n}}","{{viewlink.l.rankName}}","{{viewlink.l.AuthorRanking}}","{{viewlink.l.journalName}}","{{viewlink.l.rank}}","{{viewlink.l.startingTime}}",{{viewlink.rl.id}}));
+    {%endfor%}
+    allv();
+
+    function initial()
+    {
+    tab = document.getElementById("mtab");
+    var num = tab.rows.length;
+    if(num >1 )//清除表格
+        {
+        for(var i=1;i<num;i++){                           
+        tab.deleteRow(1);
+        }}
+
+    if(list.length == 0)//添加空内容说明
+    {
+    var tr = document.createElement("tr");  
+    var td1 = document.createElement("td");  
+
+    {%if type == '辅导员' or type == '管理员'%}
+    var tds1 = document.createElement("td"); 
+    var tds2 = document.createElement("td"); 
+    {%endif%}
+
+    var tdtype = document.createElement("td");  
+    var td2 = document.createElement("td");  
+    var td3 = document.createElement("td");  
+    var td4 = document.createElement("td");
+    var td5 = document.createElement("td");  
+    var td6 = document.createElement("td");  
+    var tdedit = document.createElement("td");
+    
+    td3.innerHTML = "<i>暂时找不到记录</i>"; 
+
+    tr.appendChild(td1); 
+    {% if type == '管理员' or type == '辅导员' %}
+    tr.appendChild(tds1); 
+    tr.appendChild(tds2); 
+    {% endif%}
+    tr.appendChild(td2); 
+    tr.appendChild(td3); 
+    tr.appendChild(td4); 
+    tr.appendChild(td5); 
+    tr.appendChild(td6); 
+    tr.appendChild(tdedit); 
+
+    var listbody = document.getElementById("mainlist");  
+    listbody.appendChild(tr); 
+    }
+
+    for(var i = 0;i<list.length;i++){
+    var tr = document.createElement("tr");  
+    var new_obj = list[i];
+
+    var td1 = document.createElement("td");  
+    td1.innerHTML = new_obj.status;
+
+    {%if type == '辅导员' or type == '管理员'%}
+
+    var tds1 = document.createElement("td");  
+    tds1.innerHTML = new_obj.studentNum;
+
+    var tds2 = document.createElement("td");  
+    tds2.innerHTML = new_obj.studentName;
+    {%endif%}
+
+    var tdtype = document.createElement("td");  
+    tdtype.innerHTML = new_obj.type;
+
+    var td2 = document.createElement("td");  
+    td2.innerHTML = new_obj.rankName;
+
+    var td3 = document.createElement("td");  
+    td3.innerHTML = new_obj.authorRanking;
+
+    var td4 = document.createElement("td");  
+    td4.innerHTML = new_obj.journalName;
+
+    var td5 = document.createElement("td");  
+    td5.innerHTML = new_obj.rank;
+
+    var td6 = document.createElement("td");  
+    td6.innerHTML = new_obj.startingTime;
+
+    var tdedit = document.createElement("td");
+    var check = (new_obj.status == "待审核")?"审核":"修改";
+      
+    tdedit.innerHTML = "{% if type == '管理员' or type == '辅导员' %}<a class='btn btn-info' href= '/Check/" + new_obj.id.toString() + "' >"+check+"</a>{% endif%}    <a class='btn btn-accent' href= '/Detail/" + new_obj.id.toString() + "'>查看</a>";
+    
+    tr.appendChild(td1); 
+    {% if type == '管理员' or type == '辅导员' %}
+    tr.appendChild(tds1); 
+    tr.appendChild(tds2); 
+    {% endif%}
+    tr.appendChild(td2); 
+    tr.appendChild(td3); 
+    tr.appendChild(td4); 
+    tr.appendChild(td5); 
+    tr.appendChild(td6); 
+    tr.appendChild(tdedit); 
+
+    var listbody = document.getElementById("mainlist");  
+    listbody.appendChild(tr);  
+        }
+    }
+
+    function search()
+    {
+        var string = document.getElementById("filter_search").value;
+        nlist = [];
+        for(var i in list)
+        {
+            if ( list[i].rankName.indexOf(string) > -1)
+            {
+                nlist.push(list[i]);
+            }
+            else if ( list[i].studentName.indexOf(string) > -1)
+            {
+                nlist.push(list[i]);
+            }
+            else if ( list[i].journalName.indexOf(string) > -1)
+            {
+                nlist.push(list[i]);
+            }
+            else if ( list[i].studentNum.indexOf(string) > -1)
+            {
+                nlist.push(list[i]);
+            }
+        }
+        list = nlist;
+        initial();
+    }
+    function reset() {
+        document.id('filter_search').value='';
+        search();
+    }
+    function rank(rankname){
+        list = [];
+        for(var i in vl)
+        {
+            if ( vl[i].n.indexOf(rankname) > -1)
+            {
+                list.push(vl[i]);
+            }
+        }
+        
+        initial();
+    }
+    function p(){
+        list = vl;
+        initial();
+    }
+    function ds(){
+        list = vlDS;
+        initial();
+    }
+    function np(){
+        list = vlNP;
+        initial();
+    }
+    function allv(){
+        list = vlDS.concat(vl,vlNP)
+        initial();
+    }
+    function Link(status,StudentNum,StudentName,type,rankName,authorRanking,journalName,rank,startingTime,id) {
+        this.status = status;
+        this.studentNum = StudentNum;
+        this.studentName = StudentName;
+        this.type = type;
+        this.rankName = rankName;
+        this.authorRanking = authorRanking;
+        this.journalName = journalName;
+        this.rank = rank;
+        this.startingTime = startingTime;
+        this.id = id;
+    }
+</script>
+
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/jquery.validate.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/jquery-validation/dist/additional-methods.min.js'%}"></script>
 <script src="{%static 'app/assets/js/libs/wizard/jquery.bootstrap.wizard.min.js'%}"></script>
