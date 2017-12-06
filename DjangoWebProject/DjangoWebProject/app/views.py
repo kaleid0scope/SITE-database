@@ -12,6 +12,7 @@ from app.forms import *
 from app.models import *
 from app.Info import *
 from app.project import *
+from app.lesson import *
 from app.complete import GetComplete
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  
@@ -99,11 +100,50 @@ def StudentList(request):
 def construction(request):
     return render(request,'app/construction.html',{})
 
+def getall(request):
+    projects = rls = Dic = None
+    if getType(request) == '辅导员':
+        instructor = Instructor.objects.get(user = request.user)
+        majors = Major.objects.filter(instructor = instructor)
+        students = Students.objects.filter(major__in = majors)
+        rls = RankLinks.objects.filter(student__in = students)
+        projects = []
+        for link in rls:
+            rank = getModel(link.rtype)
+            project = rank.objects.get(pk = link.rnum)
+            if project not in projects : projects.append(project)
+    elif getType(request) == '管理员':
+        students = Students.objects.all()
+        rls = RankLinks.objects.all()
+        projects = []
+        Dic = {'ResearchProjectRank': ResearchProjectRank,
+        'IdeologyConstructionRank': IdeologyConstructionRank, 
+        'LectureRank':LectureRank,
+        'VolunteeringRank':VolunteeringRank,
+        'SchoolActivityRank':SchoolActivityRank,
+        'PaperRank':PaperRank,
+        'CompetitionRank':CompetitionRank,
+        'ExchangeRank':ExchangeRank,
+        'StudentCadreRank':StudentCadreRank,
+        'InternshipRank':InternshipRank}
+        for key,value in Dic.items():
+            Dic[key] = value.objects.all()
+            projects.append(value.objects.all())
+    else:return Error(request,u'您无权访问')
+    lessons = getls(request)['lessons']
+    return {'lessons':lessons,'lessonsC':lessons.count(),'lessonsF':lessons[:5],
+            'projects':projects,'projectsC':len(projects),'projectsF':projects[:5],
+            'ProjectDic':Dic,
+            'ranklinks':rls,'ranklinksC':rls.count(),'ranklinksF':rls[:5],
+            'students':getls(request)['students'],'studentsC':getls(request)['students'].count(),'studentsF':getls(request)['students'][:5],
+            'scores':getls(request)['scores'],'scoresC':getls(request)['scores'].count(),'scoresF':getls(request)['scores'][:5]}
+
 def home(request):
     NewWeb()
     assert isinstance(request, HttpRequest)
     if request.user.is_authenticated():
-        return render(request,'app/index2.html',{})
+        dic = getall(request)
+        return render(request,'app/index2.html',dic)
     else:
         return redirect('/login')
 
